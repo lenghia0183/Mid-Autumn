@@ -1,0 +1,22 @@
+import React from "react";
+import { useField } from "formik";
+import TextField from "../TextField";
+import FieldWrapper from "./FieldWrapper";
+
+const FormikTextField = ({ id, ...props }) => {
+  const [field, meta, helpers] = useField(id);
+  const { setValue } = helpers;
+
+  return (
+    <>
+      <TextField
+        {...props}
+        onChange={(val) => setValue(val)}
+        value={field.value}
+        error={meta.touched && meta.error ? meta.error : ""}
+      />
+    </>
+  );
+};
+
+export default FieldWrapper(FormikTextField);
