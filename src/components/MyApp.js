@@ -4,6 +4,8 @@ import * as Yup from "yup";
 
 import Field from "../components/Formik";
 import Dialog from "./Diaglog";
+import Button from "./Button";
+import Icon from "./Icon";
 
 const MyForm = () => {
   const [isDialogOpen, setDialogOpen] = useState(false);
@@ -38,7 +40,19 @@ const MyForm = () => {
 
   return (
     <>
-      <button onClick={handleOpenDialog}>Test</button>
+      <Button
+        onClick={handleOpenDialog}
+        variant="contained"
+        size="medium"
+        // loading={true}
+        startIcon={
+          <Icon name="closeCircle" className="text-red-500" size="1em" />
+        }
+        className="text-3xl"
+      >
+        Le cong Nghia
+      </Button>
+
       <Dialog
         title="My Form"
         open={isDialogOpen}
