@@ -1,10 +1,9 @@
 import React, { useState } from "react";
-import { Formik, Form } from "formik";
 import * as Yup from "yup";
 
 import Field from "../components/Formik";
-import Dialog from "./Diaglog";
 import Button from "./Button";
+import Dialog from "./Diaglog";
 import Icon from "./Icon";
 
 const MyForm = () => {
@@ -46,7 +45,7 @@ const MyForm = () => {
         size="medium"
         // loading={true}
         startIcon={
-          <Icon name="closeCircle" className="text-red-500" size="1em" />
+          <Icon name="closeCircle" size="1em" color="text-green-500" />
         }
         className="text-3xl"
       >

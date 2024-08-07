@@ -1,8 +1,8 @@
-import React, { useCallback } from "react";
-import PropTypes from "prop-types";
-import { Formik, Form } from "formik";
-import { isEmpty } from "lodash";
 import clsx from "clsx";
+import { Form, Formik } from "formik";
+import { isEmpty } from "lodash";
+import PropTypes from "prop-types";
+import React, { useCallback } from "react";
 
 const Dialog = ({
   title = "",
@@ -17,13 +17,13 @@ const Dialog = ({
   onSubmit,
   submitLabel = "",
   submitProps = {},
-  disableBackdropClick = false,
+  disableBackdropClick = true,
   noBorderBottom = false,
-  noBorderTop,
+  noBorderTop = false,
   formikProps,
   titleProps,
 }) => {
-  const handleBackdropClick = (e) => {
+  const handleBackdropClick = () => {
     if (!disableBackdropClick) {
       onCancel();
     }
@@ -47,8 +47,8 @@ const Dialog = ({
     <>
       <div
         className={clsx("p-6", {
-          "border-b border-gray-200": !noBorderBottom,
-          "border-t border-gray-200": !noBorderTop,
+          "border-b-2 border-gray-200": !noBorderBottom,
+          "border-t-2 border-gray-200": !noBorderTop,
         })}
       >
         {children}
@@ -101,7 +101,7 @@ const Dialog = ({
         )}
         onClick={(e) => e.stopPropagation()}
       >
-        <div className="p-4 border-b border-gray-200">
+        <div className="p-4">
           <h2 className={clsx("text-lg font-semibold", titleProps)}>{title}</h2>
         </div>
         <DialogWrapper>
@@ -127,8 +127,9 @@ Dialog.propTypes = {
   children: PropTypes.node,
   renderFooter: PropTypes.func,
   noBorderBottom: PropTypes.bool,
+  noBorderTop: PropTypes.bool,
   formikProps: PropTypes.object,
-  titleProps: PropTypes.string, // Add titleProps to prop types
+  titleProps: PropTypes.string,
 };
 
 export default Dialog;
