@@ -23,6 +23,12 @@ const Home = () => {
             Xem Các Loại Bánh
           </button>
         </Link>
+
+        <Link to="/about">
+          <button className="px-4 py-2 bg-yellow-600 text-white rounded hover:bg-yellow-700 transition">
+            Về chúng tôi
+          </button>
+        </Link>
       </div>
     </div>
   );
