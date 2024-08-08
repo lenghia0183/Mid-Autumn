@@ -1,7 +1,6 @@
 // OptionsList.js
 import React from "react";
 import PropTypes from "prop-types";
-import { parseDimension } from "../../../utils";
 import useParseDimension from "../../../hooks/useParseDimension";
 
 const OptionsList = ({

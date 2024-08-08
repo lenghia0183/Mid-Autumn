@@ -29,6 +29,12 @@ const Home = () => {
             Về chúng tôi
           </button>
         </Link>
+
+        <Link to="/test">
+          <button className="px-4 py-2 bg-yellow-600 text-white rounded hover:bg-yellow-700 transition">
+            Test
+          </button>
+        </Link>
       </div>
     </div>
   );

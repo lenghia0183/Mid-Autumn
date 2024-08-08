@@ -53,15 +53,12 @@ const Autocomplete = ({
 
   useEffect(() => {
     if (autoFetch && optionsState.length === 0) {
-    
       fetchData();
     }
 
     if (debouncedInputValue.trim() && isUserInput) {
-
       fetchData();
     }
-    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [autoFetch, debouncedInputValue, asyncRequest]);
 
   useEffect(() => {
@@ -80,7 +77,6 @@ const Autocomplete = ({
     };
 
     filterOptions();
-    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [inputValue, optionsState, getOptionsLabel]);
 
   const handleInputChange = (e) => {
@@ -143,7 +139,6 @@ const Autocomplete = ({
   const handleFocus = () => {
     setShowOptions(true);
     if (!autoFetch && !showOptions && !isUserInput) {
-
       fetchData();
     }
   };
