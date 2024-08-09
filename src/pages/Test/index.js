@@ -9,6 +9,7 @@ import {
 } from "../../constants/common";
 import Icon from "../../components/Icon";
 import Accordion from "../../components/Accordion";
+import DrawerMenu from "../../components/DrawerMenu";
 
 const Test = () => {
   const initialValues = { gender: "", number: "100", haha: "female" };
@@ -146,6 +147,18 @@ const Test = () => {
             >
               Gui
             </Button>
+
+            <DrawerMenu
+              animationDuration={1000}
+              renderCloseButton={() => {
+                return <div>Đóng</div>;
+              }}
+              renderContent={() => {
+                return <div>Hello Drawer lorem500</div>;
+              }}
+            >
+              <Button>Mở</Button>
+            </DrawerMenu>
           </>
         </Form>
       )}

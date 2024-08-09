@@ -1,7 +1,7 @@
 import React from "react";
 import PropTypes from "prop-types";
 import clsx from "clsx";
-import Loading from "../Loading"; // Nhập component loading của bạn
+import Loading from "../Loading"; 
 
 const Button = ({
   children,
