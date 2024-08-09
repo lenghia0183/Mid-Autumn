@@ -1,4 +1,4 @@
-import PropTypes from "prop-types";
+import React from "react"; // Ensure React is imported
 import { ReactComponent as ArrowDown } from "../../asset/icons/ArrowDown.svg";
 import { ReactComponent as CloseCircle } from "../../asset/icons/CloseCircle.svg";
 import useParseDimension from "../../hooks/useParseDimension";
@@ -10,7 +10,6 @@ export const icons = {
 
 const Icon = ({
   name = "",
-  fill,
   size = 2,
   className = "",
   color = "gray",
@@ -43,14 +42,6 @@ const Icon = ({
       )}
     </span>
   );
-};
-
-Icon.propTypes = {
-  name: PropTypes.string,
-  fill: PropTypes.string,
-  size: PropTypes.oneOfType([PropTypes.number, PropTypes.string]),
-  className: PropTypes.string,
-  color: PropTypes.string,
 };
 
 export default Icon;

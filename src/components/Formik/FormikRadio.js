@@ -2,7 +2,6 @@ import React from "react";
 import { useField } from "formik";
 import Radio from "../Radio";
 import FieldWrapper from "./FieldWrapper";
-import PropTypes from "prop-types";
 
 const FormikRadio = ({ id, onChange: externalOnChange, ...props }) => {
   const [field, meta, helpers] = useField(id);
@@ -24,13 +23,6 @@ const FormikRadio = ({ id, onChange: externalOnChange, ...props }) => {
       error={meta.error ? meta.error : ""}
     />
   );
-};
-
-FormikRadio.propTypes = {
-  id: PropTypes.string.isRequired,
-  value: PropTypes.string.isRequired,
-  label: PropTypes.string,
-  onChange: PropTypes.func,
 };
 
 export default FieldWrapper(FormikRadio);

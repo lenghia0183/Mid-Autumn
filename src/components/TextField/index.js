@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useId } from "react";
 import PropTypes from "prop-types";
 
 const TextField = ({
@@ -8,16 +8,23 @@ const TextField = ({
   onChange = () => {},
   error = "",
   label = "",
-  orientation = "vertical", // "vertical" hoặc "horizontal"
+  orientation = "vertical",
   className = "",
   width = "100%",
   height = "30px",
+  allow,
+  inputProps,
+  disabled = false,
 }) => {
-  const [inputValue, setInputValue] = useState(value);
+  const id = useId();
 
   const handleChange = (e) => {
-    const newValue = e.target.value;
-    setInputValue(newValue);
+    let newValue = e.target.value;
+
+    if (allow instanceof RegExp) {
+      newValue = newValue.replace(allow, "");
+    }
+
     onChange(newValue);
   };
 
@@ -30,7 +37,8 @@ const TextField = ({
     >
       {label && (
         <label
-          className={`text-sm w-1/6 ${
+          htmlFor={id}
+          className={`text-sm select-none ${
             orientation === "horizontal" ? "mr-2" : "mb-1 block text-left"
           }`}
         >
@@ -39,14 +47,21 @@ const TextField = ({
       )}
       <div className="flex-grow">
         <input
+          id={id}
           type={type}
-          value={inputValue}
+          value={value}
           placeholder={placeholder}
           onChange={handleChange}
-          className={`w-full border-b p-2 bg-gray-50 hover:bg-gray-200 focus:bg-gray-200 focus:border-b-2 focus:border-gray-500 ${
+          disabled={disabled}
+          className={`w-full border-b p-2 bg-gray-50 ${
+            disabled
+              ? "bg-gray-200 text-gray-500 cursor-not-allowed"
+              : "hover:bg-gray-200 focus:bg-gray-200 focus:border-b-2 focus:border-gray-500"
+          } ${
             error ? "border-red-500 border-b-2" : "border-gray-400"
-          } rounded outline-none `}
+          } rounded outline-none`}
           style={{ height: height }}
+          {...inputProps}
         />
         {error && (
           <div className="text-red-500 text-sm mt-1 text-left">{error}</div>
@@ -67,6 +82,9 @@ TextField.propTypes = {
   className: PropTypes.string,
   width: PropTypes.string,
   height: PropTypes.string,
+  allow: PropTypes.instanceOf(RegExp),
+  inputProps: PropTypes.object,
+  disabled: PropTypes.bool,
 };
 
 export default TextField;
