@@ -10,39 +10,39 @@ const Button = ({
   loading = false,
   size = "medium",
   variant = "contained",
-  color = "primary",
+  textColor = "text-blue-300",
+  bgColor = "bg-blue-100",
   startIcon,
   endIcon,
   className,
   ...props
 }) => {
   const baseClasses =
-    "rounded focus:outline-none transition duration-200 flex items-center justify-center"; // Thêm flex và căn giữa
+    "rounded focus:outline-none transition duration-200 flex items-center justify-center";
   const sizeClasses = {
     small: "px-2 py-1 text-sm",
     medium: "px-4 py-2 text-base",
     large: "px-6 py-3 text-lg",
     fullWidth: "w-full py-2",
   };
+
   const variantClasses = {
-    contained:
-      color === "primary"
-        ? "bg-blue-600 text-white hover:bg-blue-700"
-        : "bg-gray-200 text-gray-800 hover:bg-gray-300",
-    outlined:
-      color === "primary"
-        ? "border border-blue-600 text-blue-600 hover:bg-blue-600 hover:text-white"
-        : "border border-gray-300 text-gray-800 hover:bg-gray-100",
-    text:
-      color === "primary"
-        ? "text-blue-600 hover:bg-blue-100"
-        : "text-gray-800 hover:bg-gray-100",
+    contained: "text-white",
+    outlined: `border-2 ${textColor} bg-transparent`,
+    text: "bg-transparent hover:underline",
   };
+
+  const textClasses =
+    textColor || (variant === "contained" ? "text-white" : "text-gray-800");
+  const bgClasses =
+    bgColor || (variant === "contained" ? "bg-blue-600 hover:bg-blue-700" : "");
 
   const classes = clsx(
     baseClasses,
     sizeClasses[size],
     variantClasses[variant],
+    textClasses,
+    bgClasses,
     {
       "opacity-50 cursor-not-allowed": disabled || loading,
     }
@@ -59,8 +59,8 @@ const Button = ({
     >
       {loading ? (
         <>
-          <Loading color={color} size="1em" />
-          <span className="ml-2">Đang tải...</span>{" "}
+          <Loading color={textColor || "white"} size="1em" />
+          <span className="ml-2">Đang tải...</span>
         </>
       ) : (
         <>
@@ -82,7 +82,8 @@ Button.propTypes = {
   loading: PropTypes.bool,
   size: PropTypes.oneOf(["small", "medium", "large", "fullWidth"]),
   variant: PropTypes.oneOf(["contained", "outlined", "text"]),
-  color: PropTypes.oneOf(["primary", "secondary"]),
+  textColor: PropTypes.string,
+  bgColor: PropTypes.string,
   startIcon: PropTypes.node,
   endIcon: PropTypes.node,
   className: PropTypes.string,
