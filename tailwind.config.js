@@ -1,11 +1,23 @@
-import { colors, colorSafelist } from "./src/config/colorConfig";
+import {
+  colors,
+  bgColorSafelist,
+  textColorSafelist,
+  borderColorSafelist,
+  hoverBgColorSafelist,
+} from "./src/config/colorConfig";
 import { durations, durationSafelist } from "./src/config/durationConfig";
 
 export default {
   mode: "jit",
   purge: ["./public/**/*.html", "./src/**/*.{js,jsx}"],
   content: ["./src/**/*.{js,jsx,ts,tsx,html}"],
-  safelist: [...durationSafelist, ...colorSafelist],
+  safelist: [
+    ...durationSafelist,
+    ...textColorSafelist,
+    ...borderColorSafelist,
+    ...bgColorSafelist,
+    ...hoverBgColorSafelist,
+  ],
   theme: {
     extend: {
       colors: {

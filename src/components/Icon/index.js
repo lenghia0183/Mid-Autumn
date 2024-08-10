@@ -2,6 +2,8 @@ import React from "react"; // Ensure React is imported
 import { ReactComponent as ArrowDown } from "../../asset/icons/ArrowDown.svg";
 import { ReactComponent as CloseCircle } from "../../asset/icons/CloseCircle.svg";
 import useParseDimension from "../../hooks/useParseDimension";
+import useColorClasses from "../../hooks/useColorClasses";
+import clsx from "clsx"; // Import clsx
 
 export const icons = {
   arrowDown: ArrowDown,
@@ -23,13 +25,18 @@ const Icon = ({
     height: `${value}${unit}`,
   };
 
+  const { textColor: newColor } = useColorClasses({ textColor: color });
   const style = {
     ...sizeStyle,
   };
 
   return (
     <span
-      className={`x-icon inline-flex items-center justify-center ${className} ${color}`}
+      className={clsx(
+        "x-icon inline-flex items-center justify-center",
+        className,
+        newColor
+      )}
       style={style}
       {...props}
     >

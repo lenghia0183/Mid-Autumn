@@ -16,11 +16,11 @@ const DrawerMenu = ({
   animationDuration = 3000,
   disableScroll = true,
   autoCloseTimeout = null,
-  preventOverlayClick = false,
   overlayColor = "rgba(0, 0, 0, 0.5)",
   bgColor = "white",
   textColor,
-  borderColor = "dark",
+  borderColor = "yellow",
+  handleOverlayClick,
   className,
 }) => {
   const [open, setOpen] = useState(isOpen);
@@ -64,30 +64,20 @@ const DrawerMenu = ({
     };
   }, [onClose]);
 
-  const handleToggle = () => {
-    setOpen(!open);
-    if (!open && onClose) onClose();
-  };
-
-  const handleOverlayClick = () => {
-    if (!preventOverlayClick) {
-      setOpen(false);
-      if (onClose) onClose();
-    }
-  };
-
   const positionStyles = {
     top: {
       classes: "-translate-y-full",
       style: { top: "0", width: "100%", height },
     },
     right: {
-      classes: "translate-x-full h-full",
+      classes: "translate-x-full h-full border",
       style: {
         right: "0",
         top: "0",
         height: "100%",
-        borderLeft: "1px solid",
+        borderRight: 0,
+        borderTop: 0,
+        borderBottom: 0,
         width,
       },
     },
@@ -100,21 +90,33 @@ const DrawerMenu = ({
       style: {
         left: "0",
         top: "0",
-        borderRight: "1px solid",
+        borderLeft: 0,
+        borderTop: 0,
+        borderBottom: 0,
         height: "100%",
         width,
       },
     },
   };
 
-  const colorClasses = useColorClasses({ bgColor, textColor, borderColor });
+  const { bgColor: newBgColor } = useColorClasses({ bgColor });
+  const { textColor: newTextColor } = useColorClasses({ textColor });
+  const { borderColor: newBorderColor } = useColorClasses({ borderColor });
 
   const { classes: positionClasses, style: positionStyle } =
     positionStyles[position];
 
   const drawerClasses = clsx(
-    `fixed transition-transform ${className} ${durationMap[animationDuration]} ${colorClasses}`,
-    open ? "transform-none" : positionClasses
+    "fixed transition-transform overflow-auto",
+    className,
+    durationMap[animationDuration],
+    newBgColor,
+    newTextColor,
+    newBorderColor,
+    {
+      "transform-none": open,
+    },
+    positionClasses
   );
 
   const drawerStyle = {
@@ -135,9 +137,7 @@ const DrawerMenu = ({
         {renderTitle && <div className="p-4">{renderTitle()}</div>}
         <div>{renderContent()}</div>
       </div>
-      <div className="drawer-trigger" onClick={handleToggle}>
-        {children}
-      </div>
+      <>{children}</>
     </>
   );
 };

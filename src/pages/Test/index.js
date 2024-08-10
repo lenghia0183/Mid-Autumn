@@ -10,6 +10,7 @@ import {
 import Icon from "../../components/Icon";
 import Accordion from "../../components/Accordion";
 import DrawerMenu from "../../components/DrawerMenu";
+import { PropTypes } from "prop-types";
 
 const Test = () => {
   const initialValues = { gender: "", number: "100", haha: "female" };
@@ -103,7 +104,7 @@ const Test = () => {
               allowMultipleOpen={true}
               width="80%"
               className="m-auto mt-10"
-            ></Accordion>
+            />
 
             <Field.RadioGroup name="gender" orientation="horizontal">
               <Field.Radio label="nam" value="male" />
@@ -139,18 +140,19 @@ const Test = () => {
             />
 
             <Button
-              className="m-auto mt-5 "
-              type="submit"
-              color="gray-text-500"
-              startIcon={
-                <Icon size="2em" name="closeCircle" color="text-red-500" />
-              }
+              size="medium"
+              variant="text"
+              textColor="crimson"
+              className="box-border m-auto mt-3"
+              onClick={() => {
+                setIsOpenCart(true);
+              }}
             >
-              Gui
+              Mở
             </Button>
 
             <DrawerMenu
-              animationDuration={1000}
+              animationDuration={500}
               renderContent={() => {
                 return (
                   <div className="p-4 pt-0">
@@ -163,6 +165,12 @@ const Test = () => {
                       <div className="text-dark-200">Tổng tiền</div>
                       <div className="text-crimson-100 text-right">0đ</div>
                     </div>
+
+                    <Accordion
+                      items={accordionItems}
+                      allowMultipleOpen={true}
+                      className="m-auto mt-10"
+                    />
 
                     <div className="h-px w-full bg-dark-100 mt-5"></div>
 
@@ -197,20 +205,55 @@ const Test = () => {
                   </div>
                 );
               }}
-              position="right"
+              borderColor="crimson"
+              position="left"
               width="350px"
-              bgColor="white"
               isOpen={isOpenCart}
+              handleOverlayClick={() => {
+                setIsOpenCart(false);
+              }}
+            />
+
+            <Button
+              variant="text"
+              rounded
+              width="300px"
+              className="box-border m-auto mt-3"
+              onClick={() => {
+                setIsOpenCart(true);
+              }}
             >
-              <Button
-                className="m-auto mt-5"
-                onClick={() => {
-                  setIsOpenCart(true);
-                }}
-              >
-                Mở
-              </Button>
-            </DrawerMenu>
+              Mở
+            </Button>
+
+            <Button
+              variant="outlined"
+              textColor="blue"
+              borderColor="blue-300"
+              rounded
+              bgHoverColor="blue-300"
+              className="box-border m-auto mt-3"
+              onClick={() => {
+                setIsOpenCart(true);
+              }}
+            >
+              Ai sợ thì đi về
+            </Button>
+
+            <Button
+              type="submit"
+              variant="contained"
+              bgColor="crimson"
+              bgHoverColor="yellow"
+              textColor="white-300"
+              className="box-border m-auto mt-3 border"
+              rounded
+              startIcon={
+                <Icon color="test-500" size="2em" name="closeCircle" />
+              }
+            >
+              Mở to lên mà nghe
+            </Button>
           </>
         </Form>
       )}

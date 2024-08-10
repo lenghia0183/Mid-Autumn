@@ -2,6 +2,7 @@ import React from "react";
 import PropTypes from "prop-types";
 import clsx from "clsx";
 import Loading from "../Loading";
+import useColorClasses from "../../hooks/useColorClasses";
 
 const Button = ({
   children,
@@ -12,39 +13,66 @@ const Button = ({
   variant = "contained",
   textColor = "",
   bgColor = "",
+  bgHoverColor = "",
   startIcon,
   endIcon,
+  borderColor,
   className,
+  width,
+  rounded,
+  full,
+  height,
   ...props
 }) => {
   const baseClasses =
     "rounded focus:outline-none transition duration-200 flex items-center justify-center";
   const sizeClasses = {
     small: "px-2 py-1 text-sm",
-    medium: "px-4 py-2 text-base",
-    large: "px-6 py-3 text-lg",
-    fullWidth: "w-full py-2",
+    medium: "px-5 py-2 text-base",
+    large: "px-7 py-3 text-lg",
   };
+  const defaultTextContainedColor = "text-white";
+  const defaultBgHoverContainedColor = "hover:bg-blue-300";
+  const defaultBgContainedColor = "bg-blue-500";
+
+  const defaultTextColor = "text-blue-500";
+  const defaultBorderColor = "border-blue-500";
+  const defaultBgHoverColor = "hover:bg-blue-200";
+
+  const { textColor: newTextColor } = useColorClasses({ textColor });
+  const { bgHoverColor: newBgHoverColor } = useColorClasses({ bgHoverColor });
+  const { bgColor: newBgColor } = useColorClasses({ bgColor });
+  const { borderColor: newBorderColor } = useColorClasses({ borderColor });
 
   const variantClasses = {
-    contained: "text-white",
-    outlined: `border-2 ${textColor} bg-transparent`,
-    text: "bg-transparent hover:underline",
-  };
+    contained: clsx(
+      newTextColor || defaultTextContainedColor,
+      newBgColor || defaultBgContainedColor,
+      newBgHoverColor || defaultBgHoverContainedColor
+    ),
 
-  const textClasses =
-    textColor || (variant === "contained" ? "text-white" : "text-gray-800");
-  const bgClasses =
-    bgColor || (variant === "contained" ? "bg-blue-500 hover:bg-blue-600" : "");
+    outlined: clsx(
+      "border",
+      newTextColor || defaultTextColor,
+      newBorderColor || defaultBorderColor,
+      newBgHoverColor || defaultBgHoverColor
+    ),
+
+    text: clsx(
+      "hover:underline",
+      newTextColor || defaultTextColor,
+      newBgHoverColor || defaultBgHoverColor
+    ),
+  };
 
   const classes = clsx(
     baseClasses,
     sizeClasses[size],
     variantClasses[variant],
-    textClasses,
-    bgClasses,
     {
       "opacity-50 cursor-not-allowed": disabled || loading,
+      "rounded-full": rounded,
+      "w-full": full,
     }
   );
 
@@ -53,6 +81,7 @@ const Button = ({
       className={clsx(classes, className, {})}
       onClick={disabled || loading ? undefined : onClick}
       disabled={disabled || loading}
+      style={{ width, height }}
       {...props}
     >
       {loading ? (
@@ -78,7 +107,7 @@ Button.propTypes = {
   onClick: PropTypes.func,
   disabled: PropTypes.bool,
   loading: PropTypes.bool,
-  size: PropTypes.oneOf(["small", "medium", "large", "fullWidth"]),
+  size: PropTypes.oneOf(["small", "medium", "large"]),
   variant: PropTypes.oneOf(["contained", "outlined", "text"]),
   textColor: PropTypes.string,
   bgColor: PropTypes.string,
