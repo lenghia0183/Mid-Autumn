@@ -1,35 +1,24 @@
-/** @type {import('tailwindcss').Config} */
-module.exports = {
+import { colors, colorSafelist } from "./src/config/colorConfig";
+import { durations, durationSafelist } from "./src/config/durationConfig";
+
+export default {
+  mode: "jit",
+  purge: ["./public/**/*.html", "./src/**/*.{js,jsx}"],
   content: ["./src/**/*.{js,jsx,ts,tsx,html}"],
+  safelist: [...durationSafelist, ...colorSafelist],
   theme: {
     extend: {
+      colors: {
+        ...colors,
+      },
+      transitionDuration: {
+        ...durations,
+      },
       maxWidth: {
         "1/4": "25%",
         "1/2": "50%",
         "3/4": "75%",
         "4/5": "80%",
-      },
-      animation: {
-        "progress-spin": "progress-spin 1.5s linear infinite",
-      },
-      keyframes: {
-        "progress-spin": {
-          "0%": {
-            transform: "rotate(0deg)",
-            strokeDasharray: "1, 200",
-            strokeDashoffset: "0",
-          },
-          "50%": {
-            transform: "rotate(180deg)",
-            strokeDasharray: "100, 200",
-            strokeDashoffset: "-15px",
-          },
-          "100%": {
-            transform: "rotate(360deg)",
-            strokeDasharray: "100, 200",
-            strokeDashoffset: "-125px",
-          },
-        },
       },
     },
   },

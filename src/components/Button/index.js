@@ -1,7 +1,7 @@
 import React from "react";
 import PropTypes from "prop-types";
 import clsx from "clsx";
-import Loading from "../Loading"; 
+import Loading from "../Loading";
 
 const Button = ({
   children,
@@ -10,8 +10,8 @@ const Button = ({
   loading = false,
   size = "medium",
   variant = "contained",
-  textColor = "text-blue-300",
-  bgColor = "bg-blue-100",
+  textColor = "",
+  bgColor = "",
   startIcon,
   endIcon,
   className,
@@ -35,7 +35,7 @@ const Button = ({
   const textClasses =
     textColor || (variant === "contained" ? "text-white" : "text-gray-800");
   const bgClasses =
-    bgColor || (variant === "contained" ? "bg-blue-600 hover:bg-blue-700" : "");
+    bgColor || (variant === "contained" ? "bg-blue-500 hover:bg-blue-600" : "");
 
   const classes = clsx(
     baseClasses,
@@ -50,9 +50,7 @@ const Button = ({
 
   return (
     <button
-      className={clsx(classes, className, {
-        [sizeClasses.fullWidth]: size === "fullWidth",
-      })}
+      className={clsx(classes, className, {})}
       onClick={disabled || loading ? undefined : onClick}
       disabled={disabled || loading}
       {...props}

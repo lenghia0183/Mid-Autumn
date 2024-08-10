@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import { Formik, Form } from "formik";
 import Field from "../../components/Formik";
 import Button from "../../components/Button";
@@ -13,6 +13,7 @@ import DrawerMenu from "../../components/DrawerMenu";
 
 const Test = () => {
   const initialValues = { gender: "", number: "100", haha: "female" };
+  const [isOpenCart, setIsOpenCart] = useState(false);
 
   const validationSchema = Yup.object({
     gender: Yup.string().required("Bạn phải chọn một tùy chọn."),
@@ -138,7 +139,7 @@ const Test = () => {
             />
 
             <Button
-              className="m-auto mt-5 w-1/5"
+              className="m-auto mt-5 "
               type="submit"
               color="gray-text-500"
               startIcon={
@@ -150,14 +151,65 @@ const Test = () => {
 
             <DrawerMenu
               animationDuration={1000}
-              renderCloseButton={() => {
-                return <div>Đóng</div>;
-              }}
               renderContent={() => {
-                return <div>Hello Drawer lorem500</div>;
+                return (
+                  <div className="p-4 pt-0">
+                    <div className="h-px w-full bg-dark-100 mb-5"></div>
+                    <div>
+                      <p>Giỏ hàng của bạn hiện đang trống</p>
+                    </div>
+
+                    <div className="flex justify-between items-center mt-5">
+                      <div className="text-dark-200">Tổng tiền</div>
+                      <div className="text-crimson-100 text-right">0đ</div>
+                    </div>
+
+                    <div className="h-px w-full bg-dark-100 mt-5"></div>
+
+                    <Button
+                      className="w-full bg-crimson mt-4 text-white-200"
+                      variant="fullWidth"
+                    >
+                      GIỎ HÀNG
+                    </Button>
+
+                    <Button
+                      className="w-full bg-yellow mt-4 text-white-200"
+                      variant="fullWidth"
+                    >
+                      Đặt hàng
+                    </Button>
+                  </div>
+                );
               }}
+              renderTitle={() => {
+                return (
+                  <div className="flex items-center justify-between text-2xl">
+                    <h3>Giỏ hàng của bạn</h3>
+                    <Button
+                      variant="text"
+                      className="m-0 p-0"
+                      startIcon={<Icon size="2em" name="closeCircle" />}
+                      onClick={() => {
+                        setIsOpenCart(false);
+                      }}
+                    ></Button>
+                  </div>
+                );
+              }}
+              position="right"
+              width="350px"
+              bgColor="white"
+              isOpen={isOpenCart}
             >
-              <Button>Mở</Button>
+              <Button
+                className="m-auto mt-5"
+                onClick={() => {
+                  setIsOpenCart(true);
+                }}
+              >
+                Mở
+              </Button>
             </DrawerMenu>
           </>
         </Form>
