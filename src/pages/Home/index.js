@@ -1,11 +1,14 @@
 import React from "react";
 import { Link } from "react-router-dom";
+import { useTranslation } from 'react-i18next';
 
 const Home = () => {
+  const { t } = useTranslation();
+
   return (
     <div className="flex flex-col items-center justify-center h-screen bg-gray-100">
       <h1 className="text-5xl font-bold text-orange-600 mb-4">
-        Chào Mừng Đến Với Cửa Hàng Bánh Trung Thu Của Chúng Tôi!
+        Chào Mừng Đến Với Cửa Hàng Bánh {t('title')} Của Chúng Tôi!
       </h1>
       <p className="text-lg text-gray-700 mb-8 text-center max-w-lg">
         Khám phá các loại bánh Trung Thu ngon miệng, từ truyền thống đến hiện
