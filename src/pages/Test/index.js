@@ -12,6 +12,7 @@ import Accordion from "../../components/Accordion";
 import DrawerMenu from "../../components/DrawerMenu";
 import { PropTypes } from "prop-types";
 import Image from "../../components/Image";
+import ImageGallery from "../../components/ImageGallery";
 
 const Test = () => {
   const initialValues = { gender: "", number: "100", haha: "female" };
@@ -252,12 +253,53 @@ const Test = () => {
               startIcon={<Icon color="test-500" size="2em" name="close" />}
             ></Button>
 
-            <Image
-              src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRP3LAN10XycHIs3slzNl6f5UfOtwnW1biSng&s"
-              width="200px"
-              height="150px"
-              shadow
-              className="m-auto mt-5"
+            <ImageGallery
+              className="my-10 m-auto"
+              width="60%"
+              height=""
+              fadeEffect={false}
+              images={[
+                {
+                  src: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRP3LAN10XycHIs3slzNl6f5UfOtwnW1biSng&s",
+                  alt: "alt 1",
+                },
+                {
+                  src: "https://images.unsplash.com/photo-1720048170970-3848514c3d60?w=500&auto=format&fit=crop&q=60&ixlib=rb-4.0.3&ixid=M3wxMjA3fDF8MHxmZWF0dXJlZC1waG90b3MtZmVlZHwxfHx8ZW58MHx8fHx8",
+                  alt: "alt 2",
+                },
+                {
+                  src: "https://plus.unsplash.com/premium_photo-1664303000625-9da917c7fcfe?w=500&auto=format&fit=crop&q=60&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxmZWF0dXJlZC1waG90b3MtZmVlZHwyfHx8ZW58MHx8fHx8",
+                  alt: "alt 3",
+                },
+                {
+                  src: "https://images.unsplash.com/photo-1723387046130-191915c3ba2b?w=500&auto=format&fit=crop&q=60&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxmZWF0dXJlZC1waG90b3MtZmVlZHwzfHx8ZW58MHx8fHx8",
+                  alt: "alt 1",
+                },
+                {
+                  src: "https://plus.unsplash.com/premium_photo-1671641753643-f26f5e811d57?w=500&auto=format&fit=crop&q=60&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxmZWF0dXJlZC1waG90b3MtZmVlZHw3fHx8ZW58MHx8fHx8",
+                  alt: "alt 1",
+                },
+                {
+                  src: "https://images.unsplash.com/photo-1723376121479-97140b8f2713?w=500&auto=format&fit=crop&q=60&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxmZWF0dXJlZC1waG90b3MtZmVlZHwxMHx8fGVufDB8fHx8fA%3D%3D",
+                  alt: "alt 1",
+                },
+                {
+                  src: "https://plus.unsplash.com/premium_photo-1673795754005-214e3e1fccba?w=500&auto=format&fit=crop&q=60&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxmZWF0dXJlZC1waG90b3MtZmVlZHwxMnx8fGVufDB8fHx8fA%3D%3D",
+                  alt: "alt 1",
+                },
+                {
+                  src: "https://images.unsplash.com/photo-1723130039043-2af7d9d64754?w=500&auto=format&fit=crop&q=60&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxmZWF0dXJlZC1waG90b3MtZmVlZHwxNHx8fGVufDB8fHx8fA%3D%3D",
+                  alt: "alt 1",
+                },
+                {
+                  src: "https://images.unsplash.com/photo-1721468932356-8e22662ea4b7?w=500&auto=format&fit=crop&q=60&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxmZWF0dXJlZC1waG90b3MtZmVlZHwxOHx8fGVufDB8fHx8fA%3D%3D",
+                  alt: "alt 1",
+                },
+                {
+                  src: "https://images.unsplash.com/photo-1719937206158-cad5e6775044?w=500&auto=format&fit=crop&q=60&ixlib=rb-4.0.3&ixid=M3wxMjA3fDF8MHxmZWF0dXJlZC1waG90b3MtZmVlZHwyMXx8fGVufDB8fHx8fA%3D%3D",
+                  alt: "alt 1",
+                },
+              ]}
             />
           </>
         </Form>

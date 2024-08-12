@@ -1,25 +1,29 @@
-import React, { useState } from "react";
+import React, { forwardRef, useState } from "react";
 import clsx from "clsx";
 
-const Image = ({
-  src = "https://img.freepik.com/premium-vector/default-image-icon-vector-missing-picture-page-website-design-mobile-app-no-photo-available_87543-11093.jpg",
-  alt,
-  width,
-  height,
-  className,
-  onErrorSrc = "https://img.freepik.com/premium-vector/default-image-icon-vector-missing-picture-page-website-design-mobile-app-no-photo-available_87543-11093.jpg",
-  loading = "lazy",
-  style,
-  onLoad,
-  onClick,
-  onMouseEnter,
-  onMouseLeave,
-  rounded = false,
-  shadow = false,
-  fadeIn = true,
-  transitionDuration = "0.5s",
-  ...props
-}) => {
+const Image = (
+  {
+    src = "https://img.freepik.com/premium-vector/default-image-icon-vector-missing-picture-page-website-design-mobile-app-no-photo-available_87543-11093.jpg",
+    alt,
+    width,
+    height,
+    className,
+    onErrorSrc = "https://img.freepik.com/premium-vector/default-image-icon-vector-missing-picture-page-website-design-mobile-app-no-photo-available_87543-11093.jpg",
+    loading = "lazy",
+    style,
+    onLoad,
+    onClick,
+    onMouseEnter,
+    onMouseLeave,
+    rounded = false,
+    shadow = false,
+    fadeIn = true,
+    transitionDuration = 300,
+
+    ...props
+  },
+  ref
+) => {
   const [imgSrc, setImgSrc] = useState(src);
   const [hasError, setHasError] = useState(false);
   const [isLoading, setIsLoading] = useState(true);
@@ -42,6 +46,7 @@ const Image = ({
   return (
     <img
       src={imgSrc}
+      ref={ref}
       alt={alt}
       width={width}
       height={height}
@@ -69,4 +74,4 @@ const Image = ({
   );
 };
 
-export default Image;
+export default forwardRef(Image);
