@@ -8,7 +8,7 @@ const ImageGallery = ({
   width,
   transitionDuration = 500,
   aspectRatio = "16:9",
-  thumbsToShow = 4,
+  thumbsToShow = 7,
 }) => {
   const [currentIndex, setCurrentIndex] = useState(0);
   const [thumbnailIndex, setThumbnailIndex] = useState(0);
@@ -22,7 +22,7 @@ const ImageGallery = ({
       return;
     }
 
-    if (currentIndex <= images.length - thumbsToShow) {
+    if (currentIndex == thumbnailIndex) {
       setThumbnailIndex(thumbnailIndex - 1);
     }
     setCurrentIndex(currentIndex - 1);
@@ -35,7 +35,7 @@ const ImageGallery = ({
       return;
     }
 
-    if (currentIndex >= thumbsToShow - 1) {
+    if (currentIndex == thumbsToShow - 1 + thumbnailIndex) {
       setThumbnailIndex(thumbnailIndex + 1);
     }
 
