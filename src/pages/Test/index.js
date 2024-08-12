@@ -11,6 +11,7 @@ import Icon from "../../components/Icon";
 import Accordion from "../../components/Accordion";
 import DrawerMenu from "../../components/DrawerMenu";
 import { PropTypes } from "prop-types";
+import Image from "../../components/Image";
 
 const Test = () => {
   const initialValues = { gender: "", number: "100", haha: "female" };
@@ -248,12 +249,16 @@ const Test = () => {
               textColor="white-300"
               className="box-border m-auto mt-3 border"
               rounded
-              startIcon={
-                <Icon color="test-500" size="2em" name="closeCircle" />
-              }
-            >
-              Mở to lên mà nghe
-            </Button>
+              startIcon={<Icon color="test-500" size="2em" name="close" />}
+            ></Button>
+
+            <Image
+              src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRP3LAN10XycHIs3slzNl6f5UfOtwnW1biSng&s"
+              width="200px"
+              height="150px"
+              shadow
+              className="m-auto mt-5"
+            />
           </>
         </Form>
       )}
