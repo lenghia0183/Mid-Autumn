@@ -13,6 +13,7 @@ import DrawerMenu from "../../components/DrawerMenu";
 import { PropTypes } from "prop-types";
 import Image from "../../components/Image";
 import ImageGallery from "../../components/ImageGallery";
+import IconButton from "../../components/IconButton";
 
 const Test = () => {
   const initialValues = { gender: "", number: "100", haha: "female" };
@@ -301,6 +302,35 @@ const Test = () => {
                 },
               ]}
             />
+
+            <div className="m-auto">
+              <IconButton
+                bgColor="blue-200"
+                // variant="contained"
+                variant="text"
+                bgHoverColor="test"
+                icon={
+                  <Icon
+                    name="arrowDown"
+                    color="tranparent"
+                    className="tranform rotate-90"
+                  />
+                }
+              />
+
+              <IconButton
+                size="large"
+                variant="outlined"
+                icon={
+                  <Icon
+                    size="1"
+                    name="arrowDown"
+                    className="tranform -rotate-90"
+                    color="crimson"
+                  />
+                }
+              />
+            </div>
           </>
         </Form>
       )}
