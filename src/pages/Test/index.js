@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useRef, useState } from "react";
 import { Formik, Form } from "formik";
 import Field from "../../components/Formik";
 import Button from "../../components/Button";
@@ -18,6 +18,7 @@ import IconButton from "../../components/IconButton";
 const Test = () => {
   const initialValues = { gender: "", number: "100", haha: "female" };
   const [isOpenCart, setIsOpenCart] = useState(false);
+  const nameRef = useRef();
 
   const validationSchema = Yup.object({
     gender: Yup.string().required("Bạn phải chọn một tùy chọn."),
@@ -91,6 +92,8 @@ const Test = () => {
     { title: "Item 2", content: <div>Content for item 2</div> },
   ];
 
+  console.log(nameRef?.current);
+
   return (
     <Formik
       initialValues={initialValues}
@@ -153,6 +156,17 @@ const Test = () => {
             >
               Mở
             </Button>
+
+            <Field.TextField
+              ref={nameRef}
+              aaa="aaa"
+              name="name"
+              label="Họ tên"
+              placeholder="Họ tên"
+              width="200px"
+              className="m-auto"
+              height="50px"
+            />
 
             <DrawerMenu
               animationDuration={500}
@@ -311,9 +325,9 @@ const Test = () => {
                 bgHoverColor="test"
                 icon={
                   <Icon
-                    name="arrowDown"
+                    name="arrowRight"
                     color="tranparent"
-                    className="tranform rotate-90"
+                    // className="tranform rotate-90"
                   />
                 }
               />

@@ -1,12 +1,14 @@
-import React from "react"; 
+import React from "react";
 import { ReactComponent as ArrowDown } from "../../asset/icons/ArrowDown.svg";
+import { ReactComponent as ArrowRight } from "../../asset/icons/ArrowRight.svg";
 import { ReactComponent as Close } from "../../asset/icons/Close.svg";
 import useParseDimension from "../../hooks/useParseDimension";
 import useColorClasses from "../../hooks/useColorClasses";
-import clsx from "clsx"; 
+import clsx from "clsx";
 
 export const icons = {
   arrowDown: ArrowDown,
+  arrowRight: ArrowRight,
   close: Close,
 };
 
