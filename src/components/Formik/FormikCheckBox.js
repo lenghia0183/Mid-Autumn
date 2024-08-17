@@ -2,15 +2,14 @@ import React from "react";
 import PropTypes from "prop-types";
 import { useField } from "formik";
 import CheckBox from "../CheckBox";
-import FieldWrapper from "./FieldWrapper";
 
 const FormikCheckBox = ({
-  id = "",
+  name = "",
   label,
   onChange: externalOnChange,
   ...props
 }) => {
-  const [field, meta, helpers] = useField(id);
+  const [field, meta, helpers] = useField(name);
   const { setValue } = helpers;
 
   const handleChange = (value) => {
@@ -37,4 +36,4 @@ FormikCheckBox.propTypes = {
   onChange: PropTypes.func,
 };
 
-export default FieldWrapper(FormikCheckBox);
+export default FormikCheckBox;

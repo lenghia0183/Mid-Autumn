@@ -165,28 +165,33 @@ const TextField = forwardRef(
         className={clsx(className)}
         style={{
           ...widthStyle,
-          ...heightStyle,
         }}
       >
         <div
-          className={clsx("relative h-full", {
-            "flex items-center justify-end": orientation === "horizontal",
-          })}
+          style={{
+            ...heightStyle,
+          }}
         >
-          {renderLabel()}
           <div
-            className="right-0 transition-all duration-500 ease-in-out h-full"
-            ref={inputContainerRef}
-            style={{
-              width:
-                (isFocused || value) && orientation === "horizontal"
-                  ? `${inputWidth - labelWidthValue}px`
-                  : "100%",
-            }}
+            className={clsx("relative h-full", {
+              "flex items-center justify-end": orientation === "horizontal",
+            })}
           >
-            <div className="relative h-full">
-              {renderInput()}
-              {renderRightIcon()}
+            {renderLabel()}
+            <div
+              className="right-0 transition-all duration-500 ease-in-out h-full"
+              ref={inputContainerRef}
+              style={{
+                width:
+                  (isFocused || value) && orientation === "horizontal"
+                    ? `${inputWidth - labelWidthValue}px`
+                    : "100%",
+              }}
+            >
+              <div className="relative h-full">
+                {renderInput()}
+                {renderRightIcon()}
+              </div>
             </div>
           </div>
         </div>

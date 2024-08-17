@@ -12,6 +12,7 @@ import { PropTypes } from "prop-types";
 import ImageGallery from "../../components/ImageGallery";
 import IconButton from "../../components/IconButton";
 import FormikTextField from "../../components/Formik/FormikTextField";
+import FormikCheckBox from "../../components/Formik/FormikCheckBox";
 
 const Test = () => {
   const initialValues = { gender: "", number: "100", haha: "female" };
@@ -21,8 +22,6 @@ const Test = () => {
   const validationSchema = Yup.object({
     name: Yup.string().required("Bạn phải chọn một tùy chọn."),
   });
-
-  console.log(nameRef?.current);
 
   return (
     <Formik
@@ -52,22 +51,22 @@ const Test = () => {
                 name="name"
                 label="Họ và tên"
                 width="lg:w-[800px] md:w-[500px] w-[50px]"
-                labelWidth="100px"
+                labelWidth="200px"
                 className="m-auto mt-1"
                 height="50px"
-                // orientation="horizontal"
+                orientation="horizontal"
                 rightIcon={
                   <Icon name="arrowDown" color="crimson" size="20px" />
                 }
               />
             </div>
 
-            <Field.CheckBox
+            <FormikCheckBox
               name="hello"
               label="Xin chào"
               orientation="horizontal"
               className="m-auto"
-              disabled={true}
+              // disabled={true}
             />
 
             <Button
