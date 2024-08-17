@@ -13,10 +13,10 @@ const FormikTextField = ({ id, name, ...props }) => {
         {...props}
         onChange={(val) => setValue(val)}
         value={field.value}
-        error={meta.touched && meta.error ? meta.error : ""}
+        error={meta.error}
       />
     </>
   );
 };
 
-export default FieldWrapper(FormikTextField);
+export default FormikTextField;
