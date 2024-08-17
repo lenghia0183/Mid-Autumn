@@ -3,6 +3,7 @@ import PropTypes from "prop-types";
 import clsx from "clsx";
 import { durationMap } from "../../config/durationConfig";
 import useColorClasses from "./../../hooks/useColorClasses";
+import useResponsiveStyle from "../../hooks/useResponsiveStyle";
 
 const DrawerMenu = ({
   isOpen = false,
@@ -25,6 +26,9 @@ const DrawerMenu = ({
 }) => {
   const [open, setOpen] = useState(isOpen);
   const timeoutRef = useRef(null);
+
+  const widthStyle = useResponsiveStyle(width, "w");
+  const heightStyle = useResponsiveStyle(height, "h");
 
   useEffect(() => {
     if (disableScroll) {
@@ -67,7 +71,7 @@ const DrawerMenu = ({
   const positionStyles = {
     top: {
       classes: "-translate-y-full",
-      style: { top: "0", width: "100%", height },
+      style: { top: "0", width: "100%", ...heightStyle },
     },
     right: {
       classes: "translate-x-full h-full border",
@@ -78,12 +82,12 @@ const DrawerMenu = ({
         borderRight: 0,
         borderTop: 0,
         borderBottom: 0,
-        width,
+        ...widthStyle,
       },
     },
     bottom: {
       classes: "translate-y-full",
-      style: { bottom: "0", width: "100%", height },
+      style: { bottom: "0", width: "100%", ...heightStyle },
     },
     left: {
       classes: "-translate-x-full h-full border-r",
@@ -94,7 +98,7 @@ const DrawerMenu = ({
         borderTop: 0,
         borderBottom: 0,
         height: "100%",
-        width,
+        ...widthStyle,
       },
     },
   };
@@ -140,28 +144,6 @@ const DrawerMenu = ({
       <>{children}</>
     </>
   );
-};
-
-DrawerMenu.propTypes = {
-  isOpen: PropTypes.bool,
-  onClose: PropTypes.func,
-  position: PropTypes.oneOf(["left", "right", "top", "bottom"]),
-  overlay: PropTypes.bool,
-  width: PropTypes.string,
-  height: PropTypes.string,
-  renderContent: PropTypes.func.isRequired,
-  renderTitle: PropTypes.func,
-  children: PropTypes.node.isRequired,
-  disableScroll: PropTypes.bool,
-  renderCloseButton: PropTypes.func,
-  autoCloseTimeout: PropTypes.number,
-  preventOverlayClick: PropTypes.bool,
-  overlayColor: PropTypes.string,
-  drawerColor: PropTypes.string,
-  drawerBorderColor: PropTypes.string,
-  textColor: PropTypes.string,
-  bgColor: PropTypes.string,
-  borderColor: PropTypes.string,
 };
 
 export default DrawerMenu;

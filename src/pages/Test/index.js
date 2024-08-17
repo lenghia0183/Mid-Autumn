@@ -122,7 +122,7 @@ const Test = () => {
                     <Button
                       variant="text"
                       className="m-0 p-0"
-                      startIcon={<Icon size="2em" name="closeCircle" />}
+                      startIcon={<Icon size="2em" name="close" />}
                       onClick={() => {
                         setIsOpenCart(false);
                       }}
@@ -131,8 +131,8 @@ const Test = () => {
                 );
               }}
               borderColor="crimson"
-              position="left"
-              width="350px"
+              position="top"
+              width="xl:w-[800px] lg:w-[500px] md:w-[300px] sm:w-[100px] w-full"
               isOpen={isOpenCart}
               handleOverlayClick={() => {
                 setIsOpenCart(false);
