@@ -3,6 +3,7 @@ import PropTypes from "prop-types";
 import clsx from "clsx";
 import Loading from "../Loading";
 import useColorClasses from "../../hooks/useColorClasses";
+import { Link } from "react-router-dom";
 
 const Button = ({
   children,
@@ -13,7 +14,7 @@ const Button = ({
   variant = "contained",
   textColor = "",
   bgColor = "",
-  bgHoverColor = "",
+  bgHoverColor = "hover:bg-blue-200",
   startIcon,
   endIcon,
   borderColor,
@@ -22,6 +23,8 @@ const Button = ({
   rounded,
   full,
   height,
+  textLink = false,
+  to,
   ...props
 }) => {
   const baseClasses =
@@ -76,14 +79,10 @@ const Button = ({
     }
   );
 
-  return (
-    <button
-      className={clsx(classes, className, {})}
-      onClick={disabled || loading ? undefined : onClick}
-      disabled={disabled || loading}
-      style={{ width, height }}
-      {...props}
-    >
+  const ButtonComponent = textLink ? Link : "button";
+
+  const content = () => (
+    <>
       {loading ? (
         <>
           <Loading color={textColor || "white"} size="1em" />
@@ -98,7 +97,19 @@ const Button = ({
           {endIcon && <span className="ml-2 flex items-center">{endIcon}</span>}
         </>
       )}
-    </button>
+    </>
+  );
+
+  return (
+    <ButtonComponent
+      className={clsx(classes, className, {})}
+      onClick={disabled || loading ? undefined : onClick}
+      disabled={disabled || loading}
+      style={{ width, height }}
+      {...props}
+    >
+      {content()}
+    </ButtonComponent>
   );
 };
 

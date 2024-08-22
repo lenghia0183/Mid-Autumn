@@ -1,9 +1,11 @@
 import { useMemo } from "react";
 import clsx from "clsx";
 
-const prefix = ["text-", "border-", "bg-"];
+const prefix = ["text-", "border-", "bg-", "hover:bg-"];
 
 const getColorAndShade = (colorClass) => {
+  console.log("colorClass", colorClass);
+
   const parts = colorClass.split("-");
   if (parts.length === 2) {
     if (prefix.includes(parts[0]))
@@ -18,15 +20,13 @@ const getColorAndShade = (colorClass) => {
 
 const useColorClasses = ({ textColor, bgColor, borderColor, bgHoverColor }) => {
   const classes = useMemo(() => {
-    const isSingleColorProvided =
-      (textColor && !bgColor && !borderColor && !bgHoverColor) ||
-      (!textColor && bgColor && !borderColor && !bgHoverColor) ||
-      (!textColor && !bgColor && borderColor && !bgHoverColor) ||
-      (!textColor && !bgColor && !borderColor && bgHoverColor);
+    const activeColors = [textColor, bgColor, borderColor, bgHoverColor].filter(
+      Boolean
+    );
 
-    if (isSingleColorProvided) {
-      const baseColor = textColor || bgColor || borderColor || bgHoverColor;
-      const { color, shade } = getColorAndShade(baseColor);
+    if (activeColors.length === 1) {
+      const selectedColor = activeColors[0];
+      const { color, shade } = getColorAndShade(selectedColor);
 
       return {
         textColor: shade ? `text-${color}-${shade}` : `text-${color}`,
@@ -38,15 +38,7 @@ const useColorClasses = ({ textColor, bgColor, borderColor, bgHoverColor }) => {
       };
     }
 
-    return clsx(
-      textColor && textColor.startsWith("text-")
-        ? textColor
-        : `text-${textColor}`,
-      bgColor && bgColor.startsWith("bg-") ? bgColor : `bg-${bgColor}`,
-      borderColor && borderColor.startsWith("border-")
-        ? borderColor
-        : `border-${borderColor}`
-    );
+    return {};
   }, [textColor, bgColor, borderColor]);
 
   return classes;
