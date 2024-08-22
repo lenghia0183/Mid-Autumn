@@ -14,7 +14,7 @@ const Button = ({
   variant = "contained",
   textColor = "",
   bgColor = "",
-  bgHoverColor = "hover:bg-blue-200",
+  bgHoverColor = "",
   startIcon,
   endIcon,
   borderColor,
@@ -23,7 +23,7 @@ const Button = ({
   rounded,
   full,
   height,
-  textLink = false,
+  href,
   to,
   ...props
 }) => {
@@ -35,12 +35,13 @@ const Button = ({
     large: "px-7 py-3 text-lg",
   };
   const defaultTextContainedColor = "text-white";
-  const defaultBgHoverContainedColor = "hover:bg-blue-300";
   const defaultBgContainedColor = "bg-blue-500";
+  const defaultBgHoverContainedColor = "hover:bg-blue-300";
 
   const defaultTextColor = "text-blue-500";
   const defaultBorderColor = "border-blue-500";
   const defaultBgHoverColor = "hover:bg-blue-200";
+  const defaultLinkColor = "text-blue-500 hover:text-blue-500";
 
   const { textColor: newTextColor } = useColorClasses({ textColor });
   const { bgHoverColor: newBgHoverColor } = useColorClasses({ bgHoverColor });
@@ -66,20 +67,32 @@ const Button = ({
       newTextColor || defaultTextColor,
       newBgHoverColor || defaultBgHoverColor
     ),
+
+    link: clsx(
+      "hover:underline",
+      newTextColor || defaultLinkColor,
+      newBgHoverColor || "",
+      newBorderColor || ""
+    ),
+
+    a: clsx(
+      "hover:underline",
+      newTextColor || defaultLinkColor,
+      newBgHoverColor || "",
+      newBorderColor || ""
+    ),
   };
 
-  const classes = clsx(
-    baseClasses,
-    sizeClasses[size],
-    variantClasses[variant],
-    {
-      "opacity-50 cursor-not-allowed": disabled || loading,
-      "rounded-full": rounded,
-      "w-full": full,
-    }
-  );
-
-  const ButtonComponent = textLink ? Link : "button";
+  const classes = clsx(baseClasses, sizeClasses[size], {
+    [variantClasses[variant]]: !to && !href,
+    "px-0 py-0": to || href,
+    [variantClasses["link"]]: to,
+    [variantClasses["a"]]: href,
+    "opacity-50 cursor-not-allowed": disabled || loading,
+    "rounded-full": rounded,
+    "w-full": full,
+  });
+  const ButtonComponent = to ? Link : href ? "a" : "button";
 
   const content = () => (
     <>
@@ -91,9 +104,11 @@ const Button = ({
       ) : (
         <>
           {startIcon && (
-            <span className="mr-2 flex items-center">{startIcon}</span>
+            <span className="mr-2 flex items-center text-inherit">
+              {startIcon}
+            </span>
           )}
-          <span className="flex-1 text-center">{children}</span>
+          <span className="flex-1 text-center text-inherit">{children}</span>
           {endIcon && <span className="ml-2 flex items-center">{endIcon}</span>}
         </>
       )}
@@ -102,10 +117,12 @@ const Button = ({
 
   return (
     <ButtonComponent
-      className={clsx(classes, className, {})}
+      className={clsx(classes, className)}
       onClick={disabled || loading ? undefined : onClick}
       disabled={disabled || loading}
       style={{ width, height }}
+      to={to}
+      href={href}
       {...props}
     >
       {content()}

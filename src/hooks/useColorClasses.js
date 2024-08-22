@@ -1,12 +1,13 @@
 import { useMemo } from "react";
 import clsx from "clsx";
 
-const prefix = ["text-", "border-", "bg-", "hover:bg-"];
+const prefix = ["text", "border", "bg", "hover:bg"];
 
 const getColorAndShade = (colorClass) => {
-  console.log("colorClass", colorClass);
-
   const parts = colorClass.split("-");
+
+  console.log("parts: " + parts);
+
   if (parts.length === 2) {
     if (prefix.includes(parts[0]))
       return { prefix: parts[0], color: parts[1], shade: null };

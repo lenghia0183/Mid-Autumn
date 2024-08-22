@@ -31,24 +31,24 @@ const breakpoints = {
 
 const parseStyleString = (styleString, windowWidth, failBackProperty) => {
   const style = {};
-  const entries = styleString.split(" ");
+  const entries = styleString?.split(" ");
 
   const appliedStyles = {};
 
   const defaultStyles = {};
 
-  entries.forEach((entry) => {
-    const [breakpoint, classValue] = entry.split(":");
+  entries?.forEach((entry) => {
+    const [breakpoint, classValue] = entry?.split(":");
 
     if (breakpoint && classValue && breakpoints[breakpoint]) {
-      const [property, value] = classValue.split("-");
+      const [property, value] = classValue?.split("-");
 
       if (breakpoints[breakpoint] <= windowWidth) {
         const cssProperty = propertyMapping[property];
-        const cssValue = valueMapping[value] || value.slice(1, -1);
+        const cssValue = valueMapping[value] || value?.slice(1, -1);
         if (
           !appliedStyles[cssProperty] ||
-          breakpoints[breakpoint] > appliedStyles[cssProperty].breakpoint
+          breakpoints[breakpoint] > appliedStyles[cssProperty]?.breakpoint
         ) {
           appliedStyles[cssProperty] = {
             value: cssValue,

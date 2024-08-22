@@ -21,7 +21,7 @@ const colors = {
     900: "#003387",
     hover: "#3392ff",
   },
-  test: {
+  emerald: {
     DEFAULT: "#005957",
     100: "#006f68",
     200: "#00827f",
@@ -40,7 +40,7 @@ const colors = {
     hover: "#6a6a6a",
   },
   white: {
-    DEFAULT: "#faf7f2",
+    DEFAULT: "#f5f3eb",
     100: "#f5f3eb",
     200: "#e8e5d7",
     300: "#d9d2be",

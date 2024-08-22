@@ -10,56 +10,55 @@ const IconButton = ({
   disabled = false,
   loading = false,
   size = "medium",
-  variant = "contained",
+  variant = "text",
   textColor = "",
   bgColor = "",
   bgHoverColor = "",
   borderColor,
   className,
   rounded = true,
+  width,
+  height,
   ...props
 }) => {
   const baseClasses =
     "rounded-full focus:outline-none transition duration-200 flex items-center justify-center";
 
   const sizeClasses = {
-    small: "p-2",
-    medium: "p-3",
-    large: "p-4",
+    small: "px-2 py-2",
+    medium: "px-3 py-3",
+    large: "px-4 py-4",
+    zeroPadding: "p-0",
   };
 
   const defaultTextContainedColor = "text-white";
   const defaultBgHoverContainedColor = "hover:bg-blue-300";
   const defaultBgContainedColor = "bg-blue-500";
 
-  const defaultTextColor = "text-blue-500";
+  const defaultIconColor = "text-blue-500";
   const defaultBorderColor = "border-blue-500";
   const defaultBgHoverColor = "hover:bg-blue-200";
 
-  const { textColor: newTextColor } = useColorClasses({ textColor });
+  const { textColor: newIconColor } = useColorClasses({ textColor });
   const { bgHoverColor: newBgHoverColor } = useColorClasses({ bgHoverColor });
   const { bgColor: newBgColor } = useColorClasses({ bgColor });
   const { borderColor: newBorderColor } = useColorClasses({ borderColor });
 
   const variantClasses = {
     contained: clsx(
-      newTextColor || defaultTextContainedColor,
+      newIconColor || defaultTextContainedColor,
       newBgColor || defaultBgContainedColor,
       newBgHoverColor || defaultBgHoverContainedColor
     ),
 
     outlined: clsx(
       "border",
-      newTextColor || defaultTextColor,
+      newIconColor || defaultIconColor,
       newBorderColor || defaultBorderColor,
       newBgHoverColor || defaultBgHoverColor
     ),
 
-    text: clsx(
-      "hover:underline",
-      newTextColor || defaultTextColor,
-      newBgHoverColor || defaultBgHoverColor
-    ),
+    text: clsx(newIconColor || defaultIconColor, newBgHoverColor || ""),
   };
 
   const classes = clsx(
@@ -78,9 +77,14 @@ const IconButton = ({
       className={classes}
       onClick={disabled || loading ? undefined : onClick}
       disabled={disabled || loading}
+      style={{ width, height }}
       {...props}
     >
-      {loading ? <Loading color={textColor || "white"} size="1em" /> : icon}
+      {loading ? (
+        <Loading color={textColor || "white"} size="1em" />
+      ) : (
+        <span>{icon}</span>
+      )}
     </button>
   );
 };
@@ -98,20 +102,6 @@ IconButton.propTypes = {
   borderColor: PropTypes.string,
   className: PropTypes.string,
   rounded: PropTypes.bool,
-};
-
-IconButton.defaultProps = {
-  onClick: () => {},
-  disabled: false,
-  loading: false,
-  size: "medium",
-  variant: "contained",
-  textColor: "",
-  bgColor: "",
-  bgHoverColor: "",
-  borderColor: "",
-  className: "",
-  rounded: true,
 };
 
 export default IconButton;

@@ -1,14 +1,16 @@
 import React, { forwardRef, useState } from "react";
 import clsx from "clsx";
+import images from "../../asset/images";
+import useResponsiveStyle from "./../../hooks/useResponsiveStyle";
 
 const Image = (
   {
-    src = "https://img.freepik.com/premium-vector/default-image-icon-vector-missing-picture-page-website-design-mobile-app-no-photo-available_87543-11093.jpg",
+    src = images?.fallBack,
     alt,
     width,
     height,
     className,
-    onErrorSrc = "https://img.freepik.com/premium-vector/default-image-icon-vector-missing-picture-page-website-design-mobile-app-no-photo-available_87543-11093.jpg",
+    onErrorSrc = images?.fallBack,
     loading = "lazy",
     style,
     onLoad,
@@ -27,6 +29,9 @@ const Image = (
   const [imgSrc, setImgSrc] = useState(src);
   const [hasError, setHasError] = useState(false);
   const [isLoading, setIsLoading] = useState(true);
+
+  const widthStyle = useResponsiveStyle(width, "w");
+  const heightStyle = useResponsiveStyle(height, "h");
 
   const handleError = () => {
     if (!hasError) {
@@ -48,8 +53,6 @@ const Image = (
       src={imgSrc}
       ref={ref}
       alt={alt}
-      width={width}
-      height={height}
       loading={loading}
       onError={handleError}
       onLoad={handleLoad}
@@ -66,8 +69,8 @@ const Image = (
       })}
       style={{
         ...style,
-        width: width,
-        height: height,
+        ...widthStyle,
+        ...heightStyle,
       }}
       {...props}
     />
