@@ -13,20 +13,20 @@ const Input = forwardRef(
       showOptions,
       inputHeight,
       onFocus,
+      id,
     },
     inputRef
   ) => {
     return (
-      <div className="input-container flex items-center gap-4">
+      <div className="input-container flex items-center gap-4 h-full ">
         <input
+          id={id}
           type="text"
           value={inputValue}
           onChange={handleInputChange}
           onFocus={onFocus}
           ref={inputRef}
-          className="border-0 outline-none w-full bg-transparent box-border p-3"
-          placeholder="Tìm kiếm..."
-          style={{ height: inputHeight }}
+          className="border-0 outline-none w-full bg-transparent box-border p-3 h-full"
         />
         <div className="flex items-center gap-x-2 mr-2">
           {loading && <Loading size="25px" color="text-gray-500" />}
@@ -36,7 +36,7 @@ const Input = forwardRef(
               onClick={clearInput}
               className="text-gray-500 hover:text-gray-700 focus:outline-none p-0 m-0 flex item-center"
             >
-              <Icon name="closeCircle" size={1.8} color="text-gray-500" />
+              <Icon name="close" size={1.8} color="text-gray-500" />
             </button>
           )}
           <Icon

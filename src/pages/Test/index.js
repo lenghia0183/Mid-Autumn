@@ -13,14 +13,28 @@ import ImageGallery from "../../components/ImageGallery";
 import IconButton from "../../components/IconButton";
 import FormikTextField from "../../components/Formik/FormikTextField";
 import FormikCheckBox from "../../components/Formik/FormikCheckBox";
+import FormikAutocomplete from "../../components/Formik/FormikAutoComplete";
 
 const Test = () => {
-  const initialValues = { gender: "", number: "100", haha: "female" };
+  const cityOptions = [
+    { label: "New York", value: "NY" },
+    { label: "Los Angeles", value: "LA" },
+    { label: "Chicago", value: "CHI" },
+    { label: "Houston", value: "HOU" },
+    { label: "Phoenix", value: "PHX" },
+    { label: "Philadelphia", value: "PHI" },
+    { label: "San Antonio", value: "SA" },
+    { label: "San Diego", value: "SD" },
+    { label: "Dallas", value: "DAL" },
+    { label: "San Jose", value: "SJ" },
+  ];
+
+  const initialValues = { gender: "", number: "100", haha: "female", city: "" };
   const [isOpenCart, setIsOpenCart] = useState(false);
-  const nameRef = useRef();
 
   const validationSchema = Yup.object({
     name: Yup.string().required("Bạn phải chọn một tùy chọn."),
+    city: Yup.string().required(""),
   });
 
   return (
@@ -51,13 +65,30 @@ const Test = () => {
                 name="name"
                 label="Họ và tên"
                 width="lg:w-[800px] md:w-[500px] w-[50px]"
-                labelWidth="200px"
+                // labelWidth="200px"
                 className="m-auto mt-1"
                 height="50px"
-                orientation="horizontal"
+                // disabled
+                // orientation="horizontal"
                 rightIcon={
                   <Icon name="arrowDown" color="crimson" size="20px" />
                 }
+              />
+            </div>
+
+            <div className="">
+              <FormikAutocomplete
+                className="m-auto"
+                name="city"
+                label="Thành phố"
+                isEqualValue={(val, opt) => {
+                  return val.label === opt.label;
+                }}
+                options={cityOptions}
+                // multiple={true}
+                width="xl:w-1/2 md:w-[500px] sm:w-[300px] w-[50px]"
+                orientation="horizontal"
+                // disabled={true}
               />
             </div>
 

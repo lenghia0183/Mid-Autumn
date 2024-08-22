@@ -3,8 +3,8 @@ import { useField } from "formik";
 import Autocomplete from "../AutoComplete";
 import FieldWrapper from "./FieldWrapper";
 
-const FormikAutocomplete = ({ id, ...props }) => {
-  const [field, meta, helpers] = useField(id);
+const FormikAutocomplete = ({ name, id, ...props }) => {
+  const [field, meta, helpers] = useField(name);
   const { setValue } = helpers;
 
   return (
@@ -19,4 +19,4 @@ const FormikAutocomplete = ({ id, ...props }) => {
   );
 };
 
-export default FieldWrapper(FormikAutocomplete);
+export default FormikAutocomplete;

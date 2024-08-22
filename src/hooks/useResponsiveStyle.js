@@ -29,26 +29,21 @@ const breakpoints = {
   "2xl": 1536,
 };
 
-const parseStyleString = (styleString, windowWidth, styleProperty) => {
+const parseStyleString = (styleString, windowWidth, failBackProperty) => {
   const style = {};
   const entries = styleString.split(" ");
 
-  // Lưu trữ các giá trị tương ứng với các breakpoint đã thỏa mãn
   const appliedStyles = {};
 
-  // Biến để lưu trữ giá trị mặc định nếu không có breakpoint nào thỏa mãn
   const defaultStyles = {};
 
   entries.forEach((entry) => {
     const [breakpoint, classValue] = entry.split(":");
 
     if (breakpoint && classValue && breakpoints[breakpoint]) {
-      // Phân tách breakpoint và thuộc tính
       const [property, value] = classValue.split("-");
 
-      // Kiểm tra nếu kích thước màn hình hiện tại khớp với breakpoint
       if (breakpoints[breakpoint] <= windowWidth) {
-        // Áp dụng giá trị cho breakpoint lớn nhất
         const cssProperty = propertyMapping[property];
         const cssValue = valueMapping[value] || value.slice(1, -1);
         if (
@@ -62,7 +57,6 @@ const parseStyleString = (styleString, windowWidth, styleProperty) => {
         }
       }
     } else if (!breakpoints[breakpoint]) {
-      // Áp dụng giá trị không có breakpoint (mặc định)
       const [property, value] = entry?.split("-");
 
       if (property && value) {
@@ -70,19 +64,17 @@ const parseStyleString = (styleString, windowWidth, styleProperty) => {
         const cssValue = valueMapping[value] || value?.slice(1, -1);
         defaultStyles[cssProperty] = cssValue;
       } else {
-        const cssProperty = propertyMapping[styleProperty];
+        const cssProperty = propertyMapping[failBackProperty];
         const cssValue = entry;
         defaultStyles[cssProperty] = cssValue;
       }
     }
   });
 
-  // Áp dụng các giá trị với breakpoint lớn nhất thỏa mãn điều kiện
   Object.keys(appliedStyles).forEach((cssProperty) => {
     style[cssProperty] = appliedStyles[cssProperty].value;
   });
 
-  // Áp dụng các giá trị mặc định nếu không có giá trị nào từ breakpoint
   Object.keys(defaultStyles).forEach((cssProperty) => {
     if (!style[cssProperty]) {
       style[cssProperty] = defaultStyles[cssProperty];
@@ -92,10 +84,9 @@ const parseStyleString = (styleString, windowWidth, styleProperty) => {
   return style;
 };
 
-const useResponsiveStyle = (styleString, styleProperty) => {
+const useResponsiveStyle = (styleString, failBackProperty) => {
   const [windowWidth, setWindowWidth] = useState(window.innerWidth);
 
-  // Cập nhật kích thước cửa sổ khi thay đổi
   useEffect(() => {
     const handleResize = () => {
       setWindowWidth(window.innerWidth);
@@ -108,8 +99,8 @@ const useResponsiveStyle = (styleString, styleProperty) => {
   }, []);
 
   const style = useMemo(
-    () => parseStyleString(styleString, windowWidth, styleProperty),
-    [styleString, windowWidth]
+    () => parseStyleString(styleString, windowWidth, failBackProperty),
+    [styleString, windowWidth, failBackProperty]
   );
 
   return style;

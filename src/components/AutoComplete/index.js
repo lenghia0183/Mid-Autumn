@@ -1,9 +1,11 @@
-import React, { useState, useEffect, useRef } from "react";
+import React, { useState, useEffect, useRef, useId } from "react";
 import PropTypes from "prop-types";
 import useDebounce from "../../hooks/useDebouce";
 import Input from "./Input";
 import OptionsList from "./OptionsList";
 import SelectedTags from "./SelectedTags";
+import useResponsiveStyle from "../../hooks/useResponsiveStyle";
+import clsx from "clsx";
 
 const Autocomplete = ({
   options = [],
@@ -19,9 +21,15 @@ const Autocomplete = ({
   row = 5,
   className = "",
   autoFetch = true,
-  inputHeight = "30px",
+  inputHeight = "50px",
   onChange = () => {},
   error = "",
+  label = "",
+  labelWidth = "70px",
+  labelClass = "",
+  orientation = "vertical",
+  errorClass,
+  disabled,
 }) => {
   const [optionsState, setOptions] = useState(options);
   const [inputValue, setInputValue] = useState("");
@@ -34,6 +42,19 @@ const Autocomplete = ({
   const [isUserInput, setIsUserInput] = useState(false);
   const inputContainerRef = useRef(null);
   const inputRef = useRef(null);
+
+  const labelRef = useRef();
+  const id = useId();
+  const [labelWidthValue, setLabelWidthValue] = useState();
+  const [inputWidth, setInputWidth] = useState();
+  const inputHeightStyle = useResponsiveStyle(inputHeight, "h");
+  const widthStyle = useResponsiveStyle(width, "w");
+  const labelWidthStyle = useResponsiveStyle(labelWidth, "w");
+
+  useEffect(() => {
+    setInputWidth(inputContainerRef?.current?.offsetWidth);
+    setLabelWidthValue(labelRef?.current?.offsetWidth);
+  }, [width, inputHeight, labelWidth]);
 
   useEffect(() => {
     if (options?.length > 0) {
@@ -77,7 +98,7 @@ const Autocomplete = ({
     };
 
     filterOptions();
-  }, [inputValue, optionsState, getOptionsLabel]);
+  }, [inputValue, optionsState]);
 
   const handleInputChange = (e) => {
     const newValue = e.target.value;
@@ -126,6 +147,7 @@ const Autocomplete = ({
   }, []);
 
   const clearInput = () => {
+    setSelectedValues(multiple ? [] : null);
     setInputValue("");
     setIsUserInput(true);
   };
@@ -159,67 +181,153 @@ const Autocomplete = ({
       : selectedValues && isEqualValue(selectedValues, option);
   };
 
-  // Tính toán số lượng tag đang hiển thị và bị ẩn
   const visibleTags = multiple ? selectedValues?.slice(0, 2) : [];
   const hiddenTagCount =
     selectedValues?.length > 2 ? selectedValues.length - 2 : 0;
 
+  const renderLabel = () => {
+    if (!label) return null;
+
+    const baseLabelClass = clsx(
+      `text-sm select-none absolute transition-all duration-300 ease-in-out`,
+      labelClass
+    );
+
+    if (orientation === "vertical") {
+      return (
+        <label
+          ref={labelRef}
+          htmlFor={id}
+          className={clsx(`z-30 left-2 `, baseLabelClass, {
+            "top-1/2 -translate-y-1/2 pointer-events-none":
+              !showOptions && !inputValue,
+            "-top-1 -translate-y-full": showOptions || inputValue,
+          })}
+        >
+          {label}
+        </label>
+      );
+    }
+
+    return (
+      <label
+        ref={labelRef}
+        htmlFor={id}
+        style={{ ...labelWidthStyle }}
+        className={clsx(
+          baseLabelClass,
+          "left-0 top-1/2 -translate-y-1/2 z-30 pointer-events-none",
+          {
+            "left-2": !showOptions && !inputValue,
+          }
+        )}
+      >
+        {label}
+      </label>
+    );
+  };
+
+  const renderError = () =>
+    error && (
+      <div
+        style={{
+          paddingLeft:
+            (showOptions || inputValue) && orientation === "horizontal"
+              ? `${labelWidthValue}px`
+              : 0,
+        }}
+        className={clsx(
+          "text-red-500 text-sm transition-all duration-500",
+          {
+            "mt-1": orientation === "vertical",
+          },
+          errorClass
+        )}
+      >
+        {error}
+      </div>
+    );
+
   return (
     <div
-      className={`relative ${className}`}
+      className={clsx(
+        { "pointer-events-none cursor-not-allowed": disabled },
+        className
+      )}
       ref={inputContainerRef}
-      style={{ width }}
+      style={{ ...widthStyle, ...inputHeightStyle }}
       onClick={() => {
         inputRef.current.focus();
       }}
     >
       <div
-        className={`flex flex-col bg-gray-50 hover:bg-gray-100 ${
-          showOptions
-            ? "border-b-2 border-b-gray-500 bg-gray-100"
-            : "border-b border-b-gray-400"
-        }`}
+        className={clsx(
+          "relative h-full",
+          {
+            "flex items-center justify-end": orientation === "horizontal",
+          },
+          className
+        )}
       >
-        {multiple && (
-          <SelectedTags
-            visibleTags={visibleTags}
+        {renderLabel()}
+        <div
+          className={clsx(
+            "relative bg-purple-100 hover:bg-purple-200 transition-all duration-300 border-b-2",
+            {
+              "bg-gray-200 text-gray-500 ": disabled,
+              "border-b-purple-500 bg-purple-200":
+                showOptions && !error && !disabled,
+              "border-b-purple-400": !showOptions && !error && !disabled,
+              "border-red-500 border-b-2": error && !disabled,
+            }
+          )}
+          style={{
+            width:
+              (showOptions || inputValue) && orientation === "horizontal"
+                ? `${inputWidth - labelWidthValue}px`
+                : "100%",
+          }}
+        >
+          {multiple && (
+            <SelectedTags
+              visibleTags={visibleTags}
+              getOptionsLabel={getOptionsLabel}
+              hiddenTagCount={hiddenTagCount}
+              clearAllSelected={clearAllSelected}
+              selectedValues={selectedValues}
+              removeSelectedOption={removeSelectedOption}
+            />
+          )}
+
+          <Input
+            inputValue={inputValue}
+            handleInputChange={handleInputChange}
+            clearInput={clearInput}
+            loading={loading}
+            showOptions={showOptions}
+            inputHeight={inputHeight}
+            onFocus={handleFocus}
+            ref={inputRef}
+            id={id}
+          />
+
+          <OptionsList
+            isSelected={isSelected}
+            heightPerOption={heightPerOption}
+            loading={loading}
+            showOptions={showOptions}
+            optionsState={optionsState}
+            row={row}
+            handleOptionSelect={handleOptionSelect}
+            getOptionSubLabel={getOptionSubLabel}
             getOptionsLabel={getOptionsLabel}
-            hiddenTagCount={hiddenTagCount}
-            clearAllSelected={clearAllSelected}
-            selectedValues={selectedValues}
             removeSelectedOption={removeSelectedOption}
           />
-        )}
+        </div>
 
-        <Input
-          inputValue={inputValue}
-          handleInputChange={handleInputChange}
-          clearInput={clearInput}
-          loading={loading}
-          showOptions={showOptions}
-          inputHeight={inputHeight}
-          onFocus={handleFocus}
-          ref={inputRef}
-        />
+        {/* Hiển thị thông báo lỗi nếu có */}
       </div>
-
-      <OptionsList
-        isSelected={isSelected}
-        heightPerOption={heightPerOption}
-        loading={loading}
-        showOptions={showOptions}
-        optionsState={optionsState}
-        row={row}
-        handleOptionSelect={handleOptionSelect}
-        getOptionSubLabel={getOptionSubLabel}
-        getOptionsLabel={getOptionsLabel}
-        removeSelectedOption={removeSelectedOption}
-      />
-
-      {/* Hiển thị thông báo lỗi nếu có */}
-      {error && (
-        <div className="text-red-500 text-sm mt-1 text-left">{error}</div>
-      )}
+      {renderError()}
     </div>
   );
 };

@@ -2,6 +2,7 @@
 import React from "react";
 import PropTypes from "prop-types";
 import useParseDimension from "../../../hooks/useParseDimension";
+import Icon from "../../Icon";
 
 const OptionsList = ({
   isSelected,
@@ -24,7 +25,7 @@ const OptionsList = ({
         </div>
       ) : (
         <ul
-          className={`absolute z-10 mt-1 bg-white border border-gray-300 rounded-sm shadow-lg transition-all duration-300 ease-in-out w-full p-y2`}
+          className={`absolute z-10 mt-1 bg-purple border border-gray-300 rounded-sm shadow-lg transition-all duration-300 ease-in-out w-full p-y2`}
           style={{
             height: showOptions
               ? `${Math.min(optionsState.length, row) * height.value}${
@@ -41,7 +42,7 @@ const OptionsList = ({
                 key={index}
                 onClick={() => handleOptionSelect(option)}
                 style={{ height: heightPerOption }}
-                className={`cursor-pointer p-2 hover:bg-gray-100 flex items-center ${
+                className={`cursor-pointer p-2 hover:bg-purple-100 flex items-center ${
                   isSelected(option) ? "bg-blue-100" : ""
                 }`}
               >
@@ -55,17 +56,16 @@ const OptionsList = ({
                     {" - "} {getOptionSubLabel(option)}
                   </span>
                 )}
+
                 {isSelected(option) && (
-                  <button
-                    type="button"
+                  <Icon
+                    name="close"
+                    size="1.5em"
                     onClick={(e) => {
                       e.stopPropagation();
                       removeSelectedOption(option);
                     }}
-                    className="ml-2 text-gray-500 hover:text-gray-700"
-                  >
-                    &times;
-                  </button>
+                  />
                 )}
               </li>
             ))
