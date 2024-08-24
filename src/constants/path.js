@@ -10,12 +10,12 @@ export const PATH = {
 };
 
 export const PAGE_TITLE = {
-  HOME: "TRANG CHỦ",
-  ABOUT: "GIỚI THIỆU",
-  SIGN_UP: "ĐĂNG KÝ",
-  SIGN_IN: "ĐĂNG NHẬP",
-  TEST: "TEST",
-  PRODUCT: "SẢN PHẨM",
-  OTHER: "KHÁC",
-  CONTACT: "LIÊN HỆ",
+  HOME: "pageTitle.home",
+  ABOUT: "pageTitle.about",
+  SIGN_UP: "pageTitle.signup",
+  SIGN_IN: "pageTitle.signIn",
+  TEST: "pageTitle.test",
+  PRODUCT: "pageTitle.product",
+  OTHER: "pageTitle.other",
+  CONTACT: "pageTitle.contact",
 };

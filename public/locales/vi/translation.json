@@ -1,3 +1,27 @@
 {
-  "title": "Trung thu"
+  "pageTitle": {
+    "home": "TRANG CHỦ",
+    "about": "GIỚI THIỆU",
+    "contact": "LIÊN HỆ",
+    "product": "SẢN PHẨM",
+    "other": "KHÁC",
+    "signIn": "ĐĂNG NHẬP",
+    "signUp": "ĐĂNG KÝ",
+    "test": "TEST",
+    "search": "Tìm kiếm"
+  },
+
+  "cart": {
+    "title": "Giỏ hàng của bạn",
+    "total": "Tổng tiền:",
+    "empty": "Giỏ hàng của bạn đang trống",
+    "cartBtn": "Giỏ hàng",
+    "checkoutBtn": "Thanh toán"
+  },
+
+  "shopInfo": {
+    "phoneNumber": "0966 859 061",
+    "address": "Xóm 2, Liên Phương, Thường Tín, Hà Nội",
+    "email": "Lenghia0183@gmail.com"
+  }
 }

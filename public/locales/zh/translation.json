@@ -1,3 +1,27 @@
 {
-  
+  "pageTitle": {
+    "home": "首页",
+    "about": "关于我们",
+    "contact": "联系我们",
+    "product": "产品",
+    "other": "其他",
+    "signIn": "登录",
+    "signUp": "注册",
+    "test": "测试",
+    "search": "搜索"
+  },
+
+  "cart": {
+    "title": "你的购物车",
+    "total": "总计:",
+    "empty": "购物车为空",
+    "cartBtn": "购物车",
+    "checkoutBtn": "结账"
+  },
+
+  "shopInfo": {
+    "phoneNumber": "0966 859 061",
+    "address": "第2组，连丰，常信，河内",
+    "email": "Lenghia0183@gmail.com"
+  }
 }

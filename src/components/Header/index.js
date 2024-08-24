@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import PropTypes from "prop-types";
-import { Link, NavLink } from "react-router-dom";
+import { NavLink } from "react-router-dom";
 import clsx from "clsx";
 import Image from "../Image";
 import images from "../../asset/images";
@@ -11,11 +11,20 @@ import Icon from "../Icon";
 import IconButton from "./../IconButton/index";
 import DrawerMenu from "./../DrawerMenu/index";
 import Divider from "../Devider";
+import { useTranslation } from "react-i18next";
+import useChangeLanguage from "../../hooks/useChangeLanguage";
 
 const Header = ({ bgColor = "emerald", textColor = "white", className }) => {
   const { bgColor: newBgColor } = useColorClasses({ bgColor });
   const { textColor: newTextColor } = useColorClasses({ textColor });
   const [isShowCart, setIsShowCart] = useState(false);
+
+  const { t } = useTranslation();
+  const changeLanguage = useChangeLanguage();
+
+  const handleLanguageChange = (lang) => {
+    changeLanguage(lang);
+  };
 
   const navItems = [
     { label: PAGE_TITLE.HOME, path: PATH.HOME, isArrow: false },
@@ -29,7 +38,9 @@ const Header = ({ bgColor = "emerald", textColor = "white", className }) => {
     return (
       <div>
         <div className="flex items-center justify-between w-full mt-5">
-          <h4 className="text-dark text-2xl font-semibold">Giỏ hàng của bạn</h4>
+          <h4 className="text-dark text-2xl font-semibold">
+            {t("cart.title")}
+          </h4>
           <IconButton
             iconName="close"
             textColor="dark"
@@ -47,11 +58,11 @@ const Header = ({ bgColor = "emerald", textColor = "white", className }) => {
       <div className="p-4 pt-0">
         <Divider marginTop="10px" />
 
-        <p className="text-dark-800 text-xl font-medium">
-          Giỏ hàng của bạn đang trống
-        </p>
+        <p className="text-dark-800 text-xl font-medium">{t("cart.empty")}</p>
         <div className="flex justify-between mt-5">
-          <div className="text-dark text-xl font-medium ">Tổng tiền: </div>
+          <div className="text-dark text-xl font-medium ">
+            {t("cart.total")}
+          </div>
           <div className="text-crimson text-xl font-medium">0đ</div>
         </div>
 
@@ -63,7 +74,7 @@ const Header = ({ bgColor = "emerald", textColor = "white", className }) => {
           bgHoverColor="crimson-hover"
           className="text-xl font-medium"
         >
-          Giỏ hàng
+          {t("cart.cartBtn")}
         </Button>
 
         <Button
@@ -72,7 +83,7 @@ const Header = ({ bgColor = "emerald", textColor = "white", className }) => {
           bgHoverColor="yellow-hover"
           className="mt-3 text-xl font-medium"
         >
-          Thanh toán
+          {t("cart.checkoutBtn")}
         </Button>
       </div>
     );
@@ -80,12 +91,7 @@ const Header = ({ bgColor = "emerald", textColor = "white", className }) => {
 
   return (
     <header
-      className={clsx(
-        `w-full h-[110px] text-2xl`,
-        newBgColor,
-        newTextColor,
-        className
-      )}
+      className={clsx(`w-full h-[110px]`, newBgColor, newTextColor, className)}
     >
       <div className="container flex h-full items-center justify-between text-base">
         {/* Navigation Menu */}
@@ -101,7 +107,7 @@ const Header = ({ bgColor = "emerald", textColor = "white", className }) => {
                 )
               }
             >
-              {item.label}
+              {t(item.label)}
               {item?.isArrow && (
                 <Icon
                   name="arrowDown"
@@ -133,11 +139,16 @@ const Header = ({ bgColor = "emerald", textColor = "white", className }) => {
             textColor="white"
             startIcon={<Icon name="phone" size="1.5em" />}
           >
-            0966 859 061
+            {t("shopInfo.phoneNumber")}
           </Button>
 
+          {/* Search Button */}
           <IconButton iconName="search" textColor="white" iconSize="1.6" />
+
+          {/* Profile Button */}
           <IconButton iconName="user" textColor="white" iconSize="1.5" />
+
+          {/* Cart Button */}
           <IconButton
             iconName="bag"
             textColor="white"
@@ -153,21 +164,25 @@ const Header = ({ bgColor = "emerald", textColor = "white", className }) => {
               iconName="vietnamFlag"
               iconWidth="30px"
               iconHeight="25px"
+              onClick={() => handleLanguageChange("vi")}
             />
             <IconButton
               iconName="chinaFlag"
               iconWidth="30px"
               iconHeight="25px"
+              onClick={() => handleLanguageChange("zh")}
             />
             <IconButton
               iconName="japanFlag"
               iconWidth="30px"
               iconHeight="25px"
+              onClick={() => handleLanguageChange("jp")}
             />
             <IconButton
               iconName="englandFlag"
               iconWidth="30px"
               iconHeight="25px"
+              onClick={() => handleLanguageChange("en")}
             />
           </div>
         </div>

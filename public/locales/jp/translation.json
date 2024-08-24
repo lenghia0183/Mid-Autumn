@@ -1,0 +1,27 @@
+{
+  "pageTitle": {
+    "home": "ホーム",
+    "about": "紹介",
+    "contact": "お問い合わせ",
+    "product": "商品",
+    "other": "その他",
+    "signIn": "サインイン",
+    "signUp": "サインアップ",
+    "test": "テスト",
+    "search": "検索"
+  },
+
+  "cart": {
+    "title": "あなたのカート",
+    "total": "合計:",
+    "empty": "カートは空です",
+    "cartBtn": "カート",
+    "checkoutBtn": "チェックアウト"
+  },
+
+  "shopInfo": {
+    "phoneNumber": "0966 859 061",
+    "address": "第2区、連峰、常信、ハノイ",
+    "email": "Lenghia0183@gmail.com"
+  }
+}
