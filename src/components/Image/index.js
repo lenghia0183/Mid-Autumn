@@ -21,7 +21,6 @@ const Image = (
     shadow = false,
     fadeIn = true,
     transitionDuration = 300,
-
     ...props
   },
   ref

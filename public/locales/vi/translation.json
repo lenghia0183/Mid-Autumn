@@ -23,5 +23,29 @@
     "phoneNumber": "0966 859 061",
     "address": "Xóm 2, Liên Phương, Thường Tín, Hà Nội",
     "email": "Lenghia0183@gmail.com"
+  },
+
+  "footer": {
+    "itemList": {
+      "title": "Danh mục sản phẩm",
+      "item1": "Bánh trăng vàng cao cấp",
+      "item2": "Bánh nướng 2 trứng đặc biệt",
+      "item3": "Bánh xanh",
+      "item4": "Bánh trung thu OREO",
+      "item5": "Bánh nướng 1 trứng",
+      "item6": "Bánh dẻo"
+    },
+    "serviceList": {
+      "title": "Danh mục dịch vụ",
+      "service1": "Dịch vụ riêng",
+      "service2": "Dịch vụ khách hàng"
+    },
+    "freeShipTitle": "Miễn phí giao hàng",
+    "freeShipDesc": "Với đơn hàng từ 500k",
+    "paymentTitle": "Thanh toán đa dạng",
+    "paymentDesc": "Ví Momo, ZaloPay, Mastercard,...",
+    "refundTitle": "Đổi trả đễ dàng",
+    "refundDesc": "Trong vòng 12h",
+    "copyRight": "Sản phẩm của lenghia0183"
   }
 }

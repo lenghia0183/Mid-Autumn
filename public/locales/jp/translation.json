@@ -23,5 +23,28 @@
     "phoneNumber": "0966 859 061",
     "address": "第2区、連峰、常信、ハノイ",
     "email": "Lenghia0183@gmail.com"
+  },
+  "footer": {
+    "itemList": {
+      "title": "製品カテゴリー",
+      "item1": "プレミアム月餅",
+      "item2": "特別2卵月餅",
+      "item3": "緑の月餅",
+      "item4": "OREO月餅",
+      "item5": "1卵月餅",
+      "item6": "スノー月餅"
+    },
+    "serviceList": {
+      "title": "サービスカテゴリー",
+      "service1": "プライベートサービス",
+      "service2": "カスタマーサービス"
+    },
+    "freeShipTitle": "送料無料",
+    "freeShipDesc": "500k以上の注文で",
+    "paymentTitle": "多様な支払い方法",
+    "paymentDesc": "Momoウォレット、ZaloPay、Mastercard、...",
+    "refundTitle": "簡単な返品",
+    "refundDesc": "12時間以内",
+    "copyRight": "lenghia0183の製品"
   }
 }

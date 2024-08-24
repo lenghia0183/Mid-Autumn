@@ -23,5 +23,28 @@
     "phoneNumber": "0966 859 061",
     "address": "第2组，连丰，常信，河内",
     "email": "Lenghia0183@gmail.com"
+  },
+  "footer": {
+    "itemList": {
+      "title": "产品分类",
+      "item1": "高级月饼",
+      "item2": "特别双蛋月饼",
+      "item3": "绿月饼",
+      "item4": "OREO月饼",
+      "item5": "单蛋月饼",
+      "item6": "冰皮月饼"
+    },
+    "serviceList": {
+      "title": "服务分类",
+      "service1": "私人服务",
+      "service2": "客户服务"
+    },
+    "freeShipTitle": "免运费",
+    "freeShipDesc": "订单满500k",
+    "paymentTitle": "多样支付方式",
+    "paymentDesc": "Momo钱包，ZaloPay，Mastercard，...",
+    "refundTitle": "轻松退货",
+    "refundDesc": "12小时内",
+    "copyRight": "lenghia0183的产品"
   }
 }

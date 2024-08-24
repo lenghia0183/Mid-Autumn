@@ -205,12 +205,6 @@ const Header = ({ bgColor = "emerald", textColor = "white", className }) => {
 };
 
 Header.propTypes = {
-  userOptions: PropTypes.arrayOf(
-    PropTypes.shape({
-      label: PropTypes.string.isRequired,
-      path: PropTypes.string.isRequired,
-    })
-  ).isRequired,
   bgColor: PropTypes.string,
   textColor: PropTypes.string,
   className: PropTypes.string,

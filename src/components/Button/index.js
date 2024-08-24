@@ -28,11 +28,12 @@ const Button = ({
   ...props
 }) => {
   const baseClasses =
-    "rounded focus:outline-none transition duration-200 flex items-center justify-center";
+    "rounded focus:outline-none transition duration-200 flex items-center justify-center cursor-pointer";
   const sizeClasses = {
     small: "px-2 py-1 text-sm",
     medium: "px-5 py-2 text-base",
     large: "px-7 py-3 text-lg",
+    zeroPadding: "p-0",
   };
   const defaultTextContainedColor = "text-white";
   const defaultBgContainedColor = "bg-blue-500";
@@ -113,7 +114,7 @@ const Button = ({
               {startIcon}
             </span>
           )}
-          <span className="flex-1 text-center text-inherit">{children}</span>
+          <span className="flex-1 text-inherit">{children}</span>
           {endIcon && <span className="ml-2 flex items-center">{endIcon}</span>}
         </>
       )}
@@ -140,7 +141,7 @@ Button.propTypes = {
   onClick: PropTypes.func,
   disabled: PropTypes.bool,
   loading: PropTypes.bool,
-  size: PropTypes.oneOf(["small", "medium", "large"]),
+  size: PropTypes.oneOf(["small", "medium", "large", "zeroPadding"]),
   variant: PropTypes.oneOf(["contained", "outlined", "text"]),
   textColor: PropTypes.string,
   bgColor: PropTypes.string,

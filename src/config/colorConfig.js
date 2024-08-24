@@ -45,7 +45,7 @@ const colors = {
   },
   white: {
     DEFAULT: "#f5f3eb",
-    100: "#f5f3eb",
+    100: "#ffffff",
     200: "#e8e5d7",
     300: "#d9d2be",
     400: "#cbc0a6",

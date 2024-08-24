@@ -23,5 +23,29 @@
     "phoneNumber": "0966 859 061",
     "address": "Xom 2, Lien Phuong, Thuong Tin, Hanoi",
     "email": "Lenghia0183@gmail.com"
+  },
+
+  "footer": {
+    "itemList": {
+      "title": "Product Categories",
+      "item1": "Premium Mooncakes",
+      "item2": "Special 2-Egg Mooncakes",
+      "item3": "Green Mooncakes",
+      "item4": "OREO Mooncakes",
+      "item5": "1-Egg Mooncakes",
+      "item6": "Snowy Mooncakes"
+    },
+    "serviceList": {
+      "title": "Service Categories",
+      "service1": "Private Services",
+      "service2": "Customer Services"
+    },
+    "freeShipTitle": "Free Shipping",
+    "freeShipDesc": "For orders over 500k",
+    "paymentTitle": "Diverse Payment Methods",
+    "paymentDesc": "Momo Wallet, ZaloPay, Mastercard,...",
+    "refundTitle": "Easy Returns",
+    "refundDesc": "Within 12 hours",
+    "copyRight": "Product of lenghia0183"
   }
 }

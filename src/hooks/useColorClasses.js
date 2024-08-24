@@ -3,7 +3,7 @@ import { useMemo } from "react";
 const prefix = ["text", "border", "bg", "hover:bg"];
 
 const getColorAndShade = (colorClass) => {
-  const parts = colorClass.split("-");
+  const parts = colorClass?.split("-");
 
   if (parts.length === 2) {
     if (prefix.includes(parts[0]))

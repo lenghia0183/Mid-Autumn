@@ -1,18 +1,14 @@
 import React from "react";
 import Header from "../../components/Header";
+import Footer from "../../components/Footer";
 
 const Test = () => {
-  const logo = <img src="/path/to/logo.png" alt="Logo" className="h-8" />;
-
-  const userOptions = [
-    { label: "Login", path: "/login" },
-    { label: "Sign Up", path: "/signup" },
-  ];
-
   return (
     <div>
-      <Header logo={logo} userOptions={userOptions} />
+      <Header />
       {/* Rest of your app */}
+      <div className="h-screen"></div>
+      <Footer />
     </div>
   );
 };

@@ -10,6 +10,8 @@ import { ReactComponent as EnglandFlag } from "../../asset/icons/EnglandFlag.svg
 import { ReactComponent as Search } from "../../asset/icons/Search.svg";
 import { ReactComponent as User } from "../../asset/icons/User.svg";
 import { ReactComponent as Bag } from "../../asset/icons/Bag.svg";
+import { ReactComponent as Location } from "../../asset/icons/Location.svg";
+import { ReactComponent as Email } from "../../asset/icons/Email.svg";
 import useParseDimension from "../../hooks/useParseDimension";
 import useColorClasses from "../../hooks/useColorClasses";
 import clsx from "clsx";
@@ -27,6 +29,8 @@ export const icons = {
   search: Search,
   user: User,
   bag: Bag,
+  location: Location,
+  email: Email,
   // Add more icon components here...
 };
 
