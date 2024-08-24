@@ -3,6 +3,11 @@ import fallBack from "./default.avif";
 import truck from "./truck.png";
 import refund from "./refund.png";
 import payment from "./payment.png";
+import slide1 from "./slide-1.jpg";
+import slide2 from "./slide-2.jpg";
+import slide3 from "./slide-3.jpg";
+import childrenBanner1 from "./children-banner-1.png";
+import childrenBanner2 from "./children-banner-2.png";
 
 const images = {
   logo,
@@ -10,6 +15,11 @@ const images = {
   truck,
   refund,
   payment,
+  slide1,
+  slide2,
+  slide3,
+  childrenBanner1,
+  childrenBanner2,
 };
 
 export default images;
