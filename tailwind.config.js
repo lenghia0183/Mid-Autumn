@@ -31,7 +31,8 @@ export default {
 
     extend: {
       fontFamily: {
-        barlow: ["barlow", "sans-serif"],
+        barlow: ['"Barlow"', "sans-serif"],
+        sourceSansPro: ['"Source Sans Pro"', "sans-serif"],
       },
 
       colors: {

@@ -83,15 +83,20 @@ const Button = ({
     ),
   };
 
-  const classes = clsx(baseClasses, sizeClasses[size], {
-    [variantClasses[variant]]: !to && !href,
-    "px-0 py-0": to || href,
-    [variantClasses["link"]]: to,
-    [variantClasses["a"]]: href,
-    "opacity-50 cursor-not-allowed": disabled || loading,
-    "rounded-full": rounded,
-    "w-full": full,
-  });
+  const classes = clsx(
+    baseClasses,
+    sizeClasses[size],
+    {
+      [variantClasses[variant]]: !to && !href,
+      "px-0 py-0": to || href,
+      [variantClasses["link"]]: to,
+      [variantClasses["a"]]: href,
+      "opacity-50 cursor-not-allowed": disabled || loading,
+      "rounded-full": rounded,
+      "w-full": full,
+    },
+    className
+  );
   const ButtonComponent = to ? Link : href ? "a" : "button";
 
   const content = () => (
@@ -117,7 +122,7 @@ const Button = ({
 
   return (
     <ButtonComponent
-      className={clsx(classes, className)}
+      className={clsx(classes)}
       onClick={disabled || loading ? undefined : onClick}
       disabled={disabled || loading}
       style={{ width, height }}

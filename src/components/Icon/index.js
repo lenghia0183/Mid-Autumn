@@ -7,11 +7,13 @@ import { ReactComponent as VietnamFlag } from "../../asset/icons/VietnamFlag.svg
 import { ReactComponent as ChinaFlag } from "../../asset/icons/ChinaFlag.svg";
 import { ReactComponent as JapanFlag } from "../../asset/icons/JapanFlag.svg";
 import { ReactComponent as EnglandFlag } from "../../asset/icons/EnglandFlag.svg";
+import { ReactComponent as Search } from "../../asset/icons/Search.svg";
+import { ReactComponent as User } from "../../asset/icons/User.svg";
+import { ReactComponent as Bag } from "../../asset/icons/Bag.svg";
 import useParseDimension from "../../hooks/useParseDimension";
 import useColorClasses from "../../hooks/useColorClasses";
 import clsx from "clsx";
 import useResponsiveStyle from "../../hooks/useResponsiveStyle";
-import { isEmpty } from "lodash";
 
 export const icons = {
   arrowDown: ArrowDown,
@@ -22,6 +24,9 @@ export const icons = {
   chinaFlag: ChinaFlag,
   japanFlag: JapanFlag,
   englandFlag: EnglandFlag,
+  search: Search,
+  user: User,
+  bag: Bag,
   // Add more icon components here...
 };
 

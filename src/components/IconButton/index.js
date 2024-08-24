@@ -3,14 +3,19 @@ import PropTypes from "prop-types";
 import clsx from "clsx";
 import useColorClasses from "../../hooks/useColorClasses";
 import Loading from "../Loading";
+import Icon from "../Icon";
 
 const IconButton = ({
-  icon,
+  iconName,
   onClick,
   disabled = false,
   loading = false,
-  size = "medium",
+  size = "zeroPadding",
   variant = "text",
+  iconSize, // Thêm prop iconSize
+  iconWidth,
+  iconHeight,
+  iconClass,
   textColor = "",
   bgColor = "",
   bgHoverColor = "",
@@ -83,25 +88,37 @@ const IconButton = ({
       {loading ? (
         <Loading color={textColor || "white"} size="1em" />
       ) : (
-        <span>{icon}</span>
+        <Icon
+          className={iconClass}
+          name={iconName}
+          size={iconSize}
+          width={iconWidth}
+          height={iconHeight}
+          color={textColor}
+        />
       )}
     </button>
   );
 };
 
 IconButton.propTypes = {
-  icon: PropTypes.node.isRequired,
+  iconName: PropTypes.string.isRequired,
   onClick: PropTypes.func,
   disabled: PropTypes.bool,
   loading: PropTypes.bool,
-  size: PropTypes.oneOf(["small", "medium", "large"]),
+  size: PropTypes.oneOf(["small", "medium", "large", "zeroPadding"]),
   variant: PropTypes.oneOf(["contained", "outlined", "text"]),
+  iconSize: PropTypes.string,
+  iconWidth: PropTypes.string,
+  iconHeight: PropTypes.string,
   textColor: PropTypes.string,
   bgColor: PropTypes.string,
   bgHoverColor: PropTypes.string,
   borderColor: PropTypes.string,
   className: PropTypes.string,
   rounded: PropTypes.bool,
+  width: PropTypes.string,
+  height: PropTypes.string,
 };
 
 export default IconButton;

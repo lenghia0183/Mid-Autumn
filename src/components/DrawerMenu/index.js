@@ -14,7 +14,7 @@ const DrawerMenu = ({
   renderContent,
   renderTitle = null,
   children,
-  animationDuration = 3000,
+  animationDuration = 1000,
   disableScroll = true,
   autoCloseTimeout = null,
   overlayColor = "rgba(0, 0, 0, 0.5)",
@@ -29,6 +29,8 @@ const DrawerMenu = ({
 
   const widthStyle = useResponsiveStyle(width, "w");
   const heightStyle = useResponsiveStyle(height, "h");
+
+  console.log(widthStyle, heightStyle);
 
   useEffect(() => {
     if (disableScroll) {
@@ -128,11 +130,20 @@ const DrawerMenu = ({
     zIndex: 1000,
   };
 
+  const overlayClasses = clsx(
+    "fixed inset-0 transition-opacity",
+    durationMap[animationDuration],
+    {
+      "opacity-0 pointer-events-none": !open,
+      "opacity-100 z-10": open,
+    }
+  );
+
   return (
     <>
-      {open && (
+      {true && (
         <div
-          className="fixed inset-0 z-10"
+          className={overlayClasses}
           onClick={handleOverlayClick}
           style={{ backgroundColor: overlayColor }}
         />

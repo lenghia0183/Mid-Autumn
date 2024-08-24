@@ -17,5 +17,5 @@ export const PAGE_TITLE = {
   TEST: "TEST",
   PRODUCT: "SẢN PHẨM",
   OTHER: "KHÁC",
-  CONTACT: "LIỂN HỆ",
+  CONTACT: "LIÊN HỆ",
 };
