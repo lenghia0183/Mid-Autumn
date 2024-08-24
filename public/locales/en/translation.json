@@ -1,13 +1,17 @@
 {
+  "common": {
+    "byNow": "Buy Now"
+  },
+
   "pageTitle": {
-    "home": "HOME",
-    "about": "ABOUT",
-    "contact": "CONTACT",
-    "product": "PRODUCT",
-    "other": "OTHER",
-    "signIn": "SIGN IN",
-    "signUp": "SIGN UP",
-    "test": "TEST",
+    "home": "Home",
+    "about": "About Us",
+    "contact": "Contact Us",
+    "product": "Products",
+    "other": "Other",
+    "signIn": "Sign In",
+    "signUp": "Sign Up",
+    "test": "Test",
     "search": "Search"
   },
 
@@ -21,7 +25,7 @@
 
   "shopInfo": {
     "phoneNumber": "0966 859 061",
-    "address": "Xom 2, Lien Phuong, Thuong Tin, Hanoi",
+    "address": "Xóm 2, Liên Phương, Thường Tín, Hanoi",
     "email": "Lenghia0183@gmail.com"
   },
 
@@ -29,23 +33,38 @@
     "itemList": {
       "title": "Product Categories",
       "item1": "Premium Mooncakes",
-      "item2": "Special 2-Egg Mooncakes",
+      "item2": "Special Two-Yolk Mooncakes",
       "item3": "Green Mooncakes",
       "item4": "OREO Mooncakes",
-      "item5": "1-Egg Mooncakes",
-      "item6": "Snowy Mooncakes"
+      "item5": "Single-Yolk Mooncakes",
+      "item6": "Soft Mooncakes"
     },
     "serviceList": {
       "title": "Service Categories",
-      "service1": "Private Services",
-      "service2": "Customer Services"
+      "service1": "Exclusive Services",
+      "service2": "Customer Service"
     },
     "freeShipTitle": "Free Shipping",
-    "freeShipDesc": "For orders over 500k",
-    "paymentTitle": "Diverse Payment Methods",
-    "paymentDesc": "Momo Wallet, ZaloPay, Mastercard,...",
+    "freeShipDesc": "On orders over 500k",
+    "paymentTitle": "Diverse Payment Options",
+    "paymentDesc": "Momo, ZaloPay, Mastercard, ...",
     "refundTitle": "Easy Returns",
     "refundDesc": "Within 12 hours",
-    "copyRight": "Product of lenghia0183"
+    "copyRight": "Products by Lenghia0183"
+  },
+
+  "banner": {
+    "title": "Unmissable Mooncake Flavors",
+    "desc": "The national brand is the top choice for consumers",
+    "itemBtn": "Products"
+  },
+
+  "home": {
+    "section1": {
+      "title1": "Premium Mooncakes",
+      "desc1": "Authentic mooncakes with perfect quality",
+      "title2": "Premium Mooncakes",
+      "title3": "Premium Mooncakes"
+    }
   }
 }

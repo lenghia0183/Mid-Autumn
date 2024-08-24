@@ -1,4 +1,8 @@
 {
+  "common": {
+    "byNow": "今すぐ購入"
+  },
+
   "pageTitle": {
     "home": "ホーム",
     "about": "紹介",
@@ -13,7 +17,7 @@
 
   "cart": {
     "title": "あなたのカート",
-    "total": "合計:",
+    "total": "合計金額:",
     "empty": "カートは空です",
     "cartBtn": "カート",
     "checkoutBtn": "チェックアウト"
@@ -21,30 +25,46 @@
 
   "shopInfo": {
     "phoneNumber": "0966 859 061",
-    "address": "第2区、連峰、常信、ハノイ",
+    "address": "ベトナム ハノイ 常青 リエンフォン 2番地",
     "email": "Lenghia0183@gmail.com"
   },
+
   "footer": {
     "itemList": {
-      "title": "製品カテゴリー",
+      "title": "商品カテゴリー",
       "item1": "プレミアム月餅",
-      "item2": "特別2卵月餅",
-      "item3": "緑の月餅",
+      "item2": "特別な二黄月餅",
+      "item3": "緑月餅",
       "item4": "OREO月餅",
-      "item5": "1卵月餅",
-      "item6": "スノー月餅"
+      "item5": "一黄月餅",
+      "item6": "ソフト月餅"
     },
     "serviceList": {
       "title": "サービスカテゴリー",
-      "service1": "プライベートサービス",
+      "service1": "専用サービス",
       "service2": "カスタマーサービス"
     },
     "freeShipTitle": "送料無料",
     "freeShipDesc": "500k以上の注文で",
     "paymentTitle": "多様な支払い方法",
-    "paymentDesc": "Momoウォレット、ZaloPay、Mastercard、...",
+    "paymentDesc": "Momo、ZaloPay、Mastercardなど",
     "refundTitle": "簡単な返品",
     "refundDesc": "12時間以内",
-    "copyRight": "lenghia0183の製品"
+    "copyRight": "Lenghia0183の製品"
+  },
+
+  "banner": {
+    "title": "見逃せない月餅の風味",
+    "desc": "国民ブランドが消費者の第一選択",
+    "itemBtn": "商品"
+  },
+
+  "home": {
+    "section1": {
+      "title1": "プレミアム月餅",
+      "desc1": "本格的な月餅、最高の品質",
+      "title2": "プレミアム月餅",
+      "title3": "プレミアム月餅"
+    }
   }
 }

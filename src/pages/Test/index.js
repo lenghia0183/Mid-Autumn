@@ -8,7 +8,7 @@ const Test = () => {
       <Header />
       {/* Rest of your app */}
       <div className="h-screen"></div>
-      <Footer />
+      {/* <Footer /> */}
     </div>
   );
 };

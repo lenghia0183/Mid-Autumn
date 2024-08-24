@@ -27,22 +27,24 @@ const Button = ({
   to,
   ...props
 }) => {
+  const isLink = Boolean(to || href);
+
   const baseClasses =
-    "rounded focus:outline-none transition duration-200 flex items-center justify-center cursor-pointer";
+    "rounded focus:outline-none transition duration-500 flex w-fit items-center justify-center cursor-pointer";
   const sizeClasses = {
     small: "px-2 py-1 text-sm",
     medium: "px-5 py-2 text-base",
     large: "px-7 py-3 text-lg",
     zeroPadding: "p-0",
   };
-  const defaultTextContainedColor = "text-white";
-  const defaultBgContainedColor = "bg-blue-500";
-  const defaultBgHoverContainedColor = "hover:bg-blue-300";
+  const defaultTextContainedColor = isLink ? "text-blue" : "text-white";
+  const defaultBgContainedColor = isLink ? "" : "bg-blue-500";
+  const defaultBgHoverContainedColor = isLink ? "" : "hover:bg-blue-300";
 
   const defaultTextColor = "text-blue-500";
   const defaultBorderColor = "border-blue-500";
   const defaultBgHoverColor = "hover:bg-blue-200";
-  const defaultLinkColor = "text-blue-500 hover:text-blue-500";
+  const defaultLinkColor = "text-blue-500";
 
   const { textColor: newTextColor } = useColorClasses({ textColor });
   const { bgHoverColor: newBgHoverColor } = useColorClasses({ bgHoverColor });
@@ -68,36 +70,29 @@ const Button = ({
       newTextColor || defaultTextColor,
       newBgHoverColor || defaultBgHoverColor
     ),
-
-    link: clsx(
-      "hover:underline",
-      newTextColor || defaultLinkColor,
-      newBgHoverColor || "",
-      newBorderColor || ""
-    ),
-
-    a: clsx(
-      "hover:underline",
-      newTextColor || defaultLinkColor,
-      newBgHoverColor || "",
-      newBorderColor || ""
-    ),
   };
+
+  const linkClass = clsx(
+    // "hover:underline",
+    newTextColor || defaultLinkColor,
+    newBgHoverColor || "",
+    newBorderColor || "",
+    newBgColor || ""
+  );
 
   const classes = clsx(
     baseClasses,
     sizeClasses[size],
     {
-      [variantClasses[variant]]: !to && !href,
-      "px-0 py-0": to || href,
-      [variantClasses["link"]]: to,
-      [variantClasses["a"]]: href,
+      [variantClasses[variant]]: variant,
+      [linkClass]: isLink,
       "opacity-50 cursor-not-allowed": disabled || loading,
       "rounded-full": rounded,
       "w-full": full,
     },
     className
   );
+
   const ButtonComponent = to ? Link : href ? "a" : "button";
 
   const content = () => (

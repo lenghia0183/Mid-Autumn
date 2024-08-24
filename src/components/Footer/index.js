@@ -62,6 +62,7 @@ const Footer = ({
             <Button
               to={PATH.HOME}
               size="zeroPadding"
+              textColor="white"
               className="hover:text-yellow"
             >
               {t("footer.itemList.item1")}
@@ -70,6 +71,7 @@ const Footer = ({
             <Button
               to={PATH.HOME}
               size="zeroPadding"
+              textColor="white"
               className="hover:text-yellow "
             >
               {t("footer.itemList.item2")}
@@ -78,6 +80,7 @@ const Footer = ({
             <Button
               to={PATH.HOME}
               size="zeroPadding"
+              textColor="white"
               className="hover:text-yellow "
             >
               {t("footer.itemList.item3")}
@@ -86,6 +89,7 @@ const Footer = ({
             <Button
               to={PATH.HOME}
               size="zeroPadding"
+              textColor="white"
               className="hover:text-yellow "
             >
               {t("footer.itemList.item4")}
@@ -94,6 +98,7 @@ const Footer = ({
             <Button
               to={PATH.HOME}
               size="zeroPadding"
+              textColor="white"
               className="hover:text-yellow "
             >
               {t("footer.itemList.item5")}
@@ -102,6 +107,7 @@ const Footer = ({
             <Button
               to={PATH.HOME}
               size="zeroPadding"
+              textColor="white"
               className="hover:text-yellow"
             >
               {t("footer.itemList.item6")}
@@ -119,6 +125,7 @@ const Footer = ({
             <Button
               to={PATH.HOME}
               size="zeroPadding"
+              textColor="white"
               className="hover:text-yellow "
             >
               {t("footer.serviceList.service1")}
@@ -127,6 +134,7 @@ const Footer = ({
             <Button
               to={PATH.HOME}
               size="zeroPadding"
+              textColor="white"
               className="hover:text-yellow "
             >
               {t("footer.serviceList.service2")}

@@ -1,4 +1,8 @@
 {
+  "common": {
+    "byNow": "MUA NGAY"
+  },
+
   "pageTitle": {
     "home": "TRANG CHỦ",
     "about": "GIỚI THIỆU",
@@ -53,5 +57,14 @@
     "title": "  HƯƠNG VỊ BÁNH TRUNG THU KHÔNG THỂ BỎ LỠ",
     "desc": " Thương hiệu quốc dân là lựa chọn hàng đầu của người tiêu dùng",
     "itemBtn": "SẢN PHẨM"
+  },
+
+  "home": {
+    "section1": {
+      "title1": "Bánh trung thu cao cấp",
+      "desc1": "Bánh trung thu chính hãng với quy cách, chất lượng hoàn hảo nhất",
+      "title2": "Bánh trung thu cao cấp",
+      "title3": "Bánh trung thu cao cấp"
+    }
   }
 }

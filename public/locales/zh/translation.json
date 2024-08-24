@@ -1,4 +1,8 @@
 {
+  "common": {
+    "byNow": "立即购买"
+  },
+
   "pageTitle": {
     "home": "首页",
     "about": "关于我们",
@@ -12,39 +16,55 @@
   },
 
   "cart": {
-    "title": "你的购物车",
-    "total": "总计:",
-    "empty": "购物车为空",
+    "title": "您的购物车",
+    "total": "总金额:",
+    "empty": "您的购物车为空",
     "cartBtn": "购物车",
     "checkoutBtn": "结账"
   },
 
   "shopInfo": {
     "phoneNumber": "0966 859 061",
-    "address": "第2组，连丰，常信，河内",
+    "address": "越南河内常青联芳2号",
     "email": "Lenghia0183@gmail.com"
   },
+
   "footer": {
     "itemList": {
-      "title": "产品分类",
+      "title": "产品类别",
       "item1": "高级月饼",
-      "item2": "特别双蛋月饼",
+      "item2": "特别双黄月饼",
       "item3": "绿月饼",
       "item4": "OREO月饼",
-      "item5": "单蛋月饼",
-      "item6": "冰皮月饼"
+      "item5": "单黄月饼",
+      "item6": "软月饼"
     },
     "serviceList": {
-      "title": "服务分类",
-      "service1": "私人服务",
+      "title": "服务类别",
+      "service1": "专属服务",
       "service2": "客户服务"
     },
     "freeShipTitle": "免运费",
     "freeShipDesc": "订单满500k",
-    "paymentTitle": "多样支付方式",
-    "paymentDesc": "Momo钱包，ZaloPay，Mastercard，...",
-    "refundTitle": "轻松退货",
+    "paymentTitle": "多种支付方式",
+    "paymentDesc": "Momo钱包, ZaloPay, Mastercard,...",
+    "refundTitle": "轻松退换",
     "refundDesc": "12小时内",
-    "copyRight": "lenghia0183的产品"
+    "copyRight": "Lenghia0183的产品"
+  },
+
+  "banner": {
+    "title": "不可错过的月饼风味",
+    "desc": "国民品牌是消费者的首选",
+    "itemBtn": "产品"
+  },
+
+  "home": {
+    "section1": {
+      "title1": "高级月饼",
+      "desc1": "正宗月饼，质量卓越",
+      "title2": "高级月饼",
+      "title3": "高级月饼"
+    }
   }
 }
