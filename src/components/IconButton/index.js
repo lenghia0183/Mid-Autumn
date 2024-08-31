@@ -12,7 +12,7 @@ const IconButton = ({
   loading = false,
   size = "zeroPadding",
   variant = "text",
-  iconSize, // Thêm prop iconSize
+  iconSize = 2,
   iconWidth,
   iconHeight,
   iconClass,
@@ -22,8 +22,8 @@ const IconButton = ({
   borderColor,
   className,
   rounded = true,
-  width,
-  height,
+  width = "",
+  height = "",
   ...props
 }) => {
   const baseClasses =

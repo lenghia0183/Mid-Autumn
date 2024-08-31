@@ -1,5 +1,5 @@
 import React from "react";
-import { Link } from "react-router-dom";
+
 import { useTranslation } from "react-i18next";
 import Header from "./../../components/Header";
 import Footer from "./../../components/Footer";
@@ -7,6 +7,7 @@ import Banner from "../../components/Banner";
 import images from "../../asset/images";
 import Button from "../../components/Button";
 import { PATH } from "../../constants/path";
+import PopularDishes from "./PopularDishes";
 
 const Home = () => {
   const { t } = useTranslation();
@@ -15,12 +16,12 @@ const Home = () => {
     <>
       <Header />
       <Banner />
-      <div className="py-10 md:py-20">
-        <section className="container grid grid-cols-1 md:grid-cols-3 grid-rows-2 gap-4">
-          {/* The first div spans 2 columns and 2 rows */}
+      <main className="py-10 md:py-20 bg-white">
+        {/* section 1 */}
+        <section className="container grid grid-cols-1 md:grid-cols-3 grid-rows-2 gap-6">
+          {/*  Div đầu tiên trải dài 2 cột và 2 hàng*/}
           <div className="col-span-1 md:col-span-2 row-span-1 md:row-span-2 overflow-hidden rounded-xl relative">
             <div className="relative w-full aspect-[5/4] overflow-hidden">
-              {/* Phần tử chứa hình ảnh */}
               <div
                 className="absolute inset-0 transform scale-100 hover:scale-110 duration-500"
                 style={{
@@ -30,7 +31,6 @@ const Home = () => {
                 }}
               />
 
-              {/* Phần tử chứa nội dung */}
               <div className="absolute p-4 md:p-6 text-center md:text-left">
                 <h2 className="text-xl md:text-3xl font-semibold text-white">
                   {t("home.section1.title1")}
@@ -52,9 +52,8 @@ const Home = () => {
             </div>
           </div>
 
-          {/* Second div occupies the remaining first row, first column */}
+          {/* Div thứ hai chiếm phần còn lại của hàng thứ nhất, cột thứ nhất  */}
           <div className="relative w-full aspect-[5/4] overflow-hidden">
-            {/* Phần tử chứa hình ảnh */}
             <div
               className="absolute inset-0 transform scale-100 hover:scale-110 duration-500"
               style={{
@@ -64,7 +63,6 @@ const Home = () => {
               }}
             />
 
-            {/* Phần tử chứa nội dung */}
             <div className="absolute p-4 md:p-6 text-center">
               <h2 className="text-lg md:text-xl font-semibold text-white">
                 {t("home.section1.title2")}
@@ -83,9 +81,8 @@ const Home = () => {
             </div>
           </div>
 
-          {/* Third div occupies the remaining second row, second column */}
+          {/* Div thứ ba chiếm phần còn lại của hàng thứ hai, cột thứ hai */}
           <div className="relative w-full aspect-[5/4] overflow-hidden">
-            {/* Phần tử chứa hình ảnh */}
             <div
               className="absolute inset-0 transform scale-100 hover:scale-110 duration-500"
               style={{
@@ -95,7 +92,6 @@ const Home = () => {
               }}
             />
 
-            {/* Phần tử chứa nội dung */}
             <div className="absolute p-4 md:p-6 text-center">
               <h2 className="text-lg md:text-xl font-semibold text-dark">
                 {t("home.section1.title3")}
@@ -114,7 +110,11 @@ const Home = () => {
             </div>
           </div>
         </section>
-      </div>
+
+        <section className="container mt-20">
+          <PopularDishes />
+        </section>
+      </main>
       <Footer />
     </>
   );

@@ -6,7 +6,6 @@ import images from "../../asset/images";
 import Button from "./../Button/index";
 import { useTranslation } from "react-i18next";
 
-// Dữ liệu cho các banner
 const bannerData = [
   {
     id: 1,
@@ -40,7 +39,7 @@ const Banner = () => {
   };
 
   return (
-    <div className="relative w-full">
+    <div className="relative w-full overflow-hidden">
       <Slider {...settings}>
         {bannerData.map((banner) => {
           console.log("test", `url("${banner.src}")`);

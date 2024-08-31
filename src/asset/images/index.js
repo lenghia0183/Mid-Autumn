@@ -10,6 +10,10 @@ import childrenBanner1 from "./children-banner-1.png";
 import childrenBanner2 from "./children-banner-2.png";
 import home1 from "./home-1.jpg";
 import home2 from "./home-2.jpg";
+import popularDish1 from "./popularDish-1.jpg";
+import popularDish2 from "./popularDish-2.jpg";
+import popularDish3 from "./popularDish-3.png";
+import popularDish4 from "./popularDish-4.jpg";
 
 const images = {
   logo,
@@ -24,6 +28,10 @@ const images = {
   childrenBanner2,
   home1,
   home2,
+  popularDish1,
+  popularDish2,
+  popularDish3,
+  popularDish4,
 };
 
 export default images;

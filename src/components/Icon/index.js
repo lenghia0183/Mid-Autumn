@@ -12,7 +12,13 @@ import { ReactComponent as User } from "../../asset/icons/User.svg";
 import { ReactComponent as Bag } from "../../asset/icons/Bag.svg";
 import { ReactComponent as Location } from "../../asset/icons/Location.svg";
 import { ReactComponent as Email } from "../../asset/icons/Email.svg";
+import { ReactComponent as StarContained } from "../../asset/icons/Star-contained.svg";
+import { ReactComponent as StarEmpty } from "../../asset/icons/Start-empty.svg";
+import { ReactComponent as StarHalf } from "../../asset/icons/Star-half.svg";
+import { ReactComponent as Eye } from "../../asset/icons/Eye.svg";
+import { ReactComponent as Heart } from "../../asset/icons/Heart.svg";
 import useParseDimension from "../../hooks/useParseDimension";
+
 import useColorClasses from "../../hooks/useColorClasses";
 import clsx from "clsx";
 import useResponsiveStyle from "../../hooks/useResponsiveStyle";
@@ -31,6 +37,11 @@ export const icons = {
   bag: Bag,
   location: Location,
   email: Email,
+  starContained: StarContained,
+  starEmpty: StarEmpty,
+  starHalf: StarHalf,
+  eye: Eye,
+  heart: Heart,
   // Add more icon components here...
 };
 

@@ -7,8 +7,8 @@ const Image = (
   {
     src = images?.fallBack,
     alt,
-    width,
-    height,
+    width = "100%",
+    height = "100%",
     className,
     onErrorSrc = images?.fallBack,
     loading = "lazy",
