@@ -9,6 +9,7 @@ import Button from "../../components/Button";
 import { PATH } from "../../constants/path";
 import PopularDishes from "./PopularDishes";
 import Reason from "./Reason";
+import SaleItems from "./SaleItems";
 
 const Home = () => {
   const { t } = useTranslation();
@@ -153,6 +154,7 @@ const Home = () => {
         </section>
 
         <Reason />
+        <SaleItems />
       </main>
       <Footer />
     </>

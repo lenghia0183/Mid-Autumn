@@ -1,6 +1,7 @@
 {
   "common": {
-    "byNow": "MUA NGAY"
+    "byNow": "MUA NGAY",
+    "midAutumnFestival": "Mid Autumn Festival"
   },
 
   "pageTitle": {
@@ -71,6 +72,11 @@
       "whyChoiceUs": "Bạn nên chọn chúng tôi",
       "desc1": "Chúng tôi xin cam đoan trao tận tay khách hàng các sản phẩm Bánh Trung Thu chính hãng với quy cách, chất lượng hoàn hảo nhất.",
       "desc2": "Trân trọng ý nghĩa Tết Trung Thu, chúng tôi luôn không ngừng sáng tạo, đầu tư để mỗi năm đều giới thiệu và phục vụ thị trường những dòng sản phẩm mới với chất lượng và mẫu mã tốt nhất, góp phần tạo nên lễ hội Trung Thu đậm đà bản sắc Việt Nam."
+    },
+
+    "saleItems": {
+      "title": "ƯU ĐÃI HẤP DẪN",
+      "desc": "Không quá cầu kì, bánh trung thu mang nét mộc mạc, đặc trưng làm say lòng không biết bao thế hệ người thưởng thức."
     }
   }
 }

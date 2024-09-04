@@ -4,8 +4,9 @@ import Button from "../Button";
 import Image from "../Image";
 import Icon from "../Icon"; // Giả sử bạn có một component Icon để hiển thị sao
 import IconButton from "../IconButton";
+import clsx from "clsx";
 
-const ItemCard = ({ product }) => {
+const ItemCard = ({ product, className }) => {
   const { id, name, image, price, rating } = product;
 
   const renderStars = (rating) => {
@@ -30,7 +31,12 @@ const ItemCard = ({ product }) => {
   };
 
   return (
-    <div className="group relative  shadow-md rounded-md overflow-hidden  bg-white-100">
+    <div
+      className={clsx(
+        "group relative  shadow-md rounded-md overflow-hidden  bg-white-100",
+        className
+      )}
+    >
       {/* Image Container */}
       <div className="relative aspect-square overflow-hidden">
         <Image

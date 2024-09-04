@@ -17,6 +17,7 @@ import { ReactComponent as StarEmpty } from "../../asset/icons/Start-empty.svg";
 import { ReactComponent as StarHalf } from "../../asset/icons/Star-half.svg";
 import { ReactComponent as Eye } from "../../asset/icons/Eye.svg";
 import { ReactComponent as Heart } from "../../asset/icons/Heart.svg";
+import { ReactComponent as ArrowSlider } from "../../asset/icons/ArrowSlider.svg";
 import useParseDimension from "../../hooks/useParseDimension";
 
 import useColorClasses from "../../hooks/useColorClasses";
@@ -42,6 +43,7 @@ export const icons = {
   starHalf: StarHalf,
   eye: Eye,
   heart: Heart,
+  arrowSlider: ArrowSlider,
   // Add more icon components here...
 };
 
