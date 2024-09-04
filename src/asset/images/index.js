@@ -15,6 +15,7 @@ import popularDish2 from "./popularDish-2.jpg";
 import popularDish3 from "./popularDish-3.png";
 import popularDish4 from "./popularDish-4.jpg";
 import homeReason from "./homeReason.jpg";
+import commentBg from "./commentBg.png";
 const images = {
   logo,
   fallBack,
@@ -33,6 +34,7 @@ const images = {
   popularDish3,
   popularDish4,
   homeReason,
+  commentBg,
 };
 
 export default images;

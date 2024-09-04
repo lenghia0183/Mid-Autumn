@@ -11,6 +11,7 @@ import PopularDishes from "./PopularDishes";
 import Reason from "./Reason";
 import SaleItems from "./SaleItems";
 import Email from "./Email";
+import Comment from "./Comment";
 
 const Home = () => {
   const { t } = useTranslation();
@@ -157,6 +158,7 @@ const Home = () => {
         <Reason />
         <SaleItems />
         <Email />
+        <Comment />
       </main>
       <Footer />
     </>
