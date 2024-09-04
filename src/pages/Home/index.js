@@ -10,6 +10,7 @@ import { PATH } from "../../constants/path";
 import PopularDishes from "./PopularDishes";
 import Reason from "./Reason";
 import SaleItems from "./SaleItems";
+import Email from "./Email";
 
 const Home = () => {
   const { t } = useTranslation();
@@ -155,6 +156,7 @@ const Home = () => {
 
         <Reason />
         <SaleItems />
+        <Email />
       </main>
       <Footer />
     </>

@@ -1,7 +1,8 @@
 {
   "common": {
     "byNow": "MUA NGAY",
-    "midAutumnFestival": "Mid Autumn Festival"
+    "midAutumnFestival": "Mid Autumn Festival",
+    "register": "Đăng ký"
   },
 
   "pageTitle": {
@@ -77,6 +78,10 @@
     "saleItems": {
       "title": "ƯU ĐÃI HẤP DẪN",
       "desc": "Không quá cầu kì, bánh trung thu mang nét mộc mạc, đặc trưng làm say lòng không biết bao thế hệ người thưởng thức."
+    },
+    "email": {
+      "title": "Đăng ký email nhận tin khuyến mãi",
+      "inputPlaceholder": "Địa chỉ email..."
     }
   }
 }

@@ -70,10 +70,8 @@ function SaleItems() {
     },
   ];
 
-  console.log("slider", slider);
-
   return (
-    <div className="container mt-14">
+    <section className="container mt-14">
       <h4 className="text-xl text-emerald font-medium text-center">
         {t("common.midAutumnFestival")}
       </h4>
@@ -122,7 +120,7 @@ function SaleItems() {
           })}
         </Slider>
       </div>
-    </div>
+    </section>
   );
 }
 
