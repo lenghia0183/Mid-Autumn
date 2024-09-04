@@ -8,6 +8,7 @@ import images from "../../asset/images";
 import Button from "../../components/Button";
 import { PATH } from "../../constants/path";
 import PopularDishes from "./PopularDishes";
+import Reason from "./Reason";
 
 const Home = () => {
   const { t } = useTranslation();
@@ -150,6 +151,8 @@ const Home = () => {
             </Button>
           </div>
         </section>
+
+        <Reason />
       </main>
       <Footer />
     </>
