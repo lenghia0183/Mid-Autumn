@@ -64,7 +64,7 @@ const ProductFilterSideBar = ({ onFilter }) => {
           </div>
 
           {/* Danh mục sản phẩm */}
-          <div className="p-4 border rounded-lg shadow-md bg-white py-6">
+          <div className="p-4 border rounded-md shadow-md bg-white py-6">
             <div className="flex items-center gap-2">
               <Icon name="category" size={1.5} />
               <h3 className="text-2xl font-medium text-dark">
@@ -90,7 +90,7 @@ const ProductFilterSideBar = ({ onFilter }) => {
           </div>
 
           {/* Giá sản phẩm */}
-          <div className="p-4 border rounded-lg shadow-md bg-white py-6">
+          <div className="p-4 border rounded-md  shadow-md bg-white py-6">
             <div className="flex items-center gap-2">
               <Icon name="coin" size={1.5} color="dark" />
               <h3 className="text-2xl font-medium text-dark">Giá sản phẩm</h3>
@@ -138,7 +138,7 @@ const ProductFilterSideBar = ({ onFilter }) => {
           </div>
 
           {/* Thương hiệu */}
-          <div className="p-4 border rounded-lg shadow-md bg-white py-6">
+          <div className="p-4 border rounded-md  shadow-md bg-white py-6">
             <div className="flex items-center gap-2">
               <Icon name="vendor" size={1.5} />
               <h3 className="text-2xl font-medium text-dark">Thương hiệu</h3>
@@ -154,7 +154,7 @@ const ProductFilterSideBar = ({ onFilter }) => {
           </div>
 
           {/* Đánh giá */}
-          <div className="p-4 border rounded-lg shadow-md bg-white py-6">
+          <div className="p-4 border rounded-md  shadow-md bg-white py-6">
             <div className="flex items-center gap-2">
               <Icon name="rating" size={1.5} color="dark" />
               <h3 className="text-2xl font-medium text-dark">Đánh giá</h3>
