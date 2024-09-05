@@ -17,16 +17,18 @@ const Autocomplete = ({
   asyncRequestHelper = (res) => res,
   multiple = false,
   width = "100%",
-  heightPerOption = "40px",
+  heightPerOption = "50px",
   row = 5,
   className = "",
   autoFetch = true,
-  inputHeight = "50px",
+  height = "50px",
   onChange = () => {},
   error = "",
   label = "",
   labelWidth = "70px",
-  labelClass = "",
+  labelClassName = "",
+  optionsListClassName = "",
+  optionsClassName = "",
   orientation = "vertical",
   errorClass,
   disabled,
@@ -47,14 +49,14 @@ const Autocomplete = ({
   const id = useId();
   const [labelWidthValue, setLabelWidthValue] = useState();
   const [inputWidth, setInputWidth] = useState();
-  const inputHeightStyle = useResponsiveStyle(inputHeight, "h");
+  const heightStyle = useResponsiveStyle(height, "h");
   const widthStyle = useResponsiveStyle(width, "w");
   const labelWidthStyle = useResponsiveStyle(labelWidth, "w");
 
   useEffect(() => {
     setInputWidth(inputContainerRef?.current?.offsetWidth);
     setLabelWidthValue(labelRef?.current?.offsetWidth);
-  }, [width, inputHeight, labelWidth]);
+  }, [width, height, labelWidth]);
 
   useEffect(() => {
     if (options?.length > 0) {
@@ -190,7 +192,7 @@ const Autocomplete = ({
 
     const baseLabelClass = clsx(
       `text-sm select-none absolute transition-all duration-300 ease-in-out`,
-      labelClass
+      labelClassName
     );
 
     if (orientation === "vertical") {
@@ -248,45 +250,43 @@ const Autocomplete = ({
       </div>
     );
 
-  return (
-    <div
-      className={clsx(
-        { "pointer-events-none cursor-not-allowed": disabled },
-        className
-      )}
-      ref={inputContainerRef}
-      style={{ ...widthStyle, ...inputHeightStyle }}
-      onClick={() => {
-        inputRef.current.focus();
-      }}
-    >
+  const verticalAutocomplete = () => {
+    return (
       <div
         className={clsx(
-          "relative h-full",
-          {
-            "flex items-center justify-end": orientation === "horizontal",
-          },
+          "relative h-full text-lg",
+          { "pointer-events-none cursor-not-allowed ": disabled },
           className
         )}
+        ref={inputContainerRef}
+        style={{ ...widthStyle, ...heightStyle }}
+        onClick={() => {
+          inputRef.current.focus();
+        }}
       >
-        {renderLabel()}
-        <div
+        <label
+          htmlFor={id}
           className={clsx(
-            "relative bg-purple-100 hover:bg-purple-200 transition-all duration-300 border-b-2",
+            "absolute left-2 transition-all duration-300 ease-in-out z-[100]",
+            labelClassName,
             {
-              "bg-gray-200 text-gray-500 ": disabled,
-              "border-b-purple-500 bg-purple-200":
-                showOptions && !error && !disabled,
-              "border-b-purple-400": !showOptions && !error && !disabled,
-              "border-red-500 border-b-2": error && !disabled,
+              "text-dark top-0 -translate-y-full": showOptions || inputValue,
+              "top-1/2 -translate-y-1/2 text-gray-500":
+                !showOptions && !inputValue,
             }
           )}
-          style={{
-            width:
-              (showOptions || inputValue) && orientation === "horizontal"
-                ? `${inputWidth - labelWidthValue}px`
-                : "100%",
-          }}
+        >
+          {label}
+        </label>
+        <div
+          className={clsx(
+            "relative bg-gray-50 transition-all duration-300 border-b-2 w-full",
+            {
+              "cursor-not-allowed bg-gray-200 text-gray-500": disabled,
+              "border-gray-300": !showOptions && !error && !disabled,
+              "border-red-500": error && !disabled,
+            }
+          )}
         >
           {multiple && (
             <SelectedTags
@@ -305,7 +305,7 @@ const Autocomplete = ({
             clearInput={clearInput}
             loading={loading}
             showOptions={showOptions}
-            inputHeight={inputHeight}
+            height={height}
             onFocus={handleFocus}
             ref={inputRef}
             id={id}
@@ -322,14 +322,114 @@ const Autocomplete = ({
             getOptionSubLabel={getOptionSubLabel}
             getOptionsLabel={getOptionsLabel}
             removeSelectedOption={removeSelectedOption}
+            optionsListClassName={optionsListClassName}
+            optionsClassName={optionsClassName}
           />
         </div>
 
-        {/* Hiển thị thông báo lỗi nếu có */}
+        <div
+          className={clsx(
+            "w-full absolute bottom-0 left-0 h-[2px] bg-emerald transition-transform duration-300 ease-in-out",
+            {
+              "scale-x-0": !showOptions && !inputValue,
+              "scale-x-100": showOptions || inputValue,
+            }
+          )}
+        />
+
+        {error && (
+          <div className={clsx("text-red-500 text-sm mt-1 ml-2", errorClass)}>
+            {error}
+          </div>
+        )}
       </div>
-      {renderError()}
-    </div>
-  );
+    );
+  };
+
+  // return (
+  //   <div
+  //     className={clsx(
+  //       { "pointer-events-none cursor-not-allowed": disabled },
+  //       className
+  //     )}
+  //     ref={inputContainerRef}
+  //     style={{ ...widthStyle, ...heightStyle }}
+  //     onClick={() => {
+  //       inputRef.current.focus();
+  //     }}
+  //   >
+  //     <div
+  //       className={clsx(
+  //         "relative h-full",
+  //         {
+  //           "flex items-center justify-end": orientation === "horizontal",
+  //         },
+  //         className
+  //       )}
+  //     >
+  //       {renderLabel()}
+  //       <div
+  //         className={clsx(
+  //           "relative bg-purple-100 hover:bg-purple-200 transition-all duration-300 border-b-2",
+  //           {
+  //             "bg-gray-200 text-gray-500 ": disabled,
+  //             "border-b-purple-500 bg-purple-200":
+  //               showOptions && !error && !disabled,
+  //             "border-b-purple-400": !showOptions && !error && !disabled,
+  //             "border-red-500 border-b-2": error && !disabled,
+  //           }
+  //         )}
+  //         style={{
+  //           width:
+  //             (showOptions || inputValue) && orientation === "horizontal"
+  //               ? `${inputWidth - labelWidthValue}px`
+  //               : "100%",
+  //         }}
+  //       >
+  //         {multiple && (
+  //           <SelectedTags
+  //             visibleTags={visibleTags}
+  //             getOptionsLabel={getOptionsLabel}
+  //             hiddenTagCount={hiddenTagCount}
+  //             clearAllSelected={clearAllSelected}
+  //             selectedValues={selectedValues}
+  //             removeSelectedOption={removeSelectedOption}
+  //           />
+  //         )}
+
+  //         <Input
+  //           inputValue={inputValue}
+  //           handleInputChange={handleInputChange}
+  //           clearInput={clearInput}
+  //           loading={loading}
+  //           showOptions={showOptions}
+  //           height={height}
+  //           onFocus={handleFocus}
+  //           ref={inputRef}
+  //           id={id}
+  //         />
+
+  //         <OptionsList
+  //           isSelected={isSelected}
+  //           heightPerOption={heightPerOption}
+  //           loading={loading}
+  //           showOptions={showOptions}
+  //           optionsState={optionsState}
+  //           row={row}
+  //           handleOptionSelect={handleOptionSelect}
+  //           getOptionSubLabel={getOptionSubLabel}
+  //           getOptionsLabel={getOptionsLabel}
+  //           removeSelectedOption={removeSelectedOption}
+  //         />
+  //       </div>
+
+  //       {/* Hiển thị thông báo lỗi nếu có */}
+  //     </div>
+  //     {renderError()}
+  //   </div>
+  // );
+
+  return verticalAutocomplete();
 };
 
 Autocomplete.propTypes = {
@@ -346,7 +446,7 @@ Autocomplete.propTypes = {
   row: PropTypes.number,
   className: PropTypes.string,
   autoFetch: PropTypes.bool,
-  inputHeight: PropTypes.string,
+  height: PropTypes.string,
   onChange: PropTypes.func,
   error: PropTypes.string,
 };

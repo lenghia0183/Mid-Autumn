@@ -3,6 +3,7 @@ import React from "react";
 import PropTypes from "prop-types";
 import useParseDimension from "../../../hooks/useParseDimension";
 import Icon from "../../Icon";
+import clsx from "clsx";
 
 const OptionsList = ({
   isSelected,
@@ -15,20 +16,25 @@ const OptionsList = ({
   getOptionSubLabel,
   getOptionsLabel,
   removeSelectedOption,
+  optionsListClassName,
+  optionsClassName,
 }) => {
   const height = useParseDimension(heightPerOption);
   return (
     <>
       {loading && showOptions ? (
-        <div className="absolute z-10 mt-1 bg-white border border-gray-300 rounded-md shadow-lg w-full p-2 text-center">
+        <div className="absolute z-10 mt-1 bg-white-100 border border-gray-300 rounded-md shadow-lg w-full p-2 text-center">
           Đang tải...
         </div>
       ) : (
         <ul
-          className={`absolute z-10 mt-1 bg-purple border border-gray-300 rounded-sm shadow-lg transition-all duration-300 ease-in-out w-full p-y2`}
+          className={clsx(
+            `absolute z-10 mt-1 bg-white-100 border border-gray-300 rounded-sm shadow-md transition-all duration-300 ease-in-out w-full p-y2`,
+            optionsListClassName
+          )}
           style={{
             height: showOptions
-              ? `${Math.min(optionsState.length, row) * height.value}${
+              ? `${Math.min(optionsState.length, row) * height.value + 2}${
                   height.unit
                 }`
               : "0px",
@@ -42,9 +48,17 @@ const OptionsList = ({
                 key={index}
                 onClick={() => handleOptionSelect(option)}
                 style={{ height: heightPerOption }}
-                className={`cursor-pointer p-2 hover:bg-purple-100 flex items-center ${
-                  isSelected(option) ? "bg-blue-100" : ""
-                }`}
+                className={clsx(
+                  "cursor-pointer p-2 flex items-center transition duration-300 hover:text-yellow",
+                  {
+                    "bg-emerald text-white hover:!text-white":
+                      isSelected(option),
+                  },
+                  {
+                    "border-b-2": index !== optionsState.length - 1,
+                  },
+                  optionsClassName
+                )}
               >
                 <span
                   className={`flex-1 overflow-hidden whitespace-nowrap text-ellipsis`}

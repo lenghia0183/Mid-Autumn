@@ -4,7 +4,7 @@ export const PATH = {
   SIGN_UP: "/register",
   SIGN_IN: "/login",
   TEST: "/test",
-  PRODUCT: "/products",
+  PRODUCTS: "/products",
   OTHER: "/other",
   CONTACT: "/contact",
 };

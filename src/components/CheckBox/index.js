@@ -1,74 +1,80 @@
-import React, { useId } from "react";
-import PropTypes from "prop-types";
+import React, { useState } from "react";
 import clsx from "clsx";
+import useColorClasses from "../../hooks/useColorClasses";
 
-const CheckBox = ({
+const CustomCheckBox = ({
+  label = "Checkbox",
   checked = false,
-  label = "",
-  orientation = "vertical",
-  onChange = () => {},
-  className = "",
-  width = "100%",
-  inputProps,
-  disabled = false,
+  onChange,
+  borderWidth = "2px",
+  size = "20px",
+  className,
+  labelClassName,
+  borderColor = "dark",
 }) => {
+  const [isChecked, setIsChecked] = useState(checked);
+
   const handleChange = () => {
-    if (!disabled) {
-      // Prevent changes if disabled
-      const newChecked = !checked;
+    const newChecked = !isChecked;
+    setIsChecked(newChecked);
+    if (onChange) {
       onChange(newChecked);
     }
   };
 
-  const id = useId();
+  const { borderColor: newBorderColor } = useColorClasses({ borderColor });
 
   return (
-    <div style={{ width }} className={className}>
-      <div
-        className={clsx("flex w-full justify-center", {
-          "items-center": orientation === "horizontal",
-          "flex-col items-center": orientation === "vertical",
-        })}
-      >
+    <div className={clsx("flex items-center text-lg", className)}>
+      <label className="flex items-center cursor-pointer">
         <input
           type="checkbox"
-          checked={checked}
+          checked={isChecked}
           onChange={handleChange}
-          className={clsx("form-checkbox h-4 w-4 text-blue-600", {
-            "cursor-not-allowed": disabled,
-            "cursor-pointer": !disabled,
-          })}
-          disabled={disabled}
-          {...inputProps}
-          id={id}
+          className="appearance-none w-0 h-0 opacity-0 invisible display-none"
         />
-        {label && (
-          <label
-            htmlFor={id}
-            className={clsx("text-sm select-none", {
-              "ml-2": orientation === "horizontal",
-              "block mt-2": orientation === "vertical",
-              "text-gray-500 cursor-not-allowed": disabled,
-              "cursor-pointer": !disabled,
-            })}
-          >
-            {label}
-          </label>
-        )}
-      </div>
+        <div
+          className={clsx("relative", newBorderColor)}
+          style={{
+            borderWidth,
+            width: size,
+            height: size,
+          }}
+        >
+          {/* before */}
+          <span
+            className={clsx("absolute bg-dark transition-transform", {})}
+            style={{
+              width: `calc(${borderWidth} * 3)`,
+              height: borderWidth,
+              transform: `rotate(45deg) translate(calc(${borderWidth} / -2), calc(${borderWidth} / -2)) scaleX(${
+                isChecked ? 1 : 0
+              })`,
+              top: "50%",
+              left: "20%",
+              transformOrigin: "left center",
+            }}
+          ></span>
+
+          {/* affter */}
+          <span
+            className={clsx("absolute bg-dark transition-transform", {})}
+            style={{
+              width: `calc(${borderWidth} * 5)`,
+              height: borderWidth,
+              transform: `rotate(-45deg) translateY(calc(${borderWidth} * 2)) scaleX(${
+                isChecked ? 1 : 0
+              })`,
+              top: "50%",
+              left: "20%",
+              transformOrigin: "left center",
+            }}
+          ></span>
+        </div>
+        <span className={clsx("ml-2", labelClassName)}>{label}</span>
+      </label>
     </div>
   );
 };
 
-CheckBox.propTypes = {
-  checked: PropTypes.bool,
-  label: PropTypes.string,
-  orientation: PropTypes.oneOf(["vertical", "horizontal"]),
-  onChange: PropTypes.func,
-  className: PropTypes.string,
-  width: PropTypes.string,
-  inputProps: PropTypes.object,
-  disabled: PropTypes.bool,
-};
-
-export default CheckBox;
+export default CustomCheckBox;

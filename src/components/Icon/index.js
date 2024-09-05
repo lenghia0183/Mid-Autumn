@@ -17,6 +17,10 @@ import { ReactComponent as StarEmpty } from "../../asset/icons/Start-empty.svg";
 import { ReactComponent as StarHalf } from "../../asset/icons/Star-half.svg";
 import { ReactComponent as Eye } from "../../asset/icons/Eye.svg";
 import { ReactComponent as Heart } from "../../asset/icons/Heart.svg";
+import { ReactComponent as Category } from "../../asset/icons/Category.svg";
+import { ReactComponent as Coin } from "../../asset/icons/Coin.svg";
+import { ReactComponent as Vendor } from "../../asset/icons/Vendor.svg";
+import { ReactComponent as Rating } from "../../asset/icons/Rating.svg";
 
 import { ReactComponent as ArrowSlider } from "../../asset/icons/ArrowSlider.svg";
 import useParseDimension from "../../hooks/useParseDimension";
@@ -45,7 +49,10 @@ export const icons = {
   eye: Eye,
   heart: Heart,
   arrowSlider: ArrowSlider,
-
+  category: Category,
+  coin: Coin,
+  vendor: Vendor,
+  rating: Rating,
   // Add more icon components here...
 };
 
@@ -78,7 +85,7 @@ const Icon = ({
   return (
     <span
       className={clsx(
-        "x-icon inline-flex items-center justify-center ",
+        "x-icon inline-flex items-center justify-center transition duration-500",
         { "text-inherit": !newColor },
         newColor,
         className
