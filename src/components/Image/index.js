@@ -6,7 +6,7 @@ import useResponsiveStyle from "./../../hooks/useResponsiveStyle";
 const Image = (
   {
     src = images?.fallBack,
-    alt,
+    alt = "Mid Autumn",
     width = "100%",
     height = "100%",
     className,

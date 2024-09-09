@@ -8,6 +8,7 @@ import Divider from "../../../components/Devider";
 import FormikCheckBox from "./../../../components/Formik/FormikCheckBox";
 import Button from "../../../components/Button";
 import validationSchema from "./schema";
+import Accordion from "../../../components/Accordion";
 
 const ProductFilterSideBar = ({ onFilter }) => {
   const ratings = [1, 2, 3, 4, 5];
@@ -74,7 +75,7 @@ const ProductFilterSideBar = ({ onFilter }) => {
 
             <Divider color="dark-300" marginTop="10px" />
 
-            <div>
+            <Accordion minHeight="240px" buttonClassName="text-emerald">
               {categoryList.map(({ label, image }) => (
                 <React.Fragment key={label}>
                   <div className="flex items-center gap-3 p-2">
@@ -86,7 +87,7 @@ const ProductFilterSideBar = ({ onFilter }) => {
                   <Divider color="white-100" />
                 </React.Fragment>
               ))}
-            </div>
+            </Accordion>
           </div>
 
           {/* Giá sản phẩm */}
@@ -146,11 +147,13 @@ const ProductFilterSideBar = ({ onFilter }) => {
 
             <Divider color="dark-300" marginTop="10px" />
 
-            <div className="mt-3 ml-2">
-              {brandList.map(({ name, code }) => (
-                <FormikCheckBox key={code} label={name} name={code} />
-              ))}
-            </div>
+            <Accordion minHeight="180px" buttonClassName="text-emerald">
+              <div className="mt-3 ml-2">
+                {brandList.map(({ name, code }) => (
+                  <FormikCheckBox key={code} label={name} name={code} />
+                ))}
+              </div>
+            </Accordion>
           </div>
 
           {/* Đánh giá */}
@@ -220,6 +223,10 @@ const ProductFilterSideBar = ({ onFilter }) => {
               Tìm kiếm
             </Button>
           </div>
+
+          {/* Ảnh */}
+
+          <Image src={images.productFilter} className="rounded" />
         </Form>
       )}
     </Formik>

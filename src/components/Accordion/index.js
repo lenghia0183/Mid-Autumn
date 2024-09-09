@@ -1,127 +1,89 @@
-import React, { useState } from "react";
-import PropTypes from "prop-types";
+import { useState, useRef, useEffect } from "react";
+import Button from "../Button";
 import Icon from "../Icon";
 import clsx from "clsx";
-import Button from "../Button";
-
-const AccordionItem = ({
-  title,
-  children,
-  isOpen,
-  onClick,
-  iconOpen,
-  iconClosed,
-}) => (
-  <div className="border-b w-full">
-    <button
-      className={clsx(
-        "flex items-center justify-between w-full p-4 text-left focus:outline-none",
-        {
-          "border-b-2 border-b-gray-200": isOpen,
-          "border-b-2 border-b-transparent": !isOpen,
-        }
-      )}
-      onClick={onClick}
-    >
-      <span className="flex-1">{title}</span>
-      <span
-        className={`transition-transform duration-300 ${
-          isOpen ? "rotate-0" : "rotate-90"
-        }`}
-      >
-        {isOpen ? iconOpen : iconClosed}
-      </span>
-    </button>
-    <div
-      className={`overflow-hidden transition-max-height duration-300 ease-in-out ${
-        isOpen ? "max-h-screen" : "max-h-0"
-      }`}
-    >
-      <div className="p-4">{children}</div>
-    </div>
-  </div>
-);
+import useResponsiveStyle from "../../hooks/useResponsiveStyle";
+import useParseDimension from "../../hooks/useParseDimension";
 
 const Accordion = ({
-  items,
-  allowMultipleOpen,
-  iconOpen = <Icon name="arrowDown" size="1em" />,
-  iconClosed = <Icon name="arrowDown" size="1em" />,
-  width,
+  children,
+  minHeight = "100px",
+  maxHeight = "",
   className,
+  buttonClassName,
+  iconClassName,
 }) => {
-  const [openIndexes, setOpenIndexes] = useState([]);
+  const [isOpen, setIsOpen] = useState(false);
+  const [contentHeight, setContentHeight] = useState(0);
+  const contentRef = useRef(null);
 
-  const handleToggle = (index) => {
-    if (allowMultipleOpen) {
-      setOpenIndexes((prevIndexes) =>
-        prevIndexes.includes(index)
-          ? prevIndexes.filter((i) => i !== index)
-          : [...prevIndexes, index]
-      );
-    } else {
-      setOpenIndexes((prevIndexes) =>
-        prevIndexes.includes(index) ? [] : [index]
-      );
+  const { "max-height": newMaxHeightStyle } = useResponsiveStyle(
+    maxHeight,
+    "max-h"
+  );
+
+  const { "min-height": newMinHeightStyle } = useResponsiveStyle(
+    minHeight,
+    "min-h"
+  );
+
+  const { value: newMinHeightStyleValue } =
+    useParseDimension(newMinHeightStyle);
+
+  useEffect(() => {
+    if (contentRef.current) {
+      setContentHeight(contentRef.current.scrollHeight);
     }
+  }, [isOpen]);
+
+  const toggleAccordion = () => {
+    setIsOpen(!isOpen);
   };
 
-  const toggleAll = (open) => {
-    setOpenIndexes(open ? items.map((_, i) => i) : []);
-  };
+  // Điều kiện để hiển thị nút Xem thêm / Thu gọn
+  const showToggleButton = contentHeight > newMinHeightStyleValue;
 
   return (
-    <div className={`accordion ${className}`} style={{ width }}>
-      {items.length > 1 && (
-        <div className="flex justify-between mb-4">
-          <Button variant="outlined" onClick={() => toggleAll(true)}>
-            Mở Tất Cả
-          </Button>
-          <Button
-            variant="text"
-            onClick={() => toggleAll(false)}
-            bgColor="bg-transparent"
-            textColor="text-red-300"
-          >
-            Đóng Tất Cả
-          </Button>
-        </div>
-      )}
-      {items.map((item, index) => (
-        <AccordionItem
-          key={index}
-          title={item.title}
-          isOpen={openIndexes.includes(index)}
-          onClick={() => handleToggle(index)}
-          iconOpen={iconOpen}
-          iconClosed={iconClosed}
+    <div className={clsx("w-full", className)}>
+      <div
+        ref={contentRef}
+        className="transition-max-height duration-300 ease-in-out overflow-hidden"
+        style={{
+          maxHeight: isOpen
+            ? newMaxHeightStyle || `${contentHeight}px`
+            : newMinHeightStyle,
+        }}
+      >
+        {children}
+      </div>
+
+      {/* Hiển thị nút Xem thêm / Thu gọn chỉ khi contentHeight lớn hơn minHeight */}
+      {showToggleButton && (
+        <Button
+          onClick={toggleAccordion}
+          variant="text"
+          bgHoverColor="transparent"
+          className={clsx("mx-auto", buttonClassName)}
+          startIcon={
+            <Icon
+              name="arrowDown"
+              size="1em"
+              className={clsx(
+                "transition-transform ease-in-out duration-500",
+                {
+                  "rotate-180": isOpen,
+                  "rotate-0": !isOpen,
+                },
+                iconClassName
+              )}
+            />
+          }
         >
-          {item.content}
-        </AccordionItem>
-      ))}
+          {isOpen ? "Thu gọn" : "Xem thêm"}
+        </Button>
+      )}
     </div>
   );
-};
-
-Accordion.propTypes = {
-  items: PropTypes.arrayOf(
-    PropTypes.shape({
-      title: PropTypes.string.isRequired,
-      content: PropTypes.node.isRequired,
-    })
-  ).isRequired,
-  allowMultipleOpen: PropTypes.bool,
-  iconOpen: PropTypes.node,
-  iconClosed: PropTypes.node,
-};
-
-AccordionItem.propTypes = {
-  title: PropTypes.string.isRequired,
-  children: PropTypes.node.isRequired,
-  isOpen: PropTypes.bool.isRequired,
-  onClick: PropTypes.func.isRequired,
-  iconOpen: PropTypes.node.isRequired,
-  iconClosed: PropTypes.node.isRequired,
 };
 
 export default Accordion;

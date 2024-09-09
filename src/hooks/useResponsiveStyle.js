@@ -38,13 +38,28 @@ const parseStyleString = (styleString, windowWidth, failBackProperty) => {
   const defaultStyles = {};
 
   entries?.forEach((entry) => {
+    console.log("entry: " + entry);
     const [breakpoint, classValue] = entry?.split(":");
 
+    console.log("breakpoint: " + breakpoint, "classValue: " + classValue);
+
     if (breakpoint && classValue && breakpoints[breakpoint]) {
-      const [property, value] = classValue?.split("-");
+      let property = "";
+      let value = "";
+
+      // const [property, value] = classValue?.split("-")?.length === 2;
+      const classValueArray = classValue?.split("-");
+      property =
+        classValueArray.length === 2
+          ? classValueArray[0]
+          : classValueArray.slice(0, -1)?.join("-");
+
+      value = classValueArray[classValueArray.length - 1];
+      console.log("property: " + property + " value: " + value);
 
       if (breakpoints[breakpoint] <= windowWidth) {
         const cssProperty = propertyMapping[property];
+        console.log("css property: " + cssProperty);
         const cssValue = valueMapping[value] || value?.slice(1, -1);
         if (
           !appliedStyles[cssProperty] ||
@@ -57,7 +72,13 @@ const parseStyleString = (styleString, windowWidth, failBackProperty) => {
         }
       }
     } else if (!breakpoints[breakpoint]) {
-      const [property, value] = entry?.split("-");
+      let property = "";
+      let value = "";
+
+      const entryArray = entry?.split("-");
+      property = entryArray.slice(0, -1).join("-");
+      value = entryArray[entryArray.length - 1];
+      // const [property, value] = entry?.split("-");
 
       if (property && value) {
         const cssProperty = propertyMapping[property];
