@@ -225,7 +225,6 @@ const ProductFilterSideBar = ({ onFilter }) => {
           </div>
 
           {/* Ảnh */}
-
           <Image src={images.productFilter} className="rounded" />
         </Form>
       )}

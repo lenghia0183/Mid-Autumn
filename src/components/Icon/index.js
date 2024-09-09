@@ -21,6 +21,10 @@ import { ReactComponent as Category } from "../../asset/icons/Category.svg";
 import { ReactComponent as Coin } from "../../asset/icons/Coin.svg";
 import { ReactComponent as Vendor } from "../../asset/icons/Vendor.svg";
 import { ReactComponent as Rating } from "../../asset/icons/Rating.svg";
+import { ReactComponent as FirstPage } from "../../asset/icons/FirstPage.svg";
+import { ReactComponent as LastPage } from "../../asset/icons/LastPage.svg";
+import { ReactComponent as NextPage } from "../../asset/icons/NextPage.svg";
+import { ReactComponent as PreviousPage } from "../../asset/icons/PrevPage.svg";
 
 import { ReactComponent as ArrowSlider } from "../../asset/icons/ArrowSlider.svg";
 import useParseDimension from "../../hooks/useParseDimension";
@@ -53,6 +57,10 @@ export const icons = {
   coin: Coin,
   vendor: Vendor,
   rating: Rating,
+  firstPage: FirstPage,
+  lastPage: LastPage,
+  nextPage: NextPage,
+  previousPage: PreviousPage,
   // Add more icon components here...
 };
 
@@ -80,12 +88,13 @@ const Icon = ({
   const style = {
     ...sizeStyle,
     color: newColor,
+    strokeWidth: strokeWidth,
   };
 
   return (
     <span
       className={clsx(
-        "x-icon inline-flex items-center justify-center transition duration-500",
+        "x-icon inline-flex items-center justify-center transition duration-300",
         { "text-inherit": !newColor },
         newColor,
         className
@@ -94,11 +103,7 @@ const Icon = ({
       {...props}
     >
       {IconComponent && (
-        <IconComponent
-          className="w-full h-full"
-          stroke="currentColor"
-          strokeWidth={strokeWidth}
-        />
+        <IconComponent className="w-full h-full" stroke="currentColor" />
       )}
     </span>
   );

@@ -1,8 +1,10 @@
+import { useState } from "react";
 import images from "../../asset/images";
 import Breadcrumb from "../../components/Breadcrumb";
 import Footer from "../../components/Footer";
 import Header from "../../components/Header";
 import ItemCard from "../../components/ItemCard";
+import Pagination from "../../components/Pagination";
 import ProductFilterSideBar from "./ProductFilterSideBar";
 import ProductFilterTopBar from "./ProductFIlterTopBar";
 
@@ -111,11 +113,23 @@ function Products() {
     },
   ];
 
+  const [currentPage, setCurrentPage] = useState(0);
+  const itemsPerPage = 6;
+
+  const handlePageChange = ({ selected }) => {
+    setCurrentPage(selected);
+  };
+
+  const paginatedItems = items.slice(
+    currentPage * itemsPerPage,
+    (currentPage + 1) * itemsPerPage
+  );
+
   return (
     <>
       <Header />
       <Breadcrumb items={breadcrumbItems} />
-      <div className="container pt-14">
+      <div className="container py-14">
         <div className="grid grid-cols-12 gap-4">
           {/* Phần lọc sản phẩm chiếm 3 cột */}
           <div className="col-span-3">
@@ -132,6 +146,13 @@ function Products() {
                 <ItemCard key={item.id} product={item} />
               ))}
             </div>
+
+            <Pagination
+              pageCount={20}
+              onPageChange={handlePageChange}
+              forcePage={currentPage}
+              className="ml-auto mt-10"
+            />
           </div>
         </div>
       </div>
