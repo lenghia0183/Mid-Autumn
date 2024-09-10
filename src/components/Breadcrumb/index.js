@@ -1,8 +1,10 @@
 import React from "react";
 import { Link } from "react-router-dom";
 import images from "../../asset/images";
+import { useTranslation } from "react-i18next";
 
 const Breadcrumb = ({ items }) => {
+  const { t } = useTranslation();
   return (
     <div
       style={{
@@ -22,21 +24,21 @@ const Breadcrumb = ({ items }) => {
       >
         <div className="flex flex-col items-center justify-center">
           <h2 className="text-[50px] font-medium text-white-100">
-            {items[items.length - 1].label.toUpperCase()}
+            {t(items[items.length - 1].label).toUpperCase()}
           </h2>
           <nav className="flex items-center space-x-2 text-white-100 m-auto">
             {items.map((item, index) => (
               <React.Fragment key={index}>
                 {index < items.length - 1 ? (
                   <Link
-                    to={item.href}
+                    to={item.to}
                     className="cursor-pointer hover:text-yellow text-xl font-medium"
                   >
-                    {item.label}
+                    {t(item.label)}
                   </Link>
                 ) : (
                   <span className="text-yellow text-xl font-medium">
-                    {item.label}
+                    {t(item.label)}
                   </span>
                 )}
                 {index < items.length - 1 && (

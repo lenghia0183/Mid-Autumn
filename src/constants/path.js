@@ -1,8 +1,9 @@
 export const PATH = {
   HOME: "/",
   ABOUT: "/about",
-  SIGN_UP: "/register",
-  LOGIN: "/login",
+  AUTH: "/auth",
+  LOGIN: "/auth/login",
+  SIGN_UP: "/auth/sign-up",
   FORGOT_PASSWORD: "/forgot-password",
   TEST: "/test",
   PRODUCTS: "/products",
@@ -13,8 +14,8 @@ export const PATH = {
 export const PAGE_TITLE = {
   HOME: "pageTitle.home",
   ABOUT: "pageTitle.about",
-  SIGN_UP: "pageTitle.signup",
-  SIGN_IN: "pageTitle.signIn",
+  SIGN_UP: "pageTitle.signUp",
+  LOGIN: "pageTitle.signIn",
   TEST: "pageTitle.test",
   PRODUCT: "pageTitle.product",
   OTHER: "pageTitle.other",

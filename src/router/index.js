@@ -8,8 +8,11 @@ import Test from "../pages/Test";
 import Products from "../pages/Products";
 import MainLayout from "../layouts/MainLayout";
 import Login from "../pages/Login";
+import SignUp from "../pages/SignUp";
+import AuthLayout from "../layouts/AuthLayout";
 
 const router = createBrowserRouter([
+  // main layout
   {
     path: "/",
     element: <MainLayout />,
@@ -27,15 +30,29 @@ const router = createBrowserRouter([
         element: <About />,
       },
       {
-        path: PATH.LOGIN,
-        element: <Login />,
-      },
-      {
         path: PATH.TEST,
         element: <Test />,
       },
     ],
   },
+
+  // auth layout
+  {
+    path: PATH.AUTH,
+    element: <AuthLayout />,
+    children: [
+      {
+        path: PATH.LOGIN,
+        element: <Login />,
+      },
+      {
+        path: PATH.SIGN_UP,
+        element: <SignUp />,
+      },
+    ],
+  },
+
+  // not found
   {
     path: "*",
     element: <NotFound />,

@@ -5,11 +5,12 @@ import ItemCard from "../../components/ItemCard";
 import Pagination from "../../components/Pagination";
 import ProductFilterSideBar from "./ProductFilterSideBar";
 import ProductFilterTopBar from "./ProductFIlterTopBar";
+import { PATH } from "../../constants/path";
 
 function Products() {
   const breadcrumbItems = [
-    { label: "Trang chủ", href: "/" },
-    { label: "Sản phẩm", href: "/products" },
+    { label: "Trang chủ", to: PATH.HOME },
+    { label: "Sản phẩm", to: PATH.PRODUCTS },
   ];
 
   const items = [
