@@ -1,8 +1,6 @@
 import React from "react";
 
 import { useTranslation } from "react-i18next";
-import Header from "./../../components/Header";
-import Footer from "./../../components/Footer";
 import Banner from "../../components/Banner";
 import images from "../../asset/images";
 import Button from "../../components/Button";
@@ -18,7 +16,6 @@ const Home = () => {
 
   return (
     <>
-      <Header />
       <Banner />
       <main className="py-10 md:py-20 bg-white">
         {/* section 1 */}
@@ -160,7 +157,6 @@ const Home = () => {
         <Email />
         <Comment />
       </main>
-      <Footer />
     </>
   );
 };

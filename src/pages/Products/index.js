@@ -1,8 +1,6 @@
 import { useState } from "react";
 import images from "../../asset/images";
 import Breadcrumb from "../../components/Breadcrumb";
-import Footer from "../../components/Footer";
-import Header from "../../components/Header";
 import ItemCard from "../../components/ItemCard";
 import Pagination from "../../components/Pagination";
 import ProductFilterSideBar from "./ProductFilterSideBar";
@@ -114,20 +112,13 @@ function Products() {
   ];
 
   const [currentPage, setCurrentPage] = useState(0);
-  const itemsPerPage = 6;
 
   const handlePageChange = ({ selected }) => {
     setCurrentPage(selected);
   };
 
-  const paginatedItems = items.slice(
-    currentPage * itemsPerPage,
-    (currentPage + 1) * itemsPerPage
-  );
-
   return (
     <>
-      <Header />
       <Breadcrumb items={breadcrumbItems} />
       <div className="container py-14">
         <div className="grid grid-cols-12 gap-4">
@@ -156,7 +147,6 @@ function Products() {
           </div>
         </div>
       </div>
-      <Footer />
     </>
   );
 }
