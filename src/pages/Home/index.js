@@ -112,9 +112,7 @@ const Home = () => {
           </div>
         </section>
 
-        <section className="container mt-20">
-          <PopularDishes />
-        </section>
+        <PopularDishes />
 
         <section
           style={{

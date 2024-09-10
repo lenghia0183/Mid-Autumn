@@ -54,7 +54,7 @@ const ProductFilterSideBar = ({ onFilter }) => {
       {({ setFieldValue, values }) => (
         <Form className="space-y-4">
           {/* Tìm kiếm */}
-          <div className="h-[110px] flex items-center">
+          <div className="h-[120px] flex items-center">
             <FormikTextField
               name="search"
               rightIcon={<Icon name="search" color="white" />}

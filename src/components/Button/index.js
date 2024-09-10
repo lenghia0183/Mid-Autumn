@@ -30,7 +30,7 @@ const Button = ({
   const isLink = Boolean(to || href);
 
   const baseClasses =
-    "rounded focus:outline-none transition duration-500 flex w-fit items-center justify-center cursor-pointer";
+    "rounded focus:outline-none transition duration-300 flex w-fit items-center justify-center cursor-pointer";
   const sizeClasses = {
     small: "px-2 py-1 text-sm",
     medium: "px-5 py-2 text-base",
@@ -38,8 +38,8 @@ const Button = ({
     zeroPadding: "p-0",
   };
   const defaultTextContainedColor = isLink ? "text-blue" : "text-white";
-  const defaultBgContainedColor = isLink ? "" : "bg-blue-500";
-  const defaultBgHoverContainedColor = isLink ? "" : "hover:bg-blue-300";
+  const defaultBgContainedColor = isLink ? "" : "bg-emerald";
+  const defaultBgHoverContainedColor = isLink ? "" : "hover:bg-yellow";
 
   const defaultTextColor = "text-blue-500";
   const defaultBorderColor = "border-blue-500";
