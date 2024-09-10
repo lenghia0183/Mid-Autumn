@@ -25,6 +25,8 @@ import { ReactComponent as FirstPage } from "../../asset/icons/FirstPage.svg";
 import { ReactComponent as LastPage } from "../../asset/icons/LastPage.svg";
 import { ReactComponent as NextPage } from "../../asset/icons/NextPage.svg";
 import { ReactComponent as PreviousPage } from "../../asset/icons/PrevPage.svg";
+import { ReactComponent as Facebook } from "../../asset/icons/Facebook.svg";
+import { ReactComponent as Google } from "../../asset/icons/Google.svg";
 
 import { ReactComponent as ArrowSlider } from "../../asset/icons/ArrowSlider.svg";
 import useParseDimension from "../../hooks/useParseDimension";
@@ -61,6 +63,8 @@ export const icons = {
   lastPage: LastPage,
   nextPage: NextPage,
   previousPage: PreviousPage,
+  facebook: Facebook,
+  google: Google,
   // Add more icon components here...
 };
 

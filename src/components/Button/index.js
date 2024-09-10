@@ -19,6 +19,7 @@ const Button = ({
   endIcon,
   borderColor,
   className,
+  iconClassName = "",
   width,
   rounded,
   full,
@@ -105,11 +106,18 @@ const Button = ({
       ) : (
         <>
           {startIcon && (
-            <span className="mr-2 flex items-center text-inherit">
+            <span
+              className={clsx(
+                "mr-2 flex items-center text-inherit",
+                iconClassName
+              )}
+            >
               {startIcon}
             </span>
           )}
-          <span className="flex-1 text-inherit">{children}</span>
+          <span className={clsx("text-inherit", { iconClassName })}>
+            {children}
+          </span>
           {endIcon && <span className="ml-2 flex items-center">{endIcon}</span>}
         </>
       )}

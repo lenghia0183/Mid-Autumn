@@ -62,6 +62,12 @@ const colors = {
     500: "#ffb307",
     hover: "#f9c85b",
   },
+  facebook: {
+    DEFAULT: "#3b5998",
+  },
+  google: {
+    DEFAULT: "#dc4e41",
+  },
 };
 
 const colorMap = Object.keys(colors).reduce((map, color) => {
