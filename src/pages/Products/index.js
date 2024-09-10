@@ -77,7 +77,7 @@ function Products() {
       alt: "Banner 6",
       state: 1,
       brand: "Thủ đô",
-      discount: 3,
+      discount: 0,
     },
   ];
 
