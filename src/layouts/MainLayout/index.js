@@ -1,8 +1,9 @@
 // src/layouts/MainLayout.jsx
 import React from "react";
 import { Outlet } from "react-router-dom";
-import Header from "../components/Header";
-import Footer from "../components/Footer";
+import Header from "./../../components/Header/index";
+import Footer from "./../../components/Footer/index";
+import GoToTop from "../../components/GoToTop";
 
 const MainLayout = () => {
   return (
@@ -12,6 +13,7 @@ const MainLayout = () => {
         <Outlet />
       </main>
       <Footer />
+      <GoToTop />
     </div>
   );
 };
