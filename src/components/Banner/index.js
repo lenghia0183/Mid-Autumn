@@ -5,6 +5,7 @@ import "slick-carousel/slick/slick-theme.css";
 import images from "../../asset/images";
 import Button from "./../Button/index";
 import { useTranslation } from "react-i18next";
+import { PATH } from "../../constants/path";
 
 const bannerData = [
   {
@@ -69,7 +70,7 @@ const Banner = () => {
       ></div>
 
       <div
-        className="-translate-y-1/2 absolute top-1/2 right-[20%] w-[750px] p-[30px]"
+        className="-translate-y-1/2 absolute top-1/2 right-[15%] w-[750px] p-[30px]"
         style={{ backgroundColor: "rgba(0, 0, 0, 0.3)" }}
       >
         <h1 className="text-white text-[50px] font-medium hover:text-yellow text-center duration-500">
@@ -79,6 +80,7 @@ const Banner = () => {
           {t("banner.desc")}
         </p>
         <Button
+          to={PATH.PRODUCTS}
           rounded
           bgColor="yellow"
           textColor="dark"
