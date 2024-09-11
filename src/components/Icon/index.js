@@ -27,6 +27,8 @@ import { ReactComponent as NextPage } from "../../asset/icons/NextPage.svg";
 import { ReactComponent as PreviousPage } from "../../asset/icons/PrevPage.svg";
 import { ReactComponent as Facebook } from "../../asset/icons/Facebook.svg";
 import { ReactComponent as Google } from "../../asset/icons/Google.svg";
+import { ReactComponent as showPassword } from "../../asset/icons/ShowPassword.svg";
+import { ReactComponent as hidePassword } from "../../asset/icons/HidePassword.svg";
 
 import { ReactComponent as ArrowSlider } from "../../asset/icons/ArrowSlider.svg";
 import useParseDimension from "../../hooks/useParseDimension";
@@ -65,6 +67,8 @@ export const icons = {
   previousPage: PreviousPage,
   facebook: Facebook,
   google: Google,
+  showPassword: showPassword,
+  hidePassword: hidePassword,
   // Add more icon components here...
 };
 

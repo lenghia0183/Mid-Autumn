@@ -28,7 +28,7 @@ const initialValues = {
 };
 
 function SignUp() {
-  const handleSubmit = (values, { resetForm }) => {
+  const handleSubmit = (values) => {
     console.log("Submitted values:", values);
     // Xử lý gửi form ở đây
   };
@@ -65,6 +65,7 @@ function SignUp() {
               label="Mật khẩu"
               type="password"
               className="mt-10"
+              rightIconClassName="text-gray-500"
             />
 
             <FormikTextField
@@ -72,6 +73,7 @@ function SignUp() {
               label="Xác nhận mật khẩu"
               type="password"
               className="mt-10"
+              rightIconClassName="text-gray-500"
             />
 
             <div className="flex items-center text-lg mt-5">

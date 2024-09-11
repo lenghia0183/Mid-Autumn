@@ -46,6 +46,7 @@ function Login() {
             label="Mật khẩu"
             type="password"
             className="mt-10"
+            rightIconClassName="!text-gray-500"
           />
 
           <Button type="submit" className="mt-10 px-8 py-3 !text-xl">
@@ -70,26 +71,26 @@ function Login() {
               Đăng ký ngay
             </Button>
           </div>
-
-          <div className="flex w-full gap-2 mt-4">
-            <Button
-              className="flex-1 text-lg w-full"
-              bgColor="facebook"
-              startIcon={<Icon name="facebook" size={1} />}
-            >
-              Facebook
-            </Button>
-
-            <Button
-              className="flex-1 text-lg w-full"
-              bgColor="google"
-              startIcon={<Icon name="google" size={1} />}
-            >
-              Google
-            </Button>
-          </div>
         </Form>
       </Formik>
+
+      <div className="flex w-full gap-2 mt-4">
+        <Button
+          className="flex-1 text-lg w-full"
+          bgColor="facebook"
+          startIcon={<Icon name="facebook" size={1} />}
+        >
+          Facebook
+        </Button>
+
+        <Button
+          className="flex-1 text-lg w-full"
+          bgColor="google"
+          startIcon={<Icon name="google" size={1} />}
+        >
+          Google
+        </Button>
+      </div>
     </>
   );
 }

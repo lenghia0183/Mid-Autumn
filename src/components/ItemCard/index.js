@@ -52,7 +52,7 @@ const ItemCard = ({ product, className }) => {
       {/* Hiển thị tình trạng hàng */}
       <div
         className={clsx(
-          "absolute top-4 -left-[2px] z-50 w-fit p-2 rounded-br-lg text-white font-medium opacity-90",
+          "absolute top-4 -left-[2px] z-[2] w-fit p-2 rounded-br-lg text-white font-medium opacity-90",
           state === 1 ? "bg-emerald" : "bg-gray-400"
         )}
       >
@@ -68,7 +68,7 @@ const ItemCard = ({ product, className }) => {
 
       {/* Hiển thị discount nếu có */}
       {discount > 0 && (
-        <div className="absolute top-4 right-4 z-50 w-[50px] h-[50px] flex items-center justify-center rounded-full bg-gray-400 text-white font-medium opacity-90">
+        <div className="absolute top-4 right-4 z-[2] w-[50px] h-[50px] flex items-center justify-center rounded-full bg-gray-400 text-white font-medium opacity-90">
           -{discount}%
         </div>
       )}

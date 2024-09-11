@@ -1,7 +1,8 @@
-import React, { forwardRef, useId, useState, useEffect, useRef } from "react";
+import React, { forwardRef, useId, useState } from "react";
 import PropTypes from "prop-types";
 import clsx from "clsx";
 import useResponsiveStyle from "../../hooks/useResponsiveStyle";
+import Icon from "../Icon"; // Giả sử bạn có một component Icon để render biểu tượng
 
 const TextField = forwardRef(
   (
@@ -15,40 +16,29 @@ const TextField = forwardRef(
       className = "",
       width = "100%",
       height = "50px",
-      labelWidth = "70px",
+      labelWidth = "120px",
       allow,
       inputProps,
-      inputClass = "",
-      labelClass = "",
+      inputClassName = "",
+      labelClassName = "",
       errorClass = "",
       disabled = false,
       rightIcon = null,
-      rightIconClass = "",
+      rightIconClassName = "",
       onFocus = () => {},
       onBlur = () => {},
+
       orientation = "vertical", // or "horizontal"
     },
     inputRef
   ) => {
     const id = useId();
     const [isFocused, setIsFocused] = useState(false);
+    const [showPassword, setShowPassword] = useState(false); // Trạng thái cho hiển thị mật khẩu
 
     const widthStyle = useResponsiveStyle(width, "w");
     const heightStyle = useResponsiveStyle(height, "h");
-
-    const inputContainerRef = useRef();
-    const labelRef = useRef();
-
-    const [inputWidth, setInputWidth] = useState();
-    const [labelWidthValue, setLabelWidthValue] = useState();
     const labelWidthStyle = useResponsiveStyle(labelWidth, "w");
-
-    useEffect(() => {
-      if (orientation === "horizontal") {
-        setInputWidth(inputContainerRef?.current?.offsetWidth);
-        setLabelWidthValue(labelRef?.current?.offsetWidth);
-      }
-    }, [width, height, labelWidth, orientation]);
 
     const handleChange = (e) => {
       let newValue = e.target.value;
@@ -68,6 +58,45 @@ const TextField = forwardRef(
       setIsFocused(false);
     };
 
+    const togglePasswordVisibility = () => {
+      setShowPassword((prev) => !prev);
+    };
+
+    const inputType = type === "password" && showPassword ? "text" : type;
+
+    const renderRightIcon = () => {
+      if (type === "password") {
+        return (
+          <div
+            className={clsx(
+              "absolute right-0 p-2 inset-y-0 flex items-center cursor-pointer",
+              rightIconClassName
+            )}
+            onClick={togglePasswordVisibility}
+          >
+            <Icon
+              name={showPassword ? "hidePassword" : "showPassword"}
+              strokeWidth={0.1}
+              size="1.5em"
+            />
+          </div>
+        );
+      }
+
+      return (
+        rightIcon && (
+          <div
+            className={clsx(
+              "absolute right-0 p-2 inset-y-0 flex items-center",
+              rightIconClassName
+            )}
+          >
+            {rightIcon}
+          </div>
+        )
+      );
+    };
+
     const verticalInput = (
       <>
         <div
@@ -78,7 +107,7 @@ const TextField = forwardRef(
             htmlFor={id}
             className={clsx(
               "absolute left-2 transition-all duration-300 ease-in-out z-[100]",
-              labelClass,
+              labelClassName,
               {
                 "text-gray-500": !isFocused && !value,
                 "text-dark top-0 -translate-y-full": isFocused || value,
@@ -89,11 +118,11 @@ const TextField = forwardRef(
             {label}
           </label>
 
-          <div className={clsx("relative overflow-hidden", inputClass)}>
+          <div className={clsx("relative overflow-hidden", inputClassName)}>
             <input
               id={id}
               ref={inputRef}
-              type={type}
+              type={inputType}
               value={value}
               placeholder={placeholder}
               onChange={handleChange}
@@ -111,27 +140,20 @@ const TextField = forwardRef(
               style={{ ...heightStyle }}
               {...inputProps}
             />
-            {rightIcon && (
-              <div
-                className={clsx(
-                  "absolute right-0 p-2 inset-y-0 flex items-center",
-                  rightIconClass
-                )}
-              >
-                {rightIcon}
-              </div>
-            )}
+            {renderRightIcon()}
 
             {/* underline */}
-            <div
-              className={clsx(
-                "w-full absolute bottom-0 left-0 h-[2px] bg-emerald transition-transform duration-300 ease-in-out",
-                {
-                  "scale-x-0": !isFocused && !value,
-                  "scale-x-100": isFocused || value,
-                }
-              )}
-            />
+            {!error && (
+              <div
+                className={clsx(
+                  "w-full absolute bottom-0 left-0 h-[2px] bg-emerald transition-transform duration-300 ease-in-out",
+                  {
+                    "scale-x-0": !isFocused && !value,
+                    "scale-x-100": isFocused || value,
+                  }
+                )}
+              />
+            )}
           </div>
         </div>
 
@@ -144,82 +166,68 @@ const TextField = forwardRef(
     );
 
     const horizontalInput = (
-      <div
-        className={clsx(className, "relative flex items-center")}
-        style={{ ...widthStyle }}
-      >
-        <label
-          htmlFor={id}
-          ref={labelRef}
-          style={{ ...labelWidthStyle }}
-          className={clsx(
-            "absolute left-0 top-1/2 transform -translate-y-1/2 transition-all duration-300 ease-in-out",
-            labelClass,
-            {
-              "text-gray-500": !isFocused && !value,
-              "text-purple-500 top-[-20px] text-sm": isFocused || value,
-              "top-1/2": !isFocused && !value,
-            }
-          )}
-        >
-          {label}
-        </label>
+      <>
         <div
-          ref={inputContainerRef}
-          className={clsx("flex-grow relative", {
-            "ml-[70px]": isFocused || value,
-          })}
+          className={clsx(className, "relative flex items-center text-lg")}
+          style={{ ...widthStyle }}
         >
-          <input
-            id={id}
-            ref={inputRef}
-            type={type}
-            value={value}
-            placeholder={placeholder}
-            onChange={handleChange}
-            onFocus={handleFocus}
-            onBlur={handleBlur}
-            disabled={disabled}
-            className={clsx(
-              "w-full border-none border-b-2 bg-transparent outline-none",
-              {
-                "cursor-not-allowed bg-gray-200 text-gray-500": disabled,
-                "focus:border-b-2 focus:border-purple-500": !disabled && !error,
-                "border-red-500": error,
-                "border-gray-300": !error,
-              },
-              inputClass
-            )}
-            style={{ padding: "5px 0", ...heightStyle }}
-            {...inputProps}
-          />
+          <label
+            htmlFor={id}
+            style={{ ...labelWidthStyle }}
+            className={clsx("", labelClassName)}
+          >
+            {label}
+          </label>
           <div
             className={clsx(
-              "absolute bottom-0 left-0 h-[2px] bg-purple-500 transition-transform duration-300 ease-in-out",
-              {
-                "scale-x-0": !isFocused && !value,
-                "scale-x-100": isFocused || value,
-              }
+              "flex-shrink-0 flex-grow relative ml-4",
+              inputClassName
             )}
-            style={{ width: "100%" }}
-          />
-          {rightIcon && (
-            <div
+          >
+            <input
+              id={id}
+              ref={inputRef}
+              type={inputType}
+              value={value}
+              placeholder={placeholder}
+              onChange={handleChange}
+              onFocus={handleFocus}
+              onBlur={handleBlur}
+              disabled={disabled}
               className={clsx(
-                "absolute right-0 inset-y-0 flex items-center",
-                rightIconClass
+                "w-full border-b-2 bg-transparent outline-none p-2",
+                {
+                  "cursor-not-allowed bg-gray-200 text-gray-500": disabled,
+                  "border-red-500": error,
+                  "border-gray-300": !error,
+                }
               )}
-            >
-              {rightIcon}
-            </div>
-          )}
+              style={{ ...heightStyle }}
+              {...inputProps}
+            />
+
+            {/* underline */}
+            {!error && (
+              <div
+                className={clsx(
+                  "w-full absolute bottom-0 left-0 h-[2px] bg-emerald transition-transform duration-300 ease-in-out",
+                  {
+                    "scale-x-0": !isFocused && !value,
+                    "scale-x-100": isFocused || value,
+                  }
+                )}
+              />
+            )}
+
+            {renderRightIcon()}
+          </div>
         </div>
         {error && (
           <div className={clsx("text-red-500 text-sm mt-1", errorClass)}>
             {error}
           </div>
         )}
-      </div>
+      </>
     );
 
     return orientation === "vertical" ? verticalInput : horizontalInput;
@@ -239,12 +247,12 @@ TextField.propTypes = {
   labelWidth: PropTypes.string,
   allow: PropTypes.instanceOf(RegExp),
   inputProps: PropTypes.object,
-  inputClass: PropTypes.string,
-  labelClass: PropTypes.string,
+  inputClassName: PropTypes.string,
+  labelClassName: PropTypes.string,
   errorClass: PropTypes.string,
   disabled: PropTypes.bool,
   rightIcon: PropTypes.node,
-  rightIconClass: PropTypes.string,
+  rightIconClassName: PropTypes.string,
   onFocus: PropTypes.func,
   onBlur: PropTypes.func,
   orientation: PropTypes.oneOf(["vertical", "horizontal"]),

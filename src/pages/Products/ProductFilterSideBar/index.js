@@ -58,9 +58,9 @@ const ProductFilterSideBar = ({ onFilter }) => {
             <FormikTextField
               name="search"
               rightIcon={<Icon name="search" color="white" />}
-              rightIconClass="bg-emerald"
+              rightIconClassName="bg-emerald"
               label="Tìm kiếm"
-              inputClass="rounded"
+              inputClassName="rounded"
             />
           </div>
 
