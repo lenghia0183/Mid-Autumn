@@ -135,7 +135,7 @@ const DrawerMenu = ({
     durationMap[animationDuration],
     {
       "opacity-0 pointer-events-none": !open,
-      "opacity-100 z-10": open,
+      "opacity-100 z-[1000]": open,
     }
   );
 
