@@ -14,7 +14,7 @@ import Dialog from "../../components/Diaglog";
 
 function Cart() {
   const [openDialog, setOpenDialog] = useState(false);
-  const [itemToDeleteIndex, setItemToDeleteIndex] = useState(null); // Thêm state để lưu chỉ số sản phẩm cần xóa
+  const [itemToDeleteIndex, setItemToDeleteIndex] = useState(null);
 
   const breadcrumbCart = [
     {
@@ -63,15 +63,15 @@ function Cart() {
 
   const handleCloseDialog = () => {
     setOpenDialog(false);
-    setItemToDeleteIndex(null); // Đặt lại chỉ số sản phẩm cần xóa khi đóng dialog
+    setItemToDeleteIndex(null);
   };
 
   const handleConfirmDelete = (arrayHelpers) => {
     if (itemToDeleteIndex !== null) {
-      arrayHelpers.remove(itemToDeleteIndex); // Xóa sản phẩm khỏi giỏ hàng
+      arrayHelpers.remove(itemToDeleteIndex);
     }
     setOpenDialog(false);
-    setItemToDeleteIndex(null); // Đặt lại chỉ số sản phẩm cần xóa
+    setItemToDeleteIndex(null);
   };
 
   return (
@@ -143,7 +143,7 @@ function Cart() {
                                   <IconButton
                                     iconName="bin"
                                     textColor="dark-500"
-                                    onClick={() => handleOpenDialog(index)} // Gọi hàm mở dialog và truyền index sản phẩm
+                                    onClick={() => handleOpenDialog(index)}
                                   >
                                     Xóa
                                   </IconButton>
