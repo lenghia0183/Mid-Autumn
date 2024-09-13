@@ -89,14 +89,13 @@ function Products() {
   };
 
   return (
-    <>
+    <div
+      style={{
+        backgroundImage: `url(${images.productPageBg})`,
+      }}
+    >
       <Breadcrumb items={breadcrumbItems} />
-      <div
-        className="container py-14"
-        style={{
-          backgroundImage: `url(${images.productPageBg})`,
-        }}
-      >
+      <div className="container py-14">
         <div className="grid grid-cols-12 gap-4">
           {/* Phần lọc sản phẩm chiếm 3 cột */}
           <div className="col-span-3">
@@ -123,7 +122,7 @@ function Products() {
           </div>
         </div>
       </div>
-    </>
+    </div>
   );
 }
 

@@ -5,6 +5,7 @@ export const PATH = {
   LOGIN: "/auth/login",
   SIGN_UP: "/auth/sign-up",
   FORGOT_PASSWORD: "/forgot-password",
+  CART: "/cart",
   TEST: "/test",
   PRODUCTS: "/products",
   OTHER: "/other",
@@ -18,6 +19,7 @@ export const PAGE_TITLE = {
   LOGIN: "pageTitle.signIn",
   TEST: "pageTitle.test",
   PRODUCT: "pageTitle.product",
+  CART: "pageTitle.cart",
   OTHER: "pageTitle.other",
   CONTACT: "pageTitle.contact",
 };

@@ -13,11 +13,13 @@ const Button = ({
   size = "medium",
   variant = "contained",
   textColor = "",
+  textHoverColor = "",
   bgColor = "",
   bgHoverColor = "",
   startIcon,
   endIcon,
   borderColor,
+  borderHoverColor,
   className,
   iconClassName = "",
   width,
@@ -31,45 +33,61 @@ const Button = ({
   const isLink = Boolean(to || href);
 
   const baseClasses =
-    "rounded focus:outline-none transition duration-300 flex w-fit items-center justify-center cursor-pointer";
+    "rounded focus:outline-none transition duration-300 flex w-fit items-center justify-center cursor-pointer font-medium";
+
   const sizeClasses = {
     small: "px-2 py-1 text-sm",
     medium: "px-5 py-2 text-base",
     large: "px-7 py-3 text-lg",
     zeroPadding: "p-0",
   };
+
   const defaultTextContainedColor = isLink ? "text-blue" : "text-white";
   const defaultBgContainedColor = isLink ? "" : "bg-emerald";
   const defaultBgHoverContainedColor = isLink ? "" : "hover:bg-yellow";
+  const defaultTextHoverContainedColor = isLink ? "" : "hover:text-dark";
 
   const defaultTextColor = "text-blue-500";
   const defaultBorderColor = "border-blue-500";
   const defaultBgHoverColor = "hover:bg-blue-200";
+  const defaultTextHoverColor = "hover:white";
+
   const defaultLinkColor = "text-blue-500";
 
   const { textColor: newTextColor } = useColorClasses({ textColor });
   const { bgHoverColor: newBgHoverColor } = useColorClasses({ bgHoverColor });
   const { bgColor: newBgColor } = useColorClasses({ bgColor });
   const { borderColor: newBorderColor } = useColorClasses({ borderColor });
+  const { textHoverColor: newTextHoverColor } = useColorClasses({
+    textHoverColor,
+  });
+
+  const { borderHoverColor: newBorderHoverColor } = useColorClasses({
+    borderHoverColor,
+  });
 
   const variantClasses = {
     contained: clsx(
       newTextColor || defaultTextContainedColor,
       newBgColor || defaultBgContainedColor,
-      newBgHoverColor || defaultBgHoverContainedColor
+      newBgHoverColor || defaultBgHoverContainedColor,
+      newTextHoverColor || defaultTextHoverContainedColor
     ),
 
     outlined: clsx(
       "border",
       newTextColor || defaultTextColor,
       newBorderColor || defaultBorderColor,
-      newBgHoverColor || defaultBgHoverColor
+      newBgHoverColor || defaultBgHoverColor,
+      newTextHoverColor || defaultTextHoverColor,
+      newBorderHoverColor || ""
     ),
 
     text: clsx(
       "hover:underline",
       newTextColor || defaultTextColor,
-      newBgHoverColor || defaultBgHoverColor
+      newBgHoverColor || defaultBgHoverColor,
+      newTextHoverColor || ""
     ),
   };
 
@@ -78,7 +96,9 @@ const Button = ({
     newTextColor || defaultLinkColor,
     newBgHoverColor || "",
     newBorderColor || "",
-    newBgColor || ""
+    newBorderHoverColor || "",
+    newBgColor || "",
+    newTextHoverColor || ""
   );
 
   const classes = clsx(

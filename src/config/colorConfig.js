@@ -88,10 +88,20 @@ const hoverBgColorSafelist = colorMap.map(
   (colorClass) => `hover:bg-${colorClass}`
 );
 
+const hoverTextColorSafelist = colorMap.map(
+  (colorClass) => `hover:text-${colorClass}`
+);
+
+const hoverBorderColorSafelist = colorMap.map(
+  (colorClass) => `hover:border-${colorClass}`
+);
+
 export {
   colors,
   bgColorSafelist,
   textColorSafelist,
   borderColorSafelist,
   hoverBgColorSafelist,
+  hoverTextColorSafelist,
+  hoverBorderColorSafelist,
 };

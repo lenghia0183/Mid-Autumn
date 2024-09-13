@@ -1,6 +1,13 @@
 import { useMemo } from "react";
 
-const prefix = ["text", "border", "bg", "hover:bg"];
+const prefix = [
+  "text",
+  "border",
+  "bg",
+  "hover:bg",
+  "hover:text",
+  "hover:border",
+];
 
 const getColorAndShade = (colorClass) => {
   const parts = colorClass?.split("-");
@@ -16,11 +23,23 @@ const getColorAndShade = (colorClass) => {
   return { prefix: "", color: parts[0], shade: null };
 };
 
-const useColorClasses = ({ textColor, bgColor, borderColor, bgHoverColor }) => {
+const useColorClasses = ({
+  textColor,
+  bgColor,
+  borderColor,
+  bgHoverColor,
+  textHoverColor,
+  borderHoverColor,
+}) => {
   const classes = useMemo(() => {
-    const activeColors = [textColor, bgColor, borderColor, bgHoverColor].filter(
-      Boolean
-    );
+    const activeColors = [
+      textColor,
+      bgColor,
+      borderColor,
+      bgHoverColor,
+      textHoverColor,
+      borderHoverColor,
+    ].filter(Boolean);
 
     if (activeColors.length === 1) {
       const selectedColor = activeColors[0];
@@ -33,11 +52,25 @@ const useColorClasses = ({ textColor, bgColor, borderColor, bgHoverColor }) => {
         bgHoverColor: shade
           ? `hover:bg-${color}-${shade}`
           : `hover:bg-${color}`,
+        textHoverColor: shade
+          ? `hover:text-${color}-${shade}`
+          : `hover:text-${color}`,
+
+        borderHoverColor: shade
+          ? `hover:border-${color}-${shade}`
+          : `hover:border-${color}`,
       };
     }
 
     return {};
-  }, [textColor, bgColor, borderColor]);
+  }, [
+    textColor,
+    bgColor,
+    borderColor,
+    bgHoverColor,
+    textHoverColor,
+    borderHoverColor,
+  ]);
 
   return classes;
 };

@@ -29,6 +29,9 @@ import { ReactComponent as Facebook } from "../../asset/icons/Facebook.svg";
 import { ReactComponent as Google } from "../../asset/icons/Google.svg";
 import { ReactComponent as showPassword } from "../../asset/icons/ShowPassword.svg";
 import { ReactComponent as hidePassword } from "../../asset/icons/HidePassword.svg";
+import { ReactComponent as Plus } from "../../asset/icons/Plus.svg";
+import { ReactComponent as Minus } from "../../asset/icons/Minus.svg";
+import { ReactComponent as Bin } from "../../asset/icons/Bin.svg";
 
 import { ReactComponent as ArrowSlider } from "../../asset/icons/ArrowSlider.svg";
 import useParseDimension from "../../hooks/useParseDimension";
@@ -69,6 +72,9 @@ export const icons = {
   google: Google,
   showPassword: showPassword,
   hidePassword: hidePassword,
+  plus: Plus,
+  minus: Minus,
+  bin: Bin,
   // Add more icon components here...
 };
 

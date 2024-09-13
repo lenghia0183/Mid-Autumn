@@ -4,6 +4,8 @@ import {
   textColorSafelist,
   borderColorSafelist,
   hoverBgColorSafelist,
+  hoverTextColorSafelist,
+  hoverBorderColorSafelist,
 } from "./src/config/colorConfig";
 import { durations, durationSafelist } from "./src/config/durationConfig";
 
@@ -17,6 +19,8 @@ export default {
     ...borderColorSafelist,
     ...bgColorSafelist,
     ...hoverBgColorSafelist,
+    ...hoverTextColorSafelist,
+    ...hoverBorderColorSafelist,
   ],
   theme: {
     container: {

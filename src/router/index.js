@@ -10,6 +10,7 @@ import MainLayout from "../layouts/MainLayout";
 import Login from "../pages/Login";
 import SignUp from "../pages/SignUp";
 import AuthLayout from "../layouts/AuthLayout";
+import Cart from "../pages/Carts";
 
 const router = createBrowserRouter([
   // main layout
@@ -28,6 +29,10 @@ const router = createBrowserRouter([
       {
         path: PATH.ABOUT,
         element: <About />,
+      },
+      {
+        path: PATH.CART,
+        element: <Cart />,
       },
       {
         path: PATH.TEST,
