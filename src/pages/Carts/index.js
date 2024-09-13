@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import { Formik, FieldArray, Form } from "formik";
 import Breadcrumb from "../../components/Breadcrumb";
 import Divider from "../../components/Devider";
@@ -10,8 +10,12 @@ import Image from "../../components/Image";
 import LabelValue from "../../components/LabelValue";
 import formatCurrency from "./../../utils/formatCurrency";
 import Button from "./../../components/Button/index";
+import Dialog from "../../components/Diaglog";
 
 function Cart() {
+  const [openDialog, setOpenDialog] = useState(false);
+  const [itemToDeleteIndex, setItemToDeleteIndex] = useState(null); // Thêm state để lưu chỉ số sản phẩm cần xóa
+
   const breadcrumbCart = [
     {
       label: PAGE_TITLE.HOME,
@@ -50,6 +54,24 @@ function Cart() {
         price: 1650000,
       },
     ],
+  };
+
+  const handleOpenDialog = (index) => {
+    setItemToDeleteIndex(index);
+    setOpenDialog(true);
+  };
+
+  const handleCloseDialog = () => {
+    setOpenDialog(false);
+    setItemToDeleteIndex(null); // Đặt lại chỉ số sản phẩm cần xóa khi đóng dialog
+  };
+
+  const handleConfirmDelete = (arrayHelpers) => {
+    if (itemToDeleteIndex !== null) {
+      arrayHelpers.remove(itemToDeleteIndex); // Xóa sản phẩm khỏi giỏ hàng
+    }
+    setOpenDialog(false);
+    setItemToDeleteIndex(null); // Đặt lại chỉ số sản phẩm cần xóa
   };
 
   return (
@@ -121,7 +143,7 @@ function Cart() {
                                   <IconButton
                                     iconName="bin"
                                     textColor="dark-500"
-                                    onClick={() => arrayHelpers.remove(index)}
+                                    onClick={() => handleOpenDialog(index)} // Gọi hàm mở dialog và truyền index sản phẩm
                                   >
                                     Xóa
                                   </IconButton>
@@ -150,14 +172,29 @@ function Cart() {
                                 bgHoverColor="emerald"
                                 textHoverColor="white"
                                 textColor="dark"
+                                size="large"
                                 to={PATH.PRODUCTS}
                               >
                                 XEM THÊM SẢN PHẨM
                               </Button>
-                              <Button>THANH TOÁN</Button>
+                              <Button size="large">THANH TOÁN</Button>
                             </div>
                           </div>
                         </div>
+                        <Dialog
+                          open={openDialog}
+                          onCancel={handleCloseDialog}
+                          onSubmit={() => handleConfirmDelete(arrayHelpers)}
+                          submitLabel="Xác nhận"
+                          cancelLabel="Hủy bỏ"
+                          title="Xác nhận xóa"
+                          titleProps="text-lg font-semibold"
+                        >
+                          <p>
+                            Bạn có chắc chắn muốn xóa sản phẩm này khỏi giỏ
+                            hàng?
+                          </p>
+                        </Dialog>
                       </div>
                     )}
                   />

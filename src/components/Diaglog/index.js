@@ -3,25 +3,33 @@ import { Form, Formik } from "formik";
 import { isEmpty } from "lodash";
 import PropTypes from "prop-types";
 import React, { useCallback } from "react";
+import Button from "../Button";
+import IconButton from "../IconButton";
 
 const Dialog = ({
+  open,
+  onCancel,
   title = "",
+  children,
+  onSubmit,
+  cancelLabel = "",
+  submitLabel = "",
+  cancelProps = { bgColor: "gray-400" },
+  submitProps = { bgColor: "crimson" },
+  renderFooter,
   maxWidth = "max-w-md",
   fullWidth = true,
-  open,
-  children,
-  renderFooter,
-  onCancel,
-  cancelLabel = "",
-  cancelProps = {},
-  onSubmit,
-  submitLabel = "",
-  submitProps = {},
-  disableBackdropClick = true,
-  noBorderBottom = false,
+  disableBackdropClick = false,
   noBorderTop = false,
+  noBorderBottom = false,
   formikProps,
-  titleProps,
+  iconButtonProps = {},
+  titleClassName,
+  dialogClassName,
+  titleContainerClassName,
+  contentClassName,
+  footerClassName,
+  backdropClassName,
 }) => {
   const handleBackdropClick = () => {
     if (!disableBackdropClick) {
@@ -46,7 +54,7 @@ const Dialog = ({
   const DialogInner = () => (
     <>
       <div
-        className={clsx("p-6", {
+        className={clsx("p-6", contentClassName, {
           "border-b-2 border-gray-200": !noBorderBottom,
           "border-t-2 border-gray-200": !noBorderTop,
         })}
@@ -54,31 +62,26 @@ const Dialog = ({
         {children}
       </div>
       {(cancelLabel || submitLabel || typeof renderFooter === "function") && (
-        <div className="p-4 flex justify-end">
+        <div className={clsx("p-4 flex justify-end", footerClassName)}>
           {renderFooter ? (
             renderFooter()
           ) : (
-            <>
+            <div className="flex gap-2">
               {cancelLabel && (
-                <button
-                  onClick={onCancel}
-                  className="mr-2 px-4 py-2 text-gray-700 bg-gray-200 rounded hover:bg-gray-300 transition"
-                  {...cancelProps}
-                >
+                <Button onClick={onCancel} {...cancelProps}>
                   {cancelLabel}
-                </button>
+                </Button>
               )}
               {submitLabel && (
-                <button
+                <Button
                   type={formikProps ? "submit" : "button"}
                   onClick={formikProps ? undefined : onSubmit}
-                  className="px-4 py-2 text-white bg-blue-600 rounded hover:bg-blue-700 transition"
                   {...submitProps}
                 >
                   {submitLabel}
-                </button>
+                </Button>
               )}
-            </>
+            </div>
           )}
         </div>
       )}
@@ -89,20 +92,34 @@ const Dialog = ({
 
   return (
     <div
-      className="fixed inset-0 flex items-center justify-center z-50 bg-black bg-opacity-50"
+      className={clsx(
+        "fixed inset-0 flex items-center justify-center z-50 bg-black bg-opacity-50 text-xl",
+        backdropClassName
+      )}
       onClick={handleBackdropClick}
     >
       <div
         className={clsx(
           "bg-white rounded-lg shadow-lg w-full",
+          dialogClassName,
           maxWidth,
           { "max-w-full": fullWidth },
           "max-w-md sm:max-w-sm md:max-w-md lg:max-w-lg xl:max-w-xl"
         )}
         onClick={(e) => e.stopPropagation()}
       >
-        <div className="p-4">
-          <h2 className={clsx("text-lg font-semibold", titleProps)}>{title}</h2>
+        <div
+          className={clsx(
+            "p-4 flex items-center justify-between",
+            titleContainerClassName
+          )}
+        >
+          <div className={clsx("font-semibold", titleClassName)}>{title}</div>
+          <IconButton
+            iconName="close"
+            onClick={onCancel}
+            {...iconButtonProps}
+          />
         </div>
         <DialogWrapper>
           <DialogInner />
@@ -129,7 +146,12 @@ Dialog.propTypes = {
   noBorderBottom: PropTypes.bool,
   noBorderTop: PropTypes.bool,
   formikProps: PropTypes.object,
-  titleProps: PropTypes.string,
+  titleClassName: PropTypes.string,
+  dialogClassName: PropTypes.string,
+  titleContainerClassName: PropTypes.string,
+  contentClassName: PropTypes.string,
+  footerClassName: PropTypes.string,
+  backdropClassName: PropTypes.string,
 };
 
 export default Dialog;
