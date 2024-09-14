@@ -74,7 +74,9 @@ const Header = ({ bgColor = "emerald", textColor = "white", className }) => {
           full
           bgColor="crimson"
           bgHoverColor="crimson-hover"
+          textColor="white"
           className="text-xl font-medium"
+          to={PATH.CART}
         >
           {t("cart.cartBtn")}
         </Button>

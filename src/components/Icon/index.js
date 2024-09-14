@@ -35,6 +35,8 @@ import { ReactComponent as Bin } from "../../asset/icons/Bin.svg";
 import { ReactComponent as Edit } from "../../asset/icons/Edit.svg";
 import { ReactComponent as Key } from "../../asset/icons/Key.svg";
 import { ReactComponent as Order } from "../../asset/icons/Order.svg";
+import { ReactComponent as Send } from "../../asset/icons/Send.svg";
+import { ReactComponent as Refresh } from "../../asset/icons/Refresh.svg";
 
 import { ReactComponent as ArrowSlider } from "../../asset/icons/ArrowSlider.svg";
 import useParseDimension from "../../hooks/useParseDimension";
@@ -81,6 +83,8 @@ export const icons = {
   edit: Edit,
   key: Key,
   order: Order,
+  send: Send,
+  refresh: Refresh,
 
   // Add more icon components here...
 };

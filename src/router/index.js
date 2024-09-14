@@ -17,6 +17,7 @@ import ChangePassword from "../pages/ChangePassword";
 import Favorite from "../pages/Favorite";
 import ViewedProduct from "../pages/ViewedProduct";
 import Order from "../pages/Order";
+import ContactUs from "../pages/Contact";
 
 const router = createBrowserRouter([
   // main layout
@@ -39,6 +40,10 @@ const router = createBrowserRouter([
       {
         path: PATH.CART,
         element: <Cart />,
+      },
+      {
+        path: PATH.CONTACT,
+        element: <ContactUs />,
       },
       {
         path: PATH.TEST,
