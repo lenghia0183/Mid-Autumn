@@ -16,6 +16,7 @@ import ProfileEdit from "../pages/ProfileEdit";
 import ChangePassword from "../pages/ChangePassword";
 import Favorite from "../pages/Favorite";
 import ViewedProduct from "../pages/ViewedProduct";
+import Order from "../pages/Order";
 
 const router = createBrowserRouter([
   // main layout
@@ -82,6 +83,10 @@ const router = createBrowserRouter([
       {
         path: PATH.VIEWED_PRODUCTS,
         element: <ViewedProduct />,
+      },
+      {
+        path: PATH.ORDER,
+        element: <Order />,
       },
     ],
   },
