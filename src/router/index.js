@@ -14,6 +14,7 @@ import Cart from "../pages/Carts";
 import ProfileLayout from "../layouts/ProfileLayout";
 import ProfileEdit from "../pages/ProfileEdit";
 import ChangePassword from "../pages/ChangePassword";
+import Favorite from "../pages/Favorite";
 
 const router = createBrowserRouter([
   // main layout
@@ -72,6 +73,10 @@ const router = createBrowserRouter([
       {
         path: PATH.CHANGE_PASSWORD,
         element: <ChangePassword />,
+      },
+      {
+        path: PATH.FAVORITE,
+        element: <Favorite />,
       },
     ],
   },
