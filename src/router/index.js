@@ -13,6 +13,7 @@ import AuthLayout from "../layouts/AuthLayout";
 import Cart from "../pages/Carts";
 import ProfileLayout from "../layouts/ProfileLayout";
 import ProfileEdit from "../pages/ProfileEdit";
+import ChangePassword from "../pages/ChangePassword";
 
 const router = createBrowserRouter([
   // main layout
@@ -67,6 +68,10 @@ const router = createBrowserRouter([
       {
         path: PATH.PROFILE_EDIT,
         element: <ProfileEdit />,
+      },
+      {
+        path: PATH.CHANGE_PASSWORD,
+        element: <ChangePassword />,
       },
     ],
   },
