@@ -15,6 +15,7 @@ import ProfileLayout from "../layouts/ProfileLayout";
 import ProfileEdit from "../pages/ProfileEdit";
 import ChangePassword from "../pages/ChangePassword";
 import Favorite from "../pages/Favorite";
+import ViewedProduct from "../pages/ViewedProduct";
 
 const router = createBrowserRouter([
   // main layout
@@ -77,6 +78,10 @@ const router = createBrowserRouter([
       {
         path: PATH.FAVORITE,
         element: <Favorite />,
+      },
+      {
+        path: PATH.VIEWED_PRODUCTS,
+        element: <ViewedProduct />,
       },
     ],
   },
