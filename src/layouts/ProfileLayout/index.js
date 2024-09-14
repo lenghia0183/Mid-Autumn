@@ -21,7 +21,7 @@ function ProfileLayout() {
     <>
       <Header />
       <Breadcrumb items={breadcrumbProfile} />
-      <main className="container grid grid-cols-12 gap-4 px-4 py-6">
+      <main className="container grid grid-cols-12 gap-4 px-4 py-14">
         {/* SideBar chiếm 3 cột */}
         <aside className="col-span-3 rounded-md shadow-md">
           <SideBar />

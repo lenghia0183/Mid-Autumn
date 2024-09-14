@@ -36,14 +36,15 @@ function ProfileEdit() {
         validationSchema={validationSchema}
         onSubmit={handleSubmit}
       >
-        {() => (
+        {({ resetForm }) => (
           <Form>
-            <div className="flex flex-col gap-5 mt-7">
+            <div className="flex flex-col gap-6 mt-7">
               <FormikTextField
                 name="name"
                 label="Họ Và Tên:"
                 orientation="horizontal"
                 labelClassName="font-medium"
+                required
                 disabled
               />
 
@@ -52,6 +53,7 @@ function ProfileEdit() {
                 label="Email:"
                 orientation="horizontal"
                 labelClassName="font-medium"
+                required
                 disabled
               />
 
@@ -60,6 +62,7 @@ function ProfileEdit() {
                 label="Điện Thoại:"
                 orientation="horizontal"
                 labelClassName="font-medium"
+                required
               />
 
               <FormikTextField
@@ -67,12 +70,22 @@ function ProfileEdit() {
                 label="Địa chỉ:"
                 orientation="horizontal"
                 labelClassName="font-medium"
+                required
               />
             </div>
-            <div className="flex">
-              <Button type="submit" className="ml-auto mt-10">
-                Lưu Thông Tin
-              </Button>
+            <div className="flex mt-10">
+              <div className="flex gap-4 ml-auto">
+                <Button
+                  type="button"
+                  onClick={() => resetForm()} // Reset form on button click
+                >
+                  Hủy
+                </Button>
+
+                <Button type="submit" className="">
+                  Lưu Thông Tin
+                </Button>
+              </div>
             </div>
           </Form>
         )}

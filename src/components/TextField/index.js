@@ -27,7 +27,7 @@ const TextField = forwardRef(
       rightIconClassName = "",
       onFocus = () => {},
       onBlur = () => {},
-
+      required = false,
       orientation = "vertical", // or "horizontal"
     },
     inputRef
@@ -106,7 +106,7 @@ const TextField = forwardRef(
           <label
             htmlFor={id}
             className={clsx(
-              "absolute left-2 transition-all duration-300 ease-in-out z-[100]",
+              "absolute left-2 flex items-center transition-all duration-300 ease-in-out z-[100]",
               labelClassName,
               {
                 "text-gray-500": !isFocused && !value,
@@ -115,7 +115,8 @@ const TextField = forwardRef(
               }
             )}
           >
-            {label}
+            {required && <p className="text-red-500 mr-1">*</p>}
+            <p> {label}</p>
           </label>
 
           <div className={clsx("relative overflow-hidden", inputClassName)}>
@@ -166,7 +167,7 @@ const TextField = forwardRef(
     );
 
     const horizontalInput = (
-      <>
+      <div>
         <div
           className={clsx(className, "relative flex items-center text-lg")}
           style={{ ...widthStyle }}
@@ -174,9 +175,10 @@ const TextField = forwardRef(
           <label
             htmlFor={id}
             style={{ ...labelWidthStyle }}
-            className={clsx("", labelClassName)}
+            className={clsx("flex items-center", labelClassName)}
           >
-            {label}
+            {required && <p className="text-red-500 mr-1">*</p>}
+            <p> {label}</p>
           </label>
           <div
             className={clsx(
@@ -215,6 +217,9 @@ const TextField = forwardRef(
                   {
                     "scale-x-0": !isFocused && !value,
                     "scale-x-100": isFocused || value,
+                  },
+                  {
+                    "bg-gray-300": disabled,
                   }
                 )}
               />
@@ -228,35 +233,11 @@ const TextField = forwardRef(
             {error}
           </div>
         )}
-      </>
+      </div>
     );
 
     return orientation === "vertical" ? verticalInput : horizontalInput;
   }
 );
-
-TextField.propTypes = {
-  value: PropTypes.string,
-  placeholder: PropTypes.string,
-  type: PropTypes.string,
-  onChange: PropTypes.func,
-  error: PropTypes.string,
-  label: PropTypes.string,
-  className: PropTypes.string,
-  width: PropTypes.string,
-  height: PropTypes.string,
-  labelWidth: PropTypes.string,
-  allow: PropTypes.instanceOf(RegExp),
-  inputProps: PropTypes.object,
-  inputClassName: PropTypes.string,
-  labelClassName: PropTypes.string,
-  errorClass: PropTypes.string,
-  disabled: PropTypes.bool,
-  rightIcon: PropTypes.node,
-  rightIconClassName: PropTypes.string,
-  onFocus: PropTypes.func,
-  onBlur: PropTypes.func,
-  orientation: PropTypes.oneOf(["vertical", "horizontal"]),
-};
 
 export default TextField;

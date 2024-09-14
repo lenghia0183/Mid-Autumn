@@ -15,7 +15,7 @@ function SideBar() {
   ];
 
   return (
-    <nav className="p-4 bg-white-100 border-r border-gray-200">
+    <nav className="p-4 pb-[200px] bg-white-100 border-r border-gray-200">
       <div className="mb-4">
         <div className="text-dark text-xl font-semibold">LECONGNGHIA</div>
         <div className="text-gray-400 text-lg ">Chỉnh sửa tài khoản</div>
