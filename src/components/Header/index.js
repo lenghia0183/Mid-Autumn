@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import PropTypes from "prop-types";
-import { NavLink } from "react-router-dom";
+import { NavLink, useLocation } from "react-router-dom";
 import clsx from "clsx";
 import Image from "../Image";
 import images from "../../asset/images";
@@ -18,6 +18,8 @@ const Header = ({ bgColor = "emerald", textColor = "white", className }) => {
   const { bgColor: newBgColor } = useColorClasses({ bgColor });
   const { textColor: newTextColor } = useColorClasses({ textColor });
   const [isShowCart, setIsShowCart] = useState(false);
+
+  const { pathname } = useLocation();
 
   const { t } = useTranslation();
   const changeLanguage = useChangeLanguage();
@@ -143,16 +145,28 @@ const Header = ({ bgColor = "emerald", textColor = "white", className }) => {
           </Button>
 
           {/* Search Button */}
-          <IconButton iconName="search" textColor="white" iconSize="1.6" />
+          <IconButton
+            iconName="search"
+            textColor="white"
+            iconSize="1.6"
+            textHoverColor="yellow"
+          />
 
           {/* Profile Button */}
-          <IconButton iconName="user" textColor="white" iconSize="1.5" />
+          <IconButton
+            iconName="user"
+            textColor={pathname?.includes(PATH.PROFILE) ? "yellow" : "white"}
+            iconSize="1.5"
+            textHoverColor="yellow"
+            to={PATH.PROFILE_EDIT}
+          />
 
           {/* Cart Button */}
           <IconButton
             iconName="bag"
             textColor="white"
             iconSize="1.7"
+            textHoverColor="yellow"
             onClick={() => {
               setIsShowCart(true);
             }}

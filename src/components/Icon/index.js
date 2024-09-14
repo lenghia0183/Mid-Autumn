@@ -32,6 +32,9 @@ import { ReactComponent as hidePassword } from "../../asset/icons/HidePassword.s
 import { ReactComponent as Plus } from "../../asset/icons/Plus.svg";
 import { ReactComponent as Minus } from "../../asset/icons/Minus.svg";
 import { ReactComponent as Bin } from "../../asset/icons/Bin.svg";
+import { ReactComponent as Edit } from "../../asset/icons/Edit.svg";
+import { ReactComponent as Key } from "../../asset/icons/Key.svg";
+import { ReactComponent as Order } from "../../asset/icons/Order.svg";
 
 import { ReactComponent as ArrowSlider } from "../../asset/icons/ArrowSlider.svg";
 import useParseDimension from "../../hooks/useParseDimension";
@@ -75,6 +78,10 @@ export const icons = {
   plus: Plus,
   minus: Minus,
   bin: Bin,
+  edit: Edit,
+  key: Key,
+  order: Order,
+
   // Add more icon components here...
 };
 

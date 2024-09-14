@@ -4,6 +4,7 @@ import clsx from "clsx";
 import useColorClasses from "../../hooks/useColorClasses";
 import Loading from "../Loading";
 import Icon from "../Icon";
+import { Link } from "react-router-dom";
 
 const IconButton = ({
   iconName,
@@ -17,6 +18,8 @@ const IconButton = ({
   iconHeight,
   iconClass,
   textColor = "",
+  iconColor = "",
+  textHoverColor = "",
   bgColor = "",
   bgHoverColor = "",
   borderColor,
@@ -24,6 +27,8 @@ const IconButton = ({
   rounded = true,
   width = "",
   height = "",
+  to = "",
+  href = "",
   ...props
 }) => {
   const baseClasses =
@@ -45,6 +50,10 @@ const IconButton = ({
   const defaultBgHoverColor = "hover:bg-blue-200";
 
   const { textColor: newIconColor } = useColorClasses({ textColor });
+  const { textHoverColor: newTextHoverColor } = useColorClasses({
+    textHoverColor,
+  });
+
   const { bgHoverColor: newBgHoverColor } = useColorClasses({ bgHoverColor });
   const { bgColor: newBgColor } = useColorClasses({ bgColor });
   const { borderColor: newBorderColor } = useColorClasses({ borderColor });
@@ -53,7 +62,8 @@ const IconButton = ({
     contained: clsx(
       newIconColor || defaultTextContainedColor,
       newBgColor || defaultBgContainedColor,
-      newBgHoverColor || defaultBgHoverContainedColor
+      newBgHoverColor || defaultBgHoverContainedColor,
+      newTextHoverColor || ""
     ),
 
     outlined: clsx(
@@ -63,7 +73,11 @@ const IconButton = ({
       newBgHoverColor || defaultBgHoverColor
     ),
 
-    text: clsx(newIconColor || defaultIconColor, newBgHoverColor || ""),
+    text: clsx(
+      newIconColor || defaultIconColor,
+      newBgHoverColor || "",
+      newTextHoverColor || ""
+    ),
   };
 
   const classes = clsx(
@@ -77,12 +91,16 @@ const IconButton = ({
     className
   );
 
+  const ButtonComponent = to ? Link : href ? "a" : "button";
+
   return (
-    <button
+    <ButtonComponent
       className={classes}
       onClick={disabled || loading ? undefined : onClick}
       disabled={disabled || loading}
       style={{ width, height }}
+      to={to}
+      href={href}
       {...props}
     >
       {loading ? (
@@ -94,10 +112,10 @@ const IconButton = ({
           size={iconSize}
           width={iconWidth}
           height={iconHeight}
-          color={textColor}
+          color={iconColor}
         />
       )}
-    </button>
+    </ButtonComponent>
   );
 };
 

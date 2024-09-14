@@ -8,6 +8,12 @@ export const PATH = {
   CART: "/cart",
   TEST: "/test",
   PRODUCTS: "/products",
+  PROFILE: "/profile",
+  PROFILE_EDIT: "/profile/me",
+  VIEWED_PRODUCTS: "profile/viewed-products",
+  CHANGE_PASSWORD: "/profile/change-password",
+  FAVORITE: "/profile/favorites",
+  ORDER: "profile/order",
   OTHER: "/other",
   CONTACT: "/contact",
 };

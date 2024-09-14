@@ -11,6 +11,8 @@ import Login from "../pages/Login";
 import SignUp from "../pages/SignUp";
 import AuthLayout from "../layouts/AuthLayout";
 import Cart from "../pages/Carts";
+import ProfileLayout from "../layouts/ProfileLayout";
+import ProfileEdit from "../pages/ProfileEdit";
 
 const router = createBrowserRouter([
   // main layout
@@ -53,6 +55,18 @@ const router = createBrowserRouter([
       {
         path: PATH.SIGN_UP,
         element: <SignUp />,
+      },
+    ],
+  },
+
+  // profileLayout
+  {
+    path: PATH.PROFILE,
+    element: <ProfileLayout />,
+    children: [
+      {
+        path: PATH.PROFILE_EDIT,
+        element: <ProfileEdit />,
       },
     ],
   },
