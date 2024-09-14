@@ -181,6 +181,7 @@ const TextField = forwardRef(
           <div
             className={clsx(
               "flex-shrink-0 flex-grow relative ml-4",
+              { "cursor-not-allowed bg-gray-100 text-gray-500": disabled },
               inputClassName
             )}
           >
