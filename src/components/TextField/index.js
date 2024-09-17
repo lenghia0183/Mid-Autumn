@@ -98,11 +98,8 @@ const TextField = forwardRef(
     };
 
     const verticalInput = (
-      <>
-        <div
-          className={clsx(className, "relative text-lg")}
-          style={{ ...widthStyle }}
-        >
+      <div className={clsx(className)} style={{ ...widthStyle }}>
+        <div className={clsx("relative text-lg")}>
           <label
             htmlFor={id}
             className={clsx(
@@ -159,11 +156,11 @@ const TextField = forwardRef(
         </div>
 
         {error && (
-          <div className={clsx("text-red-500 text-sm mt-1", errorClass)}>
+          <div className={clsx("text-red-500 text-sm mt-2", errorClass)}>
             {error}
           </div>
         )}
-      </>
+      </div>
     );
 
     const horizontalInput = (

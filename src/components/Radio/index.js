@@ -11,47 +11,49 @@ const Radio = ({
   onChange = () => {},
   className = "",
   width = "100%",
-  disabled = false, // Add the disabled prop with a default value of false
+  disabled = false,
+  hideInput = false, // New prop to hide the input
+  labelClassName = "",
   ...props
 }) => {
   const id = useId();
 
   return (
-    <div className={`${className}`} style={{ width }}>
-      <div
-        className={clsx("flex w-full justify-center", {
-          "items-center": orientation === "horizontal",
-          "flex-col items-center": orientation === "vertical",
+    <div
+      className={clsx("flex", className, {
+        "items-center": orientation === "horizontal",
+        "flex-col items-center": orientation === "vertical",
+      })}
+      style={{ width }}
+    >
+      <input
+        type="radio"
+        name={name}
+        value={value}
+        checked={checked}
+        onChange={() => !disabled && onChange(value)}
+        className={clsx("form-radio h-4 w-4 text-blue-600", {
+          "cursor-not-allowed": disabled,
+          "cursor-pointer": !disabled,
+          hidden: hideInput, // Apply hidden class if hideInput is true
         })}
-      >
-        <input
-          type="radio"
-          name={name}
-          value={value}
-          checked={checked}
-          onChange={() => !disabled && onChange(value)}
-          className={clsx("form-radio h-4 w-4 text-blue-600", {
-            "cursor-not-allowed": disabled,
+        id={id}
+        disabled={disabled}
+        {...props}
+      />
+      {label && (
+        <label
+          htmlFor={id}
+          className={clsx("text-sm select-none", labelClassName, {
+            "ml-2": orientation === "horizontal",
+            "block mt-2": orientation === "vertical",
+            "text-gray-500 cursor-not-allowed": disabled,
             "cursor-pointer": !disabled,
           })}
-          id={id}
-          disabled={disabled}
-          {...props}
-        />
-        {label && (
-          <label
-            htmlFor={id}
-            className={clsx("text-sm  select-none", {
-              "ml-2": orientation === "horizontal",
-              "block mt-2": orientation === "vertical",
-              "text-gray-500 cursor-not-allowed": disabled,
-              "cursor-pointer": !disabled,
-            })}
-          >
-            {label}
-          </label>
-        )}
-      </div>
+        >
+          {label}
+        </label>
+      )}
     </div>
   );
 };
@@ -65,6 +67,7 @@ Radio.propTypes = {
   className: PropTypes.string,
   width: PropTypes.string,
   disabled: PropTypes.bool,
+  hideInput: PropTypes.bool,
 };
 
 export default Radio;

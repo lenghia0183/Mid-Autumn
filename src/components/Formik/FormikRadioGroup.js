@@ -1,10 +1,11 @@
 import React from "react";
 import { useField } from "formik";
 import RadioGroup from "../RadioGroup";
-import FieldWrapper from "./FieldWrapper";
 
-const FormikRadioGroup = ({ id, onChange, children, ...props }) => {
-  const [field, meta, helpers] = useField(id);
+const FormikRadioGroup = ({ name, onChange, children, ...props }) => {
+  const [field, meta, helpers] = useField(name);
+
+  console.log("name", name);
 
   const handleChange = (value) => {
     helpers.setValue(value);
@@ -16,6 +17,7 @@ const FormikRadioGroup = ({ id, onChange, children, ...props }) => {
   return (
     <RadioGroup
       {...field}
+      name={name}
       selectedValue={field.value}
       onChange={handleChange}
       error={meta.touched && meta.error ? meta.error : ""}
@@ -26,4 +28,4 @@ const FormikRadioGroup = ({ id, onChange, children, ...props }) => {
   );
 };
 
-export default FieldWrapper(FormikRadioGroup);
+export default FormikRadioGroup;

@@ -18,6 +18,13 @@ import homeReason from "./homeReason.jpg";
 import commentBg from "./commentBg.png";
 import productFilter from "./product-filter.jpg";
 import productPageBg from "./product-page-bg.png";
+import logoGHTK from "./logoGHTK.png";
+import logoGHN from "./logoGHN.webp";
+import codMethod from "./codMethod.png";
+import bankingMethod from "./bankingMethod.png";
+import logoMomo from "./logoMomo.png";
+import logoVnpay from "./logoVnpay.png";
+import logoZaloPay from "./logoZaloPay.png";
 const images = {
   logo,
   fallBack,
@@ -39,6 +46,13 @@ const images = {
   commentBg,
   productFilter,
   productPageBg,
+  logoGHTK,
+  logoGHN,
+  codMethod,
+  bankingMethod,
+  logoMomo,
+  logoVnpay,
+  logoZaloPay,
 };
 
 export default images;

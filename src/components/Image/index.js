@@ -21,6 +21,7 @@ const Image = (
     shadow = false,
     fadeIn = true,
     transitionDuration = 300,
+    objectFit = "cover", // Thêm thuộc tính objectFit với giá trị mặc định là "cover"
     ...props
   },
   ref
@@ -58,7 +59,7 @@ const Image = (
       onClick={onClick}
       onMouseEnter={onMouseEnter}
       onMouseLeave={onMouseLeave}
-      className={clsx("object-cover", className, {
+      className={clsx(className, {
         "rounded-lg": rounded,
         "shadow-lg": shadow,
         "opacity-0": fadeIn && isLoading,
@@ -70,6 +71,7 @@ const Image = (
         ...style,
         ...widthStyle,
         ...heightStyle,
+        objectFit, // Áp dụng objectFit vào style
       }}
       {...props}
     />

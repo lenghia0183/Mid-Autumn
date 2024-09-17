@@ -11,23 +11,31 @@ const Divider = ({
   height = "1px",
   marginTop = "0",
   marginBottom = "0",
+  borderStyle = "solid",
   className,
   ...props
 }) => {
-  const { bgColor: newBgColor } = useColorClasses({ bgColor: color });
+  const { borderColor: newBorderColor } = useColorClasses({
+    borderColor: color,
+  });
 
-  const widthStyle = useResponsiveStyle(width, "w");
-  const heightStyle = useResponsiveStyle(height, "h");
+  const dimensionStyle = useResponsiveStyle(
+    orientation === "horizontal" ? width : height,
+    orientation === "horizontal" ? "w" : "h"
+  );
+
+  const borderThickness = orientation === "horizontal" ? height : width;
 
   const style = {
-    ...widthStyle,
-    ...heightStyle,
+    ...dimensionStyle,
+    borderWidth: borderThickness,
+    borderStyle: borderStyle,
     marginTop,
     marginBottom,
   };
 
   return (
-    <div className={clsx(newBgColor, className)} style={style} {...props} />
+    <div className={clsx(className, newBorderColor)} style={style} {...props} />
   );
 };
 
@@ -38,6 +46,7 @@ Divider.propTypes = {
   height: PropTypes.string,
   marginTop: PropTypes.string,
   marginBottom: PropTypes.string,
+  borderStyle: PropTypes.oneOf(["solid", "dashed", "dotted"]),
   className: PropTypes.string,
 };
 

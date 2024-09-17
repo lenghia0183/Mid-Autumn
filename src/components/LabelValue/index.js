@@ -15,9 +15,9 @@ const LabelValue = ({
         className={clsx("font-semibold", labelClassName)}
         style={{ width: labelWidth }}
       >
-        {label}:
+        {label}
       </div>
-      <div className={clsx("ml-2 flex-1", valueClassName)}>{value}</div>
+      <div className={clsx("ml-2", valueClassName)}>{value}</div>
     </div>
   );
 };

@@ -99,11 +99,8 @@ const TextField = forwardRef(
     };
 
     const verticalInput = (
-      <div>
-        <div
-          className={clsx(className, "relative text-lg")}
-          style={{ ...widthStyle }}
-        >
+      <div className={clsx(className)} style={{ ...widthStyle }}>
+        <div className={clsx("relative text-lg")}>
           <label
             htmlFor={id}
             className={clsx(
@@ -112,7 +109,7 @@ const TextField = forwardRef(
               {
                 "text-gray-500": !isFocused && !value,
                 "text-dark top-0 -translate-y-full": isFocused || value,
-                "top-1/2 -translate-y-1/2": !isFocused && !value,
+                "top-1": !isFocused && !value,
               }
             )}
           >

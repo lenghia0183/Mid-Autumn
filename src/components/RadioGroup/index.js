@@ -9,6 +9,7 @@ const RadioGroup = ({
   children,
   error,
   orientation = "horizontal",
+  className,
 }) => {
   const handleChange = (value) => {
     onChange(value);
@@ -19,7 +20,8 @@ const RadioGroup = ({
       <div
         className={clsx(
           "flex ",
-          orientation === "vertical" ? "flex-col" : "flex-row"
+          orientation === "vertical" ? "flex-col" : "flex-row",
+          className
         )}
       >
         {React.Children.map(children, (child) => {
