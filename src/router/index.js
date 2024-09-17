@@ -18,6 +18,7 @@ import Favorite from "../pages/Favorite";
 import ViewedProduct from "../pages/ViewedProduct";
 import Order from "../pages/Order";
 import ContactUs from "../pages/Contact";
+import Checkout from "../pages/Checkout";
 
 const router = createBrowserRouter([
   // main layout
@@ -44,6 +45,10 @@ const router = createBrowserRouter([
       {
         path: PATH.CONTACT,
         element: <ContactUs />,
+      },
+      {
+        path: PATH.CHECKOUT,
+        element: <Checkout />,
       },
       {
         path: PATH.TEST,

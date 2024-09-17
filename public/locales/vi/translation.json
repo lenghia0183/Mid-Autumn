@@ -15,7 +15,8 @@
     "signUp": "ĐĂNG KÝ",
     "test": "TEST",
     "cart": "GIỎ HÀNG",
-    "search": "Tìm kiếm"
+    "search": "Tìm kiếm",
+    "checkout": "Thanh toán"
   },
 
   "cart": {

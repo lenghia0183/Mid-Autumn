@@ -86,6 +86,8 @@ const Header = ({ bgColor = "emerald", textColor = "white", className }) => {
           bgColor="yellow"
           bgHoverColor="yellow-hover"
           className="mt-3 text-xl font-medium"
+          to={PATH.CHECKOUT}
+          textColor="white"
         >
           {t("cart.checkoutBtn")}
         </Button>

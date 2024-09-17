@@ -4,16 +4,17 @@ import GoToTop from "./../../components/GoToTop/index";
 import Footer from "./../../components/Footer/index";
 import SideBar from "./SideBar";
 import Breadcrumb from "./../../components/Breadcrumb/index";
+import { PAGE_TITLE, PATH } from "../../constants/path";
 
 function ProfileLayout() {
   const breadcrumbProfile = [
     {
-      label: "Trang chủ",
-      to: "/",
+      label: PAGE_TITLE.HOME,
+      to: PATH.HOME,
     },
     {
-      label: "Tài khoản",
-      to: "/profile",
+      label: PAGE_TITLE.PROFILE,
+      to: PATH.PROFILE,
     },
   ];
 
@@ -21,7 +22,7 @@ function ProfileLayout() {
     <>
       <Header />
       <Breadcrumb items={breadcrumbProfile} />
-      <main className="container grid grid-cols-12 gap-4 px-4 py-14">
+      <main className="container grid grid-cols-12 gap-4 py-14">
         {/* SideBar chiếm 3 cột */}
         <aside className="col-span-3 rounded-md shadow-md">
           <SideBar />

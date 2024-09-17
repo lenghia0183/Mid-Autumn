@@ -32,6 +32,7 @@ const Autocomplete = ({
   orientation = "vertical",
   errorClass,
   disabled,
+  required,
 }) => {
   const [optionsState, setOptions] = useState(options);
   const [inputValue, setInputValue] = useState("");
@@ -276,7 +277,8 @@ const Autocomplete = ({
             }
           )}
         >
-          {label}
+          {required && <span className="text-red-500">*</span>}
+          <span> {label}</span>
         </label>
         <div
           className={clsx(

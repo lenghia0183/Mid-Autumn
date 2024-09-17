@@ -78,7 +78,7 @@ function Cart() {
     <>
       <Breadcrumb items={breadcrumbCart} />
       <div className="bg-white py-14">
-        <div className="container bg-white-100 p-4 rounded-md shadow-md">
+        <div className="container bg-white-100 py-4 rounded-md shadow-md">
           <h3 className="text-emerald text-[28px] font-semibold">GIỎ HÀNG</h3>
           <Divider marginTop="10px" color="dark" />
 
@@ -125,6 +125,7 @@ function Cart() {
                                       <FormikQuantityInput
                                         width="200px"
                                         name={`cartItems.${index}.quantity`}
+                                        max={10}
                                       />
                                     }
                                   />

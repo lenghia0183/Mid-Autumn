@@ -14,6 +14,7 @@ export const PATH = {
   CHANGE_PASSWORD: "/profile/change-password",
   FAVORITE: "/profile/favorites",
   ORDER: "profile/order",
+  CHECKOUT: "/checkout",
   OTHER: "/other",
   CONTACT: "/contact",
 };
@@ -28,4 +29,5 @@ export const PAGE_TITLE = {
   CART: "pageTitle.cart",
   OTHER: "pageTitle.other",
   CONTACT: "pageTitle.contact",
+  CHECKOUT: "pageTitle.checkout",
 };

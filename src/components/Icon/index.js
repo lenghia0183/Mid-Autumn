@@ -37,6 +37,8 @@ import { ReactComponent as Key } from "../../asset/icons/Key.svg";
 import { ReactComponent as Order } from "../../asset/icons/Order.svg";
 import { ReactComponent as Send } from "../../asset/icons/Send.svg";
 import { ReactComponent as Refresh } from "../../asset/icons/Refresh.svg";
+import { ReactComponent as Cart } from "../../asset/icons/Cart.svg";
+import { ReactComponent as Copy } from "../../asset/icons/Copy.svg";
 
 import { ReactComponent as ArrowSlider } from "../../asset/icons/ArrowSlider.svg";
 import useParseDimension from "../../hooks/useParseDimension";
@@ -85,6 +87,8 @@ export const icons = {
   order: Order,
   send: Send,
   refresh: Refresh,
+  cart: Cart,
+  copy: Copy,
 
   // Add more icon components here...
 };
