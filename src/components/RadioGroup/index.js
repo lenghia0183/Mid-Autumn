@@ -25,11 +25,16 @@ const RadioGroup = ({
         )}
       >
         {React.Children.map(children, (child) => {
-          return React.cloneElement(child, {
-            name,
-            checked: child.props.value === selectedValue,
-            onChange: handleChange,
-          });
+          console.log("child", child);
+          if (child.type.name === "FormikRadio") {
+            return React.cloneElement(child, {
+              name,
+              checked: child.props.value === selectedValue,
+              onChange: handleChange,
+            });
+          } else {
+            return child;
+          }
         })}
       </div>
       {error && (
