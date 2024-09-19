@@ -5,11 +5,16 @@ import images from "../../../asset/images";
 import styles from "./Reason.module.scss";
 import { useTranslation } from "react-i18next";
 
-function Reason() {
+function Reason({
+  containerClassName,
+  titleClassName,
+  headingClassName,
+  descClassName,
+}) {
   const { t } = useTranslation();
 
   return (
-    <div className="container flex gap-10 mt-14">
+    <div className={clsx("container flex gap-10 mt-14", containerClassName)}>
       <div
         className={clsx("flex-1 aspect-[5/4]", styles["flip-box-container"])}
       >
@@ -23,12 +28,23 @@ function Reason() {
         </div>
       </div>
       <div className="flex-1">
-        <h3 className="text-2xl text-emerald">{t("home.reason.title")}</h3>
-        <h2 className="text-[42px] text-dark font-medium">
+        <h3 className={clsx("text-2xl text-emerald", titleClassName)}>
+          {t("home.reason.title")}
+        </h3>
+        <h2
+          className={clsx(
+            "text-[42px] text-dark font-medium",
+            headingClassName
+          )}
+        >
           {t("home.reason.whyChoiceUs")}
         </h2>
-        <p className="mt-5 text-lg text-dark"> {t("home.reason.desc1")}</p>
-        <p className="mt-5 text-lg text-dark"> {t("home.reason.desc2")}</p>
+        <p className={clsx("mt-5 text-lg text-dark", descClassName)}>
+          {t("home.reason.desc1")}
+        </p>
+        <p className={clsx("mt-5 text-lg text-dark", descClassName)}>
+          {t("home.reason.desc2")}
+        </p>
       </div>
     </div>
   );
