@@ -25,6 +25,9 @@ import bankingMethod from "./bankingMethod.png";
 import logoMomo from "./logoMomo.png";
 import logoVnpay from "./logoVnpay.png";
 import logoZaloPay from "./logoZaloPay.png";
+import chef1 from "./chef1.jpg";
+import chef2 from "./chef2.jpg";
+import chef3 from "./chef3.png";
 const images = {
   logo,
   fallBack,
@@ -53,6 +56,9 @@ const images = {
   logoMomo,
   logoVnpay,
   logoZaloPay,
+  chef1,
+  chef2,
+  chef3,
 };
 
 export default images;
