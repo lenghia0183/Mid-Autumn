@@ -5,6 +5,7 @@ import { PATH } from "../../constants/path";
 import formatCurrency from "../../utils/formatCurrency";
 import Button from "../../components/Button";
 import Icon from "../../components/Icon";
+import Tabs from "../../components/Tabs";
 
 function ProductDetail() {
   const productDetailBreadcrumbs = [
@@ -46,6 +47,11 @@ function ProductDetail() {
       label: "Trăng vàng hoàng kim vinh hiển đỏ",
       to: PATH.PRODUCTS,
     },
+  ];
+
+  const tabList = [
+    { label: "Thông tin sản phẩm", value: "product-info" },
+    { label: "Bình Luận", value: "product-info" },
   ];
 
   return (
@@ -109,7 +115,7 @@ function ProductDetail() {
                 THÊM VÀO GIỎ HÀNG
               </Button>
 
-              <div className="shadow-md mt-5 flex items-center gap-4 py-2 px-3">
+              <div className="shadow-sm mt-5 flex items-center gap-4 py-2 px-3">
                 <Icon name="tag" color="emerald" />
                 {tagList.map((tag, index) => (
                   <div key={index} className="mr-2">
@@ -126,6 +132,16 @@ function ProductDetail() {
                   </div>
                 ))}
               </div>
+
+              <Tabs
+                className="mt-5"
+                list={tabList}
+                onChange={(value) => console.log(value)}
+                divider={true}
+              >
+                <div>Đây là thông tin sản phẩm</div>
+                <div>Hướng dẫn sử dụng sản phẩm</div>
+              </Tabs>
             </div>
           </div>
         </div>
