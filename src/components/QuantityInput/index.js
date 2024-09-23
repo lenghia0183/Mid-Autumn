@@ -69,6 +69,7 @@ const QuantityInput = ({
         )}
         height={height}
         width={height}
+        iconStrokeWidth={40}
         onClick={handleDecrease}
         disabled={disabled || value <= min}
       />
@@ -98,6 +99,7 @@ const QuantityInput = ({
         )}
         height={height}
         width={height}
+        iconStrokeWidth={40}
         onClick={handleIncrease}
         disabled={disabled || value >= max}
       />

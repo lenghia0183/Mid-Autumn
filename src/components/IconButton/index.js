@@ -17,6 +17,7 @@ const IconButton = ({
   iconWidth,
   iconHeight,
   iconClass,
+  iconStrokeWidth,
   textColor = "",
   iconColor = "",
   textHoverColor = "",
@@ -113,6 +114,7 @@ const IconButton = ({
           width={iconWidth}
           height={iconHeight}
           color={iconColor}
+          strokeWidth={iconStrokeWidth}
         />
       )}
     </ButtonComponent>

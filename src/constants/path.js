@@ -8,6 +8,7 @@ export const PATH = {
   CART: "/cart",
   TEST: "/test",
   PRODUCTS: "/products",
+  PRODUCT_DETAIL: "/product/:productId",
   PROFILE: "/profile",
   PROFILE_EDIT: "/profile/me",
   VIEWED_PRODUCTS: "profile/viewed-products",
@@ -30,4 +31,5 @@ export const PAGE_TITLE = {
   OTHER: "pageTitle.other",
   CONTACT: "pageTitle.contact",
   CHECKOUT: "pageTitle.checkout",
+  PRODUCT_DETAIL: "pathTitle.productDetail",
 };

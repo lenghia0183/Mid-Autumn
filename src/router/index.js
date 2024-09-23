@@ -19,6 +19,7 @@ import ViewedProduct from "../pages/ViewedProduct";
 import Order from "../pages/Order";
 import ContactUs from "../pages/Contact";
 import Checkout from "../pages/Checkout";
+import ProductDetail from "../pages/ProductDetail";
 
 const router = createBrowserRouter([
   // main layout
@@ -33,6 +34,10 @@ const router = createBrowserRouter([
       {
         path: PATH.PRODUCTS,
         element: <Products />,
+      },
+      {
+        path: PATH.PRODUCT_DETAIL,
+        element: <ProductDetail />,
       },
       {
         path: PATH.ABOUT,

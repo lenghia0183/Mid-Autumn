@@ -41,6 +41,7 @@ import { ReactComponent as Cart } from "../../asset/icons/Cart.svg";
 import { ReactComponent as Copy } from "../../asset/icons/Copy.svg";
 import { ReactComponent as LocationEmpty } from "../../asset/icons/LocationEmpty.svg";
 import { ReactComponent as PaymentMethod } from "../../asset/icons/PaymentMethod.svg";
+import { ReactComponent as Tag } from "../../asset/icons/Tag.svg";
 
 import { ReactComponent as ArrowSlider } from "../../asset/icons/ArrowSlider.svg";
 import useParseDimension from "../../hooks/useParseDimension";
@@ -93,6 +94,7 @@ export const icons = {
   copy: Copy,
   locationEmpty: LocationEmpty,
   paymentMethod: PaymentMethod,
+  tag: Tag,
 
   // Add more icon components here...
 };
