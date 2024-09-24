@@ -43,7 +43,6 @@ const Banner = () => {
     <div className="relative w-full overflow-hidden">
       <Slider {...settings}>
         {bannerData.map((banner) => {
-          console.log("test", `url("${banner.src}")`);
           return (
             <>
               <div

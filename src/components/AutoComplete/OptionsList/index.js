@@ -20,8 +20,7 @@ const OptionsList = ({
   optionsClassName,
 }) => {
   const height = useParseDimension(heightPerOption);
-
-  console.log(optionsState);
+  console.log("showOptions", showOptions);
 
   return (
     <>
@@ -32,26 +31,26 @@ const OptionsList = ({
       ) : (
         <ul
           className={clsx(
-            `absolute z-10 mt-1 bg-white-100 border border-gray-300 rounded-sm shadow-md transition-all duration-300 ease-in-out w-full p-y2`,
+            `absolute z-[1000] mt-1 bg-white-100 border border-gray-300 rounded-sm shadow-md transition-all duration-300 ease-in-out w-full p-y2`,
             optionsListClassName
           )}
           style={{
             height: showOptions
-              ? optionsState.length > 0
+              ? optionsState?.length > 0
                 ? `${Math.min(optionsState.length, row) * height.value + 2}${
                     height.unit
                   }`
                 : "auto" // Set height to auto if there are no options
               : "0px",
             overflow: showOptions
-              ? optionsState.length > 0
+              ? optionsState?.length > 0
                 ? "auto"
                 : "hidden"
               : "hidden",
             opacity: showOptions ? "1" : "0", // Keep opacity management the same
           }}
         >
-          {optionsState.length > 0 ? (
+          {optionsState?.length > 0 ? (
             optionsState.map((option, index) => (
               <li
                 key={index}

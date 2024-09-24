@@ -12,19 +12,21 @@ const Input = forwardRef(
       loading,
       showOptions,
       inputHeight,
-      onFocus,
+      onClick,
       id,
     },
     inputRef
   ) => {
     return (
-      <div className="input-container flex items-center gap-4 h-full ">
+      <div
+        className="input-container flex items-center gap-4 h-full "
+        onClick={onClick}
+      >
         <input
           id={id}
           type="text"
           value={inputValue}
           onChange={handleInputChange}
-          onFocus={onFocus}
           ref={inputRef}
           className="border-0 outline-none w-full bg-transparent box-border p-3 h-full"
         />

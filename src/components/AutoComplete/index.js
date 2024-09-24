@@ -31,6 +31,7 @@ const Autocomplete = ({
   optionsClassName = "",
   orientation = "vertical",
   errorClass,
+  value,
   disabled,
   required,
 }) => {
@@ -40,7 +41,7 @@ const Autocomplete = ({
   // eslint-disable-next-line no-unused-vars
   const [filteredOptions, setFilteredOptions] = useState([]);
   const [loading, setLoading] = useState(false);
-  const [selectedValues, setSelectedValues] = useState(multiple ? [] : null);
+  const [selectedValues, setSelectedValues] = useState(multiple ? [] : value);
   const [showOptions, setShowOptions] = useState(false);
   const [isUserInput, setIsUserInput] = useState(false);
   const inputContainerRef = useRef(null);
@@ -48,16 +49,9 @@ const Autocomplete = ({
 
   const labelRef = useRef();
   const id = useId();
-  const [labelWidthValue, setLabelWidthValue] = useState();
-  const [inputWidth, setInputWidth] = useState();
+
   const heightStyle = useResponsiveStyle(height, "h");
   const widthStyle = useResponsiveStyle(width, "w");
-  const labelWidthStyle = useResponsiveStyle(labelWidth, "w");
-
-  useEffect(() => {
-    setInputWidth(inputContainerRef?.current?.offsetWidth);
-    setLabelWidthValue(labelRef?.current?.offsetWidth);
-  }, [width, height, labelWidth]);
 
   useEffect(() => {
     if (options?.length > 0) {
@@ -76,18 +70,18 @@ const Autocomplete = ({
   };
 
   useEffect(() => {
-    if (autoFetch && optionsState.length === 0) {
+    if (autoFetch && optionsState?.length === 0) {
       fetchData();
     }
 
-    if (debouncedInputValue.trim() && isUserInput) {
+    if (debouncedInputValue?.trim() && isUserInput) {
       fetchData();
     }
   }, [autoFetch, debouncedInputValue, asyncRequest]);
 
   useEffect(() => {
     const filterOptions = () => {
-      if (inputValue && (!asyncRequest || optionsState.length > 0)) {
+      if (inputValue && (!asyncRequest || optionsState?.length > 0)) {
         setFilteredOptions(
           optionsState.filter((option) =>
             getOptionsLabel(option)
@@ -102,6 +96,11 @@ const Autocomplete = ({
 
     filterOptions();
   }, [inputValue, optionsState]);
+
+  useEffect(() => {
+    setSelectedValues(value);
+    setInputValue(getOptionsLabel(value) || "");
+  }, [value]);
 
   const handleInputChange = (e) => {
     const newValue = e.target.value;
@@ -120,7 +119,7 @@ const Autocomplete = ({
         );
       } else {
         newSelectedValues = [...selectedValues, option];
-        setShowOptions(true);
+        setShowOptions(!isCloseAfterSelect);
       }
     } else {
       newSelectedValues = option;
@@ -153,12 +152,13 @@ const Autocomplete = ({
     setSelectedValues(multiple ? [] : null);
     setInputValue("");
     setIsUserInput(true);
+    onChange("");
   };
 
   const clearAllSelected = () => {
     setSelectedValues([]);
     setInputValue("");
-    onChange([]);
+    onChange("");
   };
 
   const handleFocus = () => {
@@ -187,69 +187,6 @@ const Autocomplete = ({
   const visibleTags = multiple ? selectedValues?.slice(0, 2) : [];
   const hiddenTagCount =
     selectedValues?.length > 2 ? selectedValues.length - 2 : 0;
-
-  const renderLabel = () => {
-    if (!label) return null;
-
-    const baseLabelClass = clsx(
-      `text-sm select-none absolute transition-all duration-300 ease-in-out`,
-      labelClassName
-    );
-
-    if (orientation === "vertical") {
-      return (
-        <label
-          ref={labelRef}
-          htmlFor={id}
-          className={clsx(`z-30 left-2 `, baseLabelClass, {
-            "top-1/2 -translate-y-1/2 pointer-events-none":
-              !showOptions && !inputValue,
-            "-top-1 -translate-y-full": showOptions || inputValue,
-          })}
-        >
-          {label}
-        </label>
-      );
-    }
-
-    return (
-      <label
-        ref={labelRef}
-        htmlFor={id}
-        style={{ ...labelWidthStyle }}
-        className={clsx(
-          baseLabelClass,
-          "left-0 top-1/2 -translate-y-1/2 z-30 pointer-events-none",
-          {
-            "left-2": !showOptions && !inputValue,
-          }
-        )}
-      >
-        {label}
-      </label>
-    );
-  };
-
-  const renderError = () =>
-    error && (
-      <div
-        style={{
-          paddingLeft:
-            (showOptions || inputValue) && orientation === "horizontal"
-              ? `${labelWidthValue}px`
-              : 0,
-        }}
-        className={clsx(
-          "text-red-500 text-sm transition-all duration-500",
-          {
-            "mt-1": orientation === "vertical",
-          },
-          errorClass
-        )}
-      >
-        {error}
-      </div>
-    );
 
   const verticalAutocomplete = () => {
     return (
@@ -308,7 +245,7 @@ const Autocomplete = ({
             loading={loading}
             showOptions={showOptions}
             height={height}
-            onFocus={handleFocus}
+            onClick={handleFocus}
             ref={inputRef}
             id={id}
           />

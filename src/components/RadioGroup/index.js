@@ -25,7 +25,6 @@ const RadioGroup = ({
         )}
       >
         {React.Children.map(children, (child) => {
-          console.log("child", child);
           if (child.type.name === "FormikRadio") {
             return React.cloneElement(child, {
               name,

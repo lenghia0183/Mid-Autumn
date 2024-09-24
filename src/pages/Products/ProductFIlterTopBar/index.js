@@ -70,7 +70,7 @@ const ProductFilterTopBar = ({ onFilter }) => {
             <div className="flex-2 w-[300px]">
               <FormikAutocomplete
                 name="price"
-                options={priceOptions}
+                // options={priceOptions}
                 label="Sắp sếp theo giá"
                 getOptionLabel={(opt) => {
                   return opt.label;
