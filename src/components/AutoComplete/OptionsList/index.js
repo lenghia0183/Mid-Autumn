@@ -20,6 +20,9 @@ const OptionsList = ({
   optionsClassName,
 }) => {
   const height = useParseDimension(heightPerOption);
+
+  console.log(optionsState);
+
   return (
     <>
       {loading && showOptions ? (
@@ -34,12 +37,18 @@ const OptionsList = ({
           )}
           style={{
             height: showOptions
-              ? `${Math.min(optionsState.length, row) * height.value + 2}${
-                  height.unit
-                }`
+              ? optionsState.length > 0
+                ? `${Math.min(optionsState.length, row) * height.value + 2}${
+                    height.unit
+                  }`
+                : "auto" // Set height to auto if there are no options
               : "0px",
-            overflow: showOptions ? "auto" : "hidden",
-            opacity: showOptions ? "1" : "0",
+            overflow: showOptions
+              ? optionsState.length > 0
+                ? "auto"
+                : "hidden"
+              : "hidden",
+            opacity: showOptions ? "1" : "0", // Keep opacity management the same
           }}
         >
           {optionsState.length > 0 ? (

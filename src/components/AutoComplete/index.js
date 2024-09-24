@@ -331,7 +331,7 @@ const Autocomplete = ({
 
         <div
           className={clsx(
-            "w-full absolute bottom-0 left-0 h-[2px] bg-emerald transition-transform duration-300 ease-in-out",
+            "w-full absolute bottom-[2px] left-0 h-[2px] bg-emerald transition-transform duration-300 ease-in-out",
             {
               "scale-x-0": !showOptions && !inputValue,
               "scale-x-100": showOptions || inputValue,
