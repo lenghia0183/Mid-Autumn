@@ -12,10 +12,6 @@ const ItemCard = ({ product, className }) => {
   // Chuyển discount từ phần trăm sang giá trị phần trăm dưới dạng số thập phân
   const discountDecimal = discount / 100;
 
-  console.log("discount", discountDecimal);
-
-  console.log("price", price);
-
   // Tính oldPrice dựa trên discount nếu có
   const oldPrice = discountDecimal
     ? Math.round(price / (1 - discountDecimal))

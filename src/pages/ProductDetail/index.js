@@ -6,6 +6,7 @@ import formatCurrency from "../../utils/formatCurrency";
 import Button from "../../components/Button";
 import Icon from "../../components/Icon";
 import Tabs from "../../components/Tabs";
+import ProductGallery from "../../components/ProductGallery";
 
 function ProductDetail() {
   const productDetailBreadcrumbs = [
@@ -64,10 +65,12 @@ function ProductDetail() {
       <Form>
         <div className="bg-white">
           <Breadcrumb items={productDetailBreadcrumbs} />
-          <div className="container grid grid-cols-12 gap-x-5 mt-14 ">
-            <div className="col-span-5"></div>
+          <div className="container grid grid-cols-12 gap-x-7 mt-14 ">
+            <div className="col-span-6">
+              <ProductGallery />
+            </div>
 
-            <div className="col-span-7 text-dark">
+            <div className="col-span-6 text-dark">
               <h1 className="text-[45px] font-medium">{itemDetail?.name}</h1>
               <p className="text-xl font-medium mt-3">
                 Tình trạng tồn kho:{" "}
