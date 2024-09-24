@@ -7,6 +7,8 @@ import Button from "../../components/Button";
 import Icon from "../../components/Icon";
 import Tabs from "../../components/Tabs";
 import ProductGallery from "../../components/ProductGallery";
+import Divider from "../../components/Devider";
+import RelatedProducts from "../../components/RelatedProducts";
 
 function ProductDetail() {
   const productDetailBreadcrumbs = [
@@ -27,6 +29,7 @@ function ProductDetail() {
     name: "Trăng vàng hoàng kim vinh hiển đỏ",
     state: "Còn hàng",
     branch: "Kinh Đô",
+    category: "Bánh trung thu cao cấp",
     code: "000059",
     price: 1300000,
     discount: 10,
@@ -65,11 +68,13 @@ function ProductDetail() {
       <Form>
         <div className="bg-white">
           <Breadcrumb items={productDetailBreadcrumbs} />
-          <div className="container grid grid-cols-12 gap-x-7 mt-14 ">
+          <div className="container grid grid-cols-12 gap-x-7 py-14 ">
+            {/* gallery */}
             <div className="col-span-6">
               <ProductGallery />
             </div>
 
+            {/* info */}
             <div className="col-span-6 text-dark">
               <h1 className="text-[45px] font-medium">{itemDetail?.name}</h1>
               <p className="text-xl font-medium mt-3">
@@ -126,7 +131,7 @@ function ProductDetail() {
                       className="flex-shrink-0 font-medium"
                       size="zeroPadding"
                       bgColor="white"
-                      textColor="dark"
+                      textColor="dark-300"
                       textHoverColor="emerald"
                       to={tag.to}
                     >
@@ -136,15 +141,33 @@ function ProductDetail() {
                 ))}
               </div>
 
-              <Tabs
-                className="mt-5"
-                list={tabList}
-                onChange={(value) => console.log(value)}
-                divider={true}
-              >
-                <div>Đây là thông tin sản phẩm</div>
-                <div>Hướng dẫn sử dụng sản phẩm</div>
+              <Tabs className="mt-5" list={tabList} divider={true}>
+                <div className="text-dark-400 text-lg flex flex-col gap-3">
+                  <p>
+                    Thương hiệu: <span>{itemDetail.branch}</span>
+                  </p>
+
+                  <p>
+                    Loại bánh: <span>{itemDetail.category}</span>
+                  </p>
+
+                  <p>
+                    Mã sản phẩm: <span>{itemDetail.code}</span>
+                  </p>
+
+                  <p>{itemDetail?.description}</p>
+                </div>
+                <div></div>
               </Tabs>
+            </div>
+
+            <div className="col-span-12 mt-14">
+              <h2 className="text-emerald text-[35px] font-medium">
+                SẢN PHẨM LIÊN QUAN
+              </h2>
+              <Divider color="emerald" height="2px" />
+
+              <RelatedProducts />
             </div>
           </div>
         </div>

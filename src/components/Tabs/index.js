@@ -4,7 +4,7 @@ import PropTypes from "prop-types";
 const Tabs = ({
   list,
   children,
-  onChange,
+  onChange = () => {},
   value: externalValue,
   divider,
   className,
