@@ -11,6 +11,11 @@ export const TEXTFIELD_ALLOW = {
   POSITIVE_DECIMAL: /[^0-9.]/g,
   ALPHANUMERIC: /[^a-zA-Z0-9]*/g,
   ALPHA: /[^a-zA-Z]/g,
+  ALPHANUMERIC_SPECIAL: /[^a-zA-Z0-9!@#$%^&*()_+\-=[\]{};':"\\|,.<>/?`~]/g,
+  VIETNAMESE:
+    /[^a-zA-ZÀÁÂÃÈÉÊÌÍÒÓÔÕÙÚĂĐĨŨƠàáâãèéêìíòóôõùúăđĩũơƯĂẠẢẤẦẨẪẬẮẰẲẴẶẸẺẼỀỀỂỄỆỈỊỌỎỐỒỔỖỘỚỜỞỠỢỤỦỨỪỬỮỰỲỴỶỸỹỳỵỷ\s]/g,
+  VIETNAMESE_SPECIAL:
+    /[^a-zA-Z0-9ÀÁÂÃÈÉÊÌÍÒÓÔÕÙÚĂĐĨŨƠàáâãèéêìíòóôõùúăđĩũơƯĂẠẢẤẦẨẪẬẮẰẲẴẶẸẺẼỀỀỂỄỆỈỊỌỎỐỒỔỖỘỚỜỞỠỢỤỦỨỪỬỮỰỲỴỶỸỹỳỵỷ\s!@#\$%\^&\*\(\)_\+\-=\[\]{};':"\\|,.<>\/?]/g,
 };
 
 export const TEXTFIELD_REQUIRED_LENGTH = {

@@ -46,6 +46,8 @@ const validationSchema = (t) =>
       .oneOf(["ghtk", "ghn"], "Phương thức giao hàng không hợp lệ")
       .required("Phương thức giao hàng là bắt buộc"),
 
+    paymentMethod: Yup.string().required("Phương thức giao hàng là bắt buộc"),
+
     note: Yup.string(),
   });
 

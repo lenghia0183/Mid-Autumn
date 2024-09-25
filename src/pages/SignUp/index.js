@@ -1,33 +1,25 @@
 import React from "react";
 import { Formik, Form, Field } from "formik";
-import * as Yup from "yup";
+
 import FormikTextField from "../../components/Formik/FormikTextField";
 import { PATH } from "../../constants/path";
 import Button from "../../components/Button";
 import Icon from "../../components/Icon";
-
-const validationSchema = Yup.object().shape({
-  userName: Yup.string()
-    .required("Tên đăng nhập là bắt buộc")
-    .min(4, "Tên đăng nhập phải có ít nhất 4 ký tự"),
-  password: Yup.string()
-    .required("Mật khẩu là bắt buộc")
-    .min(6, "Mật khẩu phải có ít nhất 6 ký tự"),
-  confirmPassword: Yup.string()
-    .oneOf([Yup.ref("password"), null], "Mật khẩu xác nhận không khớp")
-    .required("Xác nhận mật khẩu là bắt buộc"),
-});
-
-const initialValues = {
-  userName: "",
-  phoneNumber: "",
-  address: "",
-  email: "",
-  password: "",
-  confirmPassword: "",
-};
+import { TEXTFIELD_ALLOW } from "../../constants/common";
+import validationSchema from "./schema";
+import { useTranslation } from "react-i18next";
 
 function SignUp() {
+  const { t } = useTranslation();
+
+  const initialValues = {
+    userName: "",
+    phoneNumber: "",
+    address: "",
+    email: "",
+    password: "",
+    confirmPassword: "",
+  };
   const handleSubmit = (values) => {
     console.log("Submitted values:", values);
     // Xử lý gửi form ở đây
@@ -39,7 +31,7 @@ function SignUp() {
 
       <Formik
         initialValues={initialValues}
-        validationSchema={validationSchema}
+        validationSchema={validationSchema(t)}
         onSubmit={handleSubmit}
       >
         {({ resetForm }) => (
@@ -48,17 +40,27 @@ function SignUp() {
               name="userName"
               label="Họ và tên"
               className="mt-10"
+              allow={TEXTFIELD_ALLOW.VIETNAMESE}
+              required
             />
 
             <FormikTextField
               name="phoneNumber"
               label="Điện thoại"
               className="mt-10"
+              allow={TEXTFIELD_ALLOW.NUMBER}
+              required
             />
 
             <FormikTextField name="address" label="Địa chỉ" className="mt-10" />
 
-            <FormikTextField name="email" label="Email" className="mt-10" />
+            <FormikTextField
+              name="email"
+              label="Email"
+              className="mt-10"
+              allow={TEXTFIELD_ALLOW.ALPHANUMERIC_SPECIAL}
+              required
+            />
 
             <FormikTextField
               name="password"
@@ -66,6 +68,8 @@ function SignUp() {
               type="password"
               className="mt-10"
               rightIconClassName="text-gray-500"
+              allow={TEXTFIELD_ALLOW.ALPHANUMERIC_SPECIAL}
+              required
             />
 
             <FormikTextField
@@ -74,6 +78,8 @@ function SignUp() {
               type="password"
               className="mt-10"
               rightIconClassName="text-gray-500"
+              allow={TEXTFIELD_ALLOW.ALPHANUMERIC_SPECIAL}
+              required
             />
 
             <div className="flex items-center text-lg mt-5">

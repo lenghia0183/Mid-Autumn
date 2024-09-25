@@ -1,26 +1,22 @@
 import React from "react";
 import { Formik, Form } from "formik";
-import * as Yup from "yup";
+
 import FormikTextField from "../../components/Formik/FormikTextField";
 import { PATH } from "./../../constants/path";
 import Button from "../../components/Button";
 import Icon from "../../components/Icon";
-
-const validationSchema = Yup.object().shape({
-  userName: Yup.string()
-    .required("Tên đăng nhập là bắt buộc")
-    .min(4, "Tên đăng nhập phải có ít nhất 4 ký tự"),
-  password: Yup.string()
-    .required("Mật khẩu là bắt buộc")
-    .min(6, "Mật khẩu phải có ít nhất 6 ký tự"),
-});
-
-const initialValues = {
-  userName: "",
-  password: "",
-};
+import validationSchema from "./schema";
+import { useTranslation } from "react-i18next";
+import { TEXTFIELD_ALLOW } from "../../constants/common";
 
 function Login() {
+  const { t } = useTranslation();
+
+  const initialValues = {
+    userName: "",
+    password: "",
+  };
+
   const handleSubmit = (values) => {
     console.log("Submitted values:", values);
     // Xử lý gửi form ở đây
@@ -32,7 +28,7 @@ function Login() {
 
       <Formik
         initialValues={initialValues}
-        validationSchema={validationSchema}
+        validationSchema={validationSchema(t)}
         onSubmit={handleSubmit}
       >
         <Form>
@@ -40,12 +36,14 @@ function Login() {
             name="userName"
             label="Tên đăng nhập"
             className="mt-10"
+            allow={TEXTFIELD_ALLOW.ALPHANUMERIC_SPECIAL}
           />
           <FormikTextField
             name="password"
             label="Mật khẩu"
             type="password"
             className="mt-10"
+            allow={TEXTFIELD_ALLOW.ALPHANUMERIC_SPECIAL}
             rightIconClassName="!text-gray-500"
           />
 
