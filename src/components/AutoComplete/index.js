@@ -193,7 +193,7 @@ const Autocomplete = ({
       <div
         className={clsx(
           "relative h-full text-lg",
-          { "pointer-events-none cursor-not-allowed ": disabled },
+          { "pointer-events-none": disabled },
           className
         )}
         ref={inputContainerRef}
@@ -206,11 +206,13 @@ const Autocomplete = ({
           htmlFor={id}
           className={clsx(
             "absolute left-2 transition-all duration-300 ease-in-out z-[100]",
+
             labelClassName,
             {
               "text-dark top-0 -translate-y-full": showOptions || inputValue,
               "top-1/2 -translate-y-1/2 text-gray-500":
                 !showOptions && !inputValue,
+              "text-gray-300": disabled,
             }
           )}
         >
@@ -219,9 +221,8 @@ const Autocomplete = ({
         </label>
         <div
           className={clsx(
-            "relative bg-gray-50 transition-all duration-300 border-b-2 w-full",
+            "relative transition-all duration-300 border-b-2 w-full",
             {
-              "cursor-not-allowed bg-gray-200 text-gray-500": disabled,
               "border-gray-300": !showOptions && !error && !disabled,
               "border-red-500": error && !disabled,
             }
@@ -246,6 +247,7 @@ const Autocomplete = ({
             showOptions={showOptions}
             height={height}
             onClick={handleFocus}
+            disabled={disabled}
             ref={inputRef}
             id={id}
           />

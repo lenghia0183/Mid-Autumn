@@ -17,11 +17,20 @@ import FormikRadio from "./../../components/Formik/FormikRadio";
 import FormikRadioGroup from "../../components/Formik/FormikRadioGroup";
 import {
   getDistrictData,
+  getDistrictDataTest,
   getProvinceData,
+  getProvinceDataTest,
+  getShipPrice,
+  getShipPriceTest,
   getWardData,
-} from "../../service/locationApi";
+  getWardDataTest,
+} from "../../service/GHNApi";
+import { useEffect, useRef, useState } from "react";
 
 function Checkout() {
+  const formRef = useRef();
+  const [values, setValues] = useState({});
+
   const breadcrumbCheckout = [
     {
       to: PATH.HOME,
@@ -32,42 +41,6 @@ function Checkout() {
       label: PAGE_TITLE.CHECKOUT,
     },
   ];
-
-  const initialValues = {
-    buyerName: "",
-    buyerEmail: "",
-    buyerPhone: "",
-    recipientName: "",
-    recipientPhone: "",
-    province: null,
-    district: null,
-    ward: null,
-    street: "",
-    method: "ghtk",
-    note: "",
-  };
-
-  const validationSchema = Yup.object({
-    buyerName: Yup.string().required("Họ và tên là bắt buộc"),
-    buyerEmail: Yup.string()
-      .email("Email không hợp lệ")
-      .required("Email là bắt buộc"),
-    buyerPhone: Yup.string()
-      .matches(/^[0-9]{10,15}$/, "Số điện thoại không hợp lệ")
-      .required("Điện thoại là bắt buộc"),
-    recipientName: Yup.string().required("Họ và tên người nhận là bắt buộc"),
-    recipientPhone: Yup.string()
-      .matches(/^[0-9]{10,15}$/, "Số điện thoại người nhận không hợp lệ")
-      .required("Điện thoại người nhận là bắt buộc"),
-    province: Yup.string().required("Tỉnh/Thành phố là bắt buộc"),
-    district: Yup.string().required("Quận/Huyện là bắt buộc"),
-    ward: Yup.string().required("Phường/Xã là bắt buộc"),
-    street: Yup.string().required("Địa chỉ là bắt buộc"),
-    method: Yup.string()
-      .oneOf(["ghtk", "ghn"], "Phương thức giao hàng không hợp lệ")
-      .required("Phương thức giao hàng là bắt buộc"),
-    note: Yup.string(),
-  });
 
   const items = [
     {
@@ -120,12 +93,101 @@ function Checkout() {
     },
   ];
 
+  const initialValues = {
+    buyerName: "",
+    buyerEmail: "",
+    buyerPhone: "",
+    recipientName: "",
+    recipientPhone: "",
+    province: null,
+    district: null,
+    ward: null,
+    street: "",
+    shipPrice: null,
+    itemTotalPrice: items.reduce((accumulator, item) => {
+      return accumulator + item.quantity * item.price;
+    }, 0),
+    total: 0,
+    method: "ghtk",
+    note: "",
+  };
+
+  const validationSchema = Yup.object({
+    buyerName: Yup.string().required("Họ và tên là bắt buộc"),
+    buyerEmail: Yup.string()
+      .email("Email không hợp lệ")
+      .required("Email là bắt buộc"),
+    buyerPhone: Yup.string()
+      .matches(/^[0-9]{10,15}$/, "Số điện thoại không hợp lệ")
+      .required("Điện thoại là bắt buộc"),
+    recipientName: Yup.string().required("Họ và tên người nhận là bắt buộc"),
+    recipientPhone: Yup.string()
+      .matches(/^[0-9]{10,15}$/, "Số điện thoại người nhận không hợp lệ")
+      .required("Điện thoại người nhận là bắt buộc"),
+    province: Yup.string().required("Tỉnh/Thành phố là bắt buộc"),
+    district: Yup.string().required("Quận/Huyện là bắt buộc"),
+    ward: Yup.string().required("Phường/Xã là bắt buộc"),
+    street: Yup.string().required("Địa chỉ là bắt buộc"),
+    method: Yup.string()
+      .oneOf(["ghtk", "ghn"], "Phương thức giao hàng không hợp lệ")
+      .required("Phương thức giao hàng là bắt buộc"),
+    note: Yup.string(),
+  });
+
+  useEffect(() => {
+    const {
+      province = "",
+      district = "",
+      ward = "",
+    } = formRef?.current?.values;
+
+    const { setFieldValue } = formRef?.current;
+
+    if (province && district && ward) {
+      const fetchServicePrice = async () => {
+        try {
+          const servicePrice = await getShipPriceTest({
+            service_type_id: 2,
+            to_district_id: district?.DistrictID,
+            to_ward_code: ward?.WardCode,
+            insurance_value: items?.reduce((total, item) => {
+              return total + item.quantity * item.price;
+            }, 0),
+            weight: items?.reduce((total, item) => {
+              return total + item.quantity * 700;
+            }, 0),
+            items: items?.map((i) => {
+              return {
+                name: i?.name,
+                quantity: i?.quantity,
+                height: 30,
+                weight: 700,
+                width: 30,
+                length: 30,
+              };
+            }),
+          });
+
+          if (servicePrice && servicePrice.data) {
+            setFieldValue("shipPrice", servicePrice.data.total);
+          }
+        } catch (error) {}
+      };
+
+      fetchServicePrice();
+    }
+  }, [formRef?.current?.values]);
+
   return (
     <main className="bg-white">
       <Breadcrumb items={breadcrumbCheckout} />
       <Formik
         initialValues={initialValues}
         validationSchema={validationSchema}
+        innerRef={(f) => {
+          formRef.current = f;
+          return setValues(f?.values);
+        }}
         onSubmit={(values) => {
           // Handle form submission
           console.log("Submitted values", values);
@@ -221,7 +283,7 @@ function Checkout() {
                         <FormikAutocomplete
                           name="province"
                           label="Tỉnh/Thành phô"
-                          asyncRequest={getProvinceData}
+                          asyncRequest={getProvinceDataTest}
                           asyncRequestHelper={(res) => {
                             return res?.data;
                           }}
@@ -232,6 +294,7 @@ function Checkout() {
                           onChange={() => {
                             setFieldValue("district", null);
                             setFieldValue("ward", null);
+                            setFieldValue("shipPrice", null);
                           }}
                           autoFetch={false}
                           required
@@ -241,7 +304,7 @@ function Checkout() {
                           name="district"
                           label="Quận/Huyện"
                           asyncRequest={() => {
-                            return getDistrictData(
+                            return getDistrictDataTest(
                               values?.province?.ProvinceID
                             );
                           }}
@@ -256,7 +319,9 @@ function Checkout() {
                           }
                           onChange={() => {
                             setFieldValue("ward", null);
+                            setFieldValue("shipPrice", null);
                           }}
+                          disabled={!values?.province}
                           autoFetch={false}
                           required
                         />
@@ -265,7 +330,9 @@ function Checkout() {
                           name="ward"
                           label="Phường/Xã"
                           asyncRequest={() => {
-                            return getWardData(values.district.DistrictID);
+                            return getWardDataTest(
+                              values?.district?.DistrictID
+                            );
                           }}
                           asyncRequestHelper={(res) => {
                             return res?.data;
@@ -276,7 +343,11 @@ function Checkout() {
                           isEqualValue={(opt, val) =>
                             opt?.WardCode === val?.WardCode
                           }
+                          onChange={() => {
+                            setFieldValue("shipPrice", null);
+                          }}
                           autoFetch={false}
+                          disabled={!values?.district}
                           required
                         />
                       </div>
@@ -336,7 +407,7 @@ function Checkout() {
                                   <p>
                                     Giao hàng tận nơi có phí -{" "}
                                     <span className="font-semibold">
-                                      {formatCurrency(35000)}
+                                      {formatCurrency(values?.shipPrice)}
                                     </span>
                                   </p>
                                   <p className="text-crimson font-medium">
@@ -496,7 +567,7 @@ function Checkout() {
                     <div>
                       <LabelValue
                         label={"Tổng tiền hàng"}
-                        value={formatCurrency(5000000)}
+                        value={formatCurrency(values?.itemTotalPrice)}
                         className="justify-between"
                         labelClassName="text-xl !font-normal text-gray-500"
                         valueClassName="text-2xl !font-normal text-crimson"
@@ -511,7 +582,7 @@ function Checkout() {
                     <div>
                       <LabelValue
                         label={"Phí vận chuyển"}
-                        value={formatCurrency(5000)}
+                        value={formatCurrency(values?.shipPrice)}
                         className="justify-between"
                         labelClassName="text-xl !font-normal text-gray-500"
                         valueClassName="text-2xl !font-normal text-crimson"
@@ -526,7 +597,9 @@ function Checkout() {
                     <div>
                       <LabelValue
                         label={"Tạm Tính"}
-                        value={formatCurrency(6500000)}
+                        value={formatCurrency(
+                          values?.shipPrice + values?.itemTotalPrice
+                        )}
                         className="justify-between"
                         labelClassName="text-xl !font-normal text-gray-500"
                         valueClassName="text-2xl !font-normal text-crimson"
@@ -541,7 +614,9 @@ function Checkout() {
                     <div>
                       <LabelValue
                         label={"Thành tiền"}
-                        value={formatCurrency(6500000)}
+                        value={formatCurrency(
+                          values?.shipPrice + values?.itemTotalPrice
+                        )}
                         className="justify-between"
                         labelClassName="text-xl"
                         valueClassName="text-2xl !font-semibold text-crimson"

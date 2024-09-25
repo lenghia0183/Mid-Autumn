@@ -2,6 +2,7 @@ import React, { forwardRef } from "react";
 import PropTypes from "prop-types";
 import Icon from "../../Icon";
 import Loading from "../../Loading";
+import clsx from "clsx";
 
 const Input = forwardRef(
   (
@@ -11,15 +12,17 @@ const Input = forwardRef(
       clearInput,
       loading,
       showOptions,
-      inputHeight,
       onClick,
+      disabled,
       id,
     },
     inputRef
   ) => {
     return (
       <div
-        className="input-container flex items-center gap-4 h-full "
+        className={clsx("input-container flex items-center gap-4 h-full ", {
+          "bg-gray-100": disabled,
+        })}
         onClick={onClick}
       >
         <input
