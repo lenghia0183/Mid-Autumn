@@ -1,5 +1,5 @@
 import { Form, Formik } from "formik";
-import * as Yup from "yup";
+
 import Breadcrumb from "../../components/Breadcrumb";
 import Divider from "../../components/Devider";
 import Icon from "../../components/Icon";
@@ -16,19 +16,19 @@ import LabelValue from "./../../components/LabelValue/index";
 import FormikRadio from "./../../components/Formik/FormikRadio";
 import FormikRadioGroup from "../../components/Formik/FormikRadioGroup";
 import {
-  getDistrictData,
   getDistrictDataTest,
-  getProvinceData,
   getProvinceDataTest,
-  getShipPrice,
   getShipPriceTest,
-  getWardData,
   getWardDataTest,
 } from "../../service/GHNApi";
 import { useEffect, useRef, useState } from "react";
+import validationSchema from "./schema";
+import { useTranslation } from "react-i18next";
 
 function Checkout() {
+  const { t } = useTranslation();
   const formRef = useRef();
+
   const [values, setValues] = useState({});
 
   const breadcrumbCheckout = [
@@ -112,28 +112,6 @@ function Checkout() {
     note: "",
   };
 
-  const validationSchema = Yup.object({
-    buyerName: Yup.string().required("Họ và tên là bắt buộc"),
-    buyerEmail: Yup.string()
-      .email("Email không hợp lệ")
-      .required("Email là bắt buộc"),
-    buyerPhone: Yup.string()
-      .matches(/^[0-9]{10,15}$/, "Số điện thoại không hợp lệ")
-      .required("Điện thoại là bắt buộc"),
-    recipientName: Yup.string().required("Họ và tên người nhận là bắt buộc"),
-    recipientPhone: Yup.string()
-      .matches(/^[0-9]{10,15}$/, "Số điện thoại người nhận không hợp lệ")
-      .required("Điện thoại người nhận là bắt buộc"),
-    province: Yup.string().required("Tỉnh/Thành phố là bắt buộc"),
-    district: Yup.string().required("Quận/Huyện là bắt buộc"),
-    ward: Yup.string().required("Phường/Xã là bắt buộc"),
-    street: Yup.string().required("Địa chỉ là bắt buộc"),
-    method: Yup.string()
-      .oneOf(["ghtk", "ghn"], "Phương thức giao hàng không hợp lệ")
-      .required("Phương thức giao hàng là bắt buộc"),
-    note: Yup.string(),
-  });
-
   useEffect(() => {
     const {
       province = "",
@@ -183,7 +161,7 @@ function Checkout() {
       <Breadcrumb items={breadcrumbCheckout} />
       <Formik
         initialValues={initialValues}
-        validationSchema={validationSchema}
+        validationSchema={validationSchema(t)}
         innerRef={(f) => {
           formRef.current = f;
           return setValues(f?.values);
