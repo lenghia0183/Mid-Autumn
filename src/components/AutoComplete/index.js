@@ -23,6 +23,7 @@ const Autocomplete = ({
   autoFetch = true,
   height = "50px",
   onChange = () => {},
+  onBlur = () => {},
   error = "",
   label = "",
   labelWidth = "70px",
@@ -247,6 +248,7 @@ const Autocomplete = ({
             showOptions={showOptions}
             height={height}
             onClick={handleFocus}
+            onBlur={onBlur}
             disabled={disabled}
             ref={inputRef}
             id={id}

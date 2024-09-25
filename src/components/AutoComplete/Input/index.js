@@ -13,6 +13,7 @@ const Input = forwardRef(
       loading,
       showOptions,
       onClick,
+      onBlur,
       disabled,
       id,
     },
@@ -30,6 +31,7 @@ const Input = forwardRef(
           type="text"
           value={inputValue}
           onChange={handleInputChange}
+          onBlur={onBlur}
           ref={inputRef}
           className="border-0 outline-none w-full bg-transparent box-border p-3 h-full"
         />

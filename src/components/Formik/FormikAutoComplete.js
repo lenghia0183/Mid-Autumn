@@ -6,10 +6,11 @@ const FormikAutocomplete = ({
   name,
   id,
   onChange: externalOnchange,
+  onBlur: externalOnBlur,
   ...props
 }) => {
   const [field, meta, helpers] = useField(name);
-  const { setValue } = helpers;
+  const { setValue, setTouched } = helpers;
 
   return (
     <>
@@ -20,6 +21,12 @@ const FormikAutocomplete = ({
             externalOnchange(val);
           }
           setValue(val);
+        }}
+        onBlur={(val) => {
+          if (externalOnBlur) {
+            externalOnBlur(val);
+          }
+          setTouched(true);
         }}
         value={field.value}
         error={meta.touched && meta.error ? meta.error : ""}
