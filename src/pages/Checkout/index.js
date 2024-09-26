@@ -24,6 +24,7 @@ import {
 import { useEffect, useRef, useState } from "react";
 import validationSchema from "./schema";
 import { useTranslation } from "react-i18next";
+import { TEXTFIELD_ALLOW } from "../../constants";
 
 function Checkout() {
   const { t } = useTranslation();
@@ -211,6 +212,7 @@ function Checkout() {
                           className="col-span-6"
                           name="buyerPhone"
                           label="Điện Thoại"
+                          allow={TEXTFIELD_ALLOW.NUMERIC}
                           required
                         />
                       </div>
@@ -232,6 +234,7 @@ function Checkout() {
                             className="col-span-6"
                             name="recipientPhone"
                             label="Điện Thoại"
+                            allow={TEXTFIELD_ALLOW.NUMERIC}
                             required
                           />
 
@@ -273,7 +276,7 @@ function Checkout() {
                               setFieldValue("ward", null);
                               setFieldValue("shipPrice", null);
                             }}
-                            autoFetch={false}
+                            // autoFetch={false}
                             required
                           />
 
@@ -299,7 +302,8 @@ function Checkout() {
                               setFieldValue("shipPrice", null);
                             }}
                             disabled={!values?.province}
-                            autoFetch={false}
+                            asyncRequestDeps="province"
+                            // autoFetch={false}
                             required
                           />
 
@@ -323,8 +327,9 @@ function Checkout() {
                             onChange={() => {
                               setFieldValue("shipPrice", null);
                             }}
-                            autoFetch={false}
+                            // autoFetch={false}
                             disabled={!values?.district}
+                            asyncRequestDeps="district"
                             required
                           />
                         </div>

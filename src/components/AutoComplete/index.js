@@ -6,6 +6,7 @@ import OptionsList from "./OptionsList";
 import SelectedTags from "./SelectedTags";
 import useResponsiveStyle from "../../hooks/useResponsiveStyle";
 import clsx from "clsx";
+import { useFormikContext } from "formik";
 
 const Autocomplete = ({
   options = [],
@@ -31,11 +32,16 @@ const Autocomplete = ({
   optionsListClassName = "",
   optionsClassName = "",
   orientation = "vertical",
+  asyncRequestDeps = "",
   errorClass,
   value,
   disabled,
   required,
 }) => {
+  const { values } = useFormikContext();
+
+  console.log("fomikcontext values", values);
+
   const [optionsState, setOptions] = useState(options);
   const [inputValue, setInputValue] = useState("");
   const debouncedInputValue = useDebounce(inputValue, 500);
@@ -72,13 +78,21 @@ const Autocomplete = ({
 
   useEffect(() => {
     if (autoFetch && optionsState?.length === 0) {
-      fetchData();
+      if (asyncRequestDeps && values[asyncRequestDeps]) fetchData();
+      if (!asyncRequestDeps) fetchData();
     }
 
     if (debouncedInputValue?.trim() && isUserInput) {
       fetchData();
     }
-  }, [autoFetch, debouncedInputValue, asyncRequest]);
+  }, [autoFetch, debouncedInputValue, asyncRequest, values[asyncRequestDeps]]);
+
+  const handleFocus = () => {
+    setShowOptions(true);
+    if (!autoFetch && !showOptions && !isUserInput) {
+      fetchData();
+    }
+  };
 
   useEffect(() => {
     const filterOptions = () => {
@@ -160,13 +174,6 @@ const Autocomplete = ({
     setSelectedValues([]);
     setInputValue("");
     onChange("");
-  };
-
-  const handleFocus = () => {
-    setShowOptions(true);
-    if (!autoFetch && !showOptions && !isUserInput) {
-      fetchData();
-    }
   };
 
   const removeSelectedOption = (option) => {

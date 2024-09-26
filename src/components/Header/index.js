@@ -101,7 +101,7 @@ const Header = ({ bgColor = "emerald", textColor = "white", className }) => {
     >
       <div className="container flex h-full items-center justify-between text-base">
         {/* Navigation Menu */}
-        <nav className="flex-1 flex space-x-4 text-base font-semibold">
+        <nav className="flex-1 space-x-4 text-base font-semibold xl:flex sm:hidden">
           {navItems.map((item, index) => (
             <NavLink
               key={index}
@@ -125,6 +125,10 @@ const Header = ({ bgColor = "emerald", textColor = "white", className }) => {
             </NavLink>
           ))}
         </nav>
+
+        <div>
+          <Icon name="search" />
+        </div>
 
         {/* Logo Section */}
         <div className="flex-shrink-0">

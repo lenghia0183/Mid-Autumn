@@ -75,10 +75,7 @@ function ProfileEdit() {
             </div>
             <div className="flex mt-10">
               <div className="flex gap-4 ml-auto">
-                <Button
-                  type="button"
-                  onClick={() => resetForm()} // Reset form on button click
-                >
+                <Button type="button" onClick={() => resetForm()}>
                   Hủy
                 </Button>
 
