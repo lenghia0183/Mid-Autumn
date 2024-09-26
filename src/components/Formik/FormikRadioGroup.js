@@ -5,8 +5,6 @@ import RadioGroup from "../RadioGroup";
 const FormikRadioGroup = ({ name, onChange, children, ...props }) => {
   const [field, meta, helpers] = useField(name);
 
-  console.log("name", name);
-
   const handleChange = (value) => {
     helpers.setValue(value);
     if (onChange) {

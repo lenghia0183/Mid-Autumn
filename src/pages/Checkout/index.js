@@ -153,7 +153,7 @@ function Checkout() {
 
       fetchServicePrice();
     }
-  }, [formRef?.current?.values]);
+  }, [values?.province, values?.district, values?.ward]);
 
   return (
     <main className="bg-white">
@@ -163,7 +163,7 @@ function Checkout() {
         validationSchema={validationSchema(t)}
         innerRef={(f) => {
           formRef.current = f;
-          return setValues(f?.values);
+          setValues(f?.values);
         }}
         onSubmit={(values) => {
           // Handle form submission
@@ -276,7 +276,8 @@ function Checkout() {
                               setFieldValue("ward", null);
                               setFieldValue("shipPrice", null);
                             }}
-                            // autoFetch={false}
+                            autoFetch={false}
+                            filterActive={true}
                             required
                           />
 
@@ -303,7 +304,8 @@ function Checkout() {
                             }}
                             disabled={!values?.province}
                             asyncRequestDeps="province"
-                            // autoFetch={false}
+                            autoFetch={false}
+                            filterActive={true}
                             required
                           />
 
@@ -327,9 +329,10 @@ function Checkout() {
                             onChange={() => {
                               setFieldValue("shipPrice", null);
                             }}
-                            // autoFetch={false}
+                            autoFetch={false}
                             disabled={!values?.district}
                             asyncRequestDeps="district"
+                            filterActive={true}
                             required
                           />
                         </div>

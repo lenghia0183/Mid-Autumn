@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useRef, useId } from "react";
+import React, { useState, useEffect, useRef, useId, memo } from "react";
 import PropTypes from "prop-types";
 import useDebounce from "../../hooks/useDebouce";
 import Input from "./Input";
@@ -34,13 +34,16 @@ const Autocomplete = ({
   orientation = "vertical",
   asyncRequestDeps = "",
   errorClass,
+  filterActive = false,
   value,
+  name,
   disabled,
   required,
 }) => {
   const { values } = useFormikContext();
 
-  console.log("fomikcontext values", values);
+  // console.log("fomikcontext values", values);
+  // console.log("values of dependencies", values[asyncRequestDeps]);
 
   const [optionsState, setOptions] = useState(options);
   const [inputValue, setInputValue] = useState("");
@@ -77,15 +80,21 @@ const Autocomplete = ({
   };
 
   useEffect(() => {
-    if (autoFetch && optionsState?.length === 0) {
-      if (asyncRequestDeps && values[asyncRequestDeps]) fetchData();
-      if (!asyncRequestDeps) fetchData();
+    if (autoFetch) {
+      if (asyncRequestDeps && values[asyncRequestDeps]) {
+        fetchData();
+      } else if (!asyncRequestDeps) {
+        fetchData();
+      }
     }
+  }, [autoFetch, values[asyncRequestDeps]]);
 
+  useEffect(() => {
+    if (filterActive) return;
     if (debouncedInputValue?.trim() && isUserInput) {
       fetchData();
     }
-  }, [autoFetch, debouncedInputValue, asyncRequest, values[asyncRequestDeps]]);
+  }, [debouncedInputValue]);
 
   const handleFocus = () => {
     setShowOptions(true);
@@ -101,6 +110,7 @@ const Autocomplete = ({
           optionsState.filter((option) =>
             getOptionsLabel(option)
               ?.toLowerCase()
+              ?.trim()
               ?.includes(inputValue.toLowerCase())
           )
         );
@@ -266,7 +276,7 @@ const Autocomplete = ({
             heightPerOption={heightPerOption}
             loading={loading}
             showOptions={showOptions}
-            optionsState={optionsState}
+            optionsState={filterActive ? filteredOptions : optionsState}
             row={row}
             handleOptionSelect={handleOptionSelect}
             getOptionSubLabel={getOptionSubLabel}
@@ -401,4 +411,4 @@ Autocomplete.propTypes = {
   error: PropTypes.string,
 };
 
-export default Autocomplete;
+export default memo(Autocomplete);

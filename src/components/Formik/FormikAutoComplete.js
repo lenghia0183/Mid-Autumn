@@ -1,4 +1,4 @@
-import React from "react";
+import React, { memo } from "react";
 import { useField } from "formik";
 import Autocomplete from "../AutoComplete";
 
@@ -28,6 +28,7 @@ const FormikAutocomplete = ({
           }
           setTouched(true);
         }}
+        name={name}
         value={field.value}
         error={meta.touched && meta.error ? meta.error : ""}
       />
@@ -35,4 +36,4 @@ const FormikAutocomplete = ({
   );
 };
 
-export default FormikAutocomplete;
+export default memo(FormikAutocomplete);

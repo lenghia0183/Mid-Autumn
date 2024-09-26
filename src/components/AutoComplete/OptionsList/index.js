@@ -20,7 +20,6 @@ const OptionsList = ({
   optionsClassName,
 }) => {
   const height = useParseDimension(heightPerOption);
-  console.log("showOptions", showOptions);
 
   return (
     <>
