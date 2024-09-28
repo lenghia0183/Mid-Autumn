@@ -13,10 +13,24 @@ function SaleItems() {
     infinite: true,
     slidesToShow: 4,
     slidesToScroll: 1,
-    // autoplay: true,
+    autoplay: true,
     speed: 2000,
     autoplaySpeed: 2000,
     arrow: false,
+    responsive: [
+      {
+        breakpoint: 1024, // 1024px
+        settings: {
+          slidesToShow: 2, // Hiển thị 3 slide
+        },
+      },
+      {
+        breakpoint: 480, // 480px
+        settings: {
+          slidesToShow: 1, // Hiển thị 1 slide
+        },
+      },
+    ],
   };
 
   const saleItems = [
@@ -72,18 +86,18 @@ function SaleItems() {
 
   return (
     <section className="container mt-14">
-      <h4 className="text-xl text-emerald font-medium text-center">
+      <h4 className="sm:text-xl text-lg text-emerald font-medium text-center">
         {t("common.midAutumnFestival")}
       </h4>
-      <h3 className="text-[42px] font-semibold text-dark text-center">
+      <h3 className="xl:text-[42px] text-3xl font-semibold text-dark text-center mt-2">
         {t("home.saleItems.title")}
       </h3>
-      <p className="text-xl text-dark font-medium text-center w-[70%] m-auto  mb-7">
+      <p className="xl:text-xl text-lg text-dark font-medium text-center w-[70%] m-auto  mb-7">
         {t("home.saleItems.desc")}
       </p>
       <div className="relative">
         <IconButton
-          className="absolute top-1/2 -translate-y-1/2 left-[-50px]"
+          className="absolute top-1/2 -translate-y-1/2 xl:left-[-50px] left-[-40px] sm:flex hidden"
           iconName="arrowSlider"
           variant="contained"
           size="small"
@@ -97,7 +111,7 @@ function SaleItems() {
         />
 
         <IconButton
-          className="rotate-180 absolute top-1/2 -translate-y-1/2 right-[-50px]"
+          className="rotate-180 absolute top-1/2 -translate-y-1/2 xl:right-[-50px] right-[-40px] sm:flex hidden"
           iconName="arrowSlider"
           variant="contained"
           size="small"
