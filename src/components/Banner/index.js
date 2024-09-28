@@ -46,10 +46,10 @@ const Banner = () => {
           return (
             <>
               <div
-                className="w-full h-[700px]"
+                className="w-full xl:h-[700px] sm:h-[600px] h-[350px] bg-[0%_50%]"
                 style={{
                   backgroundImage: `url(${banner.src})`,
-                  backgroundPosition: "center",
+                  // backgroundPosition: "center",
                   backgroundSize: "cover",
                   backgroundRepeat: "no-repeat",
                 }}
@@ -59,7 +59,7 @@ const Banner = () => {
         })}
       </Slider>
       <div
-        className="absolute top-[60%] right-0 w-[25%] aspect-square animate-slide-horizontal pointer-events-none"
+        className="absolute top-[60%] right-0 w-[25%] aspect-square animate-slide-horizontal pointer-events-none hidden xl:block"
         style={{
           backgroundImage: `url(${images.childrenBanner1})`,
           backgroundPosition: "center",
@@ -69,13 +69,13 @@ const Banner = () => {
       ></div>
 
       <div
-        className="-translate-y-1/2 absolute top-1/2 right-[15%] w-[750px] p-[30px]"
+        className="absolute xl:-translate-y-1/2  xl:top-1/2 xl:right-[15%] xl:w-[750px] right-0 top-full -translate-y-full w-full p-[30px]"
         style={{ backgroundColor: "rgba(0, 0, 0, 0.3)" }}
       >
-        <h1 className="text-white text-[50px] font-medium hover:text-yellow text-center duration-500">
+        <h1 className="text-white sm:text-[50px] text-[22px] font-medium hover:text-yellow text-center duration-500">
           {t("banner.title")}
         </h1>
-        <p className="text-[22px] text-yellow text-center font-medium">
+        <p className="text-[22px] text-yellow text-center font-medium hidden sm:block">
           {t("banner.desc")}
         </p>
         <Button
@@ -84,7 +84,7 @@ const Banner = () => {
           bgColor="yellow"
           textColor="dark"
           bgHoverColor="emerald"
-          className="text-[18px] h-[45px] font-medium mt-5 px-[40px] duration-500 hover:text-white m-auto"
+          className="sm:text-[18px] text-base h-[45px] font-medium mt-5 sm:px-[40px] duration-500 hover:text-white m-auto"
         >
           {t("banner.itemBtn")}
         </Button>
