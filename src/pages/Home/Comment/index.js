@@ -65,7 +65,7 @@ function Comment() {
 
   return (
     <section
-      className="p-[150px]"
+      className="xl:px-[150px] xl:py-[150px] sm:py-[150px] sm:px-[90px] py-[100px] px-[10px]"
       style={{
         backgroundImage: `url(${images.commentBg})`,
         backgroundSize: "cover",
@@ -76,7 +76,7 @@ function Comment() {
       <div className="container">
         <div className="relative">
           <IconButton
-            className="absolute top-1/2 -translate-y-1/2 left-[-50px]"
+            className="absolute top-1/2 -translate-y-1/2 left-[-50px] sm:flex hidden"
             iconName="arrowSlider"
             variant="contained"
             size="small"
@@ -90,7 +90,7 @@ function Comment() {
           />
 
           <IconButton
-            className="rotate-180 absolute top-1/2 -translate-y-1/2 right-[-50px]"
+            className="rotate-180 absolute top-1/2 -translate-y-1/2 right-[-50px] sm:flex hidden"
             iconName="arrowSlider"
             variant="contained"
             size="small"
@@ -107,7 +107,7 @@ function Comment() {
             {comments.map((item, index) => {
               return (
                 <>
-                  <div className="text-center w-[70%] m-auto" key={index}>
+                  <div className="text-center xl:w-[70%] m-auto" key={index}>
                     <p className="text-[30px] font-light italic">
                       {item.comment}
                     </p>
