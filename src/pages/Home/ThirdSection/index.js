@@ -8,11 +8,10 @@ function ThirdSection() {
       style={{
         backgroundImage: `url(${images.slide1})`,
         backgroundSize: "cover",
-        backgroundPosition: "center",
         backgroundRepeat: "no-repeat",
         backgroundAttachment: "fixed",
       }}
-      className="py-[150px] flex items-center justify-center mt-10 relative"
+      className="xl:py-[150px] sm:py-[100px] xl:bg-[50%_50%] sm:bg-[0%_50%] bg-[30%_50%]  flex items-center justify-center mt-10 relative"
     >
       <div
         style={{
@@ -20,10 +19,10 @@ function ThirdSection() {
         }}
         className="h-full w-full absolute inset-0 pointer-events-none"
       ></div>
-      <div className="text-center w-[40%] p-10 z-[1000]">
+      <div className="text-center xl:w-[35%] p-10 z-[1000]">
         <p className="text-xl text-yellow font-semibold">Mid Autumn Festival</p>
-        <h2 className="text-[50px] font-semibold text-white mt-3">
-          ĂN BÁNH TRUNG THU <br /> <span className="block">NGỌT NGÀO</span>
+        <h2 className="xl:text-[50px] text-[35px]  font-semibold text-white mt-3">
+          ĂN BÁNH TRUNG THU NGỌT NGÀO
         </h2>
         <Button
           rounded
