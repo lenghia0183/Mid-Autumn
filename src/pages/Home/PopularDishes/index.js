@@ -44,14 +44,14 @@ function PopularDishes() {
         backgroundImage: `url(${images.productPageBg})`,
       }}
     >
-      <h4 className="text-xl text-emerald font-medium text-center pt-4">
+      <h4 className="sm:text-xl text-lg text-emerald font-medium text-center pt-4">
         Mid Autumn Festival
       </h4>
-      <h2 className="text-[42px] font-semibold text-dark text-center">
+      <h2 className="xl:text-[42px] text-3xl font-semibold text-dark text-center mt-3">
         MÓN PHỔ BIẾN
       </h2>
 
-      <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 gap-4 mt-5 container">
+      <div className="grid grid-cols-1 sm:grid-cols-2 xl:grid-cols-4 gap-4 mt-5 container">
         {popularDishesList.map((dish) => (
           <ItemCard key={dish.id} product={dish} />
         ))}
