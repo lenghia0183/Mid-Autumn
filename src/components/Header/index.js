@@ -115,7 +115,7 @@ const Header = ({ bgColor = "emerald", textColor = "white", className }) => {
     );
   };
 
-  const renderNavBar = () => {
+  const renderContentNavBarDrawer = () => {
     return (
       <div className="p-4 pt-0">
         <Divider className="mt-2" />
@@ -143,6 +143,36 @@ const Header = ({ bgColor = "emerald", textColor = "white", className }) => {
             </NavLink>
           ))}
         </nav>
+        <div className="flex gap-3 mt-3">
+          <IconButton
+            className="sm:hidden"
+            iconName="vietnamFlag"
+            iconWidth="40px"
+            iconHeight="30px"
+            onClick={() => handleLanguageChange("vi")}
+          />
+          <IconButton
+            className="sm:hidden"
+            iconName="chinaFlag"
+            iconWidth="40px"
+            iconHeight="30px"
+            onClick={() => handleLanguageChange("zh")}
+          />
+          <IconButton
+            className="sm:hidden"
+            iconName="japanFlag"
+            iconWidth="40px"
+            iconHeight="30px"
+            onClick={() => handleLanguageChange("jp")}
+          />
+          <IconButton
+            className="sm:hidden"
+            iconName="englandFlag"
+            iconWidth="40px"
+            iconHeight="30px"
+            onClick={() => handleLanguageChange("en")}
+          />
+        </div>
       </div>
     );
   };
@@ -153,7 +183,7 @@ const Header = ({ bgColor = "emerald", textColor = "white", className }) => {
     >
       <div className="container relative h-full text-base">
         {/* Navigation Menu */}
-        <nav className="absolute left-0 top-1/2 -translate-y-1/2 space-x-4 text-base font-semibold xl:flex sm:hidden">
+        <nav className="absolute left-0 top-1/2 -translate-y-1/2 space-x-4 text-base font-semibold xl:flex hidden">
           {navItems.map((item, index) => (
             <NavLink
               key={index}
@@ -204,7 +234,7 @@ const Header = ({ bgColor = "emerald", textColor = "white", className }) => {
           {/* Contact Number */}
           <Button
             href="tel:0966859061"
-            className=" hover:text-yellow font-sourceSansPro font-semibold text-xl xl:flex sm:hidden"
+            className=" hover:text-yellow font-sourceSansPro font-semibold text-xl xl:flex hidden"
             textColor="white"
             startIcon={<Icon name="phone" size="1.5em" />}
           >
@@ -213,6 +243,7 @@ const Header = ({ bgColor = "emerald", textColor = "white", className }) => {
 
           {/* Search Button */}
           <IconButton
+            className="sm:block hidden"
             iconName="search"
             textColor="white"
             iconSize="1.6"
@@ -242,24 +273,28 @@ const Header = ({ bgColor = "emerald", textColor = "white", className }) => {
           {/* Language Options */}
           <div className="flex gap-2">
             <IconButton
+              className="sm:block hidden"
               iconName="vietnamFlag"
               iconWidth="30px"
               iconHeight="25px"
               onClick={() => handleLanguageChange("vi")}
             />
             <IconButton
+              className="sm:block hidden"
               iconName="chinaFlag"
               iconWidth="30px"
               iconHeight="25px"
               onClick={() => handleLanguageChange("zh")}
             />
             <IconButton
+              className="sm:block hidden"
               iconName="japanFlag"
               iconWidth="30px"
               iconHeight="25px"
               onClick={() => handleLanguageChange("jp")}
             />
             <IconButton
+              className="sm:block hidden"
               iconName="englandFlag"
               iconWidth="30px"
               iconHeight="25px"
@@ -284,7 +319,7 @@ const Header = ({ bgColor = "emerald", textColor = "white", className }) => {
 
       <DrawerMenu
         renderTitle={renderTitleNavDrawer}
-        renderContent={renderNavBar}
+        renderContent={renderContentNavBarDrawer}
         isOpen={isShowNavDrawer}
         position="left"
         width="350px"
