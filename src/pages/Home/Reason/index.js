@@ -14,7 +14,7 @@ function Reason({
   const { t } = useTranslation();
 
   return (
-    <div className={clsx("container flex gap-10 mt-14", containerClassName)}>
+    <div className={clsx("container xl:flex gap-10 mt-14", containerClassName)}>
       <div
         className={clsx("flex-1 aspect-[5/4]", styles["flip-box-container"])}
       >
@@ -27,13 +27,13 @@ function Reason({
           </div>
         </div>
       </div>
-      <div className="flex-1">
+      <div className="flex-1 sm:mt-1 mt-3">
         <h3 className={clsx("text-2xl text-emerald", titleClassName)}>
           {t("home.reason.title")}
         </h3>
         <h2
           className={clsx(
-            "text-[42px] text-dark font-medium",
+            "sm:text-[42px] text-3xl text-dark font-medium",
             headingClassName
           )}
         >
