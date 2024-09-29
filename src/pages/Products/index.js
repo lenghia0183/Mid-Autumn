@@ -5,12 +5,13 @@ import ItemCard from "../../components/ItemCard";
 import Pagination from "../../components/Pagination";
 import ProductFilterSideBar from "./ProductFilterSideBar";
 import ProductFilterTopBar from "./ProductFIlterTopBar";
-import { PATH } from "../../constants/path";
+import { PAGE_TITLE, PATH } from "../../constants/path";
+import { Form, Formik } from "formik";
 
 function Products() {
   const breadcrumbItems = [
-    { label: "Trang chủ", to: PATH.HOME },
-    { label: "Sản phẩm", to: PATH.PRODUCTS },
+    { label: PAGE_TITLE.HOME, to: PATH.HOME },
+    { label: PAGE_TITLE.PRODUCT, to: PATH.PRODUCTS },
   ];
 
   const items = [
@@ -88,6 +89,38 @@ function Products() {
     setCurrentPage(selected);
   };
 
+  const brandList = [
+    { name: "Kinh Đô", code: "kinh_do" },
+    { name: "Bibica", code: "bibica" },
+    { name: "Như Lan", code: "nhu_lan" },
+    { name: "Hữu Nghị", code: "huu_nghi" },
+    { name: "Đồng Khánh", code: "dong_khanh" },
+    { name: "Brodard", code: "brodard" },
+    { name: "Givral", code: "givral" },
+    { name: "Maison", code: "maison" },
+  ];
+
+  const categoryList = [
+    { label: "Bánh trăng vàng cao cấp", image: images.popularDish2 },
+    { label: "Bánh nướng 2 trứng đb", image: images.popularDish1 },
+    { label: "Bánh xanh", image: images.popularDish3 },
+    { label: "Bánh trung thu OREO", image: images.childrenBanner1 },
+    { label: "Bánh nướng 1 trứng", image: images.home1 },
+    { label: "Bánh dẻo", image: images.home2 },
+    { label: "Bánh Lava trứng chảy", image: images.popularDish4 },
+    { label: "Hộp thu Young", image: images.popularDish3 },
+  ];
+
+  const initialValues = {
+    rating: 1,
+    displayOption: "newest",
+    maxPrice: "",
+    minPrice: "",
+    displayOptions: {},
+    price: {},
+    search: "",
+  };
+
   return (
     <div
       style={{
@@ -95,33 +128,61 @@ function Products() {
       }}
     >
       <Breadcrumb items={breadcrumbItems} />
-      <div className="container py-14">
-        <div className="grid grid-cols-12 gap-4">
-          {/* Phần lọc sản phẩm chiếm 3 cột */}
-          <div className="col-span-3">
-            <ProductFilterSideBar />
-          </div>
+      <Formik
+        initialValues={initialValues}
+        onSubmit={(values) => {
+          console.log("products values", values);
+        }}
+      >
+        {({ setFieldValue, values }) => (
+          <Form>
+            <div className="container py-14">
+              <div className="grid grid-cols-12 gap-4">
+                {/* Phần lọc sản phẩm chiếm 3 cột */}
+                <div className="col-span-3 xl:block hidden">
+                  <ProductFilterSideBar
+                    values={values}
+                    setFieldValue={setFieldValue}
+                    brandList={brandList}
+                    categoryList={categoryList}
+                  />
+                </div>
 
-          {/* Phần hiển thị sản phẩm chiếm 9 cột */}
-          <div className="col-span-9">
-            <ProductFilterTopBar />
+                {/* Phần hiển thị sản phẩm chiếm 9 cột */}
+                <div className="xl:col-span-9 col-span-full">
+                  <ProductFilterTopBar
+                    values={values}
+                    setFieldValue={setFieldValue}
+                  />
 
-            {/* Danh sách sản phẩm */}
-            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-              {items.map((item) => (
-                <ItemCard key={item.id} product={item} />
-              ))}
+                  {/* Danh sách sản phẩm */}
+                  <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+                    {items.map((item) => (
+                      <ItemCard key={item.id} product={item} />
+                    ))}
+                  </div>
+
+                  <Pagination
+                    pageCount={20}
+                    onPageChange={handlePageChange}
+                    forcePage={currentPage}
+                    className="ml-auto mt-10"
+                  />
+                </div>
+
+                <div className="col-span-full xl:hidden block">
+                  <ProductFilterSideBar
+                    values={values}
+                    setFieldValue={setFieldValue}
+                    brandList={brandList}
+                    categoryList={categoryList}
+                  />
+                </div>
+              </div>
             </div>
-
-            <Pagination
-              pageCount={20}
-              onPageChange={handlePageChange}
-              forcePage={currentPage}
-              className="ml-auto mt-10"
-            />
-          </div>
-        </div>
-      </div>
+          </Form>
+        )}
+      </Formik>
     </div>
   );
 }

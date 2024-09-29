@@ -30,8 +30,6 @@ const DrawerMenu = ({
   const widthStyle = useResponsiveStyle(width, "w");
   const heightStyle = useResponsiveStyle(height, "h");
 
-  console.log(widthStyle, heightStyle);
-
   useEffect(() => {
     if (disableScroll) {
       document.body.style.overflow = open ? "hidden" : "auto";

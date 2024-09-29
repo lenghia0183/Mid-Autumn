@@ -11,9 +11,9 @@ import { useFormikContext } from "formik";
 const Autocomplete = ({
   options = [],
   asyncRequest = null,
-  getOptionsLabel = (option) => option.label,
+  getOptionsLabel = (option) => option?.label,
   getOptionSubLabel = () => null,
-  isEqualValue = (val, opt) => val?.id === opt.id,
+  isEqualValue = (val, opt) => val?.id === opt?.id,
   isCloseAfterSelect = true,
   asyncRequestHelper = (res) => res,
   multiple = false,
