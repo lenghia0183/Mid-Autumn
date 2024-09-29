@@ -11,10 +11,12 @@ import LabelValue from "../../components/LabelValue";
 import formatCurrency from "./../../utils/formatCurrency";
 import Button from "./../../components/Button/index";
 import Dialog from "../../components/Diaglog";
+import useBreakpoint from "./../../hooks/useBreakpoint";
 
 function Cart() {
   const [openDialog, setOpenDialog] = useState(false);
   const [itemToDeleteIndex, setItemToDeleteIndex] = useState(null);
+  const isLargerThanSm = useBreakpoint("sm");
 
   const breadcrumbCart = [
     {
@@ -104,20 +106,21 @@ function Cart() {
                           values.cartItems.map((item, index) => (
                             <div key={index} className="mt-4 flex flex-col">
                               <div className="grid grid-cols-12 gap-4 mb-4">
-                                <div className="col-span-5 flex gap-2">
-                                  <Image src={item?.image} width="130px" />
+                                {/* Responsive phần hình ảnh và tên sản phẩm */}
+                                <div className="col-span-12 md:col-span-5 flex gap-2">
+                                  <Image src={item?.image} width="100px" />
                                   <h2 className="text-lg text-dark font-medium truncate">
                                     {item?.name.toUpperCase()}
                                   </h2>
                                 </div>
 
-                                <div className="col-span-5 flex h-full flex-col justify-between">
+                                {/* Responsive phần đơn giá, số lượng, thành tiền */}
+                                <div className="col-span-12 md:col-span-5 flex flex-col justify-between gap-y-2 md:gap-y-0 mt-4 md:mt-0">
                                   <LabelValue
                                     labelWidth="100px"
                                     label="Đơn giá"
                                     value={formatCurrency(item?.price)}
                                   />
-
                                   <LabelValue
                                     labelWidth="100px"
                                     label="Số lượng"
@@ -129,7 +132,6 @@ function Cart() {
                                       />
                                     }
                                   />
-
                                   <LabelValue
                                     labelWidth="100px"
                                     label="Thành tiền"
@@ -140,7 +142,8 @@ function Cart() {
                                   />
                                 </div>
 
-                                <div className="col-span-2 flex items-center justify-center">
+                                {/* Responsive phần nút xóa */}
+                                <div className="col-span-12 md:col-span-2 flex items-center justify-center">
                                   <IconButton
                                     iconName="bin"
                                     textColor="dark-500"
@@ -157,29 +160,33 @@ function Cart() {
                           <p>Giỏ hàng trống</p>
                         )}
 
-                        <div className="flex justify-between items-center mt-4">
-                          <div className="ml-auto">
-                            <LabelValue
-                              label="Tổng tiền"
-                              labelWidth="150px"
-                              value={formatCurrency(totalAmount)}
-                              className="!text-2xl font-semibold "
-                              valueClassName="text-emerald"
-                            />
+                        <div className="flex flex-col items-end mt-4">
+                          <LabelValue
+                            label="Tổng tiền"
+                            labelWidth="150px"
+                            value={formatCurrency(totalAmount)}
+                            className="!text-2xl font-semibold "
+                            valueClassName="text-emerald"
+                          />
 
-                            <div className="flex gap-4 mt-5">
-                              <Button
-                                bgColor="yellow"
-                                bgHoverColor="emerald"
-                                textHoverColor="white"
-                                textColor="dark"
-                                size="large"
-                                to={PATH.PRODUCTS}
-                              >
-                                XEM THÊM SẢN PHẨM
-                              </Button>
-                              <Button size="large">THANH TOÁN</Button>
-                            </div>
+                          <div className="flex gap-4 mt-5">
+                            <Button
+                              bgColor="yellow"
+                              bgHoverColor="emerald"
+                              textHoverColor="white"
+                              textColor="dark"
+                              size={isLargerThanSm ? "large" : "medium"}
+                              className="sm:text-xl"
+                              to={PATH.PRODUCTS}
+                            >
+                              XEM THÊM SẢN PHẨM
+                            </Button>
+                            <Button
+                              size={isLargerThanSm ? "large" : "medium"}
+                              className="sm:text-xl"
+                            >
+                              THANH TOÁN
+                            </Button>
                           </div>
                         </div>
                         <Dialog
