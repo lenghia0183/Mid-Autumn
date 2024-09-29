@@ -6,15 +6,15 @@
   },
 
   "pageTitle": {
-    "home": "TRANG CHỦ",
-    "about": "GIỚI THIỆU",
-    "contact": "LIÊN HỆ",
-    "product": "SẢN PHẨM",
-    "other": "KHÁC",
-    "signIn": "ĐĂNG NHẬP",
-    "signUp": "ĐĂNG KÝ",
+    "home": "Trang chủ",
+    "about": "Giới thiệu",
+    "contact": "Liên hệ",
+    "product": "Sản phẩm",
+    "other": "Khác",
+    "signIn": "Đăng nhập",
+    "signUp": "Đăng ký",
     "test": "TEST",
-    "cart": "GIỎ HÀNG",
+    "cart": "Giỏ hàng",
     "search": "Tìm kiếm",
     "checkout": "Thanh toán"
   },

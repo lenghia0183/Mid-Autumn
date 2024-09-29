@@ -10,7 +10,7 @@ const Breadcrumb = ({ items }) => {
       style={{
         backgroundImage: `url(${images?.slide2})`,
         backgroundSize: "cover",
-        backgroundPosition: "center",
+        // backgroundPosition: "center",
         backgroundRepeat: "no-repeat",
         backgroundAttachment: "fixed",
       }}
@@ -22,24 +22,22 @@ const Breadcrumb = ({ items }) => {
         }}
         className="h-full w-full relative inset-0 p-[100px]"
       >
-        <div className="flex flex-col items-center justify-center">
-          <h2 className="text-[50px] font-medium text-white-100">
-            {t(items?.[items?.length - 1]?.label)?.toUpperCase()}
+        <div className="flex flex-col items-center justify-center sm:gap-y-3 gap-y-2">
+          <h2 className="sm:text-[50px] text-3xl font-medium text-white-100">
+            {t(items?.[items?.length - 1]?.label)}
           </h2>
-          <nav className="flex items-center space-x-2 text-white-100 m-auto">
+          <nav className="flex items-center space-x-2 text-white-100 sm:text-xl text-base font-medium m-auto">
             {items?.map((item, index) => (
               <React.Fragment key={index}>
                 {index < items?.length - 1 ? (
                   <Link
                     to={item?.to}
-                    className="cursor-pointer hover:text-yellow text-xl font-medium"
+                    className="cursor-pointer hover:text-yellow"
                   >
                     {t(item?.label)}
                   </Link>
                 ) : (
-                  <span className="text-yellow text-xl font-medium">
-                    {t(item?.label)}
-                  </span>
+                  <span className="text-yellow">{t(item?.label)}</span>
                 )}
                 {index < items?.length - 1 && (
                   <span className="text-white-100">/</span>
