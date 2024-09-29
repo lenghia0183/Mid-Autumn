@@ -33,7 +33,7 @@ function Reason({
         </h3>
         <h2
           className={clsx(
-            "sm:text-[42px] text-3xl text-dark font-medium",
+            "sm:text-[42px] text-3xl text-dark font-medium leading-tight",
             headingClassName
           )}
         >

@@ -27,13 +27,23 @@ const About = () => {
   return (
     <div className="bg-white">
       <Breadcrumb items={aboutBreadcrumb} />
-      <div className="container grid grid-cols-2 gap-8 items-center mt-14">
+      <div className="container grid xl:grid-cols-2 grid-cols-1 gap-8 items-center mt-14">
         <div className="text-dark text-xl">
           <p className="text-[30px] font-medium text-emerald">Giới thiệu</p>
-          <h2 className="mt-7 text-[50px] font-semibold">
+          <h2 className="sm:mt-7 mt-3 text-[50px] font-semibold leading-tight">
             Mid Autumn Festival
           </h2>
-          <p className="mt-10">
+
+          <div className="rounded-full aspect-square w-full xl:hidden block mt-10">
+            <Image
+              height="100%"
+              width="100%"
+              src={images.home1}
+              className="rounded-full object-cover h-full"
+            />
+          </div>
+
+          <p className="sm:mt-10 mt-5">
             Chúng tôi xin chân thành cảm ơn sự quan tâm của quý khách hàng trong
             suốt thời gian qua đã ủng hộ tin tưởng sản phẩm của chúng tôi!
           </p>
@@ -62,7 +72,7 @@ const About = () => {
           </p>
         </div>
 
-        <div className="rounded-full h-full flex">
+        <div className="rounded-full aspect-square w-full xl:block hidden">
           <Image
             height="100%"
             width="100%"
@@ -78,13 +88,23 @@ const About = () => {
         headingClassName="!text-[50px] font-semibold"
         descClassName="text-xl"
       />
-      <div className="container grid grid-cols-2 gap-8 items-center mt-14">
+      <div className="container grid xl:grid-cols-2 gap-8 items-center mt-14">
         <div className="text-dark text-xl flex flex-col">
           <p className="text-[30px] font-medium text-emerald">Giới thiệu</p>
-          <h2 className="mt-7 text-[50px] font-semibold">
+          <h2 className="mt-7 text-[50px] font-semibold leading-tight">
             Tầm Nhìn và Sứ Mệnh
           </h2>
-          <p className="mt-10">
+
+          <div className="xl:hidden block mt-10">
+            <Image
+              height="90%"
+              width="90%"
+              src={images.childrenBanner2}
+              className="rounded-full object-cover h-full"
+            />
+          </div>
+
+          <p className="sm:mt-10 mt-5">
             Chúng tôi hướng đến việc trở thành thương hiệu bánh Trung Thu số 1
             tại Việt Nam, với cam kết mang đến những sản phẩm thượng hạng, an
             toàn và sáng tạo, để làm hài lòng mọi khách hàng.
@@ -117,7 +137,7 @@ const About = () => {
           </p>
         </div>
 
-        <div className="">
+        <div className="xl:block hidden">
           <Image
             height="90%"
             width="90%"
@@ -127,14 +147,14 @@ const About = () => {
         </div>
       </div>
       <div className="container mt-20">
-        <h2 className="mt-7  text-[50px] font-semibold text-center text-dark">
+        <h2 className="mt-7 sm:text-[50px] text-[40px] font-semibold text-center text-dark">
           Đội ngũ nhân viên
         </h2>
-        <p className=" w-[60%] mt-4 mx-auto text-xl text-dark text-center">
+        <p className="sm:w-[60%] mt-4 mx-auto text-xl text-dark text-center">
           Không quá cầu kì, bánh trung thu mang nét mộc mạc, đặc trưng làm say
           lòng không biết bao thế hệ người thưởng thức.
         </p>
-        <div className="flex justify-between gap-5 mt-10">
+        <div className="flex sm:flex-row flex-col justify-between gap-5 mt-10">
           {[
             { img: images.chef1, name: "Nguyễn Văn A" },
             { img: images.chef2, name: "Trần Văn B" },
@@ -142,7 +162,7 @@ const About = () => {
           ].map((chef, index) => (
             <div
               key={index}
-              className="group relative flex-1 overflow-hidden" // Ensure image stays within bounds
+              className="group relative flex-1 overflow-hidden"
               data-aos="slide-up"
             >
               {/* Image with scale on hover */}
