@@ -9,6 +9,7 @@ import Comment from "../../pages/Home/Comment";
 import images from "../../asset/images";
 import Header from "../../components/Header";
 import Footer from "../../components/Footer";
+import GoToTop from "../../components/GoToTop";
 
 function AuthLayout() {
   const location = useLocation();
@@ -66,6 +67,7 @@ function AuthLayout() {
 
       <Comment />
       <Footer />
+      <GoToTop />
     </>
   );
 }
