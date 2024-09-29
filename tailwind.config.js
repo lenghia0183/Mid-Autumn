@@ -1,3 +1,4 @@
+import { breakpoints } from "./src/config/breakpointConfig";
 import {
   colors,
   bgColorSafelist,
@@ -23,6 +24,11 @@ export default {
     ...hoverBorderColorSafelist,
   ],
   theme: {
+    screen: {
+      screens: {
+        ...breakpoints,
+      },
+    },
     container: {
       center: true,
       padding: {
@@ -37,17 +43,6 @@ export default {
       fontFamily: {
         barlow: ['"Barlow"', "sans-serif"],
         sourceSansPro: ['"Source Sans Pro"', "sans-serif"],
-      },
-
-      keyframes: {
-        "slide-horizontal": {
-          "0%": { transform: "translateX(0%) translateY(-50%)" },
-          "50%": { transform: "translateX(-20%) translateY(-50%)" },
-          "100%": { transform: "translateX(0%) translateY(-50%)" },
-        },
-      },
-      animation: {
-        "slide-horizontal": "slide-horizontal 10s ease-in-out infinite",
       },
 
       colors: {

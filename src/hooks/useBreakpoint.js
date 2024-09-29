@@ -1,15 +1,8 @@
 import { useState, useEffect, useMemo } from "react";
+import { breakpoints } from "../config/breakpointConfig";
 
 // Hook để kiểm tra kích thước màn hình với breakpoints của Tailwind
 const useBreakpoint = (breakpoint = "sm") => {
-  const breakpoints = {
-    sm: "640px",
-    md: "768px",
-    lg: "1024px",
-    xl: "1280px",
-    "2xl": "1536px",
-  };
-
   const [isLargerThanBreakpoint, setIsLargerThanBreakpoint] = useState(false);
 
   // Sử dụng useMemo để chỉ tạo mediaQuery khi breakpoint thay đổi

@@ -1,4 +1,5 @@
 import { useMemo, useEffect, useState } from "react";
+import { breakpointsWithoutPx } from "./../config/breakpointConfig";
 
 // Ánh xạ các lớp Tailwind CSS tới giá trị CSS
 const valueMapping = {
@@ -21,14 +22,6 @@ const propertyMapping = {
   "max-h": "max-height",
 };
 
-const breakpoints = {
-  sm: 640,
-  md: 768,
-  lg: 1024,
-  xl: 1280,
-  "2xl": 1536,
-};
-
 const parseStyleString = (styleString, windowWidth, failBackProperty) => {
   const style = {};
   const entries = styleString?.split(" ");
@@ -40,7 +33,7 @@ const parseStyleString = (styleString, windowWidth, failBackProperty) => {
   entries?.forEach((entry) => {
     const [breakpoint, classValue] = entry?.split(":");
 
-    if (breakpoint && classValue && breakpoints[breakpoint]) {
+    if (breakpoint && classValue && breakpointsWithoutPx[breakpoint]) {
       let property = "";
       let value = "";
 
@@ -53,21 +46,22 @@ const parseStyleString = (styleString, windowWidth, failBackProperty) => {
 
       value = classValueArray[classValueArray.length - 1];
 
-      if (breakpoints[breakpoint] <= windowWidth) {
+      if (breakpointsWithoutPx[breakpoint] <= windowWidth) {
         const cssProperty = propertyMapping[property];
 
         const cssValue = valueMapping[value] || value?.slice(1, -1);
         if (
           !appliedStyles[cssProperty] ||
-          breakpoints[breakpoint] > appliedStyles[cssProperty]?.breakpoint
+          breakpointsWithoutPx[breakpoint] >
+            appliedStyles[cssProperty]?.breakpoint
         ) {
           appliedStyles[cssProperty] = {
             value: cssValue,
-            breakpoint: breakpoints[breakpoint],
+            breakpoint: breakpointsWithoutPx[breakpoint],
           };
         }
       }
-    } else if (!breakpoints[breakpoint]) {
+    } else if (!breakpointsWithoutPx[breakpoint]) {
       let property = "";
       let value = "";
 
