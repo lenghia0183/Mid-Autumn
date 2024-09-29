@@ -24,12 +24,12 @@ function ProfileLayout() {
       <Breadcrumb items={breadcrumbProfile} />
       <main className="container grid grid-cols-12 gap-4 py-14">
         {/* SideBar chiếm 3 cột */}
-        <aside className="col-span-3 rounded-md shadow-md">
+        <aside className="lg:col-span-3 col-span-full rounded-md shadow-md">
           <SideBar />
         </aside>
 
         {/* Nội dung chính chiếm 9 cột */}
-        <section className="col-span-9">
+        <section className="lg:col-span-9 col-span-full">
           <Outlet />
         </section>
       </main>

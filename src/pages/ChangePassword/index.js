@@ -2,17 +2,13 @@ import { Form, Formik } from "formik";
 import FormikTextField from "./../../components/Formik/FormikTextField";
 import * as Yup from "yup";
 import Button from "../../components/Button";
+import useBreakpoint from "../../hooks/useBreakpoint";
+import validationSchema from "./schema";
+import { useTranslation } from "react-i18next";
 
 function ChangePassword() {
-  const validationSchema = Yup.object({
-    currentPassword: Yup.string().required("Mật khẩu hiện tại là bắt buộc"),
-    newPassword: Yup.string()
-      .min(6, "Mật khẩu mới phải có ít nhất 6 ký tự")
-      .required("Mật khẩu mới là bắt buộc"),
-    confirmPassword: Yup.string()
-      .oneOf([Yup.ref("newPassword"), null], "Mật khẩu xác nhận không khớp")
-      .required("Xác nhận mật khẩu là bắt buộc"),
-  });
+  const isLargerThanSm = useBreakpoint("sm");
+  const { t } = useTranslation();
 
   // Initial values with empty fields
   const initialValues = {
@@ -33,17 +29,17 @@ function ChangePassword() {
       </h2>
       <Formik
         initialValues={initialValues}
-        validationSchema={validationSchema}
+        validationSchema={validationSchema(t)}
         onSubmit={handleSubmit}
       >
         {({ resetForm }) => (
           <Form>
-            <div className="flex flex-col gap-6 mt-7">
+            <div className="flex flex-col gap-6 sm:gap-y-6 gap-y-14 sm:mt-7 mt-14">
               <FormikTextField
                 name="currentPassword"
                 label="Mật khẩu hiện tại:"
                 type="password"
-                orientation="horizontal"
+                orientation={isLargerThanSm ? "horizontal" : "vertical"}
                 labelWidth="200px"
                 labelClassName="font-medium"
                 rightIconClassName="text-gray-500"
@@ -54,7 +50,7 @@ function ChangePassword() {
                 name="newPassword"
                 label="Mật khẩu mới:"
                 type="password"
-                orientation="horizontal"
+                orientation={isLargerThanSm ? "horizontal" : "vertical"}
                 labelWidth="200px"
                 labelClassName="font-medium"
                 rightIconClassName="text-gray-500"
@@ -65,7 +61,7 @@ function ChangePassword() {
                 name="confirmPassword"
                 label="Xác nhận mật khẩu mới:"
                 type="password"
-                orientation="horizontal"
+                orientation={isLargerThanSm ? "horizontal" : "vertical"}
                 labelWidth="200px"
                 labelClassName="font-medium"
                 rightIconClassName="text-gray-500"

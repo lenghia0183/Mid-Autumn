@@ -2,16 +2,13 @@ import { Form, Formik } from "formik";
 import FormikTextField from "./../../components/Formik/FormikTextField";
 import * as Yup from "yup";
 import Button from "../../components/Button";
+import useBreakpoint from "../../hooks/useBreakpoint";
+import validationSchema from "./schema";
+import { useTranslation } from "react-i18next";
 
 function ProfileEdit() {
-  const validationSchema = Yup.object({
-    name: Yup.string().required("Họ Tên là bắt buộc"),
-    email: Yup.string()
-      .email("Email không hợp lệ")
-      .required("Email là bắt buộc"),
-    phone: Yup.string().required("Điện Thoại là bắt buộc"),
-    address: Yup.string().required("Địa chỉ là bắt buộc"),
-  });
+  const isLargerThanSm = useBreakpoint("sm");
+  const { t } = useTranslation();
 
   // Initial values with fake data
   const initialValues = {
@@ -33,16 +30,16 @@ function ProfileEdit() {
       </h2>
       <Formik
         initialValues={initialValues}
-        validationSchema={validationSchema}
+        validationSchema={validationSchema(t)}
         onSubmit={handleSubmit}
       >
         {({ resetForm }) => (
           <Form>
-            <div className="flex flex-col gap-6 mt-7">
+            <div className="flex flex-col gap-6 sm:gap-y-6 gap-y-14 sm:mt-7 mt-14">
               <FormikTextField
                 name="name"
                 label="Họ Và Tên:"
-                orientation="horizontal"
+                orientation={isLargerThanSm ? "horizontal" : "vertical"}
                 labelClassName="font-medium"
                 required
                 disabled
@@ -51,7 +48,7 @@ function ProfileEdit() {
               <FormikTextField
                 name="email"
                 label="Email:"
-                orientation="horizontal"
+                orientation={isLargerThanSm ? "horizontal" : "vertical"}
                 labelClassName="font-medium"
                 required
                 disabled
@@ -60,7 +57,7 @@ function ProfileEdit() {
               <FormikTextField
                 name="phone"
                 label="Điện Thoại:"
-                orientation="horizontal"
+                orientation={isLargerThanSm ? "horizontal" : "vertical"}
                 labelClassName="font-medium"
                 required
               />
@@ -68,7 +65,7 @@ function ProfileEdit() {
               <FormikTextField
                 name="address"
                 label="Địa chỉ:"
-                orientation="horizontal"
+                orientation={isLargerThanSm ? "horizontal" : "vertical"}
                 labelClassName="font-medium"
                 required
               />
