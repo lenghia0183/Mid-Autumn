@@ -65,7 +65,7 @@ function Comment() {
 
   return (
     <section
-      className="xl:px-[150px] xl:py-[150px] sm:py-[150px] sm:px-[90px] py-[100px] px-[10px]"
+      className="xl:px-[150px] xl:py-[150px] sm:py-[150px] sm:px-[90px] py-[40px] px-[10px]"
       style={{
         backgroundImage: `url(${images.commentBg})`,
         backgroundSize: "cover",

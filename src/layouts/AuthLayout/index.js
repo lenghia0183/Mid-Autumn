@@ -32,9 +32,12 @@ function AuthLayout() {
       <Header />
       <Breadcrumb items={breadcrumbAuthLayout} />
 
-      <div className="container flex items-center mt-14 space-x-7">
+      <div className="container xl:flex items-center xl:mt-14 mt-6 xl:space-x-7 space-y-6">
         <div
-          className={clsx("flex-1 aspect-[5/4]", styles["flip-box-container"])}
+          className={clsx(
+            "flex-1 aspect-[5/4] hidden sm:block",
+            styles["flip-box-container"]
+          )}
         >
           <div className={styles["flip-box-inner"]}>
             <div
