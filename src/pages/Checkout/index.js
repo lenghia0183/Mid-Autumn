@@ -25,9 +25,11 @@ import { useEffect, useRef, useState } from "react";
 import validationSchema from "./schema";
 import { useTranslation } from "react-i18next";
 import { TEXTFIELD_ALLOW } from "../../constants";
+import useBreakpoint from "../../hooks/useBreakpoint";
 
 function Checkout() {
   const { t } = useTranslation();
+  const isLargerThanSm = useBreakpoint("sm");
   const formRef = useRef();
 
   const [values, setValues] = useState({});
@@ -181,7 +183,7 @@ function Checkout() {
 
                 <div className="grid grid-cols-12 gap-1">
                   {/* left column */}
-                  <div className="col-span-7 p-5">
+                  <div className="xl:col-span-7 col-span-full p-5">
                     <p className="flex items-center gap-2 text-xl font-semibold text-dark">
                       <Icon name="locationEmpty" size="1.3em" color="dark" />
                       <p>THÔNG TIN KHÁCH HÀNG</p>
@@ -195,21 +197,21 @@ function Checkout() {
                       {/* Thông tin người mua hàng */}
                       <div className="grid grid-cols-12 gap-7 gap-y-11 mt-10 ">
                         <FormikTextField
-                          className="col-span-6"
+                          className="sm:col-span-6 col-span-full"
                           name="buyerName"
                           label="Họ Và Tên"
                           required
                         />
 
                         <FormikTextField
-                          className="col-span-6"
+                          className="sm:col-span-6 col-span-full"
                           name="buyerEmail"
                           label="Email"
                           required
                         />
 
                         <FormikTextField
-                          className="col-span-6"
+                          className="sm:col-span-6 col-span-full"
                           name="buyerPhone"
                           label="Điện Thoại"
                           allow={TEXTFIELD_ALLOW.NUMERIC}
@@ -224,14 +226,14 @@ function Checkout() {
                         {/* Thông tin người nhận hàng */}
                         <div className="grid grid-cols-12 gap-7 gap-y-11 mt-10 ">
                           <FormikTextField
-                            className="col-span-6"
+                            className="sm:col-span-6 col-span-full"
                             name="recipientName"
                             label="Họ Và Tên"
                             required
                           />
 
                           <FormikTextField
-                            className="col-span-6"
+                            className="sm:col-span-6 col-span-full"
                             name="recipientPhone"
                             label="Điện Thoại"
                             allow={TEXTFIELD_ALLOW.NUMERIC}
@@ -254,10 +256,10 @@ function Checkout() {
                       </div>
 
                       {/* Địa chỉ và phương thức giao hàng*/}
-                      <div className="grid grid-cols-12 gap-7 gap-y-11 mt-2">
+                      <div className="grid grid-cols-12 gap-7 gap-y-11 sm:mt-10 mt-6">
                         {/* Địa chi  */}
-                        <div className="col-span-6 flex flex-col gap-y-12">
-                          <p className="text-dark text-xl font-medium mt-14">
+                        <div className="md:col-span-6 col-span-full flex flex-col gap-y-12">
+                          <p className="text-dark text-xl font-medium">
                             ĐỊA CHỈ NHẬN HÀNG
                           </p>
                           <FormikAutocomplete
@@ -335,12 +337,19 @@ function Checkout() {
                             filterActive={true}
                             required
                           />
+
+                          <FormikTextArea
+                            className="sm:hidden block"
+                            name="street"
+                            label="Địa chỉ"
+                            required
+                          />
                         </div>
 
                         {/* Đơn vị giao hàng */}
-                        <div className="col-span-6 flex flex-col gap-y-12">
-                          <p className="text-dark text-xl font-medium mt-14">
-                            HÌNH THỨC GIAO HÀNG
+                        <div className="md:col-span-6 col-span-full flex flex-col sm:gap-y-12 gap-y-6">
+                          <p className="text-dark text-xl font-medium sm:mt-14 mt-0">
+                            ĐƠN VỊ GIAO HÀNG
                           </p>
 
                           <FormikRadioGroup
@@ -410,7 +419,7 @@ function Checkout() {
                         </div>
 
                         <FormikTextArea
-                          className="col-span-12"
+                          className="col-span-12 hidden sm:block"
                           name="street"
                           label="Địa chỉ"
                           required
@@ -425,7 +434,7 @@ function Checkout() {
 
                     <div className="grid grid-cols-12 gap-5 items-start mt-6 shadow-lg px-4 pb-10 rounded-sm">
                       <FormikRadio
-                        className="col-span-6"
+                        className="xl:col-span-6 col-span-full"
                         value="cod"
                         name="paymentMethod"
                         labelClassName="w-full"
@@ -437,7 +446,7 @@ function Checkout() {
                         }
                       />
 
-                      <div className="col-span-6">
+                      <div className="xl:col-span-6 col-span-full">
                         <div className="w-full flex items-center gap-2 bg-blue-400 pr-3 text-lg font-semibold text-white  rounded-sm ">
                           <Image src={images.bankingMethod} width="60px" />
                           <p>Thanh toán trực tuyến</p>
@@ -510,7 +519,7 @@ function Checkout() {
                   </div>
 
                   {/* right column */}
-                  <div className="col-span-5 shadow-md p-5 h-fit">
+                  <div className="xl:col-span-5 col-span-full shadow-md p-5 h-fit">
                     {/* title */}
                     <div className="flex justify-between">
                       <p className="flex items-center gap-2 text-xl font-semibold text-dark">
