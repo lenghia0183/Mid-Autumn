@@ -18,6 +18,20 @@ function RelatedProducts({ className }) {
     autoplay: true,
     autoplaySpeed: 3000,
     arrow: false,
+    responsive: [
+      {
+        breakpoint: 1024, // 1024px
+        settings: {
+          slidesToShow: 2, // Hiển thị 3 slide
+        },
+      },
+      {
+        breakpoint: 480, // 480px
+        settings: {
+          slidesToShow: 1, // Hiển thị 1 slide
+        },
+      },
+    ],
   };
 
   const saleItems = [
@@ -72,10 +86,10 @@ function RelatedProducts({ className }) {
   ];
 
   return (
-    <section className={clsx("container mt-14", className)}>
+    <section className={clsx("container sm:mt-14 mt-10", className)}>
       <div className="relative">
         <IconButton
-          className="absolute top-1/2 -translate-y-1/2 left-[-50px]"
+          className="absolute top-1/2 -translate-y-1/2 left-[-50px] hidden sm:flex"
           iconName="arrowSlider"
           variant="contained"
           size="small"
@@ -89,7 +103,7 @@ function RelatedProducts({ className }) {
         />
 
         <IconButton
-          className="rotate-180 absolute top-1/2 -translate-y-1/2 right-[-50px]"
+          className="rotate-180 absolute top-1/2 -translate-y-1/2 right-[-50px] hidden sm:flex"
           iconName="arrowSlider"
           variant="contained"
           size="small"

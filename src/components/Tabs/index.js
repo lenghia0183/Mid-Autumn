@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from "react";
 import PropTypes from "prop-types";
+import clsx from "clsx";
 
 const Tabs = ({
   list,
@@ -41,15 +42,17 @@ const Tabs = ({
   };
 
   return (
-    <div className={className}>
+    <div className={clsx("overflow-hidden", className)}>
       <div
-        className={`flex ${divider ? "border-b" : ""} mb-4 relative text-xl`}
+        className={`flex ${
+          divider ? "border-b" : ""
+        } mb-4 relative text-xl overflow-auto`}
       >
         {list.map((item, index) => (
           <button
             key={index}
             onClick={() => handleChange(index)}
-            className={`${tabClassName} tab-${index} py-2 px-4 ${
+            className={`${tabClassName} tab-${index} py-2 px-4 text-nowrap ${
               value === index ? "font-semibold text-emerald" : "text-gray-500"
             } transition-all`}
           >
