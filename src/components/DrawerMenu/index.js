@@ -4,10 +4,10 @@ import clsx from "clsx";
 import { durationMap } from "../../config/durationConfig";
 import useColorClasses from "./../../hooks/useColorClasses";
 import useResponsiveStyle from "../../hooks/useResponsiveStyle";
+import { useLocation } from "react-router-dom";
 
 const DrawerMenu = ({
   isOpen = false,
-  onClose,
   position = "left",
   width = "25%",
   height = "100%",
@@ -17,6 +17,8 @@ const DrawerMenu = ({
   animationDuration = 1000,
   disableScroll = true,
   autoCloseTimeout = null,
+  handleClose = () => {},
+  // handleOpen = () => {},
   overlayColor = "rgba(0, 0, 0, 0.5)",
   bgColor = "white",
   textColor,
@@ -24,49 +26,49 @@ const DrawerMenu = ({
   handleOverlayClick,
   className,
 }) => {
-  const [open, setOpen] = useState(isOpen);
   const timeoutRef = useRef(null);
+  const location = useLocation();
 
   const widthStyle = useResponsiveStyle(width, "w");
   const heightStyle = useResponsiveStyle(height, "h");
 
   useEffect(() => {
-    if (disableScroll) {
-      document.body.style.overflow = open ? "hidden" : "auto";
-    }
-  }, [open, disableScroll]);
+    handleClose();
+    if (handleClose) handleClose();
+  }, [location.pathname]);
 
   useEffect(() => {
-    setOpen(isOpen);
-  }, [isOpen]);
+    if (disableScroll) {
+      document.body.style.overflow = isOpen ? "hidden" : "auto";
+    }
+  }, [isOpen, disableScroll]);
 
   useEffect(() => {
     if (autoCloseTimeout) {
-      if (open) {
+      if (isOpen) {
         timeoutRef.current = setTimeout(() => {
-          setOpen(false);
-          if (onClose) onClose();
+          handleClose();
         }, autoCloseTimeout);
       } else {
         clearTimeout(timeoutRef.current);
       }
     }
     return () => clearTimeout(timeoutRef.current);
-  }, [open, autoCloseTimeout, onClose]);
+  }, [isOpen, autoCloseTimeout, handleClose]);
 
   useEffect(() => {
     const handleEsc = (e) => {
       if (e.key === "Escape") {
-        setOpen(false);
-        if (onClose) onClose();
+        handleClose();
       }
+      return;
     };
 
     document.addEventListener("keydown", handleEsc);
     return () => {
       document.removeEventListener("keydown", handleEsc);
     };
-  }, [onClose]);
+  }, [handleClose]);
 
   const positionStyles = {
     top: {
@@ -118,7 +120,7 @@ const DrawerMenu = ({
     newTextColor,
     newBorderColor,
     {
-      "transform-none": open,
+      "transform-none": isOpen,
     },
     positionClasses
   );
@@ -132,20 +134,19 @@ const DrawerMenu = ({
     "fixed inset-0 transition-opacity",
     durationMap[animationDuration],
     {
-      "opacity-0 pointer-events-none": !open,
-      "opacity-100 z-[1000]": open,
+      "opacity-0 pointer-events-none": !isOpen,
+      "opacity-100 z-[1000]": isOpen,
     }
   );
 
   return (
     <>
-      {true && (
-        <div
-          className={overlayClasses}
-          onClick={handleOverlayClick}
-          style={{ backgroundColor: overlayColor }}
-        />
-      )}
+      <div
+        className={overlayClasses}
+        onClick={handleOverlayClick}
+        style={{ backgroundColor: overlayColor }}
+      />
+
       <div className={drawerClasses} style={drawerStyle}>
         {renderTitle && <div className="p-4">{renderTitle()}</div>}
         <div>{renderContent()}</div>

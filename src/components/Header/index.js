@@ -22,10 +22,26 @@ const Header = ({ bgColor = "emerald", textColor = "white", className }) => {
 
   const { bgColor: newBgColor } = useColorClasses({ bgColor });
   const { textColor: newTextColor } = useColorClasses({ textColor });
-  const [isShowCart, setIsShowCart] = useState(false);
-  const [isShowNavDrawer, setIsShowNavDrawer] = useState(false);
+  const [isOpenCartDrawer, setIsOpenCartDrawer] = useState(false);
+  const [isOpenNavDrawer, setIsOpenNavDrawer] = useState(false);
 
   const { pathname } = useLocation();
+
+  const handleOpenNavDrawer = () => {
+    setIsOpenNavDrawer(true);
+  };
+
+  const handleCloseNavDrawer = () => {
+    setIsOpenNavDrawer(false);
+  };
+
+  const handleOpenCartDrawer = () => {
+    setIsOpenCartDrawer(true);
+  };
+
+  const handleCloseCartDrawer = () => {
+    setIsOpenCartDrawer(false);
+  };
 
   useEffect(() => {
     if (containerRef.current) {
@@ -54,7 +70,7 @@ const Header = ({ bgColor = "emerald", textColor = "white", className }) => {
     { label: PAGE_TITLE.CONTACT, path: PATH.CONTACT, isArrow: false },
   ];
 
-  const renderTitleDrawer = () => {
+  const renderTitleCartDrawer = () => {
     return (
       <div>
         <div className="flex items-center justify-between w-full mt-5">
@@ -64,9 +80,7 @@ const Header = ({ bgColor = "emerald", textColor = "white", className }) => {
           <IconButton
             iconName="close"
             textColor="dark"
-            onClick={() => {
-              setIsShowCart(false);
-            }}
+            onClick={handleCloseCartDrawer}
           />
         </div>
       </div>
@@ -83,9 +97,7 @@ const Header = ({ bgColor = "emerald", textColor = "white", className }) => {
           <IconButton
             iconName="close"
             textColor="white"
-            onClick={() => {
-              setIsShowNavDrawer(false);
-            }}
+            onClick={handleCloseNavDrawer}
           />
         </div>
       </div>
@@ -241,7 +253,7 @@ const Header = ({ bgColor = "emerald", textColor = "white", className }) => {
             textColor="white"
             textHoverColor="yellow"
             onClick={() => {
-              setIsShowNavDrawer(true);
+              setIsOpenNavDrawer(true);
             }}
           />
         </div>
@@ -297,9 +309,7 @@ const Header = ({ bgColor = "emerald", textColor = "white", className }) => {
             textColor="white"
             iconSize="1.7"
             textHoverColor="yellow"
-            onClick={() => {
-              setIsShowCart(true);
-            }}
+            onClick={handleOpenCartDrawer}
           />
 
           {/* Language Options */}
@@ -337,29 +347,29 @@ const Header = ({ bgColor = "emerald", textColor = "white", className }) => {
       </div>
 
       <DrawerMenu
-        renderTitle={renderTitleDrawer}
+        renderTitle={renderTitleCartDrawer}
         renderContent={renderContentDrawer}
-        isOpen={isShowCart}
+        handleClose={handleCloseCartDrawer}
+        handleOpen={handleOpenCartDrawer}
+        handleOverlayClick={handleCloseCartDrawer}
+        isOpen={isOpenCartDrawer}
         position={isLargerThanSm ? "right" : "bottom"}
         width={isLargerThanSm ? "350px" : "100%"}
         borderColor="transparent"
         bgColor="white"
-        handleOverlayClick={() => {
-          setIsShowCart(false);
-        }}
       />
 
       <DrawerMenu
         renderTitle={renderTitleNavDrawer}
         renderContent={renderContentNavBarDrawer}
-        isOpen={isShowNavDrawer}
+        handleOverlayClick={handleCloseNavDrawer}
+        handleClose={handleCloseNavDrawer}
+        handleOpen={handleOpenNavDrawer}
+        isOpen={isOpenNavDrawer}
         position={isLargerThanSm ? "left" : "top"}
         width={isLargerThanSm ? "350px" : "100%"}
         borderColor="transparent"
         bgColor="emerald"
-        handleOverlayClick={() => {
-          setIsShowNavDrawer(false);
-        }}
       />
     </header>
   );
