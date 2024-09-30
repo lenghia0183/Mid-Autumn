@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import PropTypes from "prop-types";
 import { NavLink, useLocation } from "react-router-dom";
 import clsx from "clsx";
@@ -13,14 +13,31 @@ import DrawerMenu from "./../DrawerMenu/index";
 import Divider from "../Devider";
 import { useTranslation } from "react-i18next";
 import useChangeLanguage from "../../hooks/useChangeLanguage";
+import useBreakpoint from "./../../hooks/useBreakpoint";
 
 const Header = ({ bgColor = "emerald", textColor = "white", className }) => {
+  const containerRef = useRef();
+  const [padding, setPadding] = useState({});
+  const isLargerThanSm = useBreakpoint("sm");
+
   const { bgColor: newBgColor } = useColorClasses({ bgColor });
   const { textColor: newTextColor } = useColorClasses({ textColor });
   const [isShowCart, setIsShowCart] = useState(false);
   const [isShowNavDrawer, setIsShowNavDrawer] = useState(false);
 
   const { pathname } = useLocation();
+
+  useEffect(() => {
+    if (containerRef.current) {
+      const computedStyle = getComputedStyle(containerRef.current);
+      setPadding({
+        top: computedStyle.paddingTop,
+        right: computedStyle.paddingRight,
+        bottom: computedStyle.paddingBottom,
+        left: computedStyle.paddingLeft,
+      });
+    }
+  }, []);
 
   const { t } = useTranslation();
   const changeLanguage = useChangeLanguage();
@@ -67,7 +84,7 @@ const Header = ({ bgColor = "emerald", textColor = "white", className }) => {
             iconName="close"
             textColor="white"
             onClick={() => {
-              setIsShowCart(false);
+              setIsShowNavDrawer(false);
             }}
           />
         </div>
@@ -181,9 +198,14 @@ const Header = ({ bgColor = "emerald", textColor = "white", className }) => {
     <header
       className={clsx(`w-full h-[110px]`, newBgColor, newTextColor, className)}
     >
-      <div className="container relative h-full text-base">
+      <div ref={containerRef} className="container relative h-full text-base">
         {/* Navigation Menu */}
-        <nav className="absolute left-0 top-1/2 -translate-y-1/2 space-x-4 text-base font-semibold xl:flex hidden">
+        <nav
+          className="absolute top-1/2 -translate-y-1/2 space-x-4 text-base font-semibold xl:flex hidden"
+          style={{
+            left: padding.left,
+          }}
+        >
           {navItems.map((item, index) => (
             <NavLink
               key={index}
@@ -208,7 +230,12 @@ const Header = ({ bgColor = "emerald", textColor = "white", className }) => {
           ))}
         </nav>
 
-        <div className="absolute left-0 top-1/2 -translate-y-1/2 xl:hidden">
+        <div
+          className="absolute left-0 top-1/2 -translate-y-1/2 xl:hidden"
+          style={{
+            left: padding.left,
+          }}
+        >
           <IconButton
             iconName="menu"
             textColor="white"
@@ -230,7 +257,12 @@ const Header = ({ bgColor = "emerald", textColor = "white", className }) => {
           </Button>
         </div>
 
-        <div className="flex absolute right-0 top-1/2 -translate-y-1/2 space-x-3">
+        <div
+          className="flex absolute right-0 top-1/2 -translate-y-1/2 space-x-3"
+          style={{
+            right: padding.right,
+          }}
+        >
           {/* Contact Number */}
           <Button
             href="tel:0966859061"
@@ -308,8 +340,8 @@ const Header = ({ bgColor = "emerald", textColor = "white", className }) => {
         renderTitle={renderTitleDrawer}
         renderContent={renderContentDrawer}
         isOpen={isShowCart}
-        position="right"
-        width="350px"
+        position={isLargerThanSm ? "right" : "bottom"}
+        width={isLargerThanSm ? "350px" : "100%"}
         borderColor="transparent"
         bgColor="white"
         handleOverlayClick={() => {
@@ -321,8 +353,8 @@ const Header = ({ bgColor = "emerald", textColor = "white", className }) => {
         renderTitle={renderTitleNavDrawer}
         renderContent={renderContentNavBarDrawer}
         isOpen={isShowNavDrawer}
-        position="left"
-        width="350px"
+        position={isLargerThanSm ? "left" : "top"}
+        width={isLargerThanSm ? "350px" : "100%"}
         borderColor="transparent"
         bgColor="emerald"
         handleOverlayClick={() => {
