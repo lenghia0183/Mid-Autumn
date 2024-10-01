@@ -79,7 +79,7 @@ function ViewedProduct() {
   };
 
   return (
-    <div className="p-4">
+    <div className="xl:p-4">
       <h2 className="text-2xl font-semibold text-dark shadow-md p-4">
         Danh sách sản phẩm đã xem
       </h2>
