@@ -8,9 +8,18 @@ import Icon from "../../components/Icon";
 import validationSchema from "./schema";
 import { useTranslation } from "react-i18next";
 import { TEXTFIELD_ALLOW } from "../../constants/common";
+import { auth } from "../../firebaseConfig";
+import {
+  GoogleAuthProvider,
+  signInWithPopup,
+  FacebookAuthProvider,
+  sendEmailVerification,
+} from "firebase/auth";
 
 function Login() {
-  const { t } = useTranslation();
+  const { t, i18n } = useTranslation();
+
+  // console.log("auth", auth);
 
   const initialValues = {
     userName: "",
@@ -20,6 +29,35 @@ function Login() {
   const handleSubmit = (values) => {
     console.log("Submitted values:", values);
     // Xử lý gửi form ở đây
+  };
+
+  const handleGoogleLogin = async () => {
+    const provider = new GoogleAuthProvider();
+    try {
+      const result = await signInWithPopup(auth, provider);
+
+      const user = result.user;
+      // console.log("Đăng nhập thành công:", user);
+
+      await sendEmailVerification(user);
+      // console.log("Email xác minh đã được gửi.");
+
+      // Xử lý logic lưu thông tin người dùng vào cơ sở dữ liệu của bạn tại đây (nếu cần)
+    } catch (error) {
+      console.error("Lỗi đăng nhập Google:", error);
+    }
+  };
+
+  const handleFacebookLogin = async () => {
+    const provider = new FacebookAuthProvider();
+    try {
+      const result = await signInWithPopup(auth, provider);
+      const user = result.user;
+      // console.log("Đăng nhập thành công bằng Facebook:", user);
+      // Xử lý logic lưu thông tin người dùng vào cơ sở dữ liệu của bạn tại đây (nếu cần)
+    } catch (error) {
+      // console.error("Lỗi đăng nhập Facebook:", error);
+    }
   };
 
   return (
@@ -77,6 +115,7 @@ function Login() {
           className="flex-1 text-lg w-full"
           bgColor="facebook"
           startIcon={<Icon name="facebook" size={1} />}
+          onClick={handleFacebookLogin}
         >
           Facebook
         </Button>
@@ -85,6 +124,7 @@ function Login() {
           className="flex-1 text-lg w-full"
           bgColor="google"
           startIcon={<Icon name="google" size={1} />}
+          onClick={handleGoogleLogin}
         >
           Google
         </Button>
