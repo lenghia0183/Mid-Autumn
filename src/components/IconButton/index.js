@@ -33,7 +33,7 @@ const IconButton = ({
   ...props
 }) => {
   const baseClasses =
-    "rounded-full focus:outline-none transition duration-200 flex items-center justify-center";
+    "rounded-full outline-none transition duration-200 flex items-center justify-center";
 
   const sizeClasses = {
     small: "px-2 py-2",
@@ -111,8 +111,8 @@ const IconButton = ({
           className={iconClass}
           name={iconName}
           size={iconSize}
-          width={iconWidth}
-          height={iconHeight}
+          width={iconWidth || width}
+          height={iconHeight || height}
           color={iconColor}
           strokeWidth={iconStrokeWidth}
         />

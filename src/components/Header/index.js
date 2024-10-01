@@ -14,6 +14,7 @@ import Divider from "../Devider";
 import { useTranslation } from "react-i18next";
 import useChangeLanguage from "../../hooks/useChangeLanguage";
 import useBreakpoint from "./../../hooks/useBreakpoint";
+import formatCurrency from "../../utils/formatCurrency";
 
 const Header = ({ bgColor = "emerald", textColor = "white", className }) => {
   const containerRef = useRef();
@@ -24,6 +25,38 @@ const Header = ({ bgColor = "emerald", textColor = "white", className }) => {
   const { textColor: newTextColor } = useColorClasses({ textColor });
   const [isOpenCartDrawer, setIsOpenCartDrawer] = useState(false);
   const [isOpenNavDrawer, setIsOpenNavDrawer] = useState(false);
+
+  const cartItems = [
+    {
+      image: images.popularDish1,
+      name: "Bánh trung thu trang vàng hoàng kim, Bánh trung thu trang vàng hoàng kim, Bánh trung thu trang vàng hoàng kim, Bánh trung thu trang vàng hoàng kim",
+      quantity: 1,
+      price: 4800000,
+    },
+    {
+      image: images.popularDish2,
+      name: "Bánh trung thu 2 trứng đặc biệt",
+      quantity: 2,
+      price: 1650000,
+    },
+    {
+      image: images.popularDish1,
+      name: "Bánh trung thu trang vàng hoàng kim",
+      quantity: 1,
+      price: 4800000,
+    },
+    {
+      image: images.popularDish2,
+      name: "Bánh trung thu 2 trứng đặc biệt",
+      quantity: 2,
+      price: 1650000,
+    },
+  ];
+
+  const totalAmount = cartItems.reduce(
+    (total, item) => total + item.price * item.quantity,
+    0
+  );
 
   const { pathname } = useLocation();
 
@@ -72,52 +105,82 @@ const Header = ({ bgColor = "emerald", textColor = "white", className }) => {
 
   const renderTitleCartDrawer = () => {
     return (
-      <div>
-        <div className="flex items-center justify-between w-full mt-5">
-          <h4 className="text-dark text-2xl font-semibold">
-            {t("cart.title")}
-          </h4>
-          <IconButton
-            iconName="close"
-            textColor="dark"
-            onClick={handleCloseCartDrawer}
-          />
-        </div>
+      <div className="flex items-center justify-between w-full py-3 border-b border-gray-300">
+        <h4 className="text-dark text-2xl font-semibold">{t("cart.title")}</h4>
+        <IconButton
+          iconName="close"
+          textColor="dark"
+          onClick={handleCloseCartDrawer}
+        />
       </div>
     );
   };
 
   const renderTitleNavDrawer = () => {
     return (
-      <div className="">
-        <div className="flex items-center justify-between w-full mt-2">
-          <h4 className="text-white text-2xl font-semibold">
-            {t("common.midAutumnFestival")}
-          </h4>
-          <IconButton
-            iconName="close"
-            textColor="white"
-            onClick={handleCloseNavDrawer}
-          />
-        </div>
+      <div className="flex items-center justify-between w-full mt-2">
+        <h4 className="text-white text-2xl font-semibold">
+          {t("common.midAutumnFestival")}
+        </h4>
+        <IconButton
+          iconName="close"
+          textColor="white"
+          onClick={handleCloseNavDrawer}
+        />
       </div>
     );
   };
 
-  const renderContentDrawer = () => {
+  const renderContentCartDrawer = () => {
     return (
       <div className="p-4 pt-0">
-        <Divider marginTop="10px" />
+        <div className="text-dark">
+          {cartItems?.length > 0 ? (
+            <div>
+              {cartItems.map((item) => {
+                return (
+                  <div className="flex items-start gap-2 p-3 border-t border-b border-dashed border-gray-300">
+                    <Image
+                      src={item?.image}
+                      width="100px"
+                      height="100px"
+                      className="border border-gray-300 rounded-md"
+                    />
+                    <div>
+                      <p className="text-lg font-medium line-clamp-2">
+                        {item?.name}
+                      </p>
+                      <p>
+                        {item?.quantity} X{" "}
+                        <span className="font-medium">
+                          {formatCurrency(item?.price)}
+                        </span>
+                      </p>
+                    </div>
+                    <IconButton
+                      iconName="bin"
+                      textColor="dark-500"
+                      iconSize="1.5"
+                    />
+                  </div>
+                );
+              })}
+            </div>
+          ) : (
+            <p className="text-dark-800 text-xl font-medium">
+              {t("cart.empty")}
+            </p>
+          )}
+        </div>
 
-        <p className="text-dark-800 text-xl font-medium">{t("cart.empty")}</p>
-        <div className="flex justify-between mt-5">
+        <div className="flex justify-between border-b py-4 border-gray-300 mb-5 mt-5">
           <div className="text-dark text-xl font-medium ">
             {t("cart.total")}
           </div>
-          <div className="text-crimson text-xl font-medium">0đ</div>
+          <div className="text-crimson text-xl font-medium">
+            {formatCurrency(totalAmount)}
+          </div>
         </div>
-
-        <Divider marginTop="10px" marginBottom="20px" />
 
         <Button
           full
@@ -174,31 +237,31 @@ const Header = ({ bgColor = "emerald", textColor = "white", className }) => {
         </nav>
         <div className="flex gap-3 mt-3">
           <IconButton
-            className="sm:hidden"
+            className="sm:hidden flex"
             iconName="vietnamFlag"
-            iconWidth="40px"
-            iconHeight="30px"
+            width="35px"
+            height="30px"
             onClick={() => handleLanguageChange("vi")}
           />
           <IconButton
-            className="sm:hidden"
+            className="sm:hidden flex"
             iconName="chinaFlag"
-            iconWidth="40px"
-            iconHeight="30px"
+            width="35px"
+            height="30px"
             onClick={() => handleLanguageChange("zh")}
           />
           <IconButton
-            className="sm:hidden"
+            className="sm:hidden flex"
             iconName="japanFlag"
-            iconWidth="40px"
-            iconHeight="30px"
+            width="35px"
+            height="30px"
             onClick={() => handleLanguageChange("jp")}
           />
           <IconButton
-            className="sm:hidden"
+            className="sm:hidden flex"
             iconName="englandFlag"
-            iconWidth="40px"
-            iconHeight="30px"
+            width="35px"
+            height="30px"
             onClick={() => handleLanguageChange("en")}
           />
         </div>
@@ -251,6 +314,8 @@ const Header = ({ bgColor = "emerald", textColor = "white", className }) => {
           <IconButton
             iconName="menu"
             textColor="white"
+            width="30px"
+            height="30px"
             textHoverColor="yellow"
             onClick={() => {
               setIsOpenNavDrawer(true);
@@ -270,7 +335,7 @@ const Header = ({ bgColor = "emerald", textColor = "white", className }) => {
         </div>
 
         <div
-          className="flex absolute right-0 top-1/2 -translate-y-1/2 space-x-3"
+          className="flex items-center absolute right-0 top-1/2 -translate-y-1/2 sm:space-x-1"
           style={{
             right: padding.right,
           }}
@@ -287,10 +352,10 @@ const Header = ({ bgColor = "emerald", textColor = "white", className }) => {
 
           {/* Search Button */}
           <IconButton
-            className="sm:block hidden"
+            className="sm:flex hidden"
             iconName="search"
             textColor="white"
-            iconSize="1.6"
+            iconSize="1.8"
             textHoverColor="yellow"
           />
 
@@ -304,42 +369,47 @@ const Header = ({ bgColor = "emerald", textColor = "white", className }) => {
           />
 
           {/* Cart Button */}
-          <IconButton
-            iconName="bag"
-            textColor="white"
-            iconSize="1.7"
-            textHoverColor="yellow"
-            onClick={handleOpenCartDrawer}
-          />
+          <div className="relative flex items-center sm:ml-0 ml-2">
+            <div className="absolute top-0 right-0 -translate-y-[30%] translate-x-[35%] w-[20px] h-[20px] flex items-center justify-center bg-yellow text-dark rounded-full">
+              {cartItems?.length}
+            </div>
+            <IconButton
+              iconName="bag"
+              textColor="white"
+              iconSize="1.8"
+              textHoverColor="yellow"
+              onClick={handleOpenCartDrawer}
+            />
+          </div>
 
           {/* Language Options */}
-          <div className="flex gap-2">
+          <div className="flex gap-x-2 items-center h-fit sm:pl-4">
             <IconButton
-              className="sm:block hidden"
+              className="sm:flex hidden"
               iconName="vietnamFlag"
-              iconWidth="30px"
-              iconHeight="25px"
+              width="35px"
+              height="30px"
               onClick={() => handleLanguageChange("vi")}
             />
             <IconButton
-              className="sm:block hidden"
+              className="sm:flex hidden"
               iconName="chinaFlag"
-              iconWidth="30px"
-              iconHeight="25px"
+              width="35px"
+              height="30px"
               onClick={() => handleLanguageChange("zh")}
             />
             <IconButton
-              className="sm:block hidden"
+              className="sm:flex hidden"
               iconName="japanFlag"
-              iconWidth="30px"
-              iconHeight="25px"
+              width="35px"
+              height="30px"
               onClick={() => handleLanguageChange("jp")}
             />
             <IconButton
-              className="sm:block hidden"
+              className="sm:flex hidden"
               iconName="englandFlag"
-              iconWidth="30px"
-              iconHeight="25px"
+              width="35px"
+              height="30px"
               onClick={() => handleLanguageChange("en")}
             />
           </div>
@@ -348,7 +418,7 @@ const Header = ({ bgColor = "emerald", textColor = "white", className }) => {
 
       <DrawerMenu
         renderTitle={renderTitleCartDrawer}
-        renderContent={renderContentDrawer}
+        renderContent={renderContentCartDrawer}
         handleClose={handleCloseCartDrawer}
         handleOpen={handleOpenCartDrawer}
         handleOverlayClick={handleCloseCartDrawer}
@@ -373,12 +443,6 @@ const Header = ({ bgColor = "emerald", textColor = "white", className }) => {
       />
     </header>
   );
-};
-
-Header.propTypes = {
-  bgColor: PropTypes.string,
-  textColor: PropTypes.string,
-  className: PropTypes.string,
 };
 
 export default Header;

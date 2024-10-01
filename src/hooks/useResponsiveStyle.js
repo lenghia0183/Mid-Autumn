@@ -40,9 +40,9 @@ const parseStyleString = (styleString, windowWidth, failBackProperty) => {
       // const [property, value] = classValue?.split("-")?.length === 2;
       const classValueArray = classValue?.split("-");
       property =
-        classValueArray.length === 2
+        classValueArray?.length === 2
           ? classValueArray[0]
-          : classValueArray.slice(0, -1)?.join("-");
+          : classValueArray?.slice(0, -1)?.join("-");
 
       value = classValueArray[classValueArray.length - 1];
 
@@ -66,7 +66,7 @@ const parseStyleString = (styleString, windowWidth, failBackProperty) => {
       let value = "";
 
       const entryArray = entry?.split("-");
-      property = entryArray.slice(0, -1).join("-");
+      property = entryArray?.slice(0, -1)?.join("-");
       value = entryArray[entryArray.length - 1];
       // const [property, value] = entry?.split("-");
 

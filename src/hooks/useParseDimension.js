@@ -8,7 +8,7 @@ const useParseDimension = (dimensionString) => {
       return { value: 0, unit: "rem" };
     }
 
-    const unit = dimensionString.replace(value, "").trim() || "rem";
+    const unit = dimensionString?.replace(value, "")?.trim() || "rem";
 
     return { value, unit };
   }, [dimensionString]);
