@@ -60,16 +60,17 @@ const QuantityInput = ({
     >
       <IconButton
         iconName="minus"
-        iconSize={1}
         textColor="emerald"
         className={clsx(
           "border-gray-300 border rounded-sm shrink-0",
           { "hover:border-emerald": !(value <= min) },
           buttonClassName
         )}
+        iconWidth="50%"
+        iconHeight="50%"
         height={height}
         width={height}
-        iconStrokeWidth={40}
+        iconStrokeWidth={30}
         onClick={handleDecrease}
         disabled={disabled || value <= min}
       />
@@ -91,15 +92,16 @@ const QuantityInput = ({
       <IconButton
         iconName="plus"
         textColor="emerald"
-        iconSize={1}
         className={clsx(
           "border-gray-300 border rounded-sm shrink-0",
           { "hover:border-emerald": !(value >= max) },
           buttonClassName
         )}
+        iconWidth="50%"
+        iconHeight="50%"
         height={height}
         width={height}
-        iconStrokeWidth={40}
+        iconStrokeWidth={20}
         onClick={handleIncrease}
         disabled={disabled || value >= max}
       />
