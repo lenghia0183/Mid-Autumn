@@ -1,6 +1,5 @@
 import React from "react";
 import { Formik, Form } from "formik";
-
 import FormikTextField from "../../components/Formik/FormikTextField";
 import { PATH } from "./../../constants/path";
 import Button from "../../components/Button";
@@ -8,18 +7,15 @@ import Icon from "../../components/Icon";
 import validationSchema from "./schema";
 import { useTranslation } from "react-i18next";
 import { TEXTFIELD_ALLOW } from "../../constants/common";
-import { auth } from "../../firebaseConfig";
+import { auth } from "../../firebaseConfig"; // Giữ nguyên import auth
 import {
   GoogleAuthProvider,
   signInWithPopup,
   FacebookAuthProvider,
-  sendEmailVerification,
 } from "firebase/auth";
 
 function Login() {
-  const { t, i18n } = useTranslation();
-
-  // console.log("auth", auth);
+  const { t } = useTranslation();
 
   const initialValues = {
     userName: "",
@@ -33,31 +29,25 @@ function Login() {
 
   const handleGoogleLogin = async () => {
     const provider = new GoogleAuthProvider();
+
     try {
       const result = await signInWithPopup(auth, provider);
-
-      const user = result.user;
-      // console.log("Đăng nhập thành công:", user);
-
-      await sendEmailVerification(user);
-      // console.log("Email xác minh đã được gửi.");
+      const idToken = await result.user.getIdToken();
+      // console.log("itdToken", idToken);
 
       // Xử lý logic lưu thông tin người dùng vào cơ sở dữ liệu của bạn tại đây (nếu cần)
-    } catch (error) {
-      console.error("Lỗi đăng nhập Google:", error);
-    }
+    } catch (error) {}
   };
 
   const handleFacebookLogin = async () => {
     const provider = new FacebookAuthProvider();
     try {
       const result = await signInWithPopup(auth, provider);
-      const user = result.user;
-      // console.log("Đăng nhập thành công bằng Facebook:", user);
+      const idToken = await result.user.getIdToken();
+      // console.log("itdToken", idToken);
+
       // Xử lý logic lưu thông tin người dùng vào cơ sở dữ liệu của bạn tại đây (nếu cần)
-    } catch (error) {
-      // console.error("Lỗi đăng nhập Facebook:", error);
-    }
+    } catch (error) {}
   };
 
   return (
