@@ -7,7 +7,7 @@ import Icon from "../../components/Icon";
 import validationSchema from "./schema";
 import { useTranslation } from "react-i18next";
 import { TEXTFIELD_ALLOW } from "../../constants/common";
-import { auth } from "../../firebaseConfig"; // Giữ nguyên import auth
+import { auth } from "../../firebaseConfig";
 import {
   GoogleAuthProvider,
   signInWithPopup,
@@ -28,6 +28,7 @@ function Login() {
   };
 
   const handleGoogleLogin = async () => {
+    console.log("handleGoogleLogin");
     const provider = new GoogleAuthProvider();
 
     try {
@@ -41,6 +42,7 @@ function Login() {
 
   const handleFacebookLogin = async () => {
     const provider = new FacebookAuthProvider();
+    console.log("handleGoogleLogin");
     try {
       const result = await signInWithPopup(auth, provider);
       const idToken = await result.user.getIdToken();
@@ -102,6 +104,7 @@ function Login() {
 
       <div className="flex w-full gap-2 mt-4">
         <Button
+          type="button"
           className="flex-1 text-lg w-full"
           bgColor="facebook"
           startIcon={<Icon name="facebook" size={1} />}
@@ -111,6 +114,7 @@ function Login() {
         </Button>
 
         <Button
+          type="button"
           className="flex-1 text-lg w-full"
           bgColor="google"
           startIcon={<Icon name="google" size={1} />}

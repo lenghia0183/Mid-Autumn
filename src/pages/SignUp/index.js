@@ -8,6 +8,14 @@ import Icon from "../../components/Icon";
 import { TEXTFIELD_ALLOW } from "../../constants/common";
 import validationSchema from "./schema";
 import { useTranslation } from "react-i18next";
+import { auth } from "../../firebaseConfig";
+import {
+  GoogleAuthProvider,
+  signInWithPopup,
+  FacebookAuthProvider,
+} from "firebase/auth";
+import Loading from "../../components/Loading";
+import Backdrop from "../../components/BackDrop";
 
 function SignUp() {
   const { t } = useTranslation();
@@ -25,10 +33,33 @@ function SignUp() {
     // Xử lý gửi form ở đây
   };
 
+  const handleGoogleLogin = async () => {
+    const provider = new GoogleAuthProvider();
+
+    try {
+      const result = await signInWithPopup(auth, provider);
+      const idToken = await result.user.getIdToken();
+      // console.log("itdToken", idToken);
+
+      // Xử lý logic lưu thông tin người dùng vào cơ sở dữ liệu của bạn tại đây (nếu cần)
+    } catch (error) {}
+  };
+
+  const handleFacebookLogin = async () => {
+    const provider = new FacebookAuthProvider();
+    try {
+      const result = await signInWithPopup(auth, provider);
+      const idToken = await result.user.getIdToken();
+      // console.log("itdToken", idToken);
+
+      // Xử lý logic lưu thông tin người dùng vào cơ sở dữ liệu của bạn tại đây (nếu cần)
+    } catch (error) {}
+  };
+
   return (
     <>
+      <Backdrop open={false} />;
       <h2 className="text-[40px] text-dark font-medium">ĐĂNG KÝ</h2>
-
       <Formik
         initialValues={initialValues}
         validationSchema={validationSchema(t)}
@@ -109,17 +140,21 @@ function SignUp() {
 
             <div className="flex w-full gap-2 mt-4">
               <Button
+                type="button"
                 className="flex-1 text-lg w-full"
                 bgColor="facebook"
                 startIcon={<Icon name="facebook" size={1} />}
+                onClick={handleFacebookLogin}
               >
                 Facebook
               </Button>
 
               <Button
+                type="button"
                 className="flex-1 text-lg w-full"
                 bgColor="google"
                 startIcon={<Icon name="google" size={1} />}
+                onClick={handleGoogleLogin}
               >
                 Google
               </Button>

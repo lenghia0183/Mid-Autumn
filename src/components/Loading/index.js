@@ -1,23 +1,31 @@
 import React from "react";
 import PropTypes from "prop-types";
+import useColorClasses from "./../../hooks/useColorClasses";
+import clsx from "clsx";
+import useResponsiveStyle from "../../hooks/useResponsiveStyle";
 
 const Loading = ({
-  size = "30px",
+  width = "30px",
+  height = "30px",
   thickness = "3px",
   color = "text-blue-500",
   speed = ".75s",
   className = "",
 }) => {
+  const { textColor: newTextColor } = useColorClasses({ textColor: color });
+  const widthStyle = useResponsiveStyle(width, "w");
+  const heightStyle = useResponsiveStyle(height, "h");
+
   return (
     <div
       className={`flex items-center justify-center ${className}`}
-      style={{ width: size, height: size }}
+      style={{ ...widthStyle, ...heightStyle }}
     >
       <div
-        className={`rounded-full ${color}`}
+        className={clsx("rounded-full", newTextColor)}
         style={{
-          width: size,
-          height: size,
+          ...widthStyle,
+          ...heightStyle,
           background: `
             radial-gradient(farthest-side, currentColor 94%, transparent) top/${thickness} ${thickness} no-repeat,
             conic-gradient(transparent 30%, currentColor)`,

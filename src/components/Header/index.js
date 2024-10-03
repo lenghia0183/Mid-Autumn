@@ -271,7 +271,12 @@ const Header = ({ bgColor = "emerald", textColor = "white", className }) => {
 
   return (
     <header
-      className={clsx(`w-full h-[110px]`, newBgColor, newTextColor, className)}
+      className={clsx(
+        ` top-0 z-[99999] w-full h-[110px] shadow-lg`,
+        newBgColor,
+        newTextColor,
+        className
+      )}
     >
       <div ref={containerRef} className="container relative h-full text-base">
         {/* Navigation Menu */}
