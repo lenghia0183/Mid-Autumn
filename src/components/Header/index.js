@@ -272,7 +272,7 @@ const Header = ({ bgColor = "emerald", textColor = "white", className }) => {
   return (
     <header
       className={clsx(
-        ` top-0 z-[99999] w-full h-[110px] shadow-lg`,
+        `top-0 z-[99999] w-full h-[110px] shadow-lg`,
         newBgColor,
         newTextColor,
         className
