@@ -1,21 +1,22 @@
 import React, { useState, useRef, useEffect } from "react";
 import clsx from "clsx";
 import Icon from "../Icon";
+import { useQueryState } from "./../../hooks/useQueryState";
 
 const Pagination = ({
   pageCount,
   pageRangeDisplayed = 2,
   marginPagesDisplayed = 1,
-  onPageChange,
-  forcePage = 0,
+  // onPageChange,
+  // forcePage = 1,
   previousLabel = "Previous",
   nextLabel = "Next",
   breakLabel = "...",
   className,
-  buttonWidth = "2.5rem", // Default width (40px)
-  buttonHeight = "2.5rem", // Default height (40px)
-  buttonClassName, // Custom class for buttons
-  labelClassName, // Custom class for labels
+  buttonWidth = "2.5rem",
+  buttonHeight = "2.5rem",
+  buttonClassName,
+  labelClassName,
   previousComponent: PreviousComponent = () => (
     <Icon name="previousPage" size={1} strokeWidth={40} />
   ),
@@ -34,6 +35,9 @@ const Pagination = ({
   const [ulWidth, setUlWidth] = useState("auto");
   const ulRef = useRef(null);
   const buttonRef = useRef(null);
+  const { page, setPage } = useQueryState();
+
+  const currentForcePage = Number(page);
 
   useEffect(() => {
     if (ulRef.current && buttonRef.current) {
@@ -51,54 +55,56 @@ const Pagination = ({
       window.addEventListener("resize", calculateWidth);
       return () => window.removeEventListener("resize", calculateWidth);
     }
-  }, [pageCount, forcePage, buttonWidth, buttonHeight]);
+  }, [pageCount, currentForcePage, buttonWidth, buttonHeight]);
 
   const handlePageClick = (selectedPage) => {
-    if (selectedPage !== forcePage) {
-      onPageChange({ selected: selectedPage });
+    if (selectedPage !== currentForcePage) {
+      setPage(selectedPage);
     }
   };
 
   const handlePreviousClick = () => {
-    if (forcePage > 0) {
-      handlePageClick(forcePage - 1);
+    if (currentForcePage > 1) {
+      handlePageClick(currentForcePage - 1);
     }
   };
 
   const handleNextClick = () => {
-    if (forcePage < pageCount - 1) {
-      handlePageClick(forcePage + 1);
+    if (currentForcePage < pageCount) {
+      handlePageClick(currentForcePage + 1);
     }
   };
 
   const handleFirstClick = () => {
-    if (forcePage !== 0) {
-      handlePageClick(0);
+    if (currentForcePage !== 1) {
+      handlePageClick(1);
     }
   };
 
   const handleLastClick = () => {
-    if (forcePage !== pageCount - 1) {
-      handlePageClick(pageCount - 1);
+    if (currentForcePage !== pageCount) {
+      handlePageClick(pageCount);
     }
   };
 
   const renderPages = () => {
     const pages = [];
-    for (let i = 0; i < pageCount; i++) {
-      const isActive = i === forcePage;
+    const activePage = currentForcePage;
+
+    for (let i = 1; i <= pageCount; i++) {
+      const isActive = i === activePage;
       const inRange =
-        i >= Math.max(0, forcePage - pageRangeDisplayed) &&
-        i <= Math.min(pageCount - 1, forcePage + pageRangeDisplayed);
+        i >= Math.max(1, activePage - pageRangeDisplayed) &&
+        i <= Math.min(pageCount, activePage + pageRangeDisplayed);
       const isMargin =
-        i < marginPagesDisplayed || i >= pageCount - marginPagesDisplayed;
+        i <= marginPagesDisplayed || i > pageCount - marginPagesDisplayed;
 
       if (inRange || isMargin) {
         pages.push(
           <li
             key={i}
             style={{ width: buttonWidth, height: buttonHeight }}
-            ref={i === forcePage ? buttonRef : null}
+            ref={i === activePage ? buttonRef : null}
             className={clsx(
               "flex items-center justify-center flex-shrink-0 text-emerald font-semibold border cursor-pointer rounded-md border-emerald-50 hover:bg-emerald hover:text-white transition duration-300",
               buttonClassName,
@@ -106,12 +112,12 @@ const Pagination = ({
             )}
             onClick={() => handlePageClick(i)}
           >
-            <span className={labelClassName}>{i + 1}</span>
+            <span className={labelClassName}>{i}</span>
           </li>
         );
       } else if (
-        i === Math.max(0, forcePage - pageRangeDisplayed) - 1 ||
-        i === Math.min(pageCount - 1, forcePage + pageRangeDisplayed) + 1
+        i === Math.max(1, activePage - pageRangeDisplayed) - 1 ||
+        i === Math.min(pageCount, activePage + pageRangeDisplayed) + 1
       ) {
         pages.push(
           <li
@@ -143,9 +149,10 @@ const Pagination = ({
       <li
         style={{ width: buttonWidth, height: buttonHeight }}
         className={clsx(
-          "flex items-center justify-center cursor-pointer flex-shrink-0 rounded-md border border-emerald-50 text-emerald hover:bg-emerald hover:text-white transition duration-300",
+          "flex items-center justify-center cursor-pointer flex-shrink-0 rounded-md border border-emerald-50 text-emerald transition duration-300",
           buttonClassName,
-          { "opacity-50 cursor-not-allowed": forcePage === 0 }
+          { "opacity-50 cursor-default": currentForcePage === 1 },
+          { " hover:bg-emerald hover:text-white": currentForcePage !== 1 }
         )}
         onClick={handleFirstClick}
       >
@@ -159,9 +166,10 @@ const Pagination = ({
       <li
         style={{ width: buttonWidth, height: buttonHeight }}
         className={clsx(
-          "flex items-center justify-center cursor-pointer flex-shrink-0 rounded-md border border-emerald-50 text-emerald hover:bg-emerald hover:text-white transition duration-300",
+          "flex items-center justify-center cursor-pointer flex-shrink-0 rounded-md border border-emerald-50 text-emerald transition duration-300",
           buttonClassName,
-          { "opacity-50 cursor-not-allowed": forcePage === 0 }
+          { "opacity-50 cursor-default": currentForcePage === 1 },
+          { " hover:bg-emerald hover:text-white": currentForcePage !== 1 }
         )}
         onClick={handlePreviousClick}
       >
@@ -177,9 +185,13 @@ const Pagination = ({
       <li
         style={{ width: buttonWidth, height: buttonHeight }}
         className={clsx(
-          "flex items-center justify-center cursor-pointer flex-shrink-0 rounded-md border border-emerald-50 text-emerald hover:bg-emerald hover:text-white transition duration-300",
+          "flex items-center justify-center cursor-pointer flex-shrink-0 rounded-md border border-emerald-50 text-emerald transition duration-300",
           buttonClassName,
-          { "opacity-50 cursor-not-allowed": forcePage === pageCount - 1 }
+          { "opacity-50 cursor-default": currentForcePage === pageCount },
+          {
+            " hover:bg-emerald hover:text-white":
+              currentForcePage !== pageCount,
+          }
         )}
         onClick={handleNextClick}
       >
@@ -193,9 +205,13 @@ const Pagination = ({
       <li
         style={{ width: buttonWidth, height: buttonHeight }}
         className={clsx(
-          "flex items-center justify-center cursor-pointer flex-shrink-0 rounded-md border border-emerald-50 text-emerald hover:bg-emerald hover:text-white transition duration-300",
+          "flex items-center justify-center cursor-pointer flex-shrink-0 rounded-md border border-emerald-50 text-emerald transition duration-300",
           buttonClassName,
-          { "opacity-50 cursor-not-allowed": forcePage === pageCount - 1 }
+          { "opacity-50 cursor-default": currentForcePage === pageCount },
+          {
+            " hover:bg-emerald hover:text-white":
+              currentForcePage !== pageCount,
+          }
         )}
         onClick={handleLastClick}
       >

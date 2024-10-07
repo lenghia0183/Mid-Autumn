@@ -7,12 +7,25 @@ import ProductFilterSideBar from "./ProductFilterSideBar";
 import ProductFilterTopBar from "./ProductFIlterTopBar";
 import { PAGE_TITLE, PATH } from "../../constants/path";
 import { Form, Formik } from "formik";
+import { useQueryState } from "../../hooks/useQueryState";
 
 function Products() {
   const breadcrumbItems = [
     { label: PAGE_TITLE.HOME, to: PATH.HOME },
     { label: PAGE_TITLE.PRODUCT, to: PATH.PRODUCTS },
   ];
+
+  const { filters, setFilters } = useQueryState({
+    filters: {
+      rating: 1,
+      displayOption: "newest",
+      maxPrice: "",
+      minPrice: "",
+      displayOptions: {},
+      price: {},
+      search: "",
+    },
+  });
 
   const items = [
     {
@@ -83,11 +96,7 @@ function Products() {
     },
   ];
 
-  const [currentPage, setCurrentPage] = useState(0);
-
-  const handlePageChange = ({ selected }) => {
-    setCurrentPage(selected);
-  };
+  // const [currentPage, setCurrentPage] = useState(0);
 
   const brandList = [
     { name: "Kinh Đô", code: "kinh_do" },
@@ -112,13 +121,7 @@ function Products() {
   ];
 
   const initialValues = {
-    rating: 1,
-    displayOption: "newest",
-    maxPrice: "",
-    minPrice: "",
-    displayOptions: {},
-    price: {},
-    search: "",
+    ...filters,
   };
 
   return (
@@ -132,6 +135,7 @@ function Products() {
         initialValues={initialValues}
         onSubmit={(values) => {
           console.log("products values", values);
+          setFilters({ ...values });
         }}
       >
         {({ setFieldValue, values }) => (
@@ -162,12 +166,7 @@ function Products() {
                     ))}
                   </div>
 
-                  <Pagination
-                    pageCount={20}
-                    onPageChange={handlePageChange}
-                    forcePage={currentPage}
-                    className="ml-auto mt-10"
-                  />
+                  <Pagination pageCount={20} className="ml-auto mt-10" />
                 </div>
 
                 <div className="col-span-full xl:hidden block">

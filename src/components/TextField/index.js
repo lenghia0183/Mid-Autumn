@@ -24,7 +24,9 @@ const TextField = forwardRef(
       errorClass = "",
       disabled = false,
       rightIcon = null,
+      rightIconProps = null,
       rightIconClassName = "",
+      onClickRightIcon = () => {},
       onFocus = () => {},
       onBlur = () => {},
       required = false,
@@ -85,14 +87,16 @@ const TextField = forwardRef(
 
       return (
         rightIcon && (
-          <div
+          <button
             className={clsx(
               "absolute right-0 p-2 inset-y-0 flex items-center",
               rightIconClassName
             )}
+            onClick={onClickRightIcon}
+            {...rightIconProps}
           >
             {rightIcon}
-          </div>
+          </button>
         )
       );
     };
