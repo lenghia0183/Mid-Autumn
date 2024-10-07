@@ -8,6 +8,7 @@ import ProductFilterTopBar from "./ProductFIlterTopBar";
 import { PAGE_TITLE, PATH } from "../../constants/path";
 import { Form, Formik } from "formik";
 import { useQueryState } from "../../hooks/useQueryState";
+import useBreakpoint from "./../../hooks/useBreakpoint";
 
 function Products() {
   const breadcrumbItems = [
@@ -26,6 +27,8 @@ function Products() {
       search: "",
     },
   });
+
+  const isLargerThanSm = useBreakpoint("sm");
 
   const items = [
     {
@@ -166,7 +169,11 @@ function Products() {
                     ))}
                   </div>
 
-                  <Pagination pageCount={20} className="ml-auto mt-10" />
+                  <Pagination
+                    pageCount={20}
+                    width={isLargerThanSm ? undefined : "100%"}
+                    className="sm:ml-auto sm:mx-0 mx-auto mt-10"
+                  />
                 </div>
 
                 <div className="col-span-full xl:hidden block">

@@ -17,6 +17,7 @@ const Pagination = ({
   buttonHeight = "2.5rem",
   buttonClassName,
   labelClassName,
+  width,
   previousComponent: PreviousComponent = () => (
     <Icon name="previousPage" size={1} strokeWidth={40} />
   ),
@@ -140,9 +141,9 @@ const Pagination = ({
   return (
     <ul
       ref={ulRef}
-      style={{ width: ulWidth }}
+      style={{ width: width || ulWidth }}
       className={clsx(
-        "flex gap-2 items-center transition-all duration-300",
+        "flex flex-wrap gap-2 items-center transition-all duration-300",
         className
       )}
     >
