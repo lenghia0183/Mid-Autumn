@@ -27,7 +27,7 @@ const Autocomplete = ({
   onBlur = () => {},
   error = "",
   label = "",
-  labelWidth = "70px",
+  labelWidth = "120px",
   labelClassName = "",
   optionsListClassName = "",
   optionsClassName = "",
@@ -306,90 +306,103 @@ const Autocomplete = ({
     );
   };
 
-  // return (
-  //   <div
-  //     className={clsx(
-  //       { "pointer-events-none cursor-not-allowed": disabled },
-  //       className
-  //     )}
-  //     ref={inputContainerRef}
-  //     style={{ ...widthStyle, ...heightStyle }}
-  //     onClick={() => {
-  //       inputRef.current.focus();
-  //     }}
-  //   >
-  //     <div
-  //       className={clsx(
-  //         "relative h-full",
-  //         {
-  //           "flex items-center justify-end": orientation === "horizontal",
-  //         },
-  //         className
-  //       )}
-  //     >
-  //       {renderLabel()}
-  //       <div
-  //         className={clsx(
-  //           "relative bg-purple-100 hover:bg-purple-200 transition-all duration-300 border-b-2",
-  //           {
-  //             "bg-gray-200 text-gray-500 ": disabled,
-  //             "border-b-purple-500 bg-purple-200":
-  //               showOptions && !error && !disabled,
-  //             "border-b-purple-400": !showOptions && !error && !disabled,
-  //             "border-red-500 border-b-2": error && !disabled,
-  //           }
-  //         )}
-  //         style={{
-  //           width:
-  //             (showOptions || inputValue) && orientation === "horizontal"
-  //               ? `${inputWidth - labelWidthValue}px`
-  //               : "100%",
-  //         }}
-  //       >
-  //         {multiple && (
-  //           <SelectedTags
-  //             visibleTags={visibleTags}
-  //             getOptionsLabel={getOptionsLabel}
-  //             hiddenTagCount={hiddenTagCount}
-  //             clearAllSelected={clearAllSelected}
-  //             selectedValues={selectedValues}
-  //             removeSelectedOption={removeSelectedOption}
-  //           />
-  //         )}
+  const horizontalAutocomplete = () => {
+    return (
+      <div
+        className={clsx(
+          "flex items-center text-lg",
+          { "pointer-events-none": disabled },
+          className
+        )}
+        ref={inputContainerRef}
+        style={{ ...widthStyle, ...heightStyle }}
+        onClick={() => {
+          inputRef.current.focus();
+        }}
+      >
+        <label
+          htmlFor={id}
+          style={{ width: labelWidth }}
+          className={clsx(
+            " flex-shrink-0 text-dark font-medium",
+            labelClassName
+          )}
+        >
+          {required && <span className="text-red-500">*</span>}
+          <span> {label}</span>
+        </label>
+        <div
+          className={clsx(
+            "relative ml-4 transition-all duration-300 border-b-2 w-full",
+            {
+              "border-gray-300": !showOptions && !error && !disabled,
+              "border-red-500": error && !disabled,
+            }
+          )}
+        >
+          {multiple && (
+            <SelectedTags
+              visibleTags={visibleTags}
+              getOptionsLabel={getOptionsLabel}
+              hiddenTagCount={hiddenTagCount}
+              clearAllSelected={clearAllSelected}
+              selectedValues={selectedValues}
+              removeSelectedOption={removeSelectedOption}
+            />
+          )}
 
-  //         <Input
-  //           inputValue={inputValue}
-  //           handleInputChange={handleInputChange}
-  //           clearInput={clearInput}
-  //           loading={loading}
-  //           showOptions={showOptions}
-  //           height={height}
-  //           onFocus={handleFocus}
-  //           ref={inputRef}
-  //           id={id}
-  //         />
+          <Input
+            inputValue={inputValue}
+            handleInputChange={handleInputChange}
+            clearInput={clearInput}
+            loading={loading}
+            showOptions={showOptions}
+            height={height}
+            onClick={handleFocus}
+            onBlur={onBlur}
+            disabled={disabled}
+            ref={inputRef}
+            id={id}
+          />
 
-  //         <OptionsList
-  //           isSelected={isSelected}
-  //           heightPerOption={heightPerOption}
-  //           loading={loading}
-  //           showOptions={showOptions}
-  //           optionsState={optionsState}
-  //           row={row}
-  //           handleOptionSelect={handleOptionSelect}
-  //           getOptionSubLabel={getOptionSubLabel}
-  //           getOptionsLabel={getOptionsLabel}
-  //           removeSelectedOption={removeSelectedOption}
-  //         />
-  //       </div>
+          <OptionsList
+            isSelected={isSelected}
+            heightPerOption={heightPerOption}
+            loading={loading}
+            showOptions={showOptions}
+            optionsState={filterActive ? filteredOptions : optionsState}
+            row={row}
+            handleOptionSelect={handleOptionSelect}
+            getOptionSubLabel={getOptionSubLabel}
+            getOptionsLabel={getOptionsLabel}
+            removeSelectedOption={removeSelectedOption}
+            optionsListClassName={optionsListClassName}
+            optionsClassName={optionsClassName}
+          />
 
-  //       {/* Hiển thị thông báo lỗi nếu có */}
-  //     </div>
-  //     {renderError()}
-  //   </div>
-  // );
+          <div
+            className={clsx(
+              "w-full absolute bottom-0 left-0 h-[2px] bg-emerald transition-transform duration-300 ease-in-out",
+              {
+                "scale-x-0": !showOptions && !inputValue,
+                "scale-x-100": showOptions || inputValue,
+              }
+            )}
+          />
+        </div>
 
-  return verticalAutocomplete();
+        {error && (
+          <div className={clsx("text-red-500 text-sm mt-1 ml-2", errorClass)}>
+            {error}
+          </div>
+        )}
+      </div>
+    );
+  };
+
+  return orientation === "vertical"
+    ? verticalAutocomplete()
+    : horizontalAutocomplete();
 };
 
 Autocomplete.propTypes = {

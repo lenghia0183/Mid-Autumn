@@ -36,7 +36,7 @@ const ProductFilterTopBar = ({ setFieldValue, values }) => {
       <div className="flex items-center gap-4 flex-wrap">
         <div className="text-lg font-medium hidden sm:block">Hiển thị theo</div>
         <Button
-          type="button"
+          // type="button"
           height="50px"
           className={clsx("text-lg hover:text-dark hidden sm:block", {
             "bg-yellow text-dark hover:text-white":
@@ -47,7 +47,7 @@ const ProductFilterTopBar = ({ setFieldValue, values }) => {
           Mới nhất
         </Button>
         <Button
-          type="button"
+          // type="button"
           height="50px"
           className={clsx("text-lg hover:text-dark  hidden sm:block", {
             "bg-yellow text-dark hover:text-white":
@@ -58,7 +58,7 @@ const ProductFilterTopBar = ({ setFieldValue, values }) => {
           Bán chạy nhất
         </Button>
         <Button
-          type="button"
+          // type="button"
           height="50px"
           className={clsx("text-lg hover:text-dark  hidden sm:block", {
             "bg-yellow text-dark hover:text-white":
