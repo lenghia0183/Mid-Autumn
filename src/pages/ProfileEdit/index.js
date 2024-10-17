@@ -87,7 +87,7 @@ function ProfileEdit() {
               <FormikAutoComplete
                 name="province"
                 label="Tỉnh/Thành phô"
-                orientation="horizontal"
+                orientation={isLargerThanSm ? "horizontal" : "vertical"}
                 labelWidth={"150px"}
                 asyncRequest={getProvinceDataTest}
                 asyncRequestHelper={(res) => {
@@ -108,7 +108,7 @@ function ProfileEdit() {
                 labelWidth={"150px"}
                 name="district"
                 label="Quận/Huyện:"
-                orientation="horizontal"
+                orientation={isLargerThanSm ? "horizontal" : "vertical"}
                 asyncRequest={() => {
                   return getDistrictDataTest(values?.province?.ProvinceID);
                 }}
@@ -123,7 +123,6 @@ function ProfileEdit() {
                   setFieldValue("ward", null);
                 }}
                 disabled={!values?.province}
-                asyncRequestDeps="province"
                 autoFetch={false}
                 filterActive={true}
                 required
@@ -133,7 +132,7 @@ function ProfileEdit() {
                 labelWidth={"150px"}
                 name="ward"
                 label="Phường/Xã"
-                orientation="horizontal"
+                orientation={isLargerThanSm ? "horizontal" : "vertical"}
                 asyncRequest={() => {
                   return getWardDataTest(values?.district?.DistrictID);
                 }}

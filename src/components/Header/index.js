@@ -15,11 +15,15 @@ import { useTranslation } from "react-i18next";
 import useChangeLanguage from "../../hooks/useChangeLanguage";
 import useBreakpoint from "./../../hooks/useBreakpoint";
 import formatCurrency from "../../utils/formatCurrency";
+import { useUser } from "../../context";
 
 const Header = ({ bgColor = "emerald", textColor = "white", className }) => {
   const containerRef = useRef();
   const [padding, setPadding] = useState({});
   const isLargerThanSm = useBreakpoint("sm");
+
+  const { user, logout } = useUser();
+  console.log("user", user);
 
   const { bgColor: newBgColor } = useColorClasses({ bgColor });
   const { textColor: newTextColor } = useColorClasses({ textColor });
@@ -340,7 +344,7 @@ const Header = ({ bgColor = "emerald", textColor = "white", className }) => {
         </div>
 
         <div
-          className="flex items-center absolute right-0 top-1/2 -translate-y-1/2 sm:space-x-1"
+          className="flex items-center absolute right-0 top-1/2 -translate-y-1/2 sm:space-x-2"
           style={{
             right: padding.right,
           }}
@@ -365,27 +369,53 @@ const Header = ({ bgColor = "emerald", textColor = "white", className }) => {
           />
 
           {/* Profile Button */}
-          <IconButton
-            iconName="user"
-            textColor={pathname?.includes(PATH.PROFILE) ? "yellow" : "white"}
-            iconSize="1.5"
-            textHoverColor="yellow"
-            to={PATH.PROFILE_EDIT}
-          />
+          {user?.isLoggedIn ? (
+            <>
+              <IconButton
+                iconName="user"
+                textColor={
+                  pathname?.includes(PATH.PROFILE) ? "yellow" : "white"
+                }
+                iconSize="1.5"
+                textHoverColor="yellow"
+                to={PATH.PROFILE_EDIT}
+              />
 
-          {/* Cart Button */}
-          <div className="relative flex items-center sm:ml-0 ml-2">
-            <div className="absolute top-0 right-0 -translate-y-[30%] translate-x-[35%] w-[20px] h-[20px] flex items-center justify-center bg-yellow text-dark rounded-full">
-              {cartItems?.length}
-            </div>
-            <IconButton
-              iconName="bag"
-              textColor="white"
-              iconSize="1.8"
-              textHoverColor="yellow"
-              onClick={handleOpenCartDrawer}
-            />
-          </div>
+              {/* Cart Button */}
+              <div className="relative flex items-center sm:ml-0 ml-2">
+                <div className="absolute top-0 right-0 -translate-y-[30%] translate-x-[35%] w-[20px] h-[20px] flex items-center justify-center bg-yellow text-dark rounded-full">
+                  {cartItems?.length}
+                </div>
+                <IconButton
+                  iconName="bag"
+                  textColor="white"
+                  iconSize="1.8"
+                  textHoverColor="yellow"
+                  onClick={handleOpenCartDrawer}
+                />
+              </div>
+            </>
+          ) : (
+            <>
+              <IconButton
+                className=""
+                iconName="login"
+                textColor={pathname === PATH.LOGIN ? "yellow" : "white"}
+                iconSize={isLargerThanSm ? "1.5" : "2"}
+                to={PATH.LOGIN}
+                textHoverColor="yellow"
+              />
+
+              <IconButton
+                className="sm:flex hidden"
+                iconName="signUp"
+                textColor={pathname === PATH.SIGN_UP ? "yellow" : "white"}
+                iconSize="1.8"
+                to={PATH.SIGN_UP}
+                textHoverColor="yellow"
+              />
+            </>
+          )}
 
           {/* Language Options */}
           <div className="flex gap-x-2 items-center h-fit sm:pl-4">

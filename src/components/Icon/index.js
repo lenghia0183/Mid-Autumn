@@ -43,6 +43,8 @@ import { ReactComponent as LocationEmpty } from "../../asset/icons/LocationEmpty
 import { ReactComponent as PaymentMethod } from "../../asset/icons/PaymentMethod.svg";
 import { ReactComponent as Tag } from "../../asset/icons/Tag.svg";
 import { ReactComponent as Menu } from "../../asset/icons/Menu.svg";
+import { ReactComponent as Login } from "../../asset/icons/Login.svg";
+import { ReactComponent as SignUp } from "../../asset/icons/SignUp.svg";
 
 import { ReactComponent as ArrowSlider } from "../../asset/icons/ArrowSlider.svg";
 import useParseDimension from "../../hooks/useParseDimension";
@@ -97,6 +99,8 @@ export const icons = {
   paymentMethod: PaymentMethod,
   tag: Tag,
   menu: Menu,
+  login: Login,
+  signUp: SignUp,
 
   // Add more icon components here...
 };

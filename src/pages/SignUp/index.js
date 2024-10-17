@@ -23,7 +23,7 @@ function SignUp() {
   const initialValues = {
     userName: "",
     phoneNumber: "",
-    address: "",
+    // address: "",
     email: "",
     password: "",
     confirmPassword: "",
@@ -83,7 +83,7 @@ function SignUp() {
               required
             />
 
-            <FormikTextField name="address" label="Địa chỉ" className="mt-10" />
+            {/* <FormikTextField name="address" label="Địa chỉ" className="mt-10" /> */}
 
             <FormikTextField
               name="email"
