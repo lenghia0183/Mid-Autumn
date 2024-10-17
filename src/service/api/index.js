@@ -5,7 +5,7 @@ import Cookies from "universal-cookie";
 import { CONFIG_COOKIES } from "../../constants";
 
 const cookies = new Cookies();
-const BASE_URL = process.env.REACT_APP_HOST + "/api/";
+const BASE_URL = process.env.REACT_APP_BASE_URL + "/api/";
 
 const BASE_URL_GHN = process.env.REACT_APP_BASE_URL_GHN;
 const TOKEN_GHN = process.env.REACT_APP_GHN_API_KEY;
@@ -46,6 +46,7 @@ export const createInstance = (baseURL, customHeaders = {}) => {
   // Add a response interceptor
   instance.interceptors.response.use(
     (response) => {
+      console.log("response", response);
       if (validateStatus(response?.status)) {
         if (response?.config?.getHeaders) {
           return { data: response?.data, header: response?.headers }; // Trả về cả data và headers nếu được yêu cầu
@@ -58,6 +59,7 @@ export const createInstance = (baseURL, customHeaders = {}) => {
       }
     },
     (error) => {
+      console.log("error", error);
       const response = error.response;
       if (
         response?.status === 403 &&
@@ -104,7 +106,7 @@ export const createInstance = (baseURL, customHeaders = {}) => {
       ) {
         startLogout(); // Đăng xuất nếu không được ủy quyền
       } else {
-        toast.error(response?.data?.message || error?.message);
+        // toast.error(response?.data?.message || error?.message);
         return Promise.reject(error);
       }
     }
@@ -140,7 +142,7 @@ export const createApi = (instance) => ({
         return response;
       })
       .catch((err) => {
-        return err.response || err;
+        return err?.response?.data || err;
       });
   },
 
@@ -153,7 +155,7 @@ export const createApi = (instance) => ({
         return response;
       })
       .catch((err) => {
-        return err.response || err;
+        return err?.response?.data || err;
       });
   },
 
@@ -164,7 +166,7 @@ export const createApi = (instance) => ({
         return response;
       })
       .catch((err) => {
-        return err.response || err;
+        return err?.response?.data || err;
       });
   },
 
@@ -175,7 +177,7 @@ export const createApi = (instance) => ({
         return response;
       })
       .catch((err) => {
-        return err.response || err;
+        return err?.response?.data || err;
       });
   },
 
@@ -186,7 +188,7 @@ export const createApi = (instance) => ({
         return response;
       })
       .catch((err) => {
-        return err.response || err;
+        return err?.response?.data || err;
       });
   },
 
@@ -199,7 +201,7 @@ export const createApi = (instance) => ({
         return response;
       })
       .catch((err) => {
-        return err.response || err;
+        return err?.response?.data || err;
       });
   },
 });

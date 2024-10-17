@@ -20,7 +20,7 @@ import Order from "../pages/Order";
 import ContactUs from "../pages/Contact";
 import Checkout from "../pages/Checkout";
 import ProductDetail from "../pages/ProductDetail";
-import { authLoader } from "../loaders/authentications";
+import { checkNotLoggedIn, checkLoggedIn } from "../loaders/authentications";
 
 const router = createBrowserRouter([
   // main layout
@@ -47,7 +47,7 @@ const router = createBrowserRouter([
       {
         path: PATH.CART,
         element: <Cart />,
-        loader: authLoader,
+        loader: checkNotLoggedIn,
       },
       {
         path: PATH.CONTACT,
@@ -56,7 +56,7 @@ const router = createBrowserRouter([
       {
         path: PATH.CHECKOUT,
         element: <Checkout />,
-        loader: authLoader,
+        loader: checkNotLoggedIn,
       },
       {
         path: PATH.TEST,
@@ -73,15 +73,17 @@ const router = createBrowserRouter([
       {
         path: PATH.LOGIN,
         element: <Login />,
+        loader: checkLoggedIn,
       },
       {
         path: PATH.SIGN_UP,
         element: <SignUp />,
+        loader: checkLoggedIn,
       },
     ],
   },
 
-  // profileLayout
+  // profile layout
   {
     path: PATH.PROFILE,
     element: <ProfileLayout />,
@@ -89,27 +91,27 @@ const router = createBrowserRouter([
       {
         path: PATH.PROFILE_EDIT,
         element: <ProfileEdit />,
-        loader: authLoader,
+        loader: checkNotLoggedIn,
       },
       {
         path: PATH.CHANGE_PASSWORD,
         element: <ChangePassword />,
-        loader: authLoader,
+        loader: checkNotLoggedIn,
       },
       {
         path: PATH.FAVORITE,
         element: <Favorite />,
-        loader: authLoader,
+        loader: checkNotLoggedIn,
       },
       {
         path: PATH.VIEWED_PRODUCTS,
         element: <ViewedProduct />,
-        loader: authLoader,
+        loader: checkNotLoggedIn,
       },
       {
         path: PATH.ORDER,
         element: <Order />,
-        loader: authLoader,
+        loader: checkNotLoggedIn,
       },
     ],
   },

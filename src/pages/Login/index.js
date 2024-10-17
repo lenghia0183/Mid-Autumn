@@ -13,47 +13,106 @@ import {
   signInWithPopup,
   FacebookAuthProvider,
 } from "firebase/auth";
+import { useLogin, useSocialLogin } from "../../service/https";
+import { useUser } from "../../context/userContext";
+import { useNavigate } from "react-router-dom";
+import { toast } from "react-toastify";
+import Backdrop from "../../components/BackDrop";
 
 function Login() {
   const { t } = useTranslation();
+  const { login } = useUser();
+  const navigate = useNavigate();
+
+  const { trigger: handleLogin, isMutating: isLoginLoading } = useLogin();
+  const { trigger: handleSocialLogin, isMutating: isSocialLoginLoading } =
+    useSocialLogin();
 
   const initialValues = {
     userName: "",
     password: "",
   };
 
-  const handleSubmit = (values) => {
-    console.log("Submitted values:", values);
-    // Xử lý gửi form ở đây
+  const handleSubmit = async (values) => {
+    const convertValue = {
+      email: values.userName,
+      password: values.password,
+    };
+
+    handleLogin(convertValue, {
+      onSuccess: (response) => {
+        if (response?.code === 200) {
+          toast.success("Đăng nhập thành công");
+          navigate(PATH.HOME);
+          login(response?.data?.user);
+        } else {
+          toast.error(response?.message);
+        }
+      },
+      onError: (error) => {
+        toast.error("Đăng nhập thất bại vui lòng thử lại");
+      },
+    });
   };
 
   const handleGoogleLogin = async () => {
-    console.log("handleGoogleLogin");
     const provider = new GoogleAuthProvider();
 
     try {
       const result = await signInWithPopup(auth, provider);
       const idToken = await result.user.getIdToken();
-      // console.log("itdToken", idToken);
 
-      // Xử lý logic lưu thông tin người dùng vào cơ sở dữ liệu của bạn tại đây (nếu cần)
-    } catch (error) {}
+      handleSocialLogin(idToken, {
+        onSuccess: (response) => {
+          if (response?.code === 200) {
+            toast.success("Đăng nhập thành công");
+            navigate(PATH.HOME);
+            login(response?.data?.user);
+          } else {
+            toast.error(response?.message);
+          }
+        },
+        onError: (error) => {
+          console.log("error", error);
+          toast.error("Đăng nhập thất bại vui lòng thử lại");
+        },
+      });
+    } catch (error) {
+      toast.error("Có lỗi xảy ra vui lòng thử lại");
+      console.log("error", error);
+    }
   };
 
   const handleFacebookLogin = async () => {
     const provider = new FacebookAuthProvider();
-    console.log("handleGoogleLogin");
     try {
       const result = await signInWithPopup(auth, provider);
       const idToken = await result.user.getIdToken();
-      // console.log("itdToken", idToken);
-
-      // Xử lý logic lưu thông tin người dùng vào cơ sở dữ liệu của bạn tại đây (nếu cần)
-    } catch (error) {}
+      handleSocialLogin(idToken, {
+        onSuccess: (response) => {
+          console.log("Login successful!", response);
+          if (response?.code === 200) {
+            toast.success("Đăng nhập thành công");
+            navigate(PATH.HOME);
+            login(response?.data?.user);
+          } else {
+            toast.error(response?.message);
+          }
+        },
+        onError: (error) => {
+          console.log("error", error);
+          toast.error("Đăng nhập thất bại vui lòng thử lại");
+        },
+      });
+    } catch (error) {
+      toast.error("Có lỗi xảy ra vui lòng thử lại");
+      console.log("error", error);
+    }
   };
 
   return (
     <>
+      <Backdrop open={isLoginLoading || isSocialLoginLoading} />
       <h2 className="text-[40px] text-dark font-medium">ĐĂNG NHẬP</h2>
 
       <Formik
