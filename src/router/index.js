@@ -20,6 +20,7 @@ import Order from "../pages/Order";
 import ContactUs from "../pages/Contact";
 import Checkout from "../pages/Checkout";
 import ProductDetail from "../pages/ProductDetail";
+import { authLoader } from "../loaders/authentications";
 
 const router = createBrowserRouter([
   // main layout
@@ -46,6 +47,7 @@ const router = createBrowserRouter([
       {
         path: PATH.CART,
         element: <Cart />,
+        loader: authLoader,
       },
       {
         path: PATH.CONTACT,
@@ -54,6 +56,7 @@ const router = createBrowserRouter([
       {
         path: PATH.CHECKOUT,
         element: <Checkout />,
+        loader: authLoader,
       },
       {
         path: PATH.TEST,
@@ -86,22 +89,27 @@ const router = createBrowserRouter([
       {
         path: PATH.PROFILE_EDIT,
         element: <ProfileEdit />,
+        loader: authLoader,
       },
       {
         path: PATH.CHANGE_PASSWORD,
         element: <ChangePassword />,
+        loader: authLoader,
       },
       {
         path: PATH.FAVORITE,
         element: <Favorite />,
+        loader: authLoader,
       },
       {
         path: PATH.VIEWED_PRODUCTS,
         element: <ViewedProduct />,
+        loader: authLoader,
       },
       {
         path: PATH.ORDER,
         element: <Order />,
+        loader: authLoader,
       },
     ],
   },
