@@ -9,6 +9,8 @@ import { PAGE_TITLE, PATH } from "../../constants/path";
 import { Form, Formik } from "formik";
 import { useQueryState } from "../../hooks/useQueryState";
 import useBreakpoint from "./../../hooks/useBreakpoint";
+import { useGetProduct } from "../../service/https";
+import Backdrop from "../../components/BackDrop";
 
 function Products() {
   const breadcrumbItems = [
@@ -27,6 +29,9 @@ function Products() {
       search: "",
     },
   });
+
+  const { data, isLoading } = useGetProduct();
+  console.log("items", data);
 
   const isLargerThanSm = useBreakpoint("sm");
 
@@ -128,68 +133,71 @@ function Products() {
   };
 
   return (
-    <div
-      style={{
-        backgroundImage: `url(${images.productPageBg})`,
-      }}
-    >
-      <Breadcrumb items={breadcrumbItems} />
-      <Formik
-        initialValues={initialValues}
-        onSubmit={(values) => {
-          console.log("products values", values);
-          setFilters({ ...values });
+    <>
+      <Backdrop open={isLoading} />
+      <div
+        style={{
+          backgroundImage: `url(${images.productPageBg})`,
         }}
       >
-        {({ setFieldValue, values }) => (
-          <Form>
-            <div className="container py-14">
-              <div className="grid grid-cols-12 gap-4">
-                {/* Phần lọc sản phẩm chiếm 3 cột */}
-                <div className="col-span-3 xl:block hidden">
-                  <ProductFilterSideBar
-                    values={values}
-                    setFieldValue={setFieldValue}
-                    brandList={brandList}
-                    categoryList={categoryList}
-                  />
-                </div>
-
-                {/* Phần hiển thị sản phẩm chiếm 9 cột */}
-                <div className="xl:col-span-9 col-span-full">
-                  <ProductFilterTopBar
-                    values={values}
-                    setFieldValue={setFieldValue}
-                  />
-
-                  {/* Danh sách sản phẩm */}
-                  <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-                    {items.map((item) => (
-                      <ItemCard key={item.id} product={item} />
-                    ))}
+        <Breadcrumb items={breadcrumbItems} />
+        <Formik
+          initialValues={initialValues}
+          onSubmit={(values) => {
+            console.log("products values", values);
+            setFilters({ ...values });
+          }}
+        >
+          {({ setFieldValue, values }) => (
+            <Form>
+              <div className="container py-14">
+                <div className="grid grid-cols-12 gap-4">
+                  {/* Phần lọc sản phẩm chiếm 3 cột */}
+                  <div className="col-span-3 xl:block hidden">
+                    <ProductFilterSideBar
+                      values={values}
+                      setFieldValue={setFieldValue}
+                      brandList={brandList}
+                      categoryList={categoryList}
+                    />
                   </div>
 
-                  <Pagination
-                    pageCount={20}
-                    width={isLargerThanSm ? undefined : "100%"}
-                    className="sm:ml-auto sm:mx-0 mx-auto mt-10"
-                  />
-                </div>
+                  {/* Phần hiển thị sản phẩm chiếm 9 cột */}
+                  <div className="xl:col-span-9 col-span-full">
+                    <ProductFilterTopBar
+                      values={values}
+                      setFieldValue={setFieldValue}
+                    />
 
-                <div className="col-span-full xl:hidden block">
-                  <ProductFilterSideBar
-                    values={values}
-                    setFieldValue={setFieldValue}
-                    brandList={brandList}
-                    categoryList={categoryList}
-                  />
+                    {/* Danh sách sản phẩm */}
+                    <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+                      {data?.data?.products?.map((item) => (
+                        <ItemCard key={item.id} product={item} />
+                      ))}
+                    </div>
+
+                    <Pagination
+                      pageCount={20}
+                      width={isLargerThanSm ? undefined : "100%"}
+                      className="sm:ml-auto sm:mx-0 mx-auto mt-10"
+                    />
+                  </div>
+
+                  <div className="col-span-full xl:hidden block">
+                    <ProductFilterSideBar
+                      values={values}
+                      setFieldValue={setFieldValue}
+                      brandList={brandList}
+                      categoryList={categoryList}
+                    />
+                  </div>
                 </div>
               </div>
-            </div>
-          </Form>
-        )}
-      </Formik>
-    </div>
+            </Form>
+          )}
+        </Formik>
+      </div>
+    </>
   );
 }
 

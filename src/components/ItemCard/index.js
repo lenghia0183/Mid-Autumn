@@ -5,9 +5,13 @@ import Icon from "../Icon";
 import IconButton from "../IconButton";
 import clsx from "clsx";
 import formatCurrency from "../../utils/formatCurrency";
+import { useNavigate } from "react-router-dom";
+import { PATH } from "../../constants/path";
 
 const ItemCard = ({ product, className }) => {
-  const { id, name, image, price, rating, discount, state, brand } = product;
+  const navigate = useNavigate();
+
+  const { _id, name, image, price, rating, discount, state, brand } = product;
 
   // Chuyển discount từ phần trăm sang giá trị phần trăm dưới dạng số thập phân
   const discountDecimal = discount / 100;
@@ -70,7 +74,7 @@ const ItemCard = ({ product, className }) => {
       )}
 
       {/* Image Container */}
-      <div className="relative aspect-square overflow-hidden">
+      <div className="relative aspect-square overflow-h_den">
         <Image
           src={image}
           alt={name}
@@ -102,6 +106,9 @@ const ItemCard = ({ product, className }) => {
             width="40px"
             height="40px"
             className="rounded-md px-2 py-1 bg-yellow-500"
+            onClick={() => {
+              navigate(PATH.PRODUCT_DETAIL.replace(":productId", _id));
+            }}
           />
           <IconButton
             iconName="heart"
