@@ -16,11 +16,22 @@ import { isArray } from "lodash";
 import { useAddProductToCart } from "../../service/https/cart";
 import { toast } from "react-toastify";
 import { validateStatus } from "../../utils/api";
+import { useAddProductToFavoriteList } from "./../../service/https/favorite";
 
 function ProductDetail() {
   const params = useParams();
-  const { data: itemDetail, isLoading } = useGetProductDetail(params.productId);
-  const { trigger: addProductToCart } = useAddProductToCart();
+  const {
+    data: itemDetail,
+    isLoading: isGetProductDetailLoading,
+    mutate: refreshGetProductDetail,
+  } = useGetProductDetail(params.productId);
+
+  const { trigger: addProductToCart, isMutating: isAddProductToCartLoading } =
+    useAddProductToCart();
+  const {
+    trigger: addProductToFavoriteList,
+    isMutating: isAddProductToFavoriteListLoading,
+  } = useAddProductToFavoriteList(params.productId);
   const productDetailBreadcrumbs = [
     {
       label: "Trang chủ",
@@ -34,9 +45,6 @@ function ProductDetail() {
       label: itemDetail?.categoryId?.name,
     },
   ];
-
-  console.log("itemDetail", itemDetail);
-
   const tagList = [
     {
       label: "Bánh trung thu",
@@ -52,6 +60,8 @@ function ProductDetail() {
     },
   ];
 
+  // console.log("itemDetail", itemDetail);
+
   const tabList = [
     { label: "Thông tin sản phẩm", value: "product-info" },
     { label: "Bình Luận", value: "product-info" },
@@ -59,12 +69,16 @@ function ProductDetail() {
 
   return (
     <>
-      <Backdrop open={isLoading} />
+      <Backdrop
+        open={
+          isGetProductDetailLoading ||
+          isAddProductToCartLoading ||
+          isAddProductToFavoriteListLoading
+        }
+      />
       <Formik
         initialValues={{ quantity: 1 }}
         onSubmit={(values) => {
-          console.log(values);
-
           const convertValues = {
             productId: itemDetail?._id,
             quantity: values.quantity,
@@ -140,7 +154,33 @@ function ProductDetail() {
                   </div>
                   <div className="flex gap-3">
                     <Button className="flex-shrink-0 text-xl">SO SÁNH</Button>
-                    <Button className="flex-shrink-0 text-xl">YÊU THÍCH</Button>
+                    <Button
+                      className="flex-shrink-0 text-xl"
+                      type="button"
+                      onClick={() => {
+                        addProductToFavoriteList(
+                          {},
+                          {
+                            onSuccess: (response) => {
+                              console.log(response);
+                              if (validateStatus(response.code)) {
+                                toast.success(response.message);
+                                refreshGetProductDetail();
+                              } else {
+                                toast.error(response?.message);
+                              }
+                            },
+                            onError: () => {
+                              toast.error(
+                                "Thêm sản phẩm vào giỏ hàng thất bại vui lòng thử lại"
+                              );
+                            },
+                          }
+                        );
+                      }}
+                    >
+                      {itemDetail?.isFavorite ? "BỎ YÊU THÍCH" : "YÊU THÍCH"}
+                    </Button>
                   </div>
                 </div>
 
