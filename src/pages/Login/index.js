@@ -44,7 +44,7 @@ function Login() {
         if (response?.code === 200) {
           toast.success("Đăng nhập thành công");
           navigate(PATH.HOME);
-          login(response?.data?.user);
+          login(response?.data);
         } else {
           toast.error(response?.message);
         }
@@ -67,7 +67,7 @@ function Login() {
           if (response?.code === 200) {
             toast.success("Đăng nhập thành công");
             navigate(PATH.HOME);
-            login(response?.data?.user);
+            login(response?.data);
           } else {
             toast.error(response?.message);
           }
@@ -94,7 +94,7 @@ function Login() {
           if (response?.code === 200) {
             toast.success("Đăng nhập thành công");
             navigate(PATH.HOME);
-            login(response?.data?.user);
+            login(response?.data);
           } else {
             toast.error(response?.message);
           }

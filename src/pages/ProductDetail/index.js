@@ -13,10 +13,14 @@ import { useGetProductDetail } from "../../service/https";
 import { useParams } from "react-router-dom";
 import Backdrop from "../../components/BackDrop";
 import { isArray } from "lodash";
+import { useAddProductToCart } from "../../service/https/cart";
+import { toast } from "react-toastify";
+import { validateStatus } from "../../utils/api";
 
 function ProductDetail() {
   const params = useParams();
   const { data: itemDetail, isLoading } = useGetProductDetail(params.productId);
+  const { trigger: addProductToCart } = useAddProductToCart();
   const productDetailBreadcrumbs = [
     {
       label: "Trang chủ",
@@ -60,6 +64,27 @@ function ProductDetail() {
         initialValues={{ quantity: 1 }}
         onSubmit={(values) => {
           console.log(values);
+
+          const convertValues = {
+            productId: itemDetail?._id,
+            quantity: values.quantity,
+          };
+
+          addProductToCart(convertValues, {
+            onSuccess: (response) => {
+              console.log(response);
+              if (validateStatus(response.code)) {
+                toast.success(response.message);
+              } else {
+                toast.error(response?.message);
+              }
+            },
+            onError: () => {
+              toast.error(
+                "Thêm sản phẩm vào giỏ hàng thất bại vui lòng thử lại"
+              );
+            },
+          });
         }}
       >
         <Form>

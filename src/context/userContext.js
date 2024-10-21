@@ -1,13 +1,8 @@
 import React, { createContext, useState, useContext, useEffect } from "react";
-
-const saveToLocalStorage = (key, value) => {
-  localStorage.setItem(key, JSON.stringify(value));
-};
-
-const getFromLocalStorage = (key) => {
-  const storedValue = localStorage.getItem(key);
-  return storedValue ? JSON.parse(storedValue) : null;
-};
+import {
+  getLocalStorageItem,
+  setLocalStorageItem,
+} from "../utils/localStorage";
 
 const UserContext = createContext();
 
@@ -18,13 +13,15 @@ export const UserProvider = ({ children }) => {
     isLoggedIn: false,
   });
 
-  const login = (userData) => {
+  const login = (data) => {
     setUser({
-      ...userData,
+      user: data?.user,
       isLoggedIn: true,
     });
 
-    saveToLocalStorage("user", userData);
+    setLocalStorageItem("user", data?.user);
+    setLocalStorageItem("token", data?.accessToken);
+    setLocalStorageItem("refreshToken", data?.refreshToken);
   };
 
   const logout = () => {
@@ -37,7 +34,7 @@ export const UserProvider = ({ children }) => {
   };
 
   useEffect(() => {
-    const userFromLocalStorage = getFromLocalStorage("user");
+    const userFromLocalStorage = getLocalStorageItem("user");
     if (userFromLocalStorage) {
       setUser({
         ...userFromLocalStorage,

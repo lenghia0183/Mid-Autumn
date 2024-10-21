@@ -3,6 +3,7 @@ import { validateStatus } from "../../utils/api";
 import { toast } from "react-toastify";
 import Cookies from "universal-cookie";
 import { CONFIG_COOKIES } from "../../constants";
+import { getLocalStorageItem } from "../../utils/localStorage";
 
 const cookies = new Cookies();
 const BASE_URL = process.env.REACT_APP_BASE_URL + "/api/";
@@ -31,7 +32,8 @@ export const createInstance = (baseURL, customHeaders = {}) => {
   // Add a request interceptor
   instance.interceptors.request.use(
     (config) => {
-      const token = localStorage.getItem("token"); // Lấy token từ localStorage
+      const token = getLocalStorageItem("token"); // Lấy token từ localStorage
+
       if (config.url !== REFRESH_TOKEN_URL && token) {
         config.headers["Authorization"] = `Bearer ${token}`;
       }
@@ -46,7 +48,6 @@ export const createInstance = (baseURL, customHeaders = {}) => {
   // Add a response interceptor
   instance.interceptors.response.use(
     (response) => {
-      console.log("response", response);
       if (validateStatus(response?.status)) {
         if (response?.config?.getHeaders) {
           return { data: response?.data, header: response?.headers }; // Trả về cả data và headers nếu được yêu cầu
@@ -59,7 +60,6 @@ export const createInstance = (baseURL, customHeaders = {}) => {
       }
     },
     (error) => {
-      console.log("error", error);
       const response = error.response;
       if (
         response?.status === 403 &&
@@ -119,10 +119,12 @@ const startLogout = () => {
   // Xóa token khỏi localStorage
   localStorage.removeItem("token");
   localStorage.removeItem("refreshToken");
+  localStorage.removeItem("user");
 
   // Xóa token khỏi cookies
   cookies.remove("token");
   cookies.remove("refreshToken");
+  cookies.remove("user");
 
   // Hiển thị thông báo đăng xuất (tùy chọn)
   toast.info("Bạn đã đăng xuất thành công.");
