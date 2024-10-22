@@ -90,7 +90,7 @@ function Login() {
       const idToken = await result.user.getIdToken();
       handleSocialLogin(idToken, {
         onSuccess: (response) => {
-          console.log("Login successful!", response);
+          // console.log("Login successful!", response);
           if (response?.code === 200) {
             toast.success("Đăng nhập thành công");
             navigate(PATH.HOME);
@@ -100,7 +100,7 @@ function Login() {
           }
         },
         onError: (error) => {
-          console.log("error", error);
+          // console.log("error", error);
           toast.error("Đăng nhập thất bại vui lòng thử lại");
         },
       });

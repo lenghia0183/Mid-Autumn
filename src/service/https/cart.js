@@ -11,6 +11,16 @@ export const useAddProductToCart = () => {
   return useSWRMutation(url, fetcher);
 };
 
+export const useDeleteCartDetail = () => {
+  let url = "v1/cart/me";
+  const fetcher = (url, { arg }) => {
+    url += `/${arg?.cartDetailId}`;
+    return api.delete(url, { cartId: arg?.cartId });
+  };
+
+  return useSWRMutation(url, fetcher);
+};
+
 export const useGetMyCart = () => {
   const url = "v1/cart/me";
   const fetcher = async (url, arg) => {

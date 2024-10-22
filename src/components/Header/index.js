@@ -16,7 +16,10 @@ import useChangeLanguage from "../../hooks/useChangeLanguage";
 import useBreakpoint from "./../../hooks/useBreakpoint";
 import formatCurrency from "../../utils/formatCurrency";
 import { useUser } from "../../context";
-import { useGetMyCart } from "../../service/https";
+import { useDeleteCartDetail, useGetMyCart } from "../../service/https";
+import { validateStatus } from "../../utils/api";
+import { toast } from "react-toastify";
+import Backdrop from "../BackDrop";
 
 const Header = ({ bgColor = "emerald", textColor = "white", className }) => {
   const containerRef = useRef();
@@ -24,10 +27,16 @@ const Header = ({ bgColor = "emerald", textColor = "white", className }) => {
   const isLargerThanSm = useBreakpoint("sm");
 
   const { user, logout } = useUser();
-  const { data } = useGetMyCart();
+  const {
+    data,
+    isLoading: isGetMyCartLoading,
+    isValidating: isGetMyCartValidating,
+    mutate: refreshGetMyCart,
+  } = useGetMyCart();
+  const { trigger: deleteCartDetail, isMutating: isDeleteCartDetailLoading } =
+    useDeleteCartDetail();
   const myCart = data || [];
-  console.log("myCart", myCart);
-  // console.log("user", user);
+  // console.log("myCart", myCart);
 
   const { bgColor: newBgColor } = useColorClasses({ bgColor });
   const { textColor: newTextColor } = useColorClasses({ textColor });
@@ -137,6 +146,26 @@ const Header = ({ bgColor = "emerald", textColor = "white", className }) => {
                       iconName="bin"
                       textColor="dark-500"
                       iconSize="1.5"
+                      onClick={() => {
+                        deleteCartDetail(
+                          { cartDetailId: cart?._id, cartId: myCart.id },
+                          {
+                            onSuccess: (response) => {
+                              if (validateStatus(response.code)) {
+                                toast.success(response.message);
+                                refreshGetMyCart();
+                              } else {
+                                toast.error(response?.message);
+                              }
+                            },
+                            onError: (error) => {
+                              toast.error(
+                                "Xóa sản phẩm khỏi giỏ hàng thất bại vui lòng thử lại"
+                              );
+                            },
+                          }
+                        );
+                      }}
                     />
                   </div>
                 );
@@ -246,214 +275,223 @@ const Header = ({ bgColor = "emerald", textColor = "white", className }) => {
   };
 
   return (
-    <header
-      className={clsx(
-        `top-0 z-[99999] w-full h-[110px] shadow-lg`,
-        newBgColor,
-        newTextColor,
-        className
-      )}
-    >
-      <div ref={containerRef} className="container relative h-full text-base">
-        {/* Navigation Menu */}
-        <nav
-          className="absolute top-1/2 -translate-y-1/2 space-x-4 text-base font-semibold xl:flex hidden"
-          style={{
-            left: padding.left,
-          }}
-        >
-          {navItems.map((item, index) => (
-            <NavLink
-              key={index}
-              to={item.path}
-              className={({ isActive }) =>
-                clsx(
-                  "flex items-center hover:text-yellow group duration-500",
-                  isActive && "text-yellow"
-                )
-              }
-            >
-              {t(item.label)}
-              {item?.isArrow && (
-                <Icon
-                  name="arrowDown"
-                  size="0.6em"
-                  strokeWidth={5}
-                  className="transition-transform transform group-hover:rotate-180 ml-1"
-                />
-              )}
-            </NavLink>
-          ))}
-        </nav>
-
-        <div
-          className="absolute left-0 top-1/2 -translate-y-1/2 xl:hidden"
-          style={{
-            left: padding.left,
-          }}
-        >
-          <IconButton
-            iconName="menu"
-            textColor="white"
-            width="30px"
-            height="30px"
-            textHoverColor="yellow"
-            onClick={() => {
-              setIsOpenNavDrawer(true);
+    <>
+      <Backdrop
+        open={
+          isGetMyCartLoading ||
+          isDeleteCartDetailLoading ||
+          isGetMyCartValidating
+        }
+      />
+      <header
+        className={clsx(
+          `top-0 z-[99999] w-full h-[110px] shadow-lg`,
+          newBgColor,
+          newTextColor,
+          className
+        )}
+      >
+        <div ref={containerRef} className="container relative h-full text-base">
+          {/* Navigation Menu */}
+          <nav
+            className="absolute top-1/2 -translate-y-1/2 space-x-4 text-base font-semibold xl:flex hidden"
+            style={{
+              left: padding.left,
             }}
-          />
-        </div>
-
-        {/* Logo Section */}
-        <div className="absolute left-1/2 top-1/2 -translate-y-1/2 -translate-x-1/2">
-          <Button to={PATH.HOME} className="hover:scale-110">
-            <Image
-              src={images.logo}
-              width="xl:w-[85px] 55px"
-              height="xl:h-[85px] 55px"
-            />
-          </Button>
-        </div>
-
-        <div
-          className="flex items-center absolute right-0 top-1/2 -translate-y-1/2 sm:space-x-2"
-          style={{
-            right: padding.right,
-          }}
-        >
-          {/* Contact Number */}
-          <Button
-            href="tel:0966859061"
-            className=" hover:text-yellow font-sourceSansPro font-semibold text-xl xl:flex hidden"
-            textColor="white"
-            startIcon={<Icon name="phone" size="1.5em" />}
           >
-            {t("shopInfo.phoneNumber")}
-          </Button>
-
-          {/* Search Button */}
-          <IconButton
-            className="sm:flex hidden"
-            iconName="search"
-            textColor="white"
-            iconSize="1.8"
-            textHoverColor="yellow"
-          />
-
-          {/* Profile Button */}
-          {user?.isLoggedIn ? (
-            <>
-              <IconButton
-                iconName="user"
-                textColor={
-                  pathname?.includes(PATH.PROFILE) ? "yellow" : "white"
+            {navItems.map((item, index) => (
+              <NavLink
+                key={index}
+                to={item.path}
+                className={({ isActive }) =>
+                  clsx(
+                    "flex items-center hover:text-yellow group duration-500",
+                    isActive && "text-yellow"
+                  )
                 }
-                iconSize="1.5"
-                textHoverColor="yellow"
-                to={PATH.PROFILE_EDIT}
-              />
+              >
+                {t(item.label)}
+                {item?.isArrow && (
+                  <Icon
+                    name="arrowDown"
+                    size="0.6em"
+                    strokeWidth={5}
+                    className="transition-transform transform group-hover:rotate-180 ml-1"
+                  />
+                )}
+              </NavLink>
+            ))}
+          </nav>
 
-              {/* Cart Button */}
-              <div className="relative flex items-center sm:ml-0 ml-2">
-                <div
-                  className={clsx(
-                    "absolute top-0 right-0 -translate-y-[30%] translate-x-[35%] w-[20px] h-[20px] flex items-center justify-center bg-yellow text-dark rounded-full",
-                    { hidden: myCart?.cartDetails?.length === 0 }
-                  )}
-                >
-                  {myCart?.cartDetails?.length}
-                </div>
-                <IconButton
-                  iconName="bag"
-                  textColor="white"
-                  iconSize="1.8"
-                  textHoverColor="yellow"
-                  onClick={handleOpenCartDrawer}
-                />
-              </div>
-            </>
-          ) : (
-            <>
-              <IconButton
-                className=""
-                iconName="login"
-                textColor={pathname === PATH.LOGIN ? "yellow" : "white"}
-                iconSize={isLargerThanSm ? "1.5" : "2"}
-                to={PATH.LOGIN}
-                textHoverColor="yellow"
-              />
-
-              <IconButton
-                className="sm:flex hidden"
-                iconName="signUp"
-                textColor={pathname === PATH.SIGN_UP ? "yellow" : "white"}
-                iconSize="1.8"
-                to={PATH.SIGN_UP}
-                textHoverColor="yellow"
-              />
-            </>
-          )}
-
-          {/* Language Options */}
-          <div className="flex gap-x-2 items-center h-fit sm:pl-4">
+          <div
+            className="absolute left-0 top-1/2 -translate-y-1/2 xl:hidden"
+            style={{
+              left: padding.left,
+            }}
+          >
             <IconButton
-              className="sm:flex hidden"
-              iconName="vietnamFlag"
-              width="35px"
+              iconName="menu"
+              textColor="white"
+              width="30px"
               height="30px"
-              onClick={() => handleLanguageChange("vi")}
-            />
-            <IconButton
-              className="sm:flex hidden"
-              iconName="chinaFlag"
-              width="35px"
-              height="30px"
-              onClick={() => handleLanguageChange("zh")}
-            />
-            <IconButton
-              className="sm:flex hidden"
-              iconName="japanFlag"
-              width="35px"
-              height="30px"
-              onClick={() => handleLanguageChange("jp")}
-            />
-            <IconButton
-              className="sm:flex hidden"
-              iconName="englandFlag"
-              width="35px"
-              height="30px"
-              onClick={() => handleLanguageChange("en")}
+              textHoverColor="yellow"
+              onClick={() => {
+                setIsOpenNavDrawer(true);
+              }}
             />
           </div>
+
+          {/* Logo Section */}
+          <div className="absolute left-1/2 top-1/2 -translate-y-1/2 -translate-x-1/2">
+            <Button to={PATH.HOME} className="hover:scale-110">
+              <Image
+                src={images.logo}
+                width="xl:w-[85px] 55px"
+                height="xl:h-[85px] 55px"
+              />
+            </Button>
+          </div>
+
+          <div
+            className="flex items-center absolute right-0 top-1/2 -translate-y-1/2 sm:space-x-2"
+            style={{
+              right: padding.right,
+            }}
+          >
+            {/* Contact Number */}
+            <Button
+              href="tel:0966859061"
+              className=" hover:text-yellow font-sourceSansPro font-semibold text-xl xl:flex hidden"
+              textColor="white"
+              startIcon={<Icon name="phone" size="1.5em" />}
+            >
+              {t("shopInfo.phoneNumber")}
+            </Button>
+
+            {/* Search Button */}
+            <IconButton
+              className="sm:flex hidden"
+              iconName="search"
+              textColor="white"
+              iconSize="1.8"
+              textHoverColor="yellow"
+            />
+
+            {/* Profile Button */}
+            {user?.isLoggedIn ? (
+              <>
+                <IconButton
+                  iconName="user"
+                  textColor={
+                    pathname?.includes(PATH.PROFILE) ? "yellow" : "white"
+                  }
+                  iconSize="1.5"
+                  textHoverColor="yellow"
+                  to={PATH.PROFILE_EDIT}
+                />
+
+                {/* Cart Button */}
+                <div className="relative flex items-center sm:ml-0 ml-2">
+                  <div
+                    className={clsx(
+                      "absolute top-0 right-0 -translate-y-[30%] translate-x-[35%] w-[20px] h-[20px] flex items-center justify-center bg-yellow text-dark rounded-full",
+                      { hidden: myCart?.cartDetails?.length === 0 }
+                    )}
+                  >
+                    {myCart?.cartDetails?.length}
+                  </div>
+                  <IconButton
+                    iconName="bag"
+                    textColor="white"
+                    iconSize="1.8"
+                    textHoverColor="yellow"
+                    onClick={handleOpenCartDrawer}
+                  />
+                </div>
+              </>
+            ) : (
+              <>
+                <IconButton
+                  className=""
+                  iconName="login"
+                  textColor={pathname === PATH.LOGIN ? "yellow" : "white"}
+                  iconSize={isLargerThanSm ? "1.5" : "2"}
+                  to={PATH.LOGIN}
+                  textHoverColor="yellow"
+                />
+
+                <IconButton
+                  className="sm:flex hidden"
+                  iconName="signUp"
+                  textColor={pathname === PATH.SIGN_UP ? "yellow" : "white"}
+                  iconSize="1.8"
+                  to={PATH.SIGN_UP}
+                  textHoverColor="yellow"
+                />
+              </>
+            )}
+
+            {/* Language Options */}
+            <div className="flex gap-x-2 items-center h-fit sm:pl-4">
+              <IconButton
+                className="sm:flex hidden"
+                iconName="vietnamFlag"
+                width="35px"
+                height="30px"
+                onClick={() => handleLanguageChange("vi")}
+              />
+              <IconButton
+                className="sm:flex hidden"
+                iconName="chinaFlag"
+                width="35px"
+                height="30px"
+                onClick={() => handleLanguageChange("zh")}
+              />
+              <IconButton
+                className="sm:flex hidden"
+                iconName="japanFlag"
+                width="35px"
+                height="30px"
+                onClick={() => handleLanguageChange("jp")}
+              />
+              <IconButton
+                className="sm:flex hidden"
+                iconName="englandFlag"
+                width="35px"
+                height="30px"
+                onClick={() => handleLanguageChange("en")}
+              />
+            </div>
+          </div>
         </div>
-      </div>
 
-      <DrawerMenu
-        renderTitle={renderTitleCartDrawer}
-        renderContent={renderContentCartDrawer}
-        handleClose={handleCloseCartDrawer}
-        handleOpen={handleOpenCartDrawer}
-        handleOverlayClick={handleCloseCartDrawer}
-        isOpen={isOpenCartDrawer}
-        position={isLargerThanSm ? "right" : "bottom"}
-        width={isLargerThanSm ? "350px" : "100%"}
-        borderColor="transparent"
-        bgColor="white"
-      />
+        <DrawerMenu
+          renderTitle={renderTitleCartDrawer}
+          renderContent={renderContentCartDrawer}
+          handleClose={handleCloseCartDrawer}
+          handleOpen={handleOpenCartDrawer}
+          handleOverlayClick={handleCloseCartDrawer}
+          isOpen={isOpenCartDrawer}
+          position={isLargerThanSm ? "right" : "bottom"}
+          width={isLargerThanSm ? "350px" : "100%"}
+          borderColor="transparent"
+          bgColor="white"
+        />
 
-      <DrawerMenu
-        renderTitle={renderTitleNavDrawer}
-        renderContent={renderContentNavBarDrawer}
-        handleOverlayClick={handleCloseNavDrawer}
-        handleClose={handleCloseNavDrawer}
-        handleOpen={handleOpenNavDrawer}
-        isOpen={isOpenNavDrawer}
-        position={isLargerThanSm ? "left" : "top"}
-        width={isLargerThanSm ? "350px" : "100%"}
-        borderColor="transparent"
-        bgColor="emerald"
-      />
-    </header>
+        <DrawerMenu
+          renderTitle={renderTitleNavDrawer}
+          renderContent={renderContentNavBarDrawer}
+          handleOverlayClick={handleCloseNavDrawer}
+          handleClose={handleCloseNavDrawer}
+          handleOpen={handleOpenNavDrawer}
+          isOpen={isOpenNavDrawer}
+          position={isLargerThanSm ? "left" : "top"}
+          width={isLargerThanSm ? "350px" : "100%"}
+          borderColor="transparent"
+          bgColor="emerald"
+        />
+      </header>
+    </>
   );
 };
 
