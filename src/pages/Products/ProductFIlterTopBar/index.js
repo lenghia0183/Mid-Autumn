@@ -8,18 +8,18 @@ const ProductFilterTopBar = ({ setFieldValue, values }) => {
   const priceOptions = [
     {
       label: "Giá: Tăng dần",
-      value: "desc",
+      value: "price:desc",
     },
     {
       label: "Giá: Giảm dần",
-      value: "asc",
+      value: "price:asc",
     },
   ];
 
   const displayOptions = [
     {
       label: "Mới nhất",
-      value: "newest",
+      value: "createdAt:desc",
     },
     {
       label: "Bán chạy nhất",
@@ -27,7 +27,7 @@ const ProductFilterTopBar = ({ setFieldValue, values }) => {
     },
     {
       label: "Dánh gía cao nhất",
-      value: "lowestPrice",
+      value: "ratings:desc",
     },
   ];
 
@@ -40,9 +40,9 @@ const ProductFilterTopBar = ({ setFieldValue, values }) => {
           height="50px"
           className={clsx("text-lg hover:text-dark hidden sm:block", {
             "bg-yellow text-dark hover:text-white":
-              values.displayOption === "newest",
+              values.displayOption === "createdAt:desc",
           })}
-          onClick={() => setFieldValue("displayOption", "newest")}
+          onClick={() => setFieldValue("displayOption", "createdAt:desc")}
         >
           Mới nhất
         </Button>
@@ -62,9 +62,9 @@ const ProductFilterTopBar = ({ setFieldValue, values }) => {
           height="50px"
           className={clsx("text-lg hover:text-dark  hidden sm:block", {
             "bg-yellow text-dark hover:text-white":
-              values.displayOption === "highestRating",
+              values.displayOption === "ratings:desc",
           })}
-          onClick={() => setFieldValue("displayOption", "highestRating")}
+          onClick={() => setFieldValue("displayOption", "ratings:desc")}
         >
           Đánh giá cao nhất
         </Button>
@@ -94,6 +94,7 @@ const ProductFilterTopBar = ({ setFieldValue, values }) => {
             isEqualValue={(opt, val) => {
               return val.value === opt.value;
             }}
+            getOp
           />
         </div>
       </div>

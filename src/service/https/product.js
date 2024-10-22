@@ -1,10 +1,10 @@
 import useSWR from "swr";
 import { api } from "../api";
 
-export const useGetProduct = () => {
+export const useGetProduct = (filters) => {
   const url = "v1/product";
-  const fetcher = (url, arg) => {
-    return api.get(url, arg);
+  const fetcher = (url) => {
+    return api.get(url, filters);
   };
 
   return useSWR(url, fetcher);

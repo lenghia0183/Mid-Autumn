@@ -17,14 +17,13 @@ const ProductFilterSideBar = ({
   manufacturerList,
 }) => {
   const ratings = [1, 2, 3, 4, 5];
-  console.log("manufacturerList", manufacturerList);
 
   return (
     <div className="space-y-4">
       {/* Tìm kiếm */}
       <div className="xl:h-[120px] h-fit flex items-center xl:mt-0 mt-10">
         <FormikTextField
-          name="search"
+          name="keyword"
           rightIcon={<Icon name="search" color="white" />}
           rightIconClassName="bg-emerald"
           label="Tìm kiếm"
@@ -147,7 +146,7 @@ const ProductFilterSideBar = ({
           {ratings
             .slice()
             .reverse()
-            .map((rating) => (
+            .map((rating, index) => (
               <label key={rating} className="flex items-center cursor-pointer">
                 <input
                   type="radio"

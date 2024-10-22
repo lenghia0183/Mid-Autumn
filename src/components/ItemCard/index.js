@@ -15,7 +15,6 @@ import Backdrop from "../BackDrop";
 
 const ItemCard = ({ product, className, refreshGetProduct }) => {
   const navigate = useNavigate();
-  console.log("product", product);
 
   const {
     _id,
@@ -35,8 +34,6 @@ const ItemCard = ({ product, className, refreshGetProduct }) => {
     trigger: addProductToFavoriteList,
     isMutating: isAddProductToFavoriteListLoading,
   } = useAddProductToFavoriteList(_id);
-
-  console.log("useAddProductToCart", useAddProductToCart());
 
   // Chuyển discount từ phần trăm sang giá trị phần trăm dưới dạng số thập phân
   const discountDecimal = discount / 100;

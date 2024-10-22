@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import images from "../../asset/images";
 import Breadcrumb from "../../components/Breadcrumb";
 import ItemCard from "../../components/ItemCard";
@@ -19,42 +19,50 @@ function Products() {
     { label: PAGE_TITLE.PRODUCT, to: PATH.PRODUCTS },
   ];
 
-  const { filters, setFilters } = useQueryState({
+  const { filters, setFilters, page } = useQueryState({
     filters: {
       rating: 1,
-      displayOption: "newest",
-      maxPrice: "",
-      minPrice: "",
+      displayOption: "createdAt:desc",
+      maxPrice: null,
+      minPrice: null,
       displayOptions: {},
-      price: {},
-      search: "",
+      price: null,
+      keyword: "",
     },
   });
 
-  const { data, isLoading, mutate: refreshGetProduct } = useGetProduct();
+  const {
+    data,
+    isLoading: isGetProductLoading,
+    isValidating: isGetProductValidating,
+    mutate: refreshGetProduct,
+  } = useGetProduct({
+    minPrice: filters.minPrice,
+    maxPrice: filters.maxPrice,
+    keyword: filters.keyword || "",
+    minRating: filters.rating,
+    categoryId: filters.category,
+    sortBy: filters?.price?.value
+      ? filters?.displayOption + "," + filters.price.value
+      : filters?.displayOption,
+    page: page,
+  });
   const { data: manufacturerList, isLoading: isGetManufacturerLoading } =
     useGetManufacturer();
   const { data: categoryList, isLoading: isGetCategoryLoading } =
     useGetCategory();
 
-  console.log("items", data);
-  console.log("manufacturerList", manufacturerList);
-  console.log("categoryList", categoryList);
+  // console.log("useGetProduct", useGetProduct());
+  // console.log("filters", filters);
+  // console.log("items", data);
+  // console.log("manufacturerList", manufacturerList);
+  // console.log("categoryList", categoryList);
+
+  useEffect(() => {
+    refreshGetProduct();
+  }, [filters, page]);
 
   const isLargerThanSm = useBreakpoint("sm");
-
-  // const [currentPage, setCurrentPage] = useState(0);
-
-  // const categoryList = [
-  //   { label: "Bánh trăng vàng cao cấp", image: images.popularDish2 },
-  //   { label: "Bánh nướng 2 trứng đb", image: images.popularDish1 },
-  //   { label: "Bánh xanh", image: images.popularDish3 },
-  //   { label: "Bánh trung thu OREO", image: images.childrenBanner1 },
-  //   { label: "Bánh nướng 1 trứng", image: images.home1 },
-  //   { label: "Bánh dẻo", image: images.home2 },
-  //   { label: "Bánh Lava trứng chảy", image: images.popularDish4 },
-  //   { label: "Hộp thu Young", image: images.popularDish3 },
-  // ];
 
   const initialValues = {
     ...filters,
@@ -62,7 +70,14 @@ function Products() {
 
   return (
     <>
-      <Backdrop open={isLoading} />
+      <Backdrop
+        open={
+          isGetCategoryLoading ||
+          isGetManufacturerLoading ||
+          isGetProductLoading ||
+          isGetProductValidating
+        }
+      />
       <div
         style={{
           backgroundImage: `url(${images.productPageBg})`,
@@ -109,7 +124,7 @@ function Products() {
                     </div>
 
                     <Pagination
-                      pageCount={20}
+                      pageCount={data?.data?.totalPage}
                       width={isLargerThanSm ? undefined : "100%"}
                       className="sm:ml-auto sm:mx-0 mx-auto mt-10"
                     />
