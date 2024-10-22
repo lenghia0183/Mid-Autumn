@@ -16,6 +16,7 @@ import useChangeLanguage from "../../hooks/useChangeLanguage";
 import useBreakpoint from "./../../hooks/useBreakpoint";
 import formatCurrency from "../../utils/formatCurrency";
 import { useUser } from "../../context";
+import { useGetMyCart } from "../../service/https";
 
 const Header = ({ bgColor = "emerald", textColor = "white", className }) => {
   const containerRef = useRef();
@@ -23,44 +24,15 @@ const Header = ({ bgColor = "emerald", textColor = "white", className }) => {
   const isLargerThanSm = useBreakpoint("sm");
 
   const { user, logout } = useUser();
-  console.log("user", user);
+  const { data } = useGetMyCart();
+  const myCart = data || [];
+  console.log("myCart", myCart);
+  // console.log("user", user);
 
   const { bgColor: newBgColor } = useColorClasses({ bgColor });
   const { textColor: newTextColor } = useColorClasses({ textColor });
   const [isOpenCartDrawer, setIsOpenCartDrawer] = useState(false);
   const [isOpenNavDrawer, setIsOpenNavDrawer] = useState(false);
-
-  const cartItems = [
-    {
-      image: images.popularDish1,
-      name: "Bánh trung thu trang vàng hoàng kim, Bánh trung thu trang vàng hoàng kim, Bánh trung thu trang vàng hoàng kim, Bánh trung thu trang vàng hoàng kim",
-      quantity: 1,
-      price: 4800000,
-    },
-    {
-      image: images.popularDish2,
-      name: "Bánh trung thu 2 trứng đặc biệt",
-      quantity: 2,
-      price: 1650000,
-    },
-    {
-      image: images.popularDish1,
-      name: "Bánh trung thu trang vàng hoàng kim",
-      quantity: 1,
-      price: 4800000,
-    },
-    {
-      image: images.popularDish2,
-      name: "Bánh trung thu 2 trứng đặc biệt",
-      quantity: 2,
-      price: 1650000,
-    },
-  ];
-
-  const totalAmount = cartItems.reduce(
-    (total, item) => total + item.price * item.quantity,
-    0
-  );
 
   const { pathname } = useLocation();
 
@@ -139,25 +111,25 @@ const Header = ({ bgColor = "emerald", textColor = "white", className }) => {
     return (
       <div className="p-4 pt-0">
         <div className="text-dark">
-          {cartItems?.length > 0 ? (
+          {myCart?.cartDetails?.length > 0 ? (
             <div>
-              {cartItems.map((item) => {
+              {myCart?.cartDetails.map((cart) => {
                 return (
                   <div className="flex items-start gap-2 p-3 border-t border-b border-dashed border-gray-300">
                     <Image
-                      src={item?.image}
+                      src={cart?.productId?.images[0]}
                       width="100px"
                       height="100px"
                       className="border border-gray-300 rounded-md"
                     />
                     <div>
                       <p className="text-lg font-medium line-clamp-2">
-                        {item?.name}
+                        {cart?.productId?.name}
                       </p>
                       <p>
-                        {item?.quantity} X{" "}
+                        {cart?.quantity} X{" "}
                         <span className="font-medium">
-                          {formatCurrency(item?.price)}
+                          {formatCurrency(cart?.productId?.price)}
                         </span>
                       </p>
                     </div>
@@ -182,7 +154,7 @@ const Header = ({ bgColor = "emerald", textColor = "white", className }) => {
             {t("cart.total")}
           </div>
           <div className="text-crimson text-xl font-medium">
-            {formatCurrency(totalAmount)}
+            {formatCurrency(myCart?.cartTotalMoney)}
           </div>
         </div>
 
@@ -383,8 +355,13 @@ const Header = ({ bgColor = "emerald", textColor = "white", className }) => {
 
               {/* Cart Button */}
               <div className="relative flex items-center sm:ml-0 ml-2">
-                <div className="absolute top-0 right-0 -translate-y-[30%] translate-x-[35%] w-[20px] h-[20px] flex items-center justify-center bg-yellow text-dark rounded-full">
-                  {cartItems?.length}
+                <div
+                  className={clsx(
+                    "absolute top-0 right-0 -translate-y-[30%] translate-x-[35%] w-[20px] h-[20px] flex items-center justify-center bg-yellow text-dark rounded-full",
+                    { hidden: myCart?.cartDetails?.length === 0 }
+                  )}
+                >
+                  {myCart?.cartDetails?.length}
                 </div>
                 <IconButton
                   iconName="bag"
