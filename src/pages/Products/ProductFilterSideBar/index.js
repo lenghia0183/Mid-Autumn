@@ -14,9 +14,10 @@ const ProductFilterSideBar = ({
   values,
   setFieldValue,
   categoryList,
-  brandList,
+  manufacturerList,
 }) => {
   const ratings = [1, 2, 3, 4, 5];
+  console.log("manufacturerList", manufacturerList);
 
   return (
     <div className="space-y-4">
@@ -41,24 +42,24 @@ const ProductFilterSideBar = ({
         <Divider color="dark-300" marginTop="10px" />
 
         <Accordion minHeight="240px" buttonClassName="text-emerald">
-          {categoryList.map(({ label, image }) => (
+          {categoryList?.map(({ name, image, _id }) => (
             <div
-              key={label}
+              key={_id}
               onClick={() => {
-                setFieldValue("category", label);
+                setFieldValue("category", _id);
               }}
               className="cursor-pointer"
             >
               <div className="flex items-center gap-3 p-2">
                 <div className="w-[30px] h-[30px]">
-                  <Image src={image} alt={label} />
+                  <Image src={image} alt={name} />
                 </div>
                 <p
                   className={clsx("text-lg font-normal", {
-                    "text-yellow": values.category === label,
+                    "text-yellow": values.category === _id,
                   })}
                 >
-                  {label}
+                  {name}
                 </p>
               </div>
               <Divider color="white-100" />
@@ -126,8 +127,8 @@ const ProductFilterSideBar = ({
 
         <Accordion minHeight="180px" buttonClassName="text-emerald">
           <div className="mt-3 ml-2">
-            {brandList.map(({ name, code }) => (
-              <FormikCheckBox key={code} label={name} name={code} />
+            {manufacturerList?.map(({ name, _id }) => (
+              <FormikCheckBox key={_id} label={name} name={_id} />
             ))}
           </div>
         </Accordion>
