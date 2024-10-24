@@ -26,6 +26,11 @@ import validationSchema from "./schema";
 import { useTranslation } from "react-i18next";
 import { TEXTFIELD_ALLOW } from "../../constants";
 import useBreakpoint from "../../hooks/useBreakpoint";
+import { useGetMyCart } from "../../service/https";
+import { useAddOrder } from "../../service/https/checkout";
+import { validateStatus } from "../../utils/api";
+import { toast } from "react-toastify";
+import { useNavigate } from "react-router-dom";
 
 function Checkout() {
   const { t } = useTranslation();
@@ -33,6 +38,9 @@ function Checkout() {
   const formRef = useRef();
 
   const [values, setValues] = useState({});
+  const { trigger: addOrder, isMutating: isAddOrderLoading } = useAddOrder();
+
+  const navigate = useNavigate();
 
   const breadcrumbCheckout = [
     {
@@ -45,57 +53,15 @@ function Checkout() {
     },
   ];
 
-  const items = [
-    {
-      image: images.popularDish1,
-      name: "Bánh trung thu trang vàng hoàng kim",
-      quantity: 1,
-      price: 4800000,
-    },
-    {
-      image: images.popularDish2,
-      name: "Bánh trung thu 2 trứng đặc biệt",
-      quantity: 2,
-      price: 1650000,
-    },
-    {
-      image: images.popularDish3,
-      name: "Bánh trung thu đặc biệt",
-      quantity: 2,
-      price: 1650000,
-    },
-    {
-      image: images.popularDish4,
-      name: "Bánh trung thu siêu ngon",
-      quantity: 2,
-      price: 1650000,
-    },
-    {
-      image: images.popularDish1,
-      name: "Bánh trung thu trang vàng hoàng kim",
-      quantity: 1,
-      price: 4800000,
-    },
-    {
-      image: images.popularDish2,
-      name: "Bánh trung thu 2 trứng đặc biệt",
-      quantity: 2,
-      price: 1650000,
-    },
-    {
-      image: images.popularDish3,
-      name: "Bánh trung thu đặc biệt",
-      quantity: 2,
-      price: 1650000,
-    },
-    {
-      image: images.popularDish4,
-      name: "Bánh trung thu siêu ngon",
-      quantity: 2,
-      price: 1650000,
-    },
-  ];
+  const {
+    data,
+    isLoading: isGetMyCartLoading,
+    isValidating: isGetMyCartValidating,
+    mutate: refreshGetMyCart,
+  } = useGetMyCart();
 
+  console.log(data);
+  const items = data?.cartDetails || [];
   const initialValues = {
     buyerName: "",
     buyerEmail: "",
@@ -106,12 +72,10 @@ function Checkout() {
     district: null,
     ward: null,
     street: "",
-    shipPrice: null,
-    itemTotalPrice: items.reduce((accumulator, item) => {
-      return accumulator + item.quantity * item.price;
-    }, 0),
+    shippingFee: null,
+    itemTotalPrice: data?.cartTotalMoney || 0,
     total: 0,
-    method: "ghtk",
+    method: "ghn",
     note: "",
   };
 
@@ -149,7 +113,7 @@ function Checkout() {
         });
 
         if (servicePrice && servicePrice.data) {
-          setFieldValue("shipPrice", servicePrice.data.total);
+          setFieldValue("shippingFee", servicePrice.data.total);
         }
       };
 
@@ -170,6 +134,53 @@ function Checkout() {
         onSubmit={(values) => {
           // Handle form submission
           console.log("Submitted values", values);
+          const convertValue = {
+            cartId: data?.id,
+            buyerName: values?.buyerName,
+            buyerEmail: values?.buyerEmail,
+            buyerPhone: values?.buyerPhone,
+            recipientName: values?.recipientName,
+            recipientPhone: values?.recipientPhone,
+            shippingFee: values?.shippingFee,
+            paymentMethod: values?.paymentMethod === "COD" ? "COD" : "Bank",
+            paymentGateway:
+              values?.paymentMethod !== "COD" ? values?.paymentMethod : "",
+            address: {
+              province: {
+                provinceId: values?.province?.ProvinceID,
+                provinceName: values?.province?.ProvinceName,
+              },
+              district: {
+                districtId: values?.district?.DistrictID,
+                districtName: values?.district?.DistrictName,
+              },
+              ward: {
+                wardCode: values?.ward?.WardCode,
+                wardName: values?.ward?.WardName,
+              },
+              street: values?.street,
+            },
+            note: values?.note,
+          };
+
+          addOrder(convertValue, {
+            onSuccess: (response) => {
+              console.log(response);
+              if (validateStatus(response?.code)) {
+                toast.success(response?.message);
+                window.open(response?.data?.payUrl, "_blank");
+                navigate(PATH.HOME);
+              } else {
+                toast.success(response?.message);
+                navigate(PATH.HOME);
+              }
+            },
+            onError: () => {
+              toast.success(
+                "Có lỗi xảy ra trong quá trình tạo đơn hàng vui lòng thử lại sau"
+              );
+            },
+          });
         }}
       >
         {({ resetForm, values, errors, setFieldValue }) => {
@@ -276,7 +287,7 @@ function Checkout() {
                             onChange={() => {
                               setFieldValue("district", null);
                               setFieldValue("ward", null);
-                              setFieldValue("shipPrice", null);
+                              setFieldValue("shippingFee", null);
                             }}
                             autoFetch={false}
                             filterActive={true}
@@ -302,7 +313,7 @@ function Checkout() {
                             }
                             onChange={() => {
                               setFieldValue("ward", null);
-                              setFieldValue("shipPrice", null);
+                              setFieldValue("shippingFee", null);
                             }}
                             disabled={!values?.province}
                             asyncRequestDeps="province"
@@ -329,7 +340,7 @@ function Checkout() {
                               opt?.WardCode === val?.WardCode
                             }
                             onChange={() => {
-                              setFieldValue("shipPrice", null);
+                              setFieldValue("shippingFee", null);
                             }}
                             autoFetch={false}
                             disabled={!values?.district}
@@ -347,8 +358,8 @@ function Checkout() {
                         </div>
 
                         {/* Đơn vị giao hàng */}
-                        <div className="md:col-span-6 col-span-full flex flex-col sm:gap-y-12 gap-y-6">
-                          <p className="text-dark text-xl font-medium sm:mt-14 mt-0">
+                        <div className="md:col-span-6 col-span-full flex flex-col">
+                          <p className="text-dark text-xl font-medium mt-0">
                             ĐƠN VỊ GIAO HÀNG
                           </p>
 
@@ -356,7 +367,7 @@ function Checkout() {
                             name="method"
                             className="flex flex-col"
                           >
-                            <FormikRadio
+                            {/* <FormikRadio
                               value="ghtk"
                               hideInput={true}
                               label={
@@ -384,7 +395,7 @@ function Checkout() {
                                   />
                                 </div>
                               }
-                            />
+                            /> */}
 
                             <FormikRadio
                               value="ghn"
@@ -401,7 +412,7 @@ function Checkout() {
                                     <p>
                                       Giao hàng tận nơi có phí -{" "}
                                       <span className="font-semibold">
-                                        {formatCurrency(values?.shipPrice)}
+                                        {formatCurrency(values?.shippingFee)}
                                       </span>
                                     </p>
                                     <p className="text-crimson font-medium">
@@ -435,7 +446,7 @@ function Checkout() {
                     <div className="grid grid-cols-12 gap-5 items-start mt-6 shadow-lg px-4 pb-10 rounded-sm">
                       <FormikRadio
                         className="xl:col-span-6 col-span-full"
-                        value="cod"
+                        value="COD"
                         name="paymentMethod"
                         labelClassName="w-full"
                         label={
@@ -455,7 +466,7 @@ function Checkout() {
                         <div className="flex flex-col bg-gray-100 px-4 mt-5">
                           <FormikRadio
                             name="paymentMethod"
-                            value="momo"
+                            value="MoMo"
                             labelClassName="w-full"
                             label={
                               <div>
@@ -472,9 +483,10 @@ function Checkout() {
                             }
                           />
 
-                          <FormikRadio
+                          {/* <FormikRadio
                             name="paymentMethod"
                             value="logoVnpay"
+                            disabled
                             labelClassName="w-full"
                             label={
                               <div>
@@ -490,11 +502,11 @@ function Checkout() {
                                 <Divider />
                               </div>
                             }
-                          />
+                          /> */}
 
                           <FormikRadio
                             name="paymentMethod"
-                            value="logoZaloPay"
+                            value="ZaloPay"
                             labelClassName="w-full"
                             label={
                               <div className="flex items-center justify-between py-4 text-base text-dark ">
@@ -542,18 +554,18 @@ function Checkout() {
                           <div>
                             <div className="flex justify-between items-start py-3">
                               <Image
-                                src={item?.image}
+                                src={item?.productId?.images[0]}
                                 width="70px"
                                 height="70px"
                               />
                               <p className="w-1/2 text-lg font-medium text-left text-dark">
-                                {item?.name}
+                                {item?.productId?.name}
                               </p>
                               <p className="text-lg text-crimson">
                                 {item?.quantity} x
                               </p>
                               <p className="text-lg text-crimson">
-                                {formatCurrency(item?.price)}
+                                {formatCurrency(item?.productId?.price)}
                               </p>
                             </div>
                             <Divider color="dark-200" borderStyle="dashed" />
@@ -567,7 +579,7 @@ function Checkout() {
                       <div>
                         <LabelValue
                           label={"Tổng tiền hàng"}
-                          value={formatCurrency(values?.itemTotalPrice)}
+                          value={formatCurrency(data?.cartTotalMoney)}
                           className="justify-between"
                           labelClassName="text-xl !font-normal text-gray-500"
                           valueClassName="text-2xl !font-normal text-crimson"
@@ -582,7 +594,7 @@ function Checkout() {
                       <div>
                         <LabelValue
                           label={"Phí vận chuyển"}
-                          value={formatCurrency(values?.shipPrice)}
+                          value={formatCurrency(values?.shippingFee)}
                           className="justify-between"
                           labelClassName="text-xl !font-normal text-gray-500"
                           valueClassName="text-2xl !font-normal text-crimson"
@@ -598,7 +610,7 @@ function Checkout() {
                         <LabelValue
                           label={"Tạm Tính"}
                           value={formatCurrency(
-                            values?.shipPrice + values?.itemTotalPrice
+                            values?.shippingFee + data?.cartTotalMoney
                           )}
                           className="justify-between"
                           labelClassName="text-xl !font-normal text-gray-500"
@@ -615,7 +627,7 @@ function Checkout() {
                         <LabelValue
                           label={"Thành tiền"}
                           value={formatCurrency(
-                            values?.shipPrice + values?.itemTotalPrice
+                            values?.shippingFee + data?.cartTotalMoney
                           )}
                           className="justify-between"
                           labelClassName="text-xl"
