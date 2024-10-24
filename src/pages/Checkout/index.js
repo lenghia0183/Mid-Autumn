@@ -31,6 +31,7 @@ import { useAddOrder } from "../../service/https/checkout";
 import { validateStatus } from "../../utils/api";
 import { toast } from "react-toastify";
 import { useNavigate } from "react-router-dom";
+import Backdrop from "../../components/BackDrop";
 
 function Checkout() {
   const { t } = useTranslation();
@@ -122,252 +123,257 @@ function Checkout() {
   }, [values?.province, values?.district, values?.ward]);
 
   return (
-    <main className="bg-white">
-      <Breadcrumb items={breadcrumbCheckout} />
-      <Formik
-        initialValues={initialValues}
-        validationSchema={validationSchema(t)}
-        innerRef={(f) => {
-          formRef.current = f;
-          setValues(f?.values);
-        }}
-        onSubmit={(values) => {
-          // Handle form submission
-          console.log("Submitted values", values);
-          const convertValue = {
-            cartId: data?.id,
-            buyerName: values?.buyerName,
-            buyerEmail: values?.buyerEmail,
-            buyerPhone: values?.buyerPhone,
-            recipientName: values?.recipientName,
-            recipientPhone: values?.recipientPhone,
-            shippingFee: values?.shippingFee,
-            paymentMethod: values?.paymentMethod === "COD" ? "COD" : "Bank",
-            paymentGateway:
-              values?.paymentMethod !== "COD" ? values?.paymentMethod : "",
-            address: {
-              province: {
-                provinceId: values?.province?.ProvinceID,
-                provinceName: values?.province?.ProvinceName,
-              },
-              district: {
-                districtId: values?.district?.DistrictID,
-                districtName: values?.district?.DistrictName,
-              },
-              ward: {
-                wardCode: values?.ward?.WardCode,
-                wardName: values?.ward?.WardName,
-              },
-              street: values?.street,
-            },
-            note: values?.note,
-          };
+    <>
+      <Backdrop
+        open={isAddOrderLoading || isGetMyCartLoading || isGetMyCartValidating}
+      />
 
-          addOrder(convertValue, {
-            onSuccess: (response) => {
-              console.log(response);
-              if (validateStatus(response?.code)) {
-                toast.success(response?.message);
-                window.open(response?.data?.payUrl, "_blank");
-                navigate(PATH.HOME);
-              } else {
-                toast.success(response?.message);
-                navigate(PATH.HOME);
-              }
-            },
-            onError: () => {
-              toast.success(
-                "Có lỗi xảy ra trong quá trình tạo đơn hàng vui lòng thử lại sau"
-              );
-            },
-          });
-        }}
-      >
-        {({ resetForm, values, errors, setFieldValue }) => {
-          return (
-            <Form>
-              <div className="container my-14 bg-white-100">
-                <h2 className="text-dark text-[35px] font-semibold text-center p-5">
-                  THANH TOÁN
-                </h2>
-                <Divider marginBottom="20px" color="dark-300" />
+      <main className="bg-white">
+        <Breadcrumb items={breadcrumbCheckout} />
+        <Formik
+          initialValues={initialValues}
+          validationSchema={validationSchema(t)}
+          innerRef={(f) => {
+            formRef.current = f;
+            setValues(f?.values);
+          }}
+          onSubmit={(values) => {
+            // Handle form submission
+            console.log("Submitted values", values);
+            const convertValue = {
+              cartId: data?.id,
+              buyerName: values?.buyerName,
+              buyerEmail: values?.buyerEmail,
+              buyerPhone: values?.buyerPhone,
+              recipientName: values?.recipientName,
+              recipientPhone: values?.recipientPhone,
+              shippingFee: values?.shippingFee,
+              paymentMethod: values?.paymentMethod === "COD" ? "COD" : "Bank",
+              paymentGateway:
+                values?.paymentMethod !== "COD" ? values?.paymentMethod : "",
+              address: {
+                province: {
+                  provinceId: values?.province?.ProvinceID,
+                  provinceName: values?.province?.ProvinceName,
+                },
+                district: {
+                  districtId: values?.district?.DistrictID,
+                  districtName: values?.district?.DistrictName,
+                },
+                ward: {
+                  wardCode: values?.ward?.WardCode,
+                  wardName: values?.ward?.WardName,
+                },
+                street: values?.street,
+              },
+              note: values?.note,
+            };
 
-                <div className="grid grid-cols-12 gap-1">
-                  {/* left column */}
-                  <div className="xl:col-span-7 col-span-full p-5">
-                    <p className="flex items-center gap-2 text-xl font-semibold text-dark">
-                      <Icon name="locationEmpty" size="1.3em" color="dark" />
-                      <p>THÔNG TIN KHÁCH HÀNG</p>
-                    </p>
+            addOrder(convertValue, {
+              onSuccess: (response) => {
+                console.log(response);
+                if (validateStatus(response?.code)) {
+                  toast.success(response?.message);
+                  window.open(response?.data?.payUrl, "_blank");
+                  navigate(PATH.HOME);
+                } else {
+                  toast.success(response?.message);
+                  navigate(PATH.HOME);
+                }
+              },
+              onError: () => {
+                toast.success(
+                  "Có lỗi xảy ra trong quá trình tạo đơn hàng vui lòng thử lại sau"
+                );
+              },
+            });
+          }}
+        >
+          {({ resetForm, values, errors, setFieldValue }) => {
+            return (
+              <Form>
+                <div className="container my-14 bg-white-100">
+                  <h2 className="text-dark text-[35px] font-semibold text-center p-5">
+                    THANH TOÁN
+                  </h2>
+                  <Divider marginBottom="20px" color="dark-300" />
 
-                    <div className="shadow-lg p-4">
-                      <p className=" text-xl font-medium text-dark">
-                        NGƯỜI MUA HÀNG
+                  <div className="grid grid-cols-12 gap-1">
+                    {/* left column */}
+                    <div className="xl:col-span-7 col-span-full p-5">
+                      <p className="flex items-center gap-2 text-xl font-semibold text-dark">
+                        <Icon name="locationEmpty" size="1.3em" color="dark" />
+                        <p>THÔNG TIN KHÁCH HÀNG</p>
                       </p>
 
-                      {/* Thông tin người mua hàng */}
-                      <div className="grid grid-cols-12 gap-7 gap-y-11 mt-10 ">
-                        <FormikTextField
-                          className="sm:col-span-6 col-span-full"
-                          name="buyerName"
-                          label="Họ Và Tên"
-                          required
-                        />
-
-                        <FormikTextField
-                          className="sm:col-span-6 col-span-full"
-                          name="buyerEmail"
-                          label="Email"
-                          required
-                        />
-
-                        <FormikTextField
-                          className="sm:col-span-6 col-span-full"
-                          name="buyerPhone"
-                          label="Điện Thoại"
-                          allow={TEXTFIELD_ALLOW.NUMERIC}
-                          required
-                        />
-                      </div>
-
-                      <div>
-                        <p className="text-dark text-xl font-medium mt-14">
-                          NGƯỜI NHẬN HÀNG
+                      <div className="shadow-lg p-4">
+                        <p className=" text-xl font-medium text-dark">
+                          NGƯỜI MUA HÀNG
                         </p>
-                        {/* Thông tin người nhận hàng */}
+
+                        {/* Thông tin người mua hàng */}
                         <div className="grid grid-cols-12 gap-7 gap-y-11 mt-10 ">
                           <FormikTextField
                             className="sm:col-span-6 col-span-full"
-                            name="recipientName"
+                            name="buyerName"
                             label="Họ Và Tên"
                             required
                           />
 
                           <FormikTextField
                             className="sm:col-span-6 col-span-full"
-                            name="recipientPhone"
+                            name="buyerEmail"
+                            label="Email"
+                            required
+                          />
+
+                          <FormikTextField
+                            className="sm:col-span-6 col-span-full"
+                            name="buyerPhone"
                             label="Điện Thoại"
                             allow={TEXTFIELD_ALLOW.NUMERIC}
                             required
                           />
-
-                          <Button
-                            type="button"
-                            variant="text"
-                            textColor="dark"
-                            textHoverColor="yellow"
-                            bgHoverColor="transparent"
-                            className="-mt-4 col-span-12"
-                            size="zeroPadding"
-                            startIcon={<Icon name="copy" size="1em" />}
-                          >
-                            Sử dụng thông tin người mua hàng
-                          </Button>
-                        </div>
-                      </div>
-
-                      {/* Địa chỉ và phương thức giao hàng*/}
-                      <div className="grid grid-cols-12 gap-7 gap-y-11 sm:mt-10 mt-6">
-                        {/* Địa chi  */}
-                        <div className="md:col-span-6 col-span-full flex flex-col gap-y-12">
-                          <p className="text-dark text-xl font-medium">
-                            ĐỊA CHỈ NHẬN HÀNG
-                          </p>
-                          <FormikAutocomplete
-                            name="province"
-                            label="Tỉnh/Thành phô"
-                            asyncRequest={getProvinceDataTest}
-                            asyncRequestHelper={(res) => {
-                              return res?.data;
-                            }}
-                            getOptionsLabel={(opt) => opt?.ProvinceName}
-                            isEqualValue={(opt, val) =>
-                              opt?.ProvinceID === val?.ProvinceID
-                            }
-                            onChange={() => {
-                              setFieldValue("district", null);
-                              setFieldValue("ward", null);
-                              setFieldValue("shippingFee", null);
-                            }}
-                            autoFetch={false}
-                            filterActive={true}
-                            required
-                          />
-
-                          <FormikAutocomplete
-                            name="district"
-                            label="Quận/Huyện"
-                            asyncRequest={() => {
-                              return getDistrictDataTest(
-                                values?.province?.ProvinceID
-                              );
-                            }}
-                            asyncRequestHelper={(res) => {
-                              return res?.data;
-                            }}
-                            getOptionsLabel={(opt) => {
-                              return opt?.DistrictName;
-                            }}
-                            isEqualValue={(opt, val) =>
-                              opt?.DistrictID === val?.DistrictID
-                            }
-                            onChange={() => {
-                              setFieldValue("ward", null);
-                              setFieldValue("shippingFee", null);
-                            }}
-                            disabled={!values?.province}
-                            asyncRequestDeps="province"
-                            autoFetch={false}
-                            filterActive={true}
-                            required
-                          />
-
-                          <FormikAutocomplete
-                            name="ward"
-                            label="Phường/Xã"
-                            asyncRequest={() => {
-                              return getWardDataTest(
-                                values?.district?.DistrictID
-                              );
-                            }}
-                            asyncRequestHelper={(res) => {
-                              return res?.data;
-                            }}
-                            getOptionsLabel={(opt) => {
-                              return opt?.WardName;
-                            }}
-                            isEqualValue={(opt, val) =>
-                              opt?.WardCode === val?.WardCode
-                            }
-                            onChange={() => {
-                              setFieldValue("shippingFee", null);
-                            }}
-                            autoFetch={false}
-                            disabled={!values?.district}
-                            asyncRequestDeps="district"
-                            filterActive={true}
-                            required
-                          />
-
-                          <FormikTextArea
-                            className="sm:hidden block"
-                            name="street"
-                            label="Địa chỉ"
-                            required
-                          />
                         </div>
 
-                        {/* Đơn vị giao hàng */}
-                        <div className="md:col-span-6 col-span-full flex flex-col">
-                          <p className="text-dark text-xl font-medium mt-0">
-                            ĐƠN VỊ GIAO HÀNG
+                        <div>
+                          <p className="text-dark text-xl font-medium mt-14">
+                            NGƯỜI NHẬN HÀNG
                           </p>
+                          {/* Thông tin người nhận hàng */}
+                          <div className="grid grid-cols-12 gap-7 gap-y-11 mt-10 ">
+                            <FormikTextField
+                              className="sm:col-span-6 col-span-full"
+                              name="recipientName"
+                              label="Họ Và Tên"
+                              required
+                            />
 
-                          <FormikRadioGroup
-                            name="method"
-                            className="flex flex-col"
-                          >
-                            {/* <FormikRadio
+                            <FormikTextField
+                              className="sm:col-span-6 col-span-full"
+                              name="recipientPhone"
+                              label="Điện Thoại"
+                              allow={TEXTFIELD_ALLOW.NUMERIC}
+                              required
+                            />
+
+                            <Button
+                              type="button"
+                              variant="text"
+                              textColor="dark"
+                              textHoverColor="yellow"
+                              bgHoverColor="transparent"
+                              className="-mt-4 col-span-12"
+                              size="zeroPadding"
+                              startIcon={<Icon name="copy" size="1em" />}
+                            >
+                              Sử dụng thông tin người mua hàng
+                            </Button>
+                          </div>
+                        </div>
+
+                        {/* Địa chỉ và phương thức giao hàng*/}
+                        <div className="grid grid-cols-12 gap-7 gap-y-11 sm:mt-10 mt-6">
+                          {/* Địa chi  */}
+                          <div className="md:col-span-6 col-span-full flex flex-col gap-y-12">
+                            <p className="text-dark text-xl font-medium">
+                              ĐỊA CHỈ NHẬN HÀNG
+                            </p>
+                            <FormikAutocomplete
+                              name="province"
+                              label="Tỉnh/Thành phô"
+                              asyncRequest={getProvinceDataTest}
+                              asyncRequestHelper={(res) => {
+                                return res?.data;
+                              }}
+                              getOptionsLabel={(opt) => opt?.ProvinceName}
+                              isEqualValue={(opt, val) =>
+                                opt?.ProvinceID === val?.ProvinceID
+                              }
+                              onChange={() => {
+                                setFieldValue("district", null);
+                                setFieldValue("ward", null);
+                                setFieldValue("shippingFee", null);
+                              }}
+                              autoFetch={false}
+                              filterActive={true}
+                              required
+                            />
+
+                            <FormikAutocomplete
+                              name="district"
+                              label="Quận/Huyện"
+                              asyncRequest={() => {
+                                return getDistrictDataTest(
+                                  values?.province?.ProvinceID
+                                );
+                              }}
+                              asyncRequestHelper={(res) => {
+                                return res?.data;
+                              }}
+                              getOptionsLabel={(opt) => {
+                                return opt?.DistrictName;
+                              }}
+                              isEqualValue={(opt, val) =>
+                                opt?.DistrictID === val?.DistrictID
+                              }
+                              onChange={() => {
+                                setFieldValue("ward", null);
+                                setFieldValue("shippingFee", null);
+                              }}
+                              disabled={!values?.province}
+                              asyncRequestDeps="province"
+                              autoFetch={false}
+                              filterActive={true}
+                              required
+                            />
+
+                            <FormikAutocomplete
+                              name="ward"
+                              label="Phường/Xã"
+                              asyncRequest={() => {
+                                return getWardDataTest(
+                                  values?.district?.DistrictID
+                                );
+                              }}
+                              asyncRequestHelper={(res) => {
+                                return res?.data;
+                              }}
+                              getOptionsLabel={(opt) => {
+                                return opt?.WardName;
+                              }}
+                              isEqualValue={(opt, val) =>
+                                opt?.WardCode === val?.WardCode
+                              }
+                              onChange={() => {
+                                setFieldValue("shippingFee", null);
+                              }}
+                              autoFetch={false}
+                              disabled={!values?.district}
+                              asyncRequestDeps="district"
+                              filterActive={true}
+                              required
+                            />
+
+                            <FormikTextArea
+                              className="sm:hidden block"
+                              name="street"
+                              label="Địa chỉ"
+                              required
+                            />
+                          </div>
+
+                          {/* Đơn vị giao hàng */}
+                          <div className="md:col-span-6 col-span-full flex flex-col">
+                            <p className="text-dark text-xl font-medium mt-0">
+                              ĐƠN VỊ GIAO HÀNG
+                            </p>
+
+                            <FormikRadioGroup
+                              name="method"
+                              className="flex flex-col"
+                            >
+                              {/* <FormikRadio
                               value="ghtk"
                               hideInput={true}
                               label={
@@ -397,93 +403,93 @@ function Checkout() {
                               }
                             /> */}
 
-                            <FormikRadio
-                              value="ghn"
-                              hideInput={true}
-                              label={
-                                <div className="flex items-center border border-gray-400 border-dashed p-4 text-base mt-4">
-                                  <div>
-                                    <Image
-                                      src={images.logoGHN}
-                                      height="40px"
+                              <FormikRadio
+                                value="ghn"
+                                hideInput={true}
+                                label={
+                                  <div className="flex items-center border border-gray-400 border-dashed p-4 text-base mt-4">
+                                    <div>
+                                      <Image
+                                        src={images.logoGHN}
+                                        height="40px"
+                                        width="fit-content"
+                                        objectFit="contain"
+                                      />
+                                      <p>
+                                        Giao hàng tận nơi có phí -{" "}
+                                        <span className="font-semibold">
+                                          {formatCurrency(values?.shippingFee)}
+                                        </span>
+                                      </p>
+                                      <p className="text-crimson font-medium">
+                                        Miễn phí vận chuyển cho đơn từ 500.000đ
+                                      </p>
+                                    </div>
+                                    <FormikRadio
+                                      checked={values?.method === "ghn"}
                                       width="fit-content"
-                                      objectFit="contain"
                                     />
-                                    <p>
-                                      Giao hàng tận nơi có phí -{" "}
-                                      <span className="font-semibold">
-                                        {formatCurrency(values?.shippingFee)}
-                                      </span>
-                                    </p>
-                                    <p className="text-crimson font-medium">
-                                      Miễn phí vận chuyển cho đơn từ 500.000đ
-                                    </p>
                                   </div>
-                                  <FormikRadio
-                                    checked={values?.method === "ghn"}
-                                    width="fit-content"
-                                  />
+                                }
+                              />
+                            </FormikRadioGroup>
+                          </div>
+
+                          <FormikTextArea
+                            className="col-span-12 hidden sm:block"
+                            name="street"
+                            label="Địa chỉ"
+                            required
+                          />
+                        </div>
+                      </div>
+
+                      <p className="flex items-center gap-2 text-xl font-semibold text-dark mt-10">
+                        <Icon name="paymentMethod" size="1.5em" color="dark" />
+                        <p>HÌNH THỨC THANH TOÁN</p>
+                      </p>
+
+                      <div className="grid grid-cols-12 gap-5 items-start mt-6 shadow-lg px-4 pb-10 rounded-sm">
+                        <FormikRadio
+                          className="xl:col-span-6 col-span-full"
+                          value="COD"
+                          name="paymentMethod"
+                          labelClassName="w-full"
+                          label={
+                            <div className="w-full flex items-center gap-2 bg-emerald-500 pr-3 text-lg font-semibold text-white rounded-sm ">
+                              <Image src={images.codMethod} width="60px" />
+                              <p>Thanh toán khi nhận hàng</p>
+                            </div>
+                          }
+                        />
+
+                        <div className="xl:col-span-6 col-span-full">
+                          <div className="w-full flex items-center gap-2 bg-blue-400 pr-3 text-lg font-semibold text-white  rounded-sm ">
+                            <Image src={images.bankingMethod} width="60px" />
+                            <p>Thanh toán trực tuyến</p>
+                          </div>
+
+                          <div className="flex flex-col bg-gray-100 px-4 mt-5">
+                            <FormikRadio
+                              name="paymentMethod"
+                              value="MoMo"
+                              labelClassName="w-full"
+                              label={
+                                <div>
+                                  <div className="flex items-center justify-between py-4 text-base text-dark ">
+                                    <Image
+                                      src={images.logoMomo}
+                                      width="auto"
+                                      height="30px"
+                                    />
+                                    <p className="">Thanh toán qua ví MoMo</p>
+                                  </div>
+                                  <Divider />
                                 </div>
                               }
                             />
-                          </FormikRadioGroup>
-                        </div>
 
-                        <FormikTextArea
-                          className="col-span-12 hidden sm:block"
-                          name="street"
-                          label="Địa chỉ"
-                          required
-                        />
-                      </div>
-                    </div>
-
-                    <p className="flex items-center gap-2 text-xl font-semibold text-dark mt-10">
-                      <Icon name="paymentMethod" size="1.5em" color="dark" />
-                      <p>HÌNH THỨC THANH TOÁN</p>
-                    </p>
-
-                    <div className="grid grid-cols-12 gap-5 items-start mt-6 shadow-lg px-4 pb-10 rounded-sm">
-                      <FormikRadio
-                        className="xl:col-span-6 col-span-full"
-                        value="COD"
-                        name="paymentMethod"
-                        labelClassName="w-full"
-                        label={
-                          <div className="w-full flex items-center gap-2 bg-emerald-500 pr-3 text-lg font-semibold text-white rounded-sm ">
-                            <Image src={images.codMethod} width="60px" />
-                            <p>Thanh toán khi nhận hàng</p>
-                          </div>
-                        }
-                      />
-
-                      <div className="xl:col-span-6 col-span-full">
-                        <div className="w-full flex items-center gap-2 bg-blue-400 pr-3 text-lg font-semibold text-white  rounded-sm ">
-                          <Image src={images.bankingMethod} width="60px" />
-                          <p>Thanh toán trực tuyến</p>
-                        </div>
-
-                        <div className="flex flex-col bg-gray-100 px-4 mt-5">
-                          <FormikRadio
-                            name="paymentMethod"
-                            value="MoMo"
-                            labelClassName="w-full"
-                            label={
-                              <div>
-                                <div className="flex items-center justify-between py-4 text-base text-dark ">
-                                  <Image
-                                    src={images.logoMomo}
-                                    width="auto"
-                                    height="30px"
-                                  />
-                                  <p className="">Thanh toán qua ví MoMo</p>
-                                </div>
-                                <Divider />
-                              </div>
-                            }
-                          />
-
-                          {/* <FormikRadio
+                            {/* <FormikRadio
                             name="paymentMethod"
                             value="logoVnpay"
                             disabled
@@ -504,173 +510,174 @@ function Checkout() {
                             }
                           /> */}
 
-                          <FormikRadio
-                            name="paymentMethod"
-                            value="ZaloPay"
-                            labelClassName="w-full"
-                            label={
-                              <div className="flex items-center justify-between py-4 text-base text-dark ">
+                            <FormikRadio
+                              name="paymentMethod"
+                              value="ZaloPay"
+                              labelClassName="w-full"
+                              label={
+                                <div className="flex items-center justify-between py-4 text-base text-dark ">
+                                  <Image
+                                    src={images.logoZaloPay}
+                                    width="auto"
+                                    height="30px"
+                                  />
+                                  <p className="">Thanh toán qua ZaloPay</p>
+                                </div>
+                              }
+                            />
+                          </div>
+                        </div>
+
+                        {errors?.paymentMethod && (
+                          <p className="col-span-12 text-red-500 text-sm mt-1">
+                            {errors?.paymentMethod}
+                          </p>
+                        )}
+                      </div>
+                    </div>
+
+                    {/* right column */}
+                    <div className="xl:col-span-5 col-span-full shadow-md p-5 h-fit">
+                      {/* title */}
+                      <div className="flex justify-between">
+                        <p className="flex items-center gap-2 text-xl font-semibold text-dark">
+                          <Icon name="cart" size="1.3em" color="dark" />
+                          <p>THÔNG TIN KHÁCH HÀNG</p>
+                        </p>
+
+                        <IconButton
+                          iconName="edit"
+                          textColor="dark"
+                          textHoverColor="yellow"
+                          to={PATH.CART}
+                        />
+                      </div>
+
+                      {/* items */}
+                      <div className="mt-4 max-h-[500px] overflow-auto p-2 border border-gray-300 rounded-sm">
+                        {items?.map((item) => {
+                          return (
+                            <div>
+                              <div className="flex justify-between items-start py-3">
                                 <Image
-                                  src={images.logoZaloPay}
-                                  width="auto"
-                                  height="30px"
+                                  src={item?.productId?.images[0]}
+                                  width="70px"
+                                  height="70px"
                                 />
-                                <p className="">Thanh toán qua ZaloPay</p>
+                                <p className="w-1/2 text-lg font-medium text-left text-dark">
+                                  {item?.productId?.name}
+                                </p>
+                                <p className="text-lg text-crimson">
+                                  {item?.quantity} x
+                                </p>
+                                <p className="text-lg text-crimson">
+                                  {formatCurrency(item?.productId?.price)}
+                                </p>
                               </div>
-                            }
+                              <Divider color="dark-200" borderStyle="dashed" />
+                            </div>
+                          );
+                        })}
+                      </div>
+
+                      {/* money info */}
+                      <div className="bg-gray-100 px-4 py-6 mt-10">
+                        <div>
+                          <LabelValue
+                            label={"Tổng tiền hàng"}
+                            value={formatCurrency(data?.cartTotalMoney)}
+                            className="justify-between"
+                            labelClassName="text-xl !font-normal text-gray-500"
+                            valueClassName="text-2xl !font-normal text-crimson"
+                          />
+                          <Divider
+                            marginTop="10px"
+                            marginBottom="10px"
+                            color="dark-200"
+                          />
+                        </div>
+
+                        <div>
+                          <LabelValue
+                            label={"Phí vận chuyển"}
+                            value={formatCurrency(values?.shippingFee)}
+                            className="justify-between"
+                            labelClassName="text-xl !font-normal text-gray-500"
+                            valueClassName="text-2xl !font-normal text-crimson"
+                          />
+                          <Divider
+                            marginTop="10px"
+                            marginBottom="10px"
+                            color="dark-200"
+                          />
+                        </div>
+
+                        <div>
+                          <LabelValue
+                            label={"Tạm Tính"}
+                            value={formatCurrency(
+                              values?.shippingFee + data?.cartTotalMoney
+                            )}
+                            className="justify-between"
+                            labelClassName="text-xl !font-normal text-gray-500"
+                            valueClassName="text-2xl !font-normal text-crimson"
+                          />
+                          <Divider
+                            marginTop="10px"
+                            marginBottom="10px"
+                            color="dark-200"
+                          />
+                        </div>
+
+                        <div>
+                          <LabelValue
+                            label={"Thành tiền"}
+                            value={formatCurrency(
+                              values?.shippingFee + data?.cartTotalMoney
+                            )}
+                            className="justify-between"
+                            labelClassName="text-xl"
+                            valueClassName="text-2xl !font-semibold text-crimson"
                           />
                         </div>
                       </div>
 
-                      {errors?.paymentMethod && (
-                        <p className="col-span-12 text-red-500 text-sm mt-1">
-                          {errors?.paymentMethod}
-                        </p>
-                      )}
-                    </div>
-                  </div>
-
-                  {/* right column */}
-                  <div className="xl:col-span-5 col-span-full shadow-md p-5 h-fit">
-                    {/* title */}
-                    <div className="flex justify-between">
-                      <p className="flex items-center gap-2 text-xl font-semibold text-dark">
-                        <Icon name="cart" size="1.3em" color="dark" />
-                        <p>THÔNG TIN KHÁCH HÀNG</p>
-                      </p>
-
-                      <IconButton
-                        iconName="edit"
-                        textColor="dark"
-                        textHoverColor="yellow"
-                        to={PATH.CART}
+                      <FormikTextArea
+                        name="note"
+                        label="Ghi chú"
+                        className="mt-10"
                       />
+
+                      <Button
+                        type="submit"
+                        full
+                        size="large"
+                        className="text-xl mt-5 "
+                      >
+                        Thanh Toán
+                      </Button>
+
+                      <Button
+                        type="button"
+                        full
+                        size="large"
+                        className="text-xl mt-3"
+                        bgColor="gray-400"
+                        onClick={() => {
+                          resetForm();
+                        }}
+                      >
+                        Làm Mới
+                      </Button>
                     </div>
-
-                    {/* items */}
-                    <div className="mt-4 max-h-[500px] overflow-auto p-2 border border-gray-300 rounded-sm">
-                      {items?.map((item) => {
-                        return (
-                          <div>
-                            <div className="flex justify-between items-start py-3">
-                              <Image
-                                src={item?.productId?.images[0]}
-                                width="70px"
-                                height="70px"
-                              />
-                              <p className="w-1/2 text-lg font-medium text-left text-dark">
-                                {item?.productId?.name}
-                              </p>
-                              <p className="text-lg text-crimson">
-                                {item?.quantity} x
-                              </p>
-                              <p className="text-lg text-crimson">
-                                {formatCurrency(item?.productId?.price)}
-                              </p>
-                            </div>
-                            <Divider color="dark-200" borderStyle="dashed" />
-                          </div>
-                        );
-                      })}
-                    </div>
-
-                    {/* money info */}
-                    <div className="bg-gray-100 px-4 py-6 mt-10">
-                      <div>
-                        <LabelValue
-                          label={"Tổng tiền hàng"}
-                          value={formatCurrency(data?.cartTotalMoney)}
-                          className="justify-between"
-                          labelClassName="text-xl !font-normal text-gray-500"
-                          valueClassName="text-2xl !font-normal text-crimson"
-                        />
-                        <Divider
-                          marginTop="10px"
-                          marginBottom="10px"
-                          color="dark-200"
-                        />
-                      </div>
-
-                      <div>
-                        <LabelValue
-                          label={"Phí vận chuyển"}
-                          value={formatCurrency(values?.shippingFee)}
-                          className="justify-between"
-                          labelClassName="text-xl !font-normal text-gray-500"
-                          valueClassName="text-2xl !font-normal text-crimson"
-                        />
-                        <Divider
-                          marginTop="10px"
-                          marginBottom="10px"
-                          color="dark-200"
-                        />
-                      </div>
-
-                      <div>
-                        <LabelValue
-                          label={"Tạm Tính"}
-                          value={formatCurrency(
-                            values?.shippingFee + data?.cartTotalMoney
-                          )}
-                          className="justify-between"
-                          labelClassName="text-xl !font-normal text-gray-500"
-                          valueClassName="text-2xl !font-normal text-crimson"
-                        />
-                        <Divider
-                          marginTop="10px"
-                          marginBottom="10px"
-                          color="dark-200"
-                        />
-                      </div>
-
-                      <div>
-                        <LabelValue
-                          label={"Thành tiền"}
-                          value={formatCurrency(
-                            values?.shippingFee + data?.cartTotalMoney
-                          )}
-                          className="justify-between"
-                          labelClassName="text-xl"
-                          valueClassName="text-2xl !font-semibold text-crimson"
-                        />
-                      </div>
-                    </div>
-
-                    <FormikTextArea
-                      name="note"
-                      label="Ghi chú"
-                      className="mt-10"
-                    />
-
-                    <Button
-                      type="submit"
-                      full
-                      size="large"
-                      className="text-xl mt-5 "
-                    >
-                      Thanh Toán
-                    </Button>
-
-                    <Button
-                      type="button"
-                      full
-                      size="large"
-                      className="text-xl mt-3"
-                      bgColor="gray-400"
-                      onClick={() => {
-                        resetForm();
-                      }}
-                    >
-                      Làm Mới
-                    </Button>
                   </div>
                 </div>
-              </div>
-            </Form>
-          );
-        }}
-      </Formik>
-    </main>
+              </Form>
+            );
+          }}
+        </Formik>
+      </main>
+    </>
   );
 }
 
