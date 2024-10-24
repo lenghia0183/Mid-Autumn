@@ -153,7 +153,7 @@ const Header = ({ bgColor = "emerald", textColor = "white", className }) => {
                             onSuccess: (response) => {
                               if (validateStatus(response.code)) {
                                 toast.success(response.message);
-                                refreshGetMyCart();
+                                // refreshGetMyCart();
                               } else {
                                 toast.error(response?.message);
                               }

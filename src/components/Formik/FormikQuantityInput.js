@@ -2,7 +2,7 @@ import React from "react";
 import { useField } from "formik";
 import QuantityInput from "../QuantityInput";
 
-const FormikQuantityInput = ({ id, name, ...props }) => {
+const FormikQuantityInput = ({ id, name, onChange = () => {}, ...props }) => {
   const [field, meta, helpers] = useField(id || name);
   const { setValue, setTouched } = helpers;
 
@@ -10,7 +10,10 @@ const FormikQuantityInput = ({ id, name, ...props }) => {
     <QuantityInput
       {...props}
       value={field.value}
-      onChange={(val) => setValue(val)}
+      onChange={(val) => {
+        setValue(val);
+        onChange(val);
+      }}
       onBlur={() => setTouched(true)}
       error={meta.touched && meta.error ? meta.error : ""}
     />

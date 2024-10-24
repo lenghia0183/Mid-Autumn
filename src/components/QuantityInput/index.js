@@ -7,7 +7,7 @@ const QuantityInput = ({
   min = 1,
   max = 100,
   step = 1,
-  onChange,
+  onChange = () => {},
   error = "",
   className = "",
   inputClassName = "",
@@ -68,6 +68,7 @@ const QuantityInput = ({
         )}
         iconWidth="50%"
         iconHeight="50%"
+        type="button"
         height={height}
         width={height}
         iconStrokeWidth={30}
@@ -79,7 +80,8 @@ const QuantityInput = ({
         type="text"
         value={value}
         onBlur={handleBlur}
-        onChange={handleInputChange}
+        onInput={handleInputChange}
+        // onChange={handleInputChange}
         className={clsx(
           "p-2 text-center border border-gray-300 outline-none focus:border-emerald text-dark font-medium",
           inputClassName,
@@ -97,6 +99,7 @@ const QuantityInput = ({
           { "hover:border-emerald": !(value >= max) },
           buttonClassName
         )}
+        type="button"
         iconWidth="50%"
         iconHeight="50%"
         height={height}

@@ -30,6 +30,7 @@ const IconButton = ({
   height = "",
   to = "",
   href = "",
+  type = "",
   ...props
 }) => {
   const baseClasses =
@@ -102,6 +103,7 @@ const IconButton = ({
       style={{ width, height }}
       to={to}
       href={href}
+      type
       {...props}
     >
       {loading ? (
