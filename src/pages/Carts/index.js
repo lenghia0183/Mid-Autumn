@@ -205,6 +205,11 @@ function Cart() {
                 <Button
                   size={isLargerThanSm ? "large" : "medium"}
                   className="sm:text-xl"
+                  bgColor="emerald"
+                  textColor="white"
+                  bgHoverColor="yellow"
+                  textHoverColor="dark"
+                  to={PATH.CHECKOUT}
                 >
                   THANH TOÁN
                 </Button>

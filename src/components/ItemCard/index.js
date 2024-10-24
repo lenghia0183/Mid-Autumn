@@ -123,8 +123,8 @@ const ItemCard = ({ product, className, refreshGetProduct }) => {
                   { productId: _id, quantity: 1 },
                   {
                     onSuccess: (response) => {
-                      if (validateStatus(response.code)) {
-                        toast.success(response.message);
+                      if (validateStatus(response?.code)) {
+                        toast.success(response?.message);
                       } else {
                         toast.error(response?.message);
                       }
@@ -166,8 +166,8 @@ const ItemCard = ({ product, className, refreshGetProduct }) => {
                   {},
                   {
                     onSuccess: (response) => {
-                      if (validateStatus(response.code)) {
-                        toast.success(response.message);
+                      if (validateStatus(response?.code)) {
+                        toast.success(response?.message);
                         refreshGetProduct();
                       } else {
                         toast.error(response?.message);
