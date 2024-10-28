@@ -25,17 +25,17 @@ import { useEffect, useRef, useState } from "react";
 import validationSchema from "./schema";
 import { useTranslation } from "react-i18next";
 import { TEXTFIELD_ALLOW } from "../../constants";
-import useBreakpoint from "../../hooks/useBreakpoint";
-import { useGetMyCart } from "../../service/https";
+
 import { useAddOrder } from "../../service/https/checkout";
 import { validateStatus } from "../../utils/api";
 import { toast } from "react-toastify";
 import { useNavigate } from "react-router-dom";
 import Backdrop from "../../components/BackDrop";
+import { useCart } from "../../context";
 
 function Checkout() {
   const { t } = useTranslation();
-  const isLargerThanSm = useBreakpoint("sm");
+  // const isLargerThanSm = useBreakpoint("sm");
   const formRef = useRef();
 
   const [values, setValues] = useState({});
@@ -54,15 +54,10 @@ function Checkout() {
     },
   ];
 
-  const {
-    data,
-    isLoading: isGetMyCartLoading,
-    isValidating: isGetMyCartValidating,
-    mutate: refreshGetMyCart,
-  } = useGetMyCart();
+  const { cartData, isLoading } = useCart();
 
-  console.log(data);
-  const items = data?.cartDetails || [];
+  console.log(cartData);
+  const items = cartData?.cartDetails || [];
   const initialValues = {
     buyerName: "",
     buyerEmail: "",
@@ -74,7 +69,7 @@ function Checkout() {
     ward: null,
     street: "",
     shippingFee: null,
-    itemTotalPrice: data?.cartTotalMoney || 0,
+    itemTotalPrice: cartData?.cartTotalMoney || 0,
     total: 0,
     method: "ghn",
     note: "",
@@ -113,8 +108,8 @@ function Checkout() {
           }),
         });
 
-        if (servicePrice && servicePrice.data) {
-          setFieldValue("shippingFee", servicePrice.data.total);
+        if (servicePrice && servicePrice.cartData) {
+          setFieldValue("shippingFee", servicePrice.cartData.total);
         }
       };
 
@@ -124,9 +119,7 @@ function Checkout() {
 
   return (
     <>
-      <Backdrop
-        open={isAddOrderLoading || isGetMyCartLoading || isGetMyCartValidating}
-      />
+      <Backdrop open={isLoading || isAddOrderLoading} />
 
       <main className="bg-white">
         <Breadcrumb items={breadcrumbCheckout} />
@@ -139,9 +132,9 @@ function Checkout() {
           }}
           onSubmit={(values) => {
             // Handle form submission
-            console.log("Submitted values", values);
+            // console.log("Submitted values", values);
             const convertValue = {
-              cartId: data?.id,
+              cartId: cartData?.id,
               buyerName: values?.buyerName,
               buyerEmail: values?.buyerEmail,
               buyerPhone: values?.buyerPhone,
@@ -174,7 +167,7 @@ function Checkout() {
                 console.log(response);
                 if (validateStatus(response?.code)) {
                   toast.success(response?.message);
-                  window.open(response?.data?.payUrl, "_blank");
+                  window.open(response?.cartData?.payUrl, "_blank");
                   navigate(PATH.HOME);
                 } else {
                   toast.success(response?.message);
@@ -284,7 +277,7 @@ function Checkout() {
                               label="Tỉnh/Thành phô"
                               asyncRequest={getProvinceDataTest}
                               asyncRequestHelper={(res) => {
-                                return res?.data;
+                                return res?.cartData;
                               }}
                               getOptionsLabel={(opt) => opt?.ProvinceName}
                               isEqualValue={(opt, val) =>
@@ -309,7 +302,7 @@ function Checkout() {
                                 );
                               }}
                               asyncRequestHelper={(res) => {
-                                return res?.data;
+                                return res?.cartData;
                               }}
                               getOptionsLabel={(opt) => {
                                 return opt?.DistrictName;
@@ -337,7 +330,7 @@ function Checkout() {
                                 );
                               }}
                               asyncRequestHelper={(res) => {
-                                return res?.data;
+                                return res?.cartData;
                               }}
                               getOptionsLabel={(opt) => {
                                 return opt?.WardName;
@@ -585,7 +578,7 @@ function Checkout() {
                         <div>
                           <LabelValue
                             label={"Tổng tiền hàng"}
-                            value={formatCurrency(data?.cartTotalMoney)}
+                            value={formatCurrency(cartData?.cartTotalMoney)}
                             className="justify-between"
                             labelClassName="text-xl !font-normal text-gray-500"
                             valueClassName="text-2xl !font-normal text-crimson"
@@ -616,7 +609,7 @@ function Checkout() {
                           <LabelValue
                             label={"Tạm Tính"}
                             value={formatCurrency(
-                              values?.shippingFee + data?.cartTotalMoney
+                              values?.shippingFee + cartData?.cartTotalMoney
                             )}
                             className="justify-between"
                             labelClassName="text-xl !font-normal text-gray-500"
@@ -633,7 +626,7 @@ function Checkout() {
                           <LabelValue
                             label={"Thành tiền"}
                             value={formatCurrency(
-                              values?.shippingFee + data?.cartTotalMoney
+                              values?.shippingFee + cartData?.cartTotalMoney
                             )}
                             className="justify-between"
                             labelClassName="text-xl"

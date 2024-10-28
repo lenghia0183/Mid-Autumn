@@ -16,7 +16,7 @@ const HEADERS_MULTIPLE_PART = {
   "Content-Type": "multipart/form-data; boundary=something",
 };
 
-const REFRESH_TOKEN_URL = "/auth/token/refresh";
+const REFRESH_TOKEN_URL = "v1/auth/refresh-token";
 
 export const createInstance = (baseURL, customHeaders = {}) => {
   const instance = axios.create({
@@ -62,37 +62,30 @@ export const createInstance = (baseURL, customHeaders = {}) => {
     (error) => {
       const response = error.response;
       if (
-        response?.status === 403 &&
+        response?.status === 401 &&
         response.config &&
         !response.config._isRefreshBefore &&
         response.config.url !== REFRESH_TOKEN_URL &&
         localStorage.getItem("refreshToken")
       ) {
+        console.log("error", error);
         return refreshAccessToken()
           .then((refresh) => {
-            if (refresh.statusCode === 200) {
+            console.log("refresh", refresh);
+            if (refresh.code === 200) {
               axios.defaults.headers.common["Authorization"] =
-                refresh.data.accessToken.token;
+                refresh.data.accessToken;
               // Lưu vào cookies
-              cookies.set(
-                "token",
-                refresh.data.accessToken.token,
-                CONFIG_COOKIES
-              );
+              cookies.set("token", refresh.data.accessToken, CONFIG_COOKIES);
               cookies.set(
                 "refreshToken",
-                refresh.data.refreshToken.token,
+                refresh.data.accessToken,
                 CONFIG_COOKIES
               );
 
               // Lưu vào localStorage
-              localStorage.setItem("token", refresh.data.accessToken.token);
-              localStorage.setItem(
-                "refreshToken",
-                refresh.data.refreshToken.token
-              );
-              response.config._isRefreshBefore = true;
-              return instance(response.config);
+              localStorage.setItem("token", refresh.data.accessToken);
+              localStorage.setItem("refreshToken", refresh.data.accessToken);
             } else {
               startLogout(); // Đăng xuất nếu refresh token không hợp lệ
             }
@@ -104,6 +97,7 @@ export const createInstance = (baseURL, customHeaders = {}) => {
         response?.status === 401 &&
         response.config.baseURL !== BASE_URL_GHN
       ) {
+        console.log("error", error);
         startLogout(); // Đăng xuất nếu không được ủy quyền
       } else {
         // toast.error(response?.data?.message || error?.message);
@@ -209,12 +203,9 @@ export const createApi = (instance) => ({
 });
 
 export const refreshAccessToken = () => {
-  const refreshToken = localStorage.getItem("refreshToken");
-  return instance.get(REFRESH_TOKEN_URL, {
-    headers: {
-      Authorization: `Bearer ${refreshToken}`,
-      "x-auth-token": `Bearer ${refreshToken}`,
-    },
+  const refreshToken = getLocalStorageItem("refreshToken");
+  return instance.post(REFRESH_TOKEN_URL, {
+    refreshToken: refreshToken,
   });
 };
 

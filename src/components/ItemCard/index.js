@@ -7,13 +7,13 @@ import clsx from "clsx";
 import formatCurrency from "../../utils/formatCurrency";
 import { useNavigate } from "react-router-dom";
 import { PATH } from "../../constants/path";
-import { useAddProductToCart } from "../../service/https";
 import { useAddProductToFavoriteList } from "../../service/https/favorite";
 import { validateStatus } from "../../utils/api";
 import { toast } from "react-toastify";
 import Backdrop from "../BackDrop";
+import { useCart } from "../../context";
 
-const ItemCard = ({ product, className, refreshGetProduct }) => {
+const ItemCard = ({ product, className }) => {
   const navigate = useNavigate();
 
   const {
@@ -28,8 +28,8 @@ const ItemCard = ({ product, className, refreshGetProduct }) => {
     isFavorite = false,
   } = product;
 
-  const { trigger: addProductToCart, isMutating: isAddProductToCartLoading } =
-    useAddProductToCart();
+  const { isLoading, addProductToCart, refreshCart } = useCart();
+
   const {
     trigger: addProductToFavoriteList,
     isMutating: isAddProductToFavoriteListLoading,
@@ -66,9 +66,7 @@ const ItemCard = ({ product, className, refreshGetProduct }) => {
 
   return (
     <>
-      <Backdrop
-        open={isAddProductToCartLoading || isAddProductToFavoriteListLoading}
-      />
+      <Backdrop open={isLoading || isAddProductToFavoriteListLoading} />
       <div
         className={clsx(
           "group relative shadow-lg rounded-md bg-white-100 border-gray-300 border transition-all duration-300 hover:-translate-y-1 overflow-hidden",
@@ -125,6 +123,7 @@ const ItemCard = ({ product, className, refreshGetProduct }) => {
                     onSuccess: (response) => {
                       if (validateStatus(response?.code)) {
                         toast.success(response?.message);
+                        refreshCart();
                       } else {
                         toast.error(response?.message);
                       }
@@ -168,7 +167,7 @@ const ItemCard = ({ product, className, refreshGetProduct }) => {
                     onSuccess: (response) => {
                       if (validateStatus(response?.code)) {
                         toast.success(response?.message);
-                        refreshGetProduct();
+                        refreshCart();
                       } else {
                         toast.error(response?.message);
                       }

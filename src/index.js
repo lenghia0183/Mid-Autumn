@@ -5,13 +5,15 @@ import App from "./App";
 
 import { I18nextProvider } from "react-i18next";
 import i18n from "./i18n";
-import { UserProvider } from "./context";
+import { CartProvider, UserProvider } from "./context";
 
 const root = ReactDOM.createRoot(document.getElementById("root"));
 root.render(
   <I18nextProvider i18n={i18n}>
-    <UserProvider>
-      <App />
-    </UserProvider>
+    <CartProvider>
+      <UserProvider>
+        <App />
+      </UserProvider>
+    </CartProvider>
   </I18nextProvider>
 );

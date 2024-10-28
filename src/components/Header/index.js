@@ -15,7 +15,7 @@ import { useTranslation } from "react-i18next";
 import useChangeLanguage from "../../hooks/useChangeLanguage";
 import useBreakpoint from "./../../hooks/useBreakpoint";
 import formatCurrency from "../../utils/formatCurrency";
-import { useUser } from "../../context";
+import { useCart, useUser } from "../../context";
 import { useDeleteCartDetail, useGetMyCart } from "../../service/https";
 import { validateStatus } from "../../utils/api";
 import { toast } from "react-toastify";
@@ -27,21 +27,18 @@ const Header = ({ bgColor = "emerald", textColor = "white", className }) => {
   const isLargerThanSm = useBreakpoint("sm");
 
   const { user, logout } = useUser();
-  const {
-    data,
-    isLoading: isGetMyCartLoading,
-    isValidating: isGetMyCartValidating,
-    mutate: refreshGetMyCart,
-  } = useGetMyCart();
-  const { trigger: deleteCartDetail, isMutating: isDeleteCartDetailLoading } =
-    useDeleteCartDetail();
-  const myCart = data || [];
+
   // console.log("myCart", myCart);
 
   const { bgColor: newBgColor } = useColorClasses({ bgColor });
   const { textColor: newTextColor } = useColorClasses({ textColor });
   const [isOpenCartDrawer, setIsOpenCartDrawer] = useState(false);
   const [isOpenNavDrawer, setIsOpenNavDrawer] = useState(false);
+
+  const { cartData, deleteCartDetail, isLoading } = useCart();
+
+  console.log("cartData", cartData);
+  const myCart = cartData || [];
 
   const { pathname } = useLocation();
 
@@ -276,13 +273,7 @@ const Header = ({ bgColor = "emerald", textColor = "white", className }) => {
 
   return (
     <>
-      <Backdrop
-        open={
-          isGetMyCartLoading ||
-          isDeleteCartDetailLoading ||
-          isGetMyCartValidating
-        }
-      />
+      <Backdrop open={isLoading} />
       <header
         className={clsx(
           `top-0 z-[99999] w-full h-[110px] shadow-lg`,

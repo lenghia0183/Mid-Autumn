@@ -32,6 +32,7 @@ export const useUpdateCartDetail = () => {
 };
 
 export const useGetMyCart = () => {
+  console.log("get my cart");
   const url = "v1/cart/me";
   const fetcher = async (url, arg) => {
     const response = await api.get(url, arg);

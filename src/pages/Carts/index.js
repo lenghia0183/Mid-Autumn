@@ -1,26 +1,21 @@
-import React, { useEffect, useState } from "react";
-import { Formik, FieldArray, Form } from "formik";
+import React, { useState } from "react";
+
 import Breadcrumb from "../../components/Breadcrumb";
 import Divider from "../../components/Devider";
 import { PAGE_TITLE, PATH } from "../../constants/path";
-import FormikQuantityInput from "../../components/Formik/FormikQuantityInput";
+
 import IconButton from "../../components/IconButton";
-import images from "../../asset/images";
 import Image from "../../components/Image";
 import LabelValue from "../../components/LabelValue";
 import formatCurrency from "./../../utils/formatCurrency";
 import Button from "./../../components/Button/index";
 import Dialog from "../../components/Diaglog";
 import useBreakpoint from "./../../hooks/useBreakpoint";
-import {
-  useDeleteCartDetail,
-  useGetMyCart,
-  useUpdateCartDetail,
-} from "../../service/https";
 import { toast } from "react-toastify";
 import { validateStatus } from "../../utils/api";
 import Backdrop from "../../components/BackDrop";
 import QuantityInput from "../../components/QuantityInput";
+import { useCart } from "../../context";
 
 function Cart() {
   const [openDialog, setOpenDialog] = useState(false);
@@ -28,19 +23,14 @@ function Cart() {
   const isLargerThanSm = useBreakpoint("sm");
 
   const {
-    data,
-    isLoading: isGetMyCartLoading,
-    isValidating: isGetMyCartValidating,
-    mutate: refreshGetMyCart,
-  } = useGetMyCart();
+    cartData,
+    isLoading,
+    updateCartDetail,
+    deleteCartDetail,
+    refreshCart,
+  } = useCart();
 
-  const { trigger: deleteCartDetail, isMutating: isDeleteCartDetailLoading } =
-    useDeleteCartDetail();
-
-  const { trigger: updateCartDetail, isMutating: isUpdateCartDetailLoading } =
-    useUpdateCartDetail();
-
-  const myCart = data || [];
+  const myCart = cartData || [];
 
   const breadcrumbCart = [
     {
@@ -71,12 +61,12 @@ function Cart() {
           if (validateStatus(response.code)) {
             toast.success(response.message);
             handleCloseDialog();
-            // refreshGetMyCart();
+            refreshCart();
           } else {
             toast.error(response?.message);
           }
         },
-        onError: (error) => {
+        onError: () => {
           toast.error("Xóa sản phẩm khỏi giỏ hàng thất bại vui lòng thử lại");
         },
       }
@@ -85,14 +75,7 @@ function Cart() {
 
   return (
     <>
-      <Backdrop
-        open={
-          isUpdateCartDetailLoading ||
-          isDeleteCartDetailLoading ||
-          isGetMyCartValidating ||
-          isGetMyCartLoading
-        }
-      />
+      <Backdrop open={isLoading} />
       <Breadcrumb items={breadcrumbCart} />
       <div className="bg-white py-14">
         <div className="container bg-white-100 py-4 rounded-md shadow-md">
@@ -138,7 +121,7 @@ function Cart() {
                                   onSuccess: (response) => {
                                     if (validateStatus(response.code)) {
                                       toast.success(response.message);
-                                      // refreshGetMyCart();
+                                      refreshCart();
                                     } else {
                                       toast.error(response?.message);
                                     }
