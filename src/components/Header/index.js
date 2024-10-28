@@ -16,7 +16,6 @@ import useChangeLanguage from "../../hooks/useChangeLanguage";
 import useBreakpoint from "./../../hooks/useBreakpoint";
 import formatCurrency from "../../utils/formatCurrency";
 import { useCart, useUser } from "../../context";
-import { useDeleteCartDetail, useGetMyCart } from "../../service/https";
 import { validateStatus } from "../../utils/api";
 import { toast } from "react-toastify";
 import Backdrop from "../BackDrop";
@@ -28,8 +27,6 @@ const Header = ({ bgColor = "emerald", textColor = "white", className }) => {
 
   const { user, logout } = useUser();
 
-  // console.log("myCart", myCart);
-
   const { bgColor: newBgColor } = useColorClasses({ bgColor });
   const { textColor: newTextColor } = useColorClasses({ textColor });
   const [isOpenCartDrawer, setIsOpenCartDrawer] = useState(false);
@@ -37,7 +34,6 @@ const Header = ({ bgColor = "emerald", textColor = "white", className }) => {
 
   const { cartData, deleteCartDetail, isLoading } = useCart();
 
-  console.log("cartData", cartData);
   const myCart = cartData || [];
 
   const { pathname } = useLocation();

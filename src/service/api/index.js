@@ -98,7 +98,7 @@ export const createInstance = (baseURL, customHeaders = {}) => {
         response.config.baseURL !== BASE_URL_GHN
       ) {
         console.log("error", error);
-        startLogout(); // Đăng xuất nếu không được ủy quyền
+        // startLogout(); // Đăng xuất nếu không được ủy quyền
       } else {
         // toast.error(response?.data?.message || error?.message);
         return Promise.reject(error);

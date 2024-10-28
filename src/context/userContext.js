@@ -31,6 +31,8 @@ export const UserProvider = ({ children }) => {
       isLoggedIn: false,
     });
     localStorage.removeItem("user");
+    localStorage.removeItem("token");
+    localStorage.removeItem("refreshToken");
   };
 
   useEffect(() => {

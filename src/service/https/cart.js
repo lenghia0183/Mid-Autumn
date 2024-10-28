@@ -31,14 +31,22 @@ export const useUpdateCartDetail = () => {
   return useSWRMutation(url, fetcher);
 };
 
-export const useGetMyCart = () => {
-  console.log("get my cart");
+export const useGetMyCart = (isLoggedIn) => {
   const url = "v1/cart/me";
-  const fetcher = async (url, arg) => {
-    const response = await api.get(url, arg);
-
+  const fetcher = async (url) => {
+    const response = await api.get(url);
     return response.data;
   };
 
-  return useSWR(url, fetcher);
+  const { data, isLoading, isValidating, mutate } = useSWR(
+    isLoggedIn ? url : null,
+    fetcher
+  );
+
+  return {
+    data,
+    isLoading,
+    isValidating,
+    mutate,
+  };
 };

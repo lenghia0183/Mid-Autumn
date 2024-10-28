@@ -126,7 +126,7 @@ function Cart() {
                                       toast.error(response?.message);
                                     }
                                   },
-                                  onError: (error) => {
+                                  onError: () => {
                                     toast.error(
                                       "Xóa sản phẩm khỏi giỏ hàng thất bại vui lòng thử lại"
                                     );

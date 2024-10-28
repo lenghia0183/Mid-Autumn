@@ -5,10 +5,13 @@ import {
   useUpdateCartDetail,
   useGetMyCart,
 } from "../service/https/cart";
+import { useUser } from "./userContext";
 
 const CartContext = createContext();
 
 export const CartProvider = ({ children }) => {
+  const { user } = useUser();
+
   const { trigger: addProductToCart, isMutating: isAdding } =
     useAddProductToCart();
   const { trigger: deleteCartDetail, isMutating: isDeleting } =
@@ -20,7 +23,7 @@ export const CartProvider = ({ children }) => {
     isLoading,
     isValidating: isValidatingGetMyCart,
     mutate: refreshCart,
-  } = useGetMyCart();
+  } = useGetMyCart(user.isLoggedIn);
 
   const loading = useMemo(
     () =>
