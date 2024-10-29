@@ -3,11 +3,15 @@ import { validateStatus } from "../../utils/api";
 import { toast } from "react-toastify";
 import Cookies from "universal-cookie";
 import { CONFIG_COOKIES } from "../../constants";
-import { getLocalStorageItem } from "../../utils/localStorage";
+import {
+  getLocalStorageItem,
+  setLocalStorageItem,
+} from "../../utils/localStorage";
+
+import { triggerLogout } from "../../utils/eventEmitter";
 
 const cookies = new Cookies();
 const BASE_URL = process.env.REACT_APP_BASE_URL + "/api/";
-
 const BASE_URL_GHN = process.env.REACT_APP_BASE_URL_GHN;
 const TOKEN_GHN = process.env.REACT_APP_GHN_API_KEY;
 const SHOP_ID_GHN = process.env.REACT_APP_GHN_SHOP_ID;
@@ -40,7 +44,7 @@ export const createInstance = (baseURL, customHeaders = {}) => {
       return config;
     },
     (error) => {
-      toast.error(error);
+      toast.error("Đã xảy ra lỗi trong quá trình yêu cầu.");
       return Promise.reject(error);
     }
   );
@@ -48,56 +52,53 @@ export const createInstance = (baseURL, customHeaders = {}) => {
   // Add a response interceptor
   instance.interceptors.response.use(
     (response) => {
+      // Xử lý nếu thành công
       if (validateStatus(response?.status)) {
         if (response?.config?.getHeaders) {
-          return { data: response?.data, header: response?.headers }; // Trả về cả data và headers nếu được yêu cầu
+          return { data: response?.data, header: response?.headers };
         }
-        return response.data; // Trả về dữ liệu nếu thành công
+        return response.data;
       } else if (response.status === 500) {
         toast.error("Đã xảy ra lỗi không xác định, vui lòng thử lại sau.");
       } else {
         toast.info("Bạn không có quyền truy cập.");
       }
     },
-    (error) => {
+    async (error) => {
       const response = error.response;
+      const originalRequest = error.config;
+
       if (
         response?.status === 401 &&
-        response.config &&
-        !response.config._isRefreshBefore &&
-        response.config.url !== REFRESH_TOKEN_URL &&
+        !originalRequest._isRefreshBefore &&
+        originalRequest.url !== REFRESH_TOKEN_URL &&
         localStorage.getItem("refreshToken")
       ) {
-        console.log("error", error);
-        return refreshAccessToken()
-          .then((refresh) => {
-            console.log("refresh", refresh);
-            if (refresh.code === 200) {
-              axios.defaults.headers.common["Authorization"] =
-                refresh.data.accessToken;
+        originalRequest._isRefreshBefore = true;
+        try {
+          const refresh = await refreshAccessToken();
+          if (refresh.code === 200) {
+            const newAccessToken = refresh.data.accessToken;
 
-              cookies.set("token", refresh.data.accessToken, CONFIG_COOKIES);
-              cookies.set(
-                "refreshToken",
-                refresh.data.accessToken,
-                CONFIG_COOKIES
-              );
+            setLocalStorageItem("token", newAccessToken);
+            cookies.set("token", newAccessToken, CONFIG_COOKIES);
+            cookies.set("refreshToken", newAccessToken, CONFIG_COOKIES);
 
-              localStorage.setItem("token", refresh.data.accessToken);
-              localStorage.setItem("refreshToken", refresh.data.accessToken);
-            } else {
-              startLogout();
-            }
-          })
-          .catch(() => {
-            startLogout();
-          });
+            originalRequest.headers[
+              "Authorization"
+            ] = `Bearer ${newAccessToken}`;
+            return api.instance(originalRequest);
+          } else {
+            triggerLogout();
+          }
+        } catch (err) {
+          triggerLogout();
+        }
       } else if (
         response?.status === 401 &&
         response.config.baseURL !== BASE_URL_GHN
       ) {
-        console.log("error", error);
-        startLogout();
+        triggerLogout();
       } else {
         return Promise.reject(error);
       }
@@ -105,16 +106,6 @@ export const createInstance = (baseURL, customHeaders = {}) => {
   );
 
   return instance;
-};
-
-const startLogout = () => {
-  localStorage.removeItem("token");
-  localStorage.removeItem("refreshToken");
-  localStorage.removeItem("user");
-
-  cookies.remove("token");
-  cookies.remove("refreshToken");
-  cookies.remove("user");
 };
 
 export const createApi = (instance) => ({
@@ -191,9 +182,10 @@ export const createApi = (instance) => ({
   },
 });
 
+// Dùng chính api để gọi refresh token
 export const refreshAccessToken = () => {
   const refreshToken = getLocalStorageItem("refreshToken");
-  return instance.post(REFRESH_TOKEN_URL, {
+  return api.instance.post(REFRESH_TOKEN_URL, {
     refreshToken: refreshToken,
   });
 };

@@ -58,8 +58,8 @@ function Cart() {
       { cartDetailId: selectedCartDetail?._id, cartId: myCart.id },
       {
         onSuccess: (response) => {
-          if (validateStatus(response.code)) {
-            toast.success(response.message);
+          if (validateStatus(response?.code)) {
+            toast.success(response?.message);
             handleCloseDialog();
             refreshCart();
           } else {
@@ -68,6 +68,32 @@ function Cart() {
         },
         onError: () => {
           toast.error("Xóa sản phẩm khỏi giỏ hàng thất bại vui lòng thử lại");
+        },
+      }
+    );
+  };
+
+  const handleUpdateQuantity = (quantity, item) => {
+    updateCartDetail(
+      {
+        cartDetailId: item?._id,
+        cartId: myCart.id,
+        quantity: quantity,
+      },
+      {
+        onSuccess: (response) => {
+          console.log("response: ", response);
+          if (validateStatus(response?.code)) {
+            toast.success(response?.message);
+            // refreshCart();
+          } else {
+            toast.error(response?.message);
+          }
+        },
+        onError: () => {
+          toast.error(
+            "Cập nhật sản phẩm khỏi giỏ hàng thất bại vui lòng thử lại"
+          );
         },
       }
     );
@@ -110,29 +136,7 @@ function Cart() {
                             width="200px"
                             value={item?.quantity}
                             onChange={(quantity) => {
-                              console.log("quantity", quantity);
-                              updateCartDetail(
-                                {
-                                  cartDetailId: item?._id,
-                                  cartId: myCart.id,
-                                  quantity: quantity,
-                                },
-                                {
-                                  onSuccess: (response) => {
-                                    if (validateStatus(response.code)) {
-                                      toast.success(response.message);
-                                      refreshCart();
-                                    } else {
-                                      toast.error(response?.message);
-                                    }
-                                  },
-                                  onError: () => {
-                                    toast.error(
-                                      "Xóa sản phẩm khỏi giỏ hàng thất bại vui lòng thử lại"
-                                    );
-                                  },
-                                }
-                              );
+                              handleUpdateQuantity(quantity, item);
                             }}
                             max={20}
                           />

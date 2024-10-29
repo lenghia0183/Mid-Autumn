@@ -5,6 +5,7 @@ import {
 } from "../utils/localStorage";
 import { api } from "../service/api";
 import { toast } from "react-toastify";
+import { onLogout, eventEmitter } from "../utils";
 
 const UserContext = createContext();
 
@@ -41,38 +42,38 @@ export const UserProvider = ({ children }) => {
     localStorage.removeItem("user");
     localStorage.removeItem("token");
     localStorage.removeItem("refreshToken");
+
     toast.info("Bạn đã đăng xuất thành công.");
   };
 
   useEffect(() => {
-    const checkLocalStorage = () => {
-      const token = getLocalStorageItem("token");
-      if (!token) {
-        logout();
-      }
-    };
-    checkLocalStorage();
-    const handleStorageChange = () => {
+    const handleLogout = () => {
       logout();
     };
-    window.addEventListener("storage", handleStorageChange);
+
+    onLogout(handleLogout);
+
     return () => {
-      window.removeEventListener("storage", handleStorageChange);
+      eventEmitter.removeListener("logout", handleLogout);
     };
   }, []);
 
-  useEffect(async () => {
-    const token = getLocalStorageItem("token");
-    if (token) {
-      const url = `v1/auth/me`;
-      const response = await api.get(url);
-      setUser({
-        user: response.data,
-        isLoggedIn: true,
-      });
-    } else {
-      logout();
-    }
+  useEffect(() => {
+    const fetchUserData = async () => {
+      const token = getLocalStorageItem("token");
+      if (token) {
+        const url = `v1/auth/me`;
+        const response = await api.get(url);
+        setUser({
+          user: response.data,
+          isLoggedIn: true,
+        });
+      } else {
+        // logout();
+      }
+    };
+
+    fetchUserData();
   }, []);
 
   return (
