@@ -8,8 +8,7 @@ const UserContext = createContext();
 
 export const UserProvider = ({ children }) => {
   const [user, setUser] = useState({
-    name: "",
-    email: "",
+    user: null,
     isLoggedIn: false,
   });
 
@@ -26,8 +25,7 @@ export const UserProvider = ({ children }) => {
 
   const logout = () => {
     setUser({
-      name: "",
-      email: "",
+      user: null,
       isLoggedIn: false,
     });
     localStorage.removeItem("user");

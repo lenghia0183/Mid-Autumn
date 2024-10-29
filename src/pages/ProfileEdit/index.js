@@ -11,35 +11,85 @@ import {
   getProvinceDataTest,
   getWardDataTest,
 } from "../../service/GHNApi";
+import { useUser } from "../../context";
+import { useGetUser, useUpdateUserProfile } from "./../../service/https/user";
+import { validateStatus } from "../../utils/api";
+import { toast } from "react-toastify";
 
 function ProfileEdit() {
   const isLargerThanSm = useBreakpoint("sm");
   const { t } = useTranslation();
 
+  const { user } = useUser();
+
+  console.log("user", user);
+  const { trigger: updateUserProfile } = useUpdateUserProfile(user?._id);
+  const { data: userData, mutate: refreshGetUserData } = useGetUser(user?._id);
+  console.log("data", userData);
+
   // Initial values with fake data
   const initialValues = {
-    name: "Nguyễn Văn A",
-    email: "nguyenvana@example.com",
-    phone: "0123456789",
-    address: "123 Đường ABC, Quận 1, TP.HCM",
+    name: userData?.fullname,
+    email: userData?.email,
+    phone: userData?.phone,
     province: {
-      ProvinceID: 201,
-      ProvinceName: "Hà Nội",
+      ProvinceID: userData?.address?.province.provinceId,
+      ProvinceName: userData?.address?.province.provinceName,
     },
     district: {
-      DistrictID: 3303,
-      DistrictName: "Huyện Thường Tín",
+      DistrictID: userData?.address?.district.districtId,
+      DistrictName: userData?.address?.district.districtName,
     },
     ward: {
-      WardCode: "1B2711",
-      WardName: "Xã Liên Phương",
+      WardCode: userData?.address?.ward?.wardCode,
+      WardName: userData?.address?.ward?.wardName,
     },
-    street: "Ngõ đá, Xóm 2",
+    street: userData?.address?.street,
   };
 
-  const handleSubmit = (values) => {
+  console.log("intialValues", initialValues);
+
+  const handleSubmit = (values, resetForm) => {
     // Handle form submission
     console.log("Form values:", values);
+    const convertValues = {
+      fullname: values?.name,
+      email: values?.email,
+      phone: values?.phone,
+      address: {
+        province: {
+          provinceId:
+            values?.province?.provinceId || values?.province?.ProvinceID,
+          provinceName:
+            values?.province?.provinceName || values?.province?.ProvinceName,
+        },
+        district: {
+          districtId:
+            values?.district?.districtId || values?.district?.DistrictID,
+          districtName:
+            values?.district?.districtName || values?.district?.DistrictName,
+        },
+        ward: {
+          wardCode: values?.ward?.wardCode || values?.ward?.WardCode,
+          wardName: values?.ward?.wardName || values?.ward?.WardName,
+        },
+        street: values?.street,
+      },
+    };
+
+    updateUserProfile(convertValues, {
+      onSuccess: (response) => {
+        console.log(response);
+        if (validateStatus(response?.code)) {
+          toast.success(response?.message);
+          refreshGetUserData();
+          // resetForm();
+        }
+      },
+      onError: (error) => {
+        console.log(error);
+      },
+    });
   };
 
   return (

@@ -7,7 +7,7 @@ const validationSchema = (t) => {
       .email("Email không hợp lệ")
       .required("Email là bắt buộc"),
     phone: Yup.string().required("Điện Thoại là bắt buộc"),
-    address: Yup.string().required("Địa chỉ là bắt buộc"),
+    // address: Yup.string().required("Địa chỉ là bắt buộc"),
   });
 };
 
