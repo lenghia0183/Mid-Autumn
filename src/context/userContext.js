@@ -3,6 +3,8 @@ import {
   getLocalStorageItem,
   setLocalStorageItem,
 } from "../utils/localStorage";
+import { api } from "../service/api";
+import { toast } from "react-toastify";
 
 const UserContext = createContext();
 
@@ -11,6 +13,14 @@ export const UserProvider = ({ children }) => {
     user: null,
     isLoggedIn: false,
   });
+
+  const updateUser = (updatedData) => {
+    setUser((prevUser) => ({
+      ...prevUser,
+      user: { ...prevUser.user, ...updatedData },
+    }));
+    setLocalStorageItem("user", { ...user, ...updatedData });
+  };
 
   const login = (data) => {
     setUser({
@@ -31,20 +41,42 @@ export const UserProvider = ({ children }) => {
     localStorage.removeItem("user");
     localStorage.removeItem("token");
     localStorage.removeItem("refreshToken");
+    toast.info("Bạn đã đăng xuất thành công.");
   };
 
   useEffect(() => {
-    const userFromLocalStorage = getLocalStorageItem("user");
-    if (userFromLocalStorage) {
+    const checkLocalStorage = () => {
+      const token = getLocalStorageItem("token");
+      if (!token) {
+        logout();
+      }
+    };
+    checkLocalStorage();
+    const handleStorageChange = () => {
+      logout();
+    };
+    window.addEventListener("storage", handleStorageChange);
+    return () => {
+      window.removeEventListener("storage", handleStorageChange);
+    };
+  }, []);
+
+  useEffect(async () => {
+    const token = getLocalStorageItem("token");
+    if (token) {
+      const url = `v1/auth/me`;
+      const response = await api.get(url);
       setUser({
-        ...userFromLocalStorage,
+        user: response.data,
         isLoggedIn: true,
       });
+    } else {
+      logout();
     }
   }, []);
 
   return (
-    <UserContext.Provider value={{ user, login, logout }}>
+    <UserContext.Provider value={{ user, login, logout, updateUser }}>
       {children}
     </UserContext.Provider>
   );

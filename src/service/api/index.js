@@ -75,7 +75,7 @@ export const createInstance = (baseURL, customHeaders = {}) => {
             if (refresh.code === 200) {
               axios.defaults.headers.common["Authorization"] =
                 refresh.data.accessToken;
-              // Lưu vào cookies
+
               cookies.set("token", refresh.data.accessToken, CONFIG_COOKIES);
               cookies.set(
                 "refreshToken",
@@ -83,24 +83,22 @@ export const createInstance = (baseURL, customHeaders = {}) => {
                 CONFIG_COOKIES
               );
 
-              // Lưu vào localStorage
               localStorage.setItem("token", refresh.data.accessToken);
               localStorage.setItem("refreshToken", refresh.data.accessToken);
             } else {
-              startLogout(); // Đăng xuất nếu refresh token không hợp lệ
+              startLogout();
             }
           })
           .catch(() => {
-            startLogout(); // Đăng xuất nếu có lỗi xảy ra trong quá trình refresh token
+            startLogout();
           });
       } else if (
         response?.status === 401 &&
         response.config.baseURL !== BASE_URL_GHN
       ) {
         console.log("error", error);
-        // startLogout(); // Đăng xuất nếu không được ủy quyền
+        startLogout();
       } else {
-        // toast.error(response?.data?.message || error?.message);
         return Promise.reject(error);
       }
     }
@@ -110,22 +108,13 @@ export const createInstance = (baseURL, customHeaders = {}) => {
 };
 
 const startLogout = () => {
-  // Xóa token khỏi localStorage
   localStorage.removeItem("token");
   localStorage.removeItem("refreshToken");
   localStorage.removeItem("user");
 
-  // Xóa token khỏi cookies
   cookies.remove("token");
   cookies.remove("refreshToken");
   cookies.remove("user");
-
-  // Hiển thị thông báo đăng xuất (tùy chọn)
-  toast.info("Bạn đã đăng xuất thành công.");
-
-  // Chuyển hướng đến trang đăng nhập (nếu cần thiết)
-  // Ví dụ: sử dụng react-router-dom
-  // history.push('/login');
 };
 
 export const createApi = (instance) => ({

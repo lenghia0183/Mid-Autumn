@@ -1,6 +1,5 @@
 import { Form, Formik } from "formik";
 import FormikTextField from "./../../components/Formik/FormikTextField";
-import * as Yup from "yup";
 import Button from "../../components/Button";
 import useBreakpoint from "../../hooks/useBreakpoint";
 import validationSchema from "./schema";
@@ -12,20 +11,23 @@ import {
   getWardDataTest,
 } from "../../service/GHNApi";
 import { useUser } from "../../context";
-import { useGetUser, useUpdateUserProfile } from "./../../service/https/user";
+import { useGetMe, useUpdateMe } from "./../../service/https/user";
 import { validateStatus } from "../../utils/api";
 import { toast } from "react-toastify";
+import { useEffect, useState } from "react";
 
 function ProfileEdit() {
   const isLargerThanSm = useBreakpoint("sm");
   const { t } = useTranslation();
 
-  const { user } = useUser();
+  const { updateUser } = useUser();
+  const { trigger: updateMe } = useUpdateMe();
+  const { data, mutate: refreshGetUserData } = useGetMe();
+  const [userData, setUserData] = useState(data);
 
-  console.log("user", user);
-  const { trigger: updateUserProfile } = useUpdateUserProfile(user?._id);
-  const { data: userData, mutate: refreshGetUserData } = useGetUser(user?._id);
-  console.log("data", userData);
+  useEffect(() => {
+    setUserData(data);
+  }, [data]);
 
   // Initial values with fake data
   const initialValues = {
@@ -47,9 +49,7 @@ function ProfileEdit() {
     street: userData?.address?.street,
   };
 
-  console.log("intialValues", initialValues);
-
-  const handleSubmit = (values, resetForm) => {
+  const handleSubmit = (values) => {
     // Handle form submission
     console.log("Form values:", values);
     const convertValues = {
@@ -77,13 +77,14 @@ function ProfileEdit() {
       },
     };
 
-    updateUserProfile(convertValues, {
+    updateMe(convertValues, {
       onSuccess: (response) => {
         console.log(response);
         if (validateStatus(response?.code)) {
           toast.success(response?.message);
           refreshGetUserData();
-          // resetForm();
+          console.log("response", response);
+          updateUser(response?.data);
         }
       },
       onError: (error) => {
@@ -98,6 +99,7 @@ function ProfileEdit() {
         Thông tin tài khoản
       </h2>
       <Formik
+        enableReinitialize
         initialValues={initialValues}
         validationSchema={validationSchema(t)}
         onSubmit={handleSubmit}
