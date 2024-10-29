@@ -13,7 +13,7 @@ import { toast } from "react-toastify";
 import Backdrop from "../BackDrop";
 import { useCart } from "../../context";
 
-const ItemCard = ({ product, className }) => {
+const ItemCard = ({ product, className, refreshGetProduct }) => {
   const navigate = useNavigate();
 
   const {
@@ -167,7 +167,7 @@ const ItemCard = ({ product, className }) => {
                     onSuccess: (response) => {
                       if (validateStatus(response?.code)) {
                         toast.success(response?.message);
-                        refreshCart();
+                        refreshGetProduct();
                       } else {
                         toast.error(response?.message);
                       }
