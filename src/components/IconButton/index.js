@@ -103,7 +103,7 @@ const IconButton = ({
       style={{ width, height }}
       to={to}
       href={href}
-      type
+      type={type}
       {...props}
     >
       {loading ? (

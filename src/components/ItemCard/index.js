@@ -111,6 +111,7 @@ const ItemCard = ({ product, className, refreshGetProduct }) => {
         group-hover:translate-y-0 group-hover:bottom-[10px]"
           >
             <IconButton
+              type="button"
               iconName="bag"
               textColor="dark"
               width="40px"
@@ -138,6 +139,7 @@ const ItemCard = ({ product, className, refreshGetProduct }) => {
               }}
             />
             <IconButton
+              type="button"
               iconName="search"
               textColor="dark"
               width="40px"
@@ -145,6 +147,7 @@ const ItemCard = ({ product, className, refreshGetProduct }) => {
               className="rounded-md px-2 py-1 bg-yellow-500"
             />
             <IconButton
+              type="button"
               iconName="eye"
               textColor="dark"
               width="40px"
@@ -155,6 +158,7 @@ const ItemCard = ({ product, className, refreshGetProduct }) => {
               }}
             />
             <IconButton
+              type="button"
               iconName="heart"
               textColor={isFavorite ? "crimson" : "dark"}
               width="40px"

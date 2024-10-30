@@ -86,7 +86,7 @@ function ProductDetail() {
 
           addProductToCart(convertValues, {
             onSuccess: (response) => {
-              console.log(response);
+              // console.log(response);
               if (validateStatus(response.code)) {
                 toast.success(response.message);
               } else {
@@ -162,7 +162,7 @@ function ProductDetail() {
                           {},
                           {
                             onSuccess: (response) => {
-                              console.log(response);
+                              // console.log(response);
                               if (validateStatus(response.code)) {
                                 toast.success(response.message);
                                 refreshGetProductDetail();
@@ -242,7 +242,11 @@ function ProductDetail() {
                 </h2>
                 <Divider color="emerald" height="2px" />
 
-                <RelatedProducts />
+                <RelatedProducts
+                  manufacturerId={itemDetail?.manufacturerId?._id}
+                  categoryId={itemDetail?.categoryId?._id}
+                  productId={params.productId}
+                />
               </div>
             </div>
           </div>
