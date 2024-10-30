@@ -3,9 +3,7 @@ import Slider from "react-slick";
 import { useEffect, useRef } from "react";
 import IconButton from "../IconButton";
 import ItemCard from "../ItemCard";
-import images from "../../asset/images";
 import clsx from "clsx";
-import SaleItems from "./../../pages/Home/SaleItems/index";
 import { useGetProduct } from "../../service/https";
 
 function RelatedProducts({ className, categoryId, manufacturerId, productId }) {
@@ -145,9 +143,9 @@ function RelatedProducts({ className, categoryId, manufacturerId, productId }) {
           </Slider>
         </div>
       ) : (
-        <div className="flex justify-center">
+        <div className="flex justify-center gap-4">
           {saleItems?.map((item, index) => (
-            <div className="w-[25%] mx-2" key={index}>
+            <div className="w-[25%]" key={index}>
               <ItemCard product={item} />
             </div>
           ))}

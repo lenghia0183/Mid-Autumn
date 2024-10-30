@@ -1,41 +1,14 @@
 import images from "../../../asset/images";
 import ItemCard from "../../../components/ItemCard";
+import { useGetProduct } from "../../../service/https";
 
 function PopularDishes() {
-  const popularDishesList = [
-    {
-      id: 1,
-      name: "Trăng vàng hoàng kim vinh hiển đỏ",
-      price: "1.300.000 đ",
-      image: images.popularDish1,
-      rating: 2.5,
-      alt: "Banner 1",
-    },
-    {
-      id: 2,
-      name: "Trăng vàng hoàng kim vinh hiển đỏ",
-      price: "1.300.000 đ",
-      image: images.popularDish2,
-      rating: 5,
-      alt: "Banner 1",
-    },
-    {
-      id: 3,
-      name: "Trăng vàng hoàng kim vinh hiển đỏ",
-      price: "1.300.000 đ",
-      image: images.popularDish3,
-      rating: 4,
-      alt: "Banner 1",
-    },
-    {
-      id: 4,
-      name: "Trăng vàng hoàng kim vinh hiển đỏ",
-      price: "1.300.000 đ",
-      image: images.popularDish4,
-      rating: 5,
-      alt: "Banner 1",
-    },
-  ];
+  const { data, mutate: refreshData } = useGetProduct({
+    limit: 4,
+    page: 1,
+  });
+
+  const popularDishesList = data?.data?.products || [];
 
   return (
     <section
@@ -51,9 +24,11 @@ function PopularDishes() {
         MÓN PHỔ BIẾN
       </h2>
 
-      <div className="grid grid-cols-1 sm:grid-cols-2 xl:grid-cols-4 gap-4 mt-5 container">
+      <div className="flex gap-4 justify-center mt-10 container">
         {popularDishesList.map((dish) => (
-          <ItemCard key={dish.id} product={dish} />
+          <div className="w-[25%]">
+            <ItemCard key={dish.id} product={dish} />
+          </div>
         ))}
       </div>
     </section>
