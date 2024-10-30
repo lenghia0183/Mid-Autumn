@@ -6,3 +6,5 @@
 .env.production
 .env.staging
 
+# build output
+/build

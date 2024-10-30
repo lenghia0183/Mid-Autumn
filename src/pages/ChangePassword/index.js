@@ -5,10 +5,15 @@ import Button from "../../components/Button";
 import useBreakpoint from "../../hooks/useBreakpoint";
 import validationSchema from "./schema";
 import { useTranslation } from "react-i18next";
+import { useChangePassword } from "../../service/https/auth";
+import { validateStatus } from "../../utils/api";
+import { toast } from "react-toastify";
 
 function ChangePassword() {
   const isLargerThanSm = useBreakpoint("sm");
   const { t } = useTranslation();
+
+  const { trigger: handleChangePassword } = useChangePassword();
 
   // Initial values with empty fields
   const initialValues = {
@@ -17,9 +22,29 @@ function ChangePassword() {
     confirmPassword: "",
   };
 
-  const handleSubmit = (values) => {
+  const handleSubmit = (values, { resetForm }) => {
     // Handle form submission
-    console.log("Form values:", values);
+    handleChangePassword(
+      {
+        currentPassword: values.currentPassword,
+        newPassword: values.newPassword,
+      },
+      {
+        onSuccess: (response) => {
+          if (validateStatus(response?.code)) {
+            toast.success(response?.message);
+            resetForm();
+          } else {
+            toast.error(response?.message);
+            resetForm();
+          }
+        },
+        onError: (error) => {
+          toast.error(error?.message);
+          resetForm();
+        },
+      }
+    );
   };
 
   return (
