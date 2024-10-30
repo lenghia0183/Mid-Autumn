@@ -46,17 +46,7 @@ const ProductFilterTopBar = ({ setFieldValue, values }) => {
         >
           Mới nhất
         </Button>
-        <Button
-          // type="button"
-          height="50px"
-          className={clsx("text-lg hover:text-dark  hidden sm:block", {
-            "bg-yellow text-dark hover:text-white":
-              values.displayOption === "bestSeller",
-          })}
-          onClick={() => setFieldValue("displayOption", "bestSeller")}
-        >
-          Bán chạy nhất
-        </Button>
+
         <Button
           // type="button"
           height="50px"
@@ -69,7 +59,31 @@ const ProductFilterTopBar = ({ setFieldValue, values }) => {
           Đánh giá cao nhất
         </Button>
 
-        <div className="flex-2 sm:w-[300px] w-full xl:mt-0 mt-7 sm:hidden block">
+        <Button
+          // type="button"
+          height="50px"
+          className={clsx("text-lg hover:text-dark  hidden sm:block", {
+            "bg-yellow text-dark hover:text-white":
+              values.displayOption === "price:asc",
+          })}
+          onClick={() => setFieldValue("displayOption", "price:asc")}
+        >
+          Giá tăng dần
+        </Button>
+
+        <Button
+          // type="button"
+          height="50px"
+          className={clsx("text-lg hover:text-dark  hidden sm:block", {
+            "bg-yellow text-dark hover:text-white":
+              values.displayOption === "price:desc",
+          })}
+          onClick={() => setFieldValue("displayOption", "price:desc")}
+        >
+          Giá giảm dần
+        </Button>
+
+        {/* <div className="flex-2 sm:w-[300px] w-full xl:mt-0 mt-7 sm:hidden block">
           <FormikAutocomplete
             name="displayOptions"
             options={displayOptions}
@@ -96,7 +110,7 @@ const ProductFilterTopBar = ({ setFieldValue, values }) => {
             }}
             getOp
           />
-        </div>
+        </div> */}
       </div>
     </div>
   );

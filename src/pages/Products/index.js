@@ -12,6 +12,7 @@ import useBreakpoint from "./../../hooks/useBreakpoint";
 import { useGetManufacturer, useGetProduct } from "../../service/https";
 import Backdrop from "../../components/BackDrop";
 import { useGetCategory } from "../../service/https/category";
+import { filter } from "lodash";
 
 function Products() {
   const breadcrumbItems = [
@@ -25,8 +26,6 @@ function Products() {
       displayOption: "createdAt:desc",
       maxPrice: null,
       minPrice: null,
-      displayOptions: {},
-      price: null,
       keyword: "",
     },
   });
@@ -42,10 +41,11 @@ function Products() {
     keyword: filters.keyword || "",
     minRating: filters.rating,
     categoryId: filters.category,
-    sortBy: filters?.price?.value
-      ? filters?.displayOption + "," + filters.price.value
-      : filters?.displayOption,
+    manufacturerId: filters.manufacturers,
+    limit: 6,
+    sortBy: filters?.displayOption,
     page: page,
+    // manufacturerId: [...filters],
   });
   const { data: manufacturerList, isLoading: isGetManufacturerLoading } =
     useGetManufacturer();
@@ -53,7 +53,7 @@ function Products() {
     useGetCategory();
 
   // console.log("useGetProduct", useGetProduct());
-  // console.log("filters", filters);
+  console.log("filters", filters);
   // console.log("items", data);
   // console.log("manufacturerList", manufacturerList);
   // console.log("categoryList", categoryList);
@@ -88,7 +88,20 @@ function Products() {
           initialValues={initialValues}
           onSubmit={(values) => {
             console.log("products values", values);
-            setFilters({ ...values });
+            const convertValues = {
+              keyword: values?.keyword,
+              category: values?.category,
+              rating: values?.rating,
+              displayOption: values?.displayOption,
+              minPrice: values?.minPrice,
+              maxPrice: values?.maxPrice,
+              manufacturers: Object.keys(values).filter(
+                (key) => values[key] === true
+              ),
+            };
+
+            console.log("convert values", convertValues);
+            setFilters({ ...convertValues });
           }}
         >
           {({ setFieldValue, values }) => (
