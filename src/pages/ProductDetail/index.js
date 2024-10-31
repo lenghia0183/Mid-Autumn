@@ -20,6 +20,7 @@ import { useAddProductToFavoriteList } from "./../../service/https/favorite";
 
 function ProductDetail() {
   const params = useParams();
+
   const {
     data: itemDetail,
     isLoading: isGetProductDetailLoading,
@@ -45,6 +46,12 @@ function ProductDetail() {
       label: itemDetail?.categoryId?.name,
     },
   ];
+
+  const newSearch = PATH.PRODUCTS;
+  const finalSearch = `${newSearch}?filters=${JSON.stringify({
+    category: itemDetail?.categoryId?._id,
+  })}`;
+
   const tagList = [
     {
       label: "Bánh trung thu",
@@ -52,15 +59,13 @@ function ProductDetail() {
     },
     {
       label: itemDetail?.categoryId?.name,
-      to: PATH.PRODUCTS,
+      to: finalSearch,
     },
     {
       label: itemDetail?.name,
       to: PATH.PRODUCT_DETAIL.replace(":productId", itemDetail?._id),
     },
   ];
-
-  // console.log("itemDetail", itemDetail);
 
   const tabList = [
     { label: "Thông tin sản phẩm", value: "product-info" },
@@ -206,6 +211,7 @@ function ProductDetail() {
                           bgColor="white"
                           textColor="dark-300"
                           textHoverColor="emerald"
+                          type="button"
                           to={tag.to}
                         >
                           {tag.label}
