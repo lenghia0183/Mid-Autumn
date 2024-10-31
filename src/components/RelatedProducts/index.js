@@ -47,57 +47,6 @@ function RelatedProducts({ className, categoryId, manufacturerId, productId }) {
     ],
   };
 
-  // const saleItems = [
-  //   {
-  //     id: 1,
-  //     name: "Trăng vàng hoàng kim vinh hiển đỏ",
-  //     price: "1.300.000 đ",
-  //     image: images.popularDish1,
-  //     rating: 2.5,
-  //     alt: "Banner 1",
-  //   },
-  //   {
-  //     id: 2,
-  //     name: "Trăng vàng hoàng kim vinh hiển đỏ",
-  //     price: "1.300.000 đ",
-  //     image: images.popularDish2,
-  //     rating: 5,
-  //     alt: "Banner 1",
-  //   },
-  //   // {
-  //   //   id: 3,
-  //   //   name: "Trăng vàng hoàng kim vinh hiển đỏ",
-  //   //   price: "1.300.000 đ",
-  //   //   image: images.popularDish3,
-  //   //   rating: 4,
-  //   //   alt: "Banner 1",
-  //   // },
-  //   // {
-  //   //   id: 4,
-  //   //   name: "Trăng vàng hoàng kim vinh hiển đỏ",
-  //   //   price: "1.300.000 đ",
-  //   //   image: images.popularDish4,
-  //   //   rating: 5,
-  //   //   alt: "Banner 1",
-  //   // },
-  //   // {
-  //   //   id: 5,
-  //   //   name: "Trăng vàng hoàng kim vinh hiển đỏ",
-  //   //   price: "1.300.000 đ",
-  //   //   image: images.popularDish4,
-  //   //   rating: 5,
-  //   //   alt: "Banner 1",
-  //   // },
-  //   // {
-  //   //   id: 6,
-  //   //   name: "Trăng vàng hoàng kim vinh hiển đỏ",
-  //   //   price: "1.300.000 đ",
-  //   //   image: images.popularDish4,
-  //   //   rating: 5,
-  //   //   alt: "Banner 1",
-  //   // },
-  // ];
-
   return (
     <section className={clsx("container sm:mt-14 mt-10", className)}>
       {saleItems.length > 2 ? (
@@ -135,7 +84,7 @@ function RelatedProducts({ className, categoryId, manufacturerId, productId }) {
           <Slider ref={slider} {...settings}>
             {saleItems.map((item, index) => {
               return (
-                <div className="" key={index}>
+                <div key={index}>
                   <ItemCard product={item} className="mx-2" />
                 </div>
               );

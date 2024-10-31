@@ -190,7 +190,9 @@ const ItemCard = ({ product, className, refreshGetProduct }) => {
         </div>
 
         <div className="p-5">
-          <h3 className="text-xl font-semibold text-dark mt-2">{name}</h3>
+          <h3 className="text-xl font-semibold text-dark mt-2 line-clamp-1">
+            {name}
+          </h3>
           <div className="flex space-x-1 mt-2">{renderStars(ratings)}</div>
           <div className="text-base font-semibold text-emerald mt-2">
             {manufacturerId?.name}

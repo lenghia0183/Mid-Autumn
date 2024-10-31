@@ -8,6 +8,7 @@ import Icon from "../Icon";
 import Button from "../Button";
 import { PATH } from "../../constants/path";
 import Divider from "../Devider";
+import { useGetCategory } from "./../../service/https/category";
 
 const Footer = ({
   textColor = "white-100",
@@ -17,6 +18,8 @@ const Footer = ({
   const { t } = useTranslation();
   const { bgColor: newBgColor } = useColorClasses({ bgColor });
   const { textColor: newTextColor } = useColorClasses({ textColor });
+
+  const { data: categoryList } = useGetCategory() || [];
 
   return (
     <footer
@@ -59,17 +62,21 @@ const Footer = ({
           <h3 className="text-2xl font-medium">{t("footer.itemList.title")}</h3>
           <Divider marginTop="10px" marginBottom="30px" color="dark-600" />
           <div className="flex flex-col gap-y-3">
-            {Array.from({ length: 6 }, (_, index) => (
-              <Button
-                key={index}
-                to={PATH.HOME}
-                size="zeroPadding"
-                textColor="white"
-                className="hover:text-yellow"
-              >
-                {t(`footer.itemList.item${index + 1}`)}
-              </Button>
-            ))}
+            {categoryList?.map((category, index) => {
+              return (
+                <Button
+                  key={index}
+                  to={`${PATH.PRODUCTS}?filters=${JSON.stringify({
+                    category: category?._id,
+                  })}`}
+                  size="zeroPadding"
+                  textColor="white"
+                  className="hover:text-yellow"
+                >
+                  {category?.name}
+                </Button>
+              );
+            })}
           </div>
         </div>
 
