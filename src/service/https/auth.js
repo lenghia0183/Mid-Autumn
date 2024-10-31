@@ -10,6 +10,15 @@ export const useLogin = () => {
   return useSWRMutation(url, fetcher);
 };
 
+export const useRegister = () => {
+  const url = "v1/auth/register";
+  const fetcher = (url, { arg }) => {
+    return api.post(url, arg);
+  };
+
+  return useSWRMutation(url, fetcher);
+};
+
 export const useSocialLogin = () => {
   const url = "v1/auth/social-login";
   const fetcher = (url, { arg }) => {

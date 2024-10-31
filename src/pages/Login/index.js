@@ -29,13 +29,13 @@ function Login() {
     useSocialLogin();
 
   const initialValues = {
-    userName: "",
+    email: "",
     password: "",
   };
 
   const handleSubmit = async (values) => {
     const convertValue = {
-      email: values.userName,
+      email: values.email,
       password: values.password,
     };
 
@@ -49,7 +49,7 @@ function Login() {
           toast.error(response?.message);
         }
       },
-      onError: (error) => {
+      onError: () => {
         toast.error("Đăng nhập thất bại vui lòng thử lại");
       },
     });
@@ -90,7 +90,6 @@ function Login() {
       const idToken = await result.user.getIdToken();
       handleSocialLogin(idToken, {
         onSuccess: (response) => {
-          // console.log("Login successful!", response);
           if (response?.code === 200) {
             toast.success("Đăng nhập thành công");
             navigate(PATH.HOME);
@@ -100,13 +99,11 @@ function Login() {
           }
         },
         onError: (error) => {
-          // console.log("error", error);
           toast.error("Đăng nhập thất bại vui lòng thử lại");
         },
       });
     } catch (error) {
       toast.error("Có lỗi xảy ra vui lòng thử lại");
-      console.log("error", error);
     }
   };
 
@@ -122,8 +119,8 @@ function Login() {
       >
         <Form>
           <FormikTextField
-            name="userName"
-            label="Tên đăng nhập"
+            name="email"
+            label="Email"
             className="mt-10"
             allow={TEXTFIELD_ALLOW.ALPHANUMERIC_SPECIAL}
           />

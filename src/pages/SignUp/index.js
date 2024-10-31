@@ -16,21 +16,49 @@ import {
 } from "firebase/auth";
 import Loading from "../../components/Loading";
 import Backdrop from "../../components/BackDrop";
+import { useRegister, useSocialLogin } from "../../service/https/auth";
+import { validateStatus } from "../../utils/api";
+import { toast } from "react-toastify";
+import { useNavigate } from "react-router-dom";
+import { useUser } from "../../context/userContext";
 
 function SignUp() {
   const { t } = useTranslation();
+  const { trigger: handleRegister } = useRegister();
+  const navigate = useNavigate();
+  const { login } = useUser();
+
+  const { trigger: handleSocialLogin, isMutating: isSocialLoginLoading } =
+    useSocialLogin();
 
   const initialValues = {
-    userName: "",
-    phoneNumber: "",
-    // address: "",
+    fullName: "",
     email: "",
     password: "",
     confirmPassword: "",
   };
-  const handleSubmit = (values) => {
-    console.log("Submitted values:", values);
-    // Xử lý gửi form ở đây
+  const handleSubmit = (values, { resetForm }) => {
+    handleRegister(
+      {
+        fullname: values?.fullName,
+        email: values?.email,
+        password: values?.password,
+      },
+      {
+        onSuccess: (response) => {
+          if (validateStatus(response?.code)) {
+            toast.success(response?.message);
+            navigate(PATH.LOGIN);
+          } else {
+            toast.error(response?.message);
+            resetForm();
+          }
+        },
+        onError: () => {
+          toast.error("Đăng ký thật bạo vui lòng thử lại");
+        },
+      }
+    );
   };
 
   const handleGoogleLogin = async () => {
@@ -39,21 +67,47 @@ function SignUp() {
     try {
       const result = await signInWithPopup(auth, provider);
       const idToken = await result.user.getIdToken();
-      // console.log("itdToken", idToken);
 
-      // Xử lý logic lưu thông tin người dùng vào cơ sở dữ liệu của bạn tại đây (nếu cần)
-    } catch (error) {}
+      handleSocialLogin(idToken, {
+        onSuccess: (response) => {
+          if (response?.code === 200) {
+            toast.success("Đăng nhập thành công");
+            navigate(PATH.HOME);
+            login(response?.data);
+          } else {
+            toast.error(response?.message);
+          }
+        },
+        onError: (error) => {
+          toast.error("Đăng nhập thất bại vui lòng thử lại");
+        },
+      });
+    } catch (error) {
+      toast.error("Có lỗi xảy ra vui lòng thử lại");
+    }
   };
-
   const handleFacebookLogin = async () => {
     const provider = new FacebookAuthProvider();
     try {
       const result = await signInWithPopup(auth, provider);
       const idToken = await result.user.getIdToken();
-      // console.log("itdToken", idToken);
-
-      // Xử lý logic lưu thông tin người dùng vào cơ sở dữ liệu của bạn tại đây (nếu cần)
-    } catch (error) {}
+      handleSocialLogin(idToken, {
+        onSuccess: (response) => {
+          if (response?.code === 200) {
+            toast.success("Đăng nhập thành công");
+            navigate(PATH.HOME);
+            login(response?.data);
+          } else {
+            toast.error(response?.message);
+          }
+        },
+        onError: (error) => {
+          toast.error("Đăng nhập thất bại vui lòng thử lại");
+        },
+      });
+    } catch (error) {
+      toast.error("Có lỗi xảy ra vui lòng thử lại");
+    }
   };
 
   return (
@@ -68,18 +122,10 @@ function SignUp() {
         {({ resetForm }) => (
           <Form>
             <FormikTextField
-              name="userName"
+              name="fullName"
               label="Họ và tên"
               className="mt-10"
               allow={TEXTFIELD_ALLOW.VIETNAMESE}
-              required
-            />
-
-            <FormikTextField
-              name="phoneNumber"
-              label="Điện thoại"
-              className="mt-10"
-              allow={TEXTFIELD_ALLOW.NUMBER}
               required
             />
 
