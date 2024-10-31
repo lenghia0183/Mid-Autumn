@@ -20,6 +20,7 @@ const ItemCard = ({ product, className, refreshGetProduct }) => {
     _id,
     name,
     image,
+    images,
     price,
     ratings,
     discount,
@@ -100,7 +101,7 @@ const ItemCard = ({ product, className, refreshGetProduct }) => {
         {/* Image Container */}
         <div className="relative aspect-square overflow-hidden">
           <Image
-            src={image}
+            src={image || images[0]}
             alt={name}
             className="transition-transform duration-300 group-hover:scale-105 ease-linear absolute inset-0"
           />

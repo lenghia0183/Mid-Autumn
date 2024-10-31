@@ -100,7 +100,7 @@ function Cart() {
   };
 
   return (
-    <>
+    <div>
       <Backdrop open={isLoading} />
       <Breadcrumb items={breadcrumbCart} />
       <div className="bg-white py-14">
@@ -216,7 +216,7 @@ function Cart() {
           </div>
         </div>
       </div>
-    </>
+    </div>
   );
 }
 
