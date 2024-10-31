@@ -1,13 +1,12 @@
 import Slider from "react-slick";
 import ItemCard from "../../../components/ItemCard";
-import images from "../../../asset/images";
 import IconButton from "../../../components/IconButton";
 import { useRef } from "react";
 import { useTranslation } from "react-i18next";
 import { useGetProduct } from "../../../service/https";
 
 function SaleItems() {
-  const { data } = useGetProduct({
+  const { data, mutate: refreshGetProduct } = useGetProduct({
     limit: 6,
     page: 1,
   });
@@ -88,7 +87,11 @@ function SaleItems() {
             {saleItems.map((item, index) => {
               return (
                 <div className="" key={index}>
-                  <ItemCard product={item} className="mx-2" />
+                  <ItemCard
+                    product={item}
+                    className="mx-2"
+                    refreshGetProduct={refreshGetProduct}
+                  />
                 </div>
               );
             })}
@@ -98,7 +101,7 @@ function SaleItems() {
         <div className="flex justify-center gap-4">
           {saleItems?.map((item, index) => (
             <div className="w-[25%]" key={index}>
-              <ItemCard product={item} />
+              <ItemCard product={item} refreshGetProduct={refreshGetProduct} />
             </div>
           ))}
         </div>

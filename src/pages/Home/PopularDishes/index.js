@@ -3,7 +3,7 @@ import ItemCard from "../../../components/ItemCard";
 import { useGetProduct } from "../../../service/https";
 
 function PopularDishes() {
-  const { data, mutate: refreshData } = useGetProduct({
+  const { data, mutate: refreshGetProduct } = useGetProduct({
     limit: 4,
     page: 1,
   });
@@ -27,7 +27,11 @@ function PopularDishes() {
       <div className="flex gap-4 justify-center mt-10 container">
         {popularDishesList.map((dish) => (
           <div className="w-[25%]">
-            <ItemCard key={dish.id} product={dish} />
+            <ItemCard
+              key={dish.id}
+              product={dish}
+              refreshGetProduct={refreshGetProduct}
+            />
           </div>
         ))}
       </div>
