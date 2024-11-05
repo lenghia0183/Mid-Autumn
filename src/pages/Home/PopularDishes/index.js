@@ -8,7 +8,7 @@ function PopularDishes() {
     page: 1,
   });
 
-  const popularDishesList = data?.data?.products || [];
+  let popularDishesList = data?.data?.products || [];
 
   return (
     <section

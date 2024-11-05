@@ -21,6 +21,7 @@ import ContactUs from "../pages/Contact";
 import Checkout from "../pages/Checkout";
 import ProductDetail from "../pages/ProductDetail";
 import { checkNotLoggedIn, checkLoggedIn } from "../loaders/authentications";
+import ForgotPassword from "../pages/ForgotPassword";
 
 const router = createBrowserRouter([
   // main layout
@@ -78,6 +79,11 @@ const router = createBrowserRouter([
       {
         path: PATH.SIGN_UP,
         element: <SignUp />,
+        loader: checkLoggedIn,
+      },
+      {
+        path: PATH.FORGOT_PASSWORD,
+        element: <ForgotPassword />,
         loader: checkLoggedIn,
       },
     ],

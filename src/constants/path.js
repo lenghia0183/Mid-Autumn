@@ -4,7 +4,7 @@ export const PATH = {
   AUTH: "/auth",
   LOGIN: "/auth/login",
   SIGN_UP: "/auth/sign-up",
-  FORGOT_PASSWORD: "/forgot-password",
+  FORGOT_PASSWORD: "/auth/forgot-password",
   CART: "/cart",
   TEST: "/test",
   PRODUCTS: "/products",
