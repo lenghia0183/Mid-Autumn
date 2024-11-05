@@ -1,4 +1,4 @@
-import { Outlet } from "react-router-dom";
+import { Outlet, useLocation } from "react-router-dom";
 import Header from "./../../components/Header/index";
 import GoToTop from "./../../components/GoToTop/index";
 import Footer from "./../../components/Footer/index";
@@ -7,16 +7,33 @@ import Breadcrumb from "./../../components/Breadcrumb/index";
 import { PAGE_TITLE, PATH } from "../../constants/path";
 
 function ProfileLayout() {
-  const breadcrumbProfile = [
-    {
-      label: PAGE_TITLE.HOME,
-      to: PATH.HOME,
-    },
-    {
-      label: PAGE_TITLE.PROFILE,
-      to: PATH.PROFILE,
-    },
-  ];
+  const location = useLocation();
+  const currentPath = location.pathname;
+
+  const breadcrumbData = {
+    [PATH.PROFILE_EDIT]: [
+      { label: PAGE_TITLE.HOME, to: PATH.HOME },
+      { label: PAGE_TITLE.PROFILE_EDIT, to: PATH.PROFILE_EDIT },
+    ],
+    [PATH.CHANGE_PASSWORD]: [
+      { label: PAGE_TITLE.HOME, to: PATH.HOME },
+      { label: PAGE_TITLE.CHANGE_PASSWORD, to: PATH.CHANGE_PASSWORD },
+    ],
+    [PATH.ORDER]: [
+      { label: PAGE_TITLE.HOME, to: PATH.HOME },
+      { label: PAGE_TITLE.ORDER, to: PATH.ORDER },
+    ],
+    [PATH.VIEWED_PRODUCTS]: [
+      { label: PAGE_TITLE.HOME, to: PATH.HOME },
+      { label: PAGE_TITLE.VIEWED_PRODUCTS, to: PATH.VIEWED_PRODUCTS },
+    ],
+    [PATH.FAVORITE]: [
+      { label: PAGE_TITLE.HOME, to: PATH.HOME },
+      { label: PAGE_TITLE.FAVORITE, to: PATH.FAVORITE },
+    ],
+  };
+
+  const breadcrumbProfile = breadcrumbData[currentPath] || [];
 
   return (
     <>

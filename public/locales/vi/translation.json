@@ -19,7 +19,13 @@
     "checkout": "Thanh toán",
     "forgot-password": "Quên Mật khẩu",
     "verify-forgot-password-otp": "Xác thực OTP",
-    "reset-password": "Đặt lại mật khẩu"
+    "reset-password": "Đặt lại mật khẩu",
+    "profile": "Thông tin",
+    "me": "Thông tin của bạn",
+    "viewed-products": "Sản phẩm đã xem",
+    "change-password": "Đổi mật khẩu",
+    "order": "Đơn hàng của bạn",
+    "favorites": "Danh sách sản phẩm yêu thích"
   },
 
   "cart": {
