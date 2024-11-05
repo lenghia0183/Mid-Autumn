@@ -24,6 +24,20 @@ function AuthLayout() {
       { label: PAGE_TITLE.HOME, to: PATH.HOME },
       { label: PAGE_TITLE.SIGN_UP, to: PATH.SIGN_UP },
     ],
+    [PATH.FORGOT_PASSWORD]: [
+      { label: PAGE_TITLE.HOME, to: PATH.HOME },
+      { label: PAGE_TITLE.FORGOT_PASSWORD, to: PATH.FORGOT_PASSWORD },
+    ],
+    [PATH.VERIFY_FORGOT_OTP]: [
+      { label: PAGE_TITLE.HOME, to: PATH.HOME },
+      { label: PAGE_TITLE.FORGOT_PASSWORD, to: PATH.FORGOT_PASSWORD },
+      { label: PAGE_TITLE.VERIFY_FORGOT_OTP, to: PATH.VERIFY_FORGOT_OTP },
+    ],
+    [PATH.RESET_PASSWORD]: [
+      { label: PAGE_TITLE.HOME, to: PATH.HOME },
+      { label: PAGE_TITLE.FORGOT_PASSWORD, to: PATH.FORGOT_PASSWORD },
+      { label: PAGE_TITLE.RESET_PASSWORD, to: PATH.RESET_PASSWORD },
+    ],
   };
 
   const breadcrumbAuthLayout = breadcrumbData[currentPath] || [];

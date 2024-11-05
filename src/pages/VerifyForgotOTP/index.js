@@ -27,7 +27,7 @@ function VerifyForgotOTP() {
     otp: "",
   };
 
-  const handleSubmit = async (values) => {
+  const handleSubmit = async (values, { resetForm }) => {
     const convertValue = {
       otp: values.otp,
       tokenForgot: getLocalStorageItem("tokenForgot"),
@@ -42,6 +42,7 @@ function VerifyForgotOTP() {
           setLocalStorageItem("tokenVerifyOtp", response?.data?.tokenVerifyOtp);
           navigate(PATH.RESET_PASSWORD, { replace: true });
         } else {
+          resetForm();
           toast.error(response?.message);
         }
       },

@@ -34,4 +34,7 @@ export const PAGE_TITLE = {
   CONTACT: "pageTitle.contact",
   CHECKOUT: "pageTitle.checkout",
   PRODUCT_DETAIL: "pathTitle.productDetail",
+  FORGOT_PASSWORD: "pageTitle.forgot-password",
+  VERIFY_FORGOT_OTP: "pageTitle.verify-forgot-password-otp",
+  RESET_PASSWORD: "pageTitle.reset-password",
 };

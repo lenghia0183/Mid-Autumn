@@ -16,7 +16,10 @@
     "test": "TEST",
     "cart": "Giỏ hàng",
     "search": "Tìm kiếm",
-    "checkout": "Thanh toán"
+    "checkout": "Thanh toán",
+    "forgot-password": "Quên Mật khẩu",
+    "verify-forgot-password-otp": "Xác thực OTP",
+    "reset-password": "Đặt lại mật khẩu"
   },
 
   "cart": {
