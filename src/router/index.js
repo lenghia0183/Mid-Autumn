@@ -23,6 +23,7 @@ import ProductDetail from "../pages/ProductDetail";
 import { checkNotLoggedIn, checkLoggedIn } from "../loaders/authentications";
 import ForgotPassword from "../pages/ForgotPassword";
 import VerifyForgotOTP from "../pages/VerifyForgotOTP";
+import ResetPassword from "../pages/ResetPassword";
 
 const router = createBrowserRouter([
   // main layout
@@ -90,6 +91,11 @@ const router = createBrowserRouter([
       {
         path: PATH.VERIFY_FORGOT_OTP,
         element: <VerifyForgotOTP />,
+        loader: checkLoggedIn,
+      },
+      {
+        path: PATH.RESET_PASSWORD,
+        element: <ResetPassword />,
         loader: checkLoggedIn,
       },
     ],

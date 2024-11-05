@@ -53,3 +53,11 @@ export const useVerifyForgotOTP = () => {
   };
   return useSWRMutation(url, fetcher);
 };
+
+export const useResetPassword = () => {
+  const url = "v1/auth/reset-password";
+  const fetcher = (url, { arg }) => {
+    return api.post(url, arg);
+  };
+  return useSWRMutation(url, fetcher);
+};

@@ -8,53 +8,50 @@ import validationSchema from "./schema";
 import { useTranslation } from "react-i18next";
 import { TEXTFIELD_ALLOW } from "../../constants/common";
 
-import { useVerifyForgotOTP } from "../../service/https";
+import { useResetPassword } from "../../service/https";
 
 import { useNavigate } from "react-router-dom";
 import { toast } from "react-toastify";
 import Backdrop from "../../components/BackDrop";
-import { getLocalStorageItem, setLocalStorageItem } from "../../utils";
+import { getLocalStorageItem } from "../../utils";
 
-function VerifyForgotOTP() {
+function ResetPassword() {
   const { t } = useTranslation();
-
   const navigate = useNavigate();
 
-  const { trigger: handleVerifyForgotOTP, isMutating: isVerifyForgotLoading } =
-    useVerifyForgotOTP();
+  const { trigger: handleResetPassword, isMutating: isResetPasswordLoading } =
+    useResetPassword();
 
   const initialValues = {
-    otp: "",
+    newPassword: "",
+    confirmPassword: "",
   };
 
   const handleSubmit = async (values) => {
     const convertValue = {
-      otp: values.otp,
-      tokenForgot: getLocalStorageItem("tokenForgot"),
+      newPassword: values.newPassword,
+      tokenVerifyOtp: getLocalStorageItem("tokenVerifyOtp"),
     };
 
-    handleVerifyForgotOTP(convertValue, {
+    handleResetPassword(convertValue, {
       onSuccess: (response) => {
         if (response?.code === 200) {
-          toast.success(
-            "Mã OTP của bạn đã được xác thực thành công, vui lòng tiếp tục đặt lại mật khẩu"
-          );
-          setLocalStorageItem("tokenVerifyOtp", response?.data?.tokenVerifyOtp);
-          navigate(PATH.RESET_PASSWORD, { replace: true });
+          toast.success("Mật khẩu của bạn đã được đặt lại thành công");
+          navigate(PATH.LOGIN, { replace: true });
         } else {
           toast.error(response?.message);
         }
       },
       onError: () => {
-        toast.error("Xác thực OTP thất bại, vui lòng thử lại");
+        toast.error("Đặt lại mật khẩu thất bại, vui lòng thử lại");
       },
     });
   };
 
   return (
     <>
-      <Backdrop open={isVerifyForgotLoading} />
-      <h2 className="text-[40px] text-dark font-medium">Xác thực mã OTP</h2>
+      <Backdrop open={isResetPasswordLoading} />
+      <h2 className="text-[40px] text-dark font-medium">Đặt lại mật khẩu</h2>
 
       <Formik
         initialValues={initialValues}
@@ -63,20 +60,30 @@ function VerifyForgotOTP() {
       >
         <Form>
           <FormikTextField
-            name="otp"
-            label="Nhập mã OTP"
+            name="newPassword"
+            label="Mật khẩu mới"
+            type="password"
             className="mt-10"
-            allow={TEXTFIELD_ALLOW.NUMERIC}
-            inputProps={{ maxLength: 6 }}
+            allow={TEXTFIELD_ALLOW.ALPHANUMERIC_SPECIAL}
+            inputProps={{ minLength: 6 }}
+          />
+
+          <FormikTextField
+            name="confirmPassword"
+            label="Xác nhận mật khẩu mới"
+            type="password"
+            className="mt-6"
+            allow={TEXTFIELD_ALLOW.ALPHANUMERIC_SPECIAL}
+            inputProps={{ minLength: 6 }}
           />
 
           <p className="text-gray-500 mr-2 mt-6 w-[80%]">
-            * Vui lòng nhập mã OTP gồm 6 chữ số mà chúng tôi đã gửi đến địa chỉ
-            email của bạn để hoàn tất quá trình xác thực.
+            * Hãy nhập mật khẩu mới và xác nhận lại để hoàn tất quá trình đặt
+            lại mật khẩu của bạn.
           </p>
 
           <Button type="submit" className="mt-5 px-8 py-3 !text-xl">
-            Xác thực mã OTP
+            Đặt lại mật khẩu
           </Button>
 
           <Button
@@ -103,4 +110,4 @@ function VerifyForgotOTP() {
   );
 }
 
-export default VerifyForgotOTP;
+export default ResetPassword;
