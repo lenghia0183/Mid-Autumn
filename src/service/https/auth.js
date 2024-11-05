@@ -45,3 +45,11 @@ export const useForgotPassword = () => {
 
   return useSWRMutation(url, fetcher);
 };
+
+export const useVerifyForgotOTP = () => {
+  const url = "v1/auth/verify-forgot-password-otp";
+  const fetcher = (url, { arg }) => {
+    return api.post(url, arg);
+  };
+  return useSWRMutation(url, fetcher);
+};

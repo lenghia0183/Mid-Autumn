@@ -1,60 +1,60 @@
 import React from "react";
 import { Formik, Form } from "formik";
 import FormikTextField from "../../components/Formik/FormikTextField";
-import { PATH } from "./../../constants/path";
+import { PATH } from "../../constants/path";
 import Button from "../../components/Button";
 
 import validationSchema from "./schema";
 import { useTranslation } from "react-i18next";
 import { TEXTFIELD_ALLOW } from "../../constants/common";
 
-import { useForgotPassword } from "../../service/https";
+import { useVerifyForgotOTP } from "../../service/https";
 
 import { useNavigate } from "react-router-dom";
 import { toast } from "react-toastify";
 import Backdrop from "../../components/BackDrop";
-import { setLocalStorageItem } from "../../utils";
+import { getLocalStorageItem, setLocalStorageItem } from "../../utils";
 
-function ForgotPassword() {
+function VerifyForgotOTP() {
   const { t } = useTranslation();
 
   const navigate = useNavigate();
 
-  const { trigger: handleForgotPassword, isMutating: isForgotPasswordLoading } =
-    useForgotPassword();
+  const { trigger: handleVerifyForgotOTP, isMutating: isVerifyForgotLoading } =
+    useVerifyForgotOTP();
 
   const initialValues = {
-    email: "",
-    password: "",
+    otp: "",
   };
 
   const handleSubmit = async (values) => {
     const convertValue = {
-      email: values.email,
+      otp: values.otp,
+      tokenForgot: getLocalStorageItem("tokenForgot"),
     };
 
-    handleForgotPassword(convertValue, {
+    handleVerifyForgotOTP(convertValue, {
       onSuccess: (response) => {
         if (response?.code === 200) {
           toast.success(
-            "Chúng tôi đã gửi mã OTP đến email của bạn vui lòng kiểm tra"
+            "Mã OTP của bạn đã được xác thực thành công, vui lòng tiếp tục đặt lại mật khẩu"
           );
-          setLocalStorageItem("tokenForgot", response?.data?.tokenForgot);
-          navigate(PATH.VERIFY_FORGOT_OTP);
+          setLocalStorageItem("tokenVerifyOtp", response?.data?.tokenVerifyOtp);
+          // navigate(PATH.RESET_PASSWORD);
         } else {
           toast.error(response?.message);
         }
       },
       onError: () => {
-        toast.error("Đăng nhập thất bại vui lòng thử lại");
+        toast.error("Xác thực OTP thất bại, vui lòng thử lại");
       },
     });
   };
 
   return (
     <>
-      <Backdrop open={isForgotPasswordLoading} />
-      <h2 className="text-[40px] text-dark font-medium">QUÊN MẬT KHẨU</h2>
+      <Backdrop open={isVerifyForgotLoading} />
+      <h2 className="text-[40px] text-dark font-medium">Xác thực mã OTP</h2>
 
       <Formik
         initialValues={initialValues}
@@ -63,20 +63,20 @@ function ForgotPassword() {
       >
         <Form>
           <FormikTextField
-            name="email"
-            label="Email"
+            name="otp"
+            label="Nhập mã OTP"
             className="mt-10"
-            allow={TEXTFIELD_ALLOW.ALPHANUMERIC_SPECIAL}
+            allow={TEXTFIELD_ALLOW.NUMERIC}
+            inputProps={{ maxLength: 6 }}
           />
 
           <p className="text-gray-500 mr-2 mt-6 w-[80%]">
-            * Chúng tôi sẽ gửi mã xác thực (OTP) đến địa chỉ email mà bạn đã
-            cung cấp. Vui lòng kiểm tra hộp thư để tiếp tục quá trình đặt lại
-            mật khẩu.
+            * Vui lòng nhập mã OTP gồm 6 chữ số mà chúng tôi đã gửi đến địa chỉ
+            email của bạn để hoàn tất quá trình xác thực.
           </p>
 
           <Button type="submit" className="mt-5 px-8 py-3 !text-xl">
-            QUÊN MẬT KHẨU
+            Xác thực mã OTP
           </Button>
 
           <Button
@@ -84,7 +84,7 @@ function ForgotPassword() {
             size="zeroPadding"
             className="text-lg font-semibold text-emerald hover:text-yellow mt-4"
           >
-            - Đăng nhập ngay
+            - Quay lại trang đăng nhập
           </Button>
 
           <div className="flex items-center text-lg mt-4">
@@ -103,4 +103,4 @@ function ForgotPassword() {
   );
 }
 
-export default ForgotPassword;
+export default VerifyForgotOTP;

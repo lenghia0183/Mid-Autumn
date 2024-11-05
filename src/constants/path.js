@@ -5,6 +5,7 @@ export const PATH = {
   LOGIN: "/auth/login",
   SIGN_UP: "/auth/sign-up",
   FORGOT_PASSWORD: "/auth/forgot-password",
+  VERIFY_FORGOT_OTP: "/auth/verify-forgot-password-otp",
   CART: "/cart",
   TEST: "/test",
   PRODUCTS: "/products",
