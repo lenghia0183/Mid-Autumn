@@ -36,3 +36,12 @@ export const useChangePassword = () => {
 
   return useSWRMutation(url, fetcher);
 };
+
+export const useForgotPassword = () => {
+  const url = "v1/auth/forgot-password";
+  const fetcher = (url, { arg }) => {
+    return api.post(url, arg);
+  };
+
+  return useSWRMutation(url, fetcher);
+};

@@ -3,23 +3,25 @@ import { Formik, Form } from "formik";
 import FormikTextField from "../../components/Formik/FormikTextField";
 import { PATH } from "./../../constants/path";
 import Button from "../../components/Button";
-import Icon from "../../components/Icon";
+
 import validationSchema from "./schema";
 import { useTranslation } from "react-i18next";
 import { TEXTFIELD_ALLOW } from "../../constants/common";
 
-import { useLogin, useSocialLogin } from "../../service/https";
-import { useUser } from "../../context/userContext";
+import { useForgotPassword } from "../../service/https";
+
 import { useNavigate } from "react-router-dom";
 import { toast } from "react-toastify";
 import Backdrop from "../../components/BackDrop";
+import { setLocalStorageItem } from "../../utils";
 
 function ForgotPassword() {
   const { t } = useTranslation();
-  const { login } = useUser();
+
   const navigate = useNavigate();
 
-  const { trigger: handleLogin, isMutating: isLoginLoading } = useLogin();
+  const { trigger: handleForgotPassword, isMutating: isForgotPasswordLoading } =
+    useForgotPassword();
 
   const initialValues = {
     email: "",
@@ -29,15 +31,16 @@ function ForgotPassword() {
   const handleSubmit = async (values) => {
     const convertValue = {
       email: values.email,
-      password: values.password,
     };
 
-    handleLogin(convertValue, {
+    handleForgotPassword(convertValue, {
       onSuccess: (response) => {
         if (response?.code === 200) {
-          toast.success("Đăng nhập thành công");
-          navigate(PATH.HOME);
-          login(response?.data);
+          toast.success(
+            "Chúng tôi đã gửi mã OTP đến email của bạn vui lòng kiểm tra"
+          );
+          setLocalStorageItem("tokenForgot", response?.data?.tokenForgot);
+          // navigate(PATH.HOME);
         } else {
           toast.error(response?.message);
         }
@@ -50,7 +53,7 @@ function ForgotPassword() {
 
   return (
     <>
-      <Backdrop open={isLoginLoading} />
+      <Backdrop open={isForgotPasswordLoading} />
       <h2 className="text-[40px] text-dark font-medium">QUÊN MẬT KHẨU</h2>
 
       <Formik
@@ -96,8 +99,6 @@ function ForgotPassword() {
           </div>
         </Form>
       </Formik>
-
-      <div className="flex w-full gap-2 mt-4"></div>
     </>
   );
 }
