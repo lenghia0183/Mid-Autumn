@@ -150,6 +150,7 @@ function ProfileEdit() {
                 onChange={() => {
                   setFieldValue("district", null);
                   setFieldValue("ward", null);
+                  setFieldValue("street", "");
                 }}
                 autoFetch={false}
                 filterActive={true}
@@ -173,6 +174,7 @@ function ProfileEdit() {
                 isEqualValue={(opt, val) => opt?.DistrictID === val?.DistrictID}
                 onChange={() => {
                   setFieldValue("ward", null);
+                  setFieldValue("street", "");
                 }}
                 disabled={!values?.province}
                 autoFetch={false}
@@ -196,7 +198,7 @@ function ProfileEdit() {
                 }}
                 isEqualValue={(opt, val) => opt?.WardCode === val?.WardCode}
                 onChange={() => {
-                  setFieldValue("shipPrice", null);
+                  setFieldValue("street", "");
                 }}
                 autoFetch={false}
                 disabled={!values?.district}
