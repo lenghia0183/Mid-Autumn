@@ -44,7 +44,7 @@ export const CartProvider = ({ children }) => {
         isAdding,
         isDeleting,
         isUpdating,
-
+        isLoading,
         isValidatingGetMyCart,
       }}
     >

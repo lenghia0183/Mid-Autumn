@@ -56,7 +56,6 @@ function Checkout() {
 
   const { cartData, isLoading } = useCart();
 
-  console.log(cartData);
   const items = cartData?.cartDetails || [];
   const initialValues = {
     buyerName: "",
@@ -277,7 +276,7 @@ function Checkout() {
                               label="Tỉnh/Thành phô"
                               asyncRequest={getProvinceDataTest}
                               asyncRequestHelper={(res) => {
-                                return res?.cartData;
+                                return res?.data;
                               }}
                               getOptionsLabel={(opt) => opt?.ProvinceName}
                               isEqualValue={(opt, val) =>
@@ -302,7 +301,7 @@ function Checkout() {
                                 );
                               }}
                               asyncRequestHelper={(res) => {
-                                return res?.cartData;
+                                return res?.data;
                               }}
                               getOptionsLabel={(opt) => {
                                 return opt?.DistrictName;
@@ -330,7 +329,7 @@ function Checkout() {
                                 );
                               }}
                               asyncRequestHelper={(res) => {
-                                return res?.cartData;
+                                return res?.data;
                               }}
                               getOptionsLabel={(opt) => {
                                 return opt?.WardName;
