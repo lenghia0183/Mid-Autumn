@@ -48,6 +48,7 @@ export const CartProvider = ({ children }) => {
         updateCartDetail,
         refreshCart: refreshCartData,
         loading,
+        isAdding,
         isValidatingGetMyCart,
       }}
     >

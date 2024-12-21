@@ -29,7 +29,7 @@ const ItemCard = ({ product, className, refreshGetProduct }) => {
     isFavorite = false,
   } = product;
 
-  const { isLoading, addProductToCart, refreshCart } = useCart();
+  const { isAdding, addProductToCart, refreshCart } = useCart();
 
   const {
     trigger: addProductToFavoriteList,
@@ -67,7 +67,7 @@ const ItemCard = ({ product, className, refreshGetProduct }) => {
 
   return (
     <>
-      <Backdrop open={isLoading || isAddProductToFavoriteListLoading} />
+      <Backdrop open={isAdding || isAddProductToFavoriteListLoading} />
       <div
         className={clsx(
           "group relative shadow-lg rounded-md bg-white-100 border-gray-300 border transition-all duration-300 hover:-translate-y-1 overflow-hidden",
