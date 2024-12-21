@@ -25,15 +25,8 @@ export const CartProvider = ({ children }) => {
     mutate: refreshCart,
   } = useGetMyCart(user.isLoggedIn);
 
-  const loading = useMemo(
-    () =>
-      isLoading ||
-      isAdding ||
-      isDeleting ||
-      isUpdating ||
-      isValidatingGetMyCart,
-    [isLoading, isAdding, isDeleting, isUpdating, isValidatingGetMyCart]
-  );
+  const loading =
+    isLoading || isAdding || isDeleting || isUpdating || isValidatingGetMyCart;
 
   const refreshCartData = useCallback(() => {
     refreshCart();
@@ -49,6 +42,9 @@ export const CartProvider = ({ children }) => {
         refreshCart: refreshCartData,
         loading,
         isAdding,
+        isDeleting,
+        isUpdating,
+
         isValidatingGetMyCart,
       }}
     >

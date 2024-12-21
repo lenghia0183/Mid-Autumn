@@ -25,6 +25,10 @@ function Cart() {
   const {
     cartData,
     isLoading,
+    isAdding,
+    isUpdating,
+    isDeleting,
+    isValidatingGetMyCart,
     updateCartDetail,
     deleteCartDetail,
     refreshCart,
@@ -101,7 +105,9 @@ function Cart() {
 
   return (
     <div>
-      <Backdrop open={isLoading} />
+      <Backdrop
+        open={isAdding || isDeleting || isUpdating || isValidatingGetMyCart}
+      />
       <Breadcrumb items={breadcrumbCart} />
       <div className="bg-white py-14">
         <div className="container bg-white-100 py-4 rounded-md shadow-md">
