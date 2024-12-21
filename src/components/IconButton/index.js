@@ -30,7 +30,7 @@ const IconButton = ({
   height = "",
   to = "",
   href = "",
-  type = "",
+  type = "button",
   ...props
 }) => {
   const baseClasses =

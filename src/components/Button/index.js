@@ -27,6 +27,7 @@ const Button = ({
   full,
   height,
   href,
+  type = "button",
   to,
   ...props
 }) => {
@@ -152,6 +153,7 @@ const Button = ({
       style={{ width, height }}
       to={to}
       href={href}
+      type={type}
       {...props}
     >
       {content()}

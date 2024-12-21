@@ -55,6 +55,7 @@ const Tabs = ({
             className={`${tabClassName} tab-${index} py-2 px-4 text-nowrap ${
               value === index ? "font-semibold text-emerald" : "text-gray-500"
             } transition-all`}
+            type="button"
           >
             {item.label}
             {item.required && <span className="text-red-500 ml-1">*</span>}
