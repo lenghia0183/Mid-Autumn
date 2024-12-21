@@ -31,7 +31,7 @@ import { validateStatus } from "../../utils/api";
 import { toast } from "react-toastify";
 import { useNavigate } from "react-router-dom";
 import Backdrop from "../../components/BackDrop";
-import { useCart } from "../../context";
+import { useCart, useUser } from "../../context";
 
 function Checkout() {
   const { t } = useTranslation();
@@ -40,6 +40,13 @@ function Checkout() {
 
   const [values, setValues] = useState({});
   const { trigger: addOrder, isMutating: isAddOrderLoading } = useAddOrder();
+  const { user: data } = useUser();
+
+  const [userData, setUserData] = useState(data);
+
+  useEffect(() => {
+    setUserData(data.user);
+  }, [data]);
 
   const navigate = useNavigate();
 
@@ -58,9 +65,9 @@ function Checkout() {
 
   const items = cartData?.cartDetails || [];
   const initialValues = {
-    buyerName: "",
-    buyerEmail: "",
-    buyerPhone: "",
+    buyerName: userData?.fullname || "",
+    buyerEmail: userData?.email || "",
+    buyerPhone: userData?.phone || "",
     recipientName: "",
     recipientPhone: "",
     province: null,
@@ -107,14 +114,19 @@ function Checkout() {
           }),
         });
 
-        if (servicePrice && servicePrice.cartData) {
-          setFieldValue("shippingFee", servicePrice.cartData.total);
+        if (servicePrice && servicePrice.data) {
+          setFieldValue("shippingFee", servicePrice.data.total);
         }
       };
 
       fetchServicePrice();
     }
   }, [values?.province, values?.district, values?.ward]);
+
+  const handleCopyInfo = (setFieldValue, values) => {
+    setFieldValue("recipientName", values?.buyerName);
+    setFieldValue("recipientPhone", values?.buyerPhone);
+  };
 
   return (
     <>
@@ -123,6 +135,7 @@ function Checkout() {
       <main className="bg-white">
         <Breadcrumb items={breadcrumbCheckout} />
         <Formik
+          enableReinitialize
           initialValues={initialValues}
           validationSchema={validationSchema(t)}
           innerRef={(f) => {
@@ -166,7 +179,7 @@ function Checkout() {
                 console.log(response);
                 if (validateStatus(response?.code)) {
                   toast.success(response?.message);
-                  window.open(response?.cartData?.payUrl, "_blank");
+                  window.open(response?.data?.payUrl, "_blank");
                   navigate(PATH.HOME);
                 } else {
                   toast.success(response?.message);
@@ -258,6 +271,9 @@ function Checkout() {
                               className="-mt-4 col-span-12"
                               size="zeroPadding"
                               startIcon={<Icon name="copy" size="1em" />}
+                              onClick={() => {
+                                handleCopyInfo(setFieldValue, values);
+                              }}
                             >
                               Sử dụng thông tin người mua hàng
                             </Button>
