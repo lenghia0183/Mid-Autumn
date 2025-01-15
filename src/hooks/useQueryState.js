@@ -171,7 +171,7 @@ export const useQueryState = (initialQuery, { prefix = "" } = {}) => {
       const convertedObj = convertObj(combinedObj);
 
       const newSearch = new URLSearchParams(convertedObj).toString();
-      navigate(`${pathname}?${newSearch}`); // Sử dụng navigate thay vì history.push
+      navigate(`${pathname}?${newSearch}`);
     },
     [
       pathname,

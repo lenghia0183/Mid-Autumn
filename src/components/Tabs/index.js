@@ -25,6 +25,9 @@ const Tabs = ({
     const tab = document.querySelector(`.tab-${value}`);
     if (tab) {
       const { offsetLeft, offsetWidth } = tab;
+
+      console.log("tab", offsetLeft, offsetWidth);
+
       setUnderlineStyle({
         left: offsetLeft,
         width: offsetWidth,

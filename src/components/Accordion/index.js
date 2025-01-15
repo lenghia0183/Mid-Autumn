@@ -40,7 +40,6 @@ const Accordion = ({
     setIsOpen(!isOpen);
   };
 
-  // Điều kiện để hiển thị nút Xem thêm / Thu gọn
   const showToggleButton = contentHeight > newMinHeightStyleValue;
 
   return (
@@ -57,7 +56,6 @@ const Accordion = ({
         {children}
       </div>
 
-      {/* Hiển thị nút Xem thêm / Thu gọn chỉ khi contentHeight lớn hơn minHeight */}
       {showToggleButton && (
         <Button
           onClick={toggleAccordion}
