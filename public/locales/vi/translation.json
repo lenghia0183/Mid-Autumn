@@ -28,7 +28,9 @@
     "invalidEmail": "Email không hợp lệ.",
     "invalidPhoneNumber": "Số điện thoại không hợp lệ",
     "invalidOption": "Lựa chọn không phù hợp",
-    "invalidPassword": "Mật khẩu phải có ít nhất 6 ký tự"
+    "invalidPassword": "Mật khẩu phải có ít nhất 6 ký tự",
+    "invalidOTP": "Mã OTP phải có đúng 6 ký tự",
+    "invalidConfirmPassword": "Mật khẩu xác nhận đang không khớp"
   },
 
   "pageTitle": {
@@ -246,5 +248,46 @@
     "highestRating": "Đánh giá cao nhất",
     "priceAsc": "Giá tăng dần",
     "priceDesc": "Giá giảm dần"
+  },
+  "forgotPassword": {
+    "title": "QUÊN MẬT KHẨU",
+    "email": "Email",
+    "otpMessage": "* Chúng tôi sẽ gửi mã xác thực (OTP) đến địa chỉ email mà bạn đã cung cấp. Vui lòng kiểm tra hộp thư để tiếp tục quá trình đặt lại mật khẩu.",
+    "submitButton": "QUÊN MẬT KHẨU",
+    "loginNow": "- Đăng nhập ngay",
+    "noAccount": "- Bạn chưa có tài khoản?",
+    "signUpNow": "Đăng ký ngay",
+    "toast": {
+      "otpSuccess": "Chúng tôi đã gửi mã OTP đến email của bạn, vui lòng kiểm tra",
+      "forgotFailed": "Quên mật khẩu thất bại, vui lòng thử lại"
+    }
+  },
+  "verifyForgotOTP": {
+    "title": "Xác thực mã OTP",
+    "otpLabel": "Nhập mã OTP",
+    "otpPlaceholder": "Nhập 6 chữ số OTP",
+    "description": "* Vui lòng nhập mã OTP gồm 6 chữ số mà chúng tôi đã gửi đến địa chỉ email của bạn để hoàn tất quá trình xác thực.",
+    "verifyButton": "Xác thực mã OTP",
+    "backToLogin": "- Quay lại trang đăng nhập",
+    "noAccount": "- Bạn chưa có tài khoản?",
+    "signUp": "Đăng ký ngay",
+    "toast": {
+      "successMessage": "Mã OTP của bạn đã được xác thực thành công, vui lòng tiếp tục đặt lại mật khẩu",
+      "errorMessage": "Xác thực OTP thất bại, vui lòng thử lại"
+    }
+  },
+  "resetPassword": {
+    "title": "Đặt lại mật khẩu",
+    "newPassword": "Mật khẩu mới",
+    "confirmPassword": "Xác nhận mật khẩu mới",
+    "description": "* Hãy nhập mật khẩu mới và xác nhận lại để hoàn tất quá trình đặt lại mật khẩu của bạn.",
+    "submitButton": "Đặt lại mật khẩu",
+    "backToLogin": "- Quay lại trang đăng nhập",
+    "noAccount": "- Bạn chưa có tài khoản?",
+    "signUp": "Đăng ký ngay",
+    "successMessage": "Mật khẩu của bạn đã được đặt lại thành công",
+    "toast": {
+      "successMessage": "Mật khẩu của bạn đã được đặt lại thành công"
+    }
   }
 }

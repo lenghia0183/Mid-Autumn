@@ -5,7 +5,7 @@ import { PATH } from "../../constants/path";
 import Button from "../../components/Button";
 
 import validationSchema from "./schema";
-import { useTranslation } from "react-i18next";
+
 import { TEXTFIELD_ALLOW } from "../../constants/common";
 
 import { useVerifyForgotOTP } from "../../service/https";
@@ -14,10 +14,10 @@ import { useNavigate } from "react-router-dom";
 import { toast } from "react-toastify";
 import Backdrop from "../../components/BackDrop";
 import { getLocalStorageItem, setLocalStorageItem } from "../../utils";
+import { useTranslation } from "react-i18next";
 
 function VerifyForgotOTP() {
   const { t } = useTranslation();
-
   const navigate = useNavigate();
 
   const { trigger: handleVerifyForgotOTP, isMutating: isVerifyForgotLoading } =
@@ -36,9 +36,7 @@ function VerifyForgotOTP() {
     handleVerifyForgotOTP(convertValue, {
       onSuccess: (response) => {
         if (response?.code === 200) {
-          toast.success(
-            "Mã OTP của bạn đã được xác thực thành công, vui lòng tiếp tục đặt lại mật khẩu"
-          );
+          toast.success(t("verifyForgotOTP.toast.successMessage"));
           setLocalStorageItem("tokenVerifyOtp", response?.data?.tokenVerifyOtp);
           navigate(PATH.RESET_PASSWORD, { replace: true });
         } else {
@@ -47,7 +45,7 @@ function VerifyForgotOTP() {
         }
       },
       onError: () => {
-        toast.error("Xác thực OTP thất bại, vui lòng thử lại");
+        toast.error(t("verifyForgotOTP.toast.errorMessage"));
       },
     });
   };
@@ -55,7 +53,9 @@ function VerifyForgotOTP() {
   return (
     <>
       <Backdrop open={isVerifyForgotLoading} />
-      <h2 className="text-[40px] text-dark font-medium">Xác thực mã OTP</h2>
+      <h2 className="text-[40px] text-dark font-medium">
+        {t("verifyForgotOTP.title")}
+      </h2>
 
       <Formik
         initialValues={initialValues}
@@ -65,19 +65,20 @@ function VerifyForgotOTP() {
         <Form>
           <FormikTextField
             name="otp"
-            label="Nhập mã OTP"
+            label={t("verifyForgotOTP.otpLabel")}
             className="mt-10"
             allow={TEXTFIELD_ALLOW.NUMERIC}
-            inputProps={{ maxLength: 6 }}
+            inputProps={{
+              maxLength: 6,
+            }}
           />
 
           <p className="text-gray-500 mr-2 mt-6 w-[80%]">
-            * Vui lòng nhập mã OTP gồm 6 chữ số mà chúng tôi đã gửi đến địa chỉ
-            email của bạn để hoàn tất quá trình xác thực.
+            {t("verifyForgotOTP.description")}
           </p>
 
           <Button type="submit" className="mt-5 px-8 py-3 !text-xl">
-            Xác thực mã OTP
+            {t("verifyForgotOTP.verifyButton")}
           </Button>
 
           <Button
@@ -85,17 +86,19 @@ function VerifyForgotOTP() {
             size="zeroPadding"
             className="text-lg font-semibold text-emerald hover:text-yellow mt-4"
           >
-            - Quay lại trang đăng nhập
+            {t("verifyForgotOTP.backToLogin")}
           </Button>
 
           <div className="flex items-center text-lg mt-4">
-            <p className="text-gray-500 mr-2">- Bạn chưa có tài khoản?</p>
+            <p className="text-gray-500 mr-2">
+              {t("verifyForgotOTP.noAccount")}
+            </p>
             <Button
               to={PATH.SIGN_UP}
               size="zeroPadding"
               className="text-lg font-semibold text-emerald hover:text-yellow"
             >
-              Đăng ký ngay
+              {t("verifyForgotOTP.signUp")}
             </Button>
           </div>
         </Form>

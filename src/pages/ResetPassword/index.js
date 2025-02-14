@@ -36,14 +36,14 @@ function ResetPassword() {
     handleResetPassword(convertValue, {
       onSuccess: (response) => {
         if (response?.code === 200) {
-          toast.success("Mật khẩu của bạn đã được đặt lại thành công");
+          toast.success(t("resetPassword.toast.successMessage"));
           navigate(PATH.LOGIN, { replace: true });
         } else {
           toast.error(response?.message);
         }
       },
       onError: () => {
-        toast.error("Đặt lại mật khẩu thất bại, vui lòng thử lại");
+        toast.error(t("common.toast.hasErrorTryAgainLater"));
       },
     });
   };
@@ -51,7 +51,9 @@ function ResetPassword() {
   return (
     <>
       <Backdrop open={isResetPasswordLoading} />
-      <h2 className="text-[40px] text-dark font-medium">Đặt lại mật khẩu</h2>
+      <h2 className="text-[40px] text-dark font-medium">
+        {t("resetPassword.title")}
+      </h2>
 
       <Formik
         initialValues={initialValues}
@@ -61,7 +63,7 @@ function ResetPassword() {
         <Form>
           <FormikTextField
             name="newPassword"
-            label="Mật khẩu mới"
+            label={t("resetPassword.newPassword")}
             type="password"
             className="mt-10"
             allow={TEXTFIELD_ALLOW.ALPHANUMERIC_SPECIAL}
@@ -70,7 +72,7 @@ function ResetPassword() {
 
           <FormikTextField
             name="confirmPassword"
-            label="Xác nhận mật khẩu mới"
+            label={t("resetPassword.confirmPassword")}
             type="password"
             className="mt-6"
             allow={TEXTFIELD_ALLOW.ALPHANUMERIC_SPECIAL}
@@ -78,12 +80,11 @@ function ResetPassword() {
           />
 
           <p className="text-gray-500 mr-2 mt-6 w-[80%]">
-            * Hãy nhập mật khẩu mới và xác nhận lại để hoàn tất quá trình đặt
-            lại mật khẩu của bạn.
+            {t("resetPassword.description")}
           </p>
 
           <Button type="submit" className="mt-5 px-8 py-3 !text-xl">
-            Đặt lại mật khẩu
+            {t("resetPassword.submitButton")}
           </Button>
 
           <Button
@@ -91,17 +92,17 @@ function ResetPassword() {
             size="zeroPadding"
             className="text-lg font-semibold text-emerald hover:text-yellow mt-4"
           >
-            - Quay lại trang đăng nhập
+            {t("resetPassword.backToLogin")}
           </Button>
 
           <div className="flex items-center text-lg mt-4">
-            <p className="text-gray-500 mr-2">- Bạn chưa có tài khoản?</p>
+            <p className="text-gray-500 mr-2">{t("resetPassword.noAccount")}</p>
             <Button
               to={PATH.SIGN_UP}
               size="zeroPadding"
               className="text-lg font-semibold text-emerald hover:text-yellow"
             >
-              Đăng ký ngay
+              {t("resetPassword.signUp")}
             </Button>
           </div>
         </Form>
