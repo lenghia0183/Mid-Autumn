@@ -15,7 +15,12 @@
     "showMenu": "Xem Menu",
     "autumnCake": "Bánh trung thu",
     "inStock": "Còn hàng",
-    "outOfStock": "Hết hàng"
+    "outOfStock": "Hết hàng",
+    "apply": "Áp dụng",
+    "search": "Tìm kiếm",
+    "toast": {
+      "hasErrorTryAgainLater": "Đã có lỗi xảy ra vui lòng thử lại sau"
+    }
   },
 
   "validation": {
@@ -226,5 +231,20 @@
     "compare": "SO SÁNH",
     "related": "SẢN PHẨM LIÊN QUAN",
     "category": "Loại bánh:"
+  },
+  "products": {
+    "category": "Danh mục sản phẩm",
+    "price": "Giá sản phẩm",
+    "minPrice": "Giá tối thiểu",
+    "maxPrice": "Giá tối đa",
+    "brand": "Thương hiệu:",
+    "review": "Đánh giá",
+    "more": "Trở lên",
+    "displayBy": "Hiển thị theo",
+    "latest": "Mới nhất",
+    "bestSeller": "Bán chạy nhất",
+    "highestRating": "Đánh giá cao nhất",
+    "priceAsc": "Giá tăng dần",
+    "priceDesc": "Giá giảm dần"
   }
 }

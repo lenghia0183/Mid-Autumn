@@ -13,8 +13,11 @@ import { useGetManufacturer, useGetProduct } from "../../service/https";
 import Backdrop from "../../components/BackDrop";
 import { useGetCategory } from "../../service/https/category";
 import { filter } from "lodash";
+import { useTranslation } from "react-i18next";
 
 function Products() {
+  const { t } = useTranslation();
+
   const breadcrumbItems = [
     { label: PAGE_TITLE.HOME, to: PATH.HOME },
     { label: PAGE_TITLE.PRODUCT, to: PATH.PRODUCTS },
@@ -53,7 +56,7 @@ function Products() {
     useGetCategory();
 
   // console.log("useGetProduct", useGetProduct());
-  console.log("filters", filters);
+  // console.log("filters", filters);
   // console.log("items", data);
   // console.log("manufacturerList", manufacturerList);
   // console.log("categoryList", categoryList);

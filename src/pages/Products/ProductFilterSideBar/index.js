@@ -9,6 +9,8 @@ import FormikCheckBox from "./../../../components/Formik/FormikCheckBox";
 import Button from "../../../components/Button";
 import Accordion from "../../../components/Accordion";
 import clsx from "clsx";
+import { useTranslation } from "react-i18next";
+import { TEXTFIELD_ALLOW } from "../../../constants";
 
 const ProductFilterSideBar = ({
   values,
@@ -16,6 +18,7 @@ const ProductFilterSideBar = ({
   categoryList,
   manufacturerList,
 }) => {
+  const { t } = useTranslation();
   const ratings = [1, 2, 3, 4, 5];
 
   return (
@@ -26,7 +29,7 @@ const ProductFilterSideBar = ({
           name="keyword"
           rightIcon={<Icon name="search" color="white" />}
           rightIconClassName="bg-emerald"
-          label="Tìm kiếm"
+          label={t("common.search")}
           inputClassName="rounded"
         />
       </div>
@@ -35,7 +38,9 @@ const ProductFilterSideBar = ({
       <div className="p-4 border rounded-md shadow-md bg-white py-6">
         <div className="flex items-center gap-2">
           <Icon name="category" size={1.5} />
-          <h3 className="text-2xl font-medium text-dark">Danh mục sản phẩm</h3>
+          <h3 className="text-2xl font-medium text-dark">
+            {t("products.category")}
+          </h3>
         </div>
 
         <Divider color="dark-300" marginTop="10px" />
@@ -71,7 +76,9 @@ const ProductFilterSideBar = ({
       <div className="p-4 border rounded-md  shadow-md bg-white py-6">
         <div className="flex items-center gap-2">
           <Icon name="coin" size={1.5} color="dark" />
-          <h3 className="text-2xl font-medium text-dark">Giá sản phẩm</h3>
+          <h3 className="text-2xl font-medium text-dark">
+            {t("products.price")}
+          </h3>
         </div>
 
         <Divider color="dark-300" marginTop="10px" />
@@ -80,8 +87,9 @@ const ProductFilterSideBar = ({
           <div className="flex-1">
             <FormikTextField
               name="minPrice"
+              allow={TEXTFIELD_ALLOW.POSITIVE_DECIMAL}
               rightIconClass="bg-emerald"
-              label="Giá tối thiểu"
+              label={t("products.minPrice")}
               inputClass="rounded text-base"
               labelClass="text-base rounded"
             />
@@ -97,8 +105,9 @@ const ProductFilterSideBar = ({
           <div className="flex-1">
             <FormikTextField
               name="maxPrice"
+              allow={TEXTFIELD_ALLOW.POSITIVE_DECIMAL}
               rightIconClass="bg-emerald"
-              label="Giá tối đa"
+              label={t("products.maxPrice")}
               inputClass="text-base"
               labelClass="text-base"
             />
@@ -111,7 +120,7 @@ const ProductFilterSideBar = ({
           full
           className="mt-5 hover:text-dark"
         >
-          Áp dụng
+          {t("common.apply")}
         </Button>
       </div>
 
@@ -119,7 +128,9 @@ const ProductFilterSideBar = ({
       <div className="p-4 border rounded-md  shadow-md bg-white py-6">
         <div className="flex items-center gap-2">
           <Icon name="vendor" size={1.5} />
-          <h3 className="text-2xl font-medium text-dark">Thương hiệu</h3>
+          <h3 className="text-2xl font-medium text-dark">
+            {t("products.brand")}
+          </h3>
         </div>
 
         <Divider color="dark-300" marginTop="10px" />
@@ -137,7 +148,9 @@ const ProductFilterSideBar = ({
       <div className="p-4 border rounded-md  shadow-md bg-white py-6">
         <div className="flex items-center gap-2">
           <Icon name="rating" size={1.5} color="dark" />
-          <h3 className="text-2xl font-medium text-dark">Đánh giá</h3>
+          <h3 className="text-2xl font-medium text-dark">
+            {t("products.review")}
+          </h3>
         </div>
 
         <Divider color="dark-300" marginTop="10px" />
@@ -176,7 +189,7 @@ const ProductFilterSideBar = ({
                   ))}
                 </div>
                 <span className="text-lg text-dark font-medium ml-2">
-                  {rating === 5 ? "" : "Trở lên"}
+                  {rating === 5 ? "" : t("products.more")}
                 </span>
               </label>
             ))}
@@ -190,7 +203,7 @@ const ProductFilterSideBar = ({
           full
           className="hover:text-dark"
         >
-          Tìm kiếm
+          {t("common.search")}
         </Button>
       </div>
 

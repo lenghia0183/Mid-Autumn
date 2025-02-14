@@ -124,7 +124,9 @@ function ProductDetail() {
                 <p className="text-xl font-medium mt-3">
                   {t("productDetail.status")}{" "}
                   <span className="text-emerald">
-                    {itemDetail?.inStock ? "Còn hàng" : "Hết hàng"}
+                    {itemDetail?.inStock
+                      ? t("common.inStock")
+                      : t("common.outOfStock")}
                   </span>
                 </p>
 
@@ -178,7 +180,7 @@ function ProductDetail() {
                             },
                             onError: () => {
                               toast.error(
-                                "Thêm sản phẩm vào giỏ hàng thất bại vui lòng thử lại"
+                                t("common.toast.hasErrorTryAgainLater")
                               );
                             },
                           }
