@@ -10,6 +10,11 @@
     "saveChange": "Lưu thay đổi"
   },
 
+  "validation": {
+    "required": "Trường này là bắt buộc.",
+    "invalidEmail": "Email không hợp lệ."
+  },
+
   "pageTitle": {
     "home": "Trang chủ",
     "about": "Giới thiệu",
@@ -128,5 +133,15 @@
       "confirmPasswordMismatch": "Mật khẩu xác nhận không khớp",
       "confirmPasswordRequired": "Xác nhận mật khẩu là bắt buộc"
     }
+  },
+  "profile": {
+    "title": "Thông tin tài khoản",
+    "name": "Họ và tên",
+    "email": "Email",
+    "phone": "Số điện thoại",
+    "provine": "Tỉnh/Thành phố:",
+    "district": "Quận/Huyện:",
+    "ward": "Phường/Xã",
+    "street": "Tên đường"
   }
 }

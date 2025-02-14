@@ -1,14 +1,36 @@
 import * as Yup from "yup";
+import { isEmpty, isObject } from "lodash";
 
-const validationSchema = (t) => {
-  return Yup.object({
-    name: Yup.string().required("Họ Tên là bắt buộc"),
+const validationSchema = (t) =>
+  Yup.object().shape({
+    name: Yup.string().required(t("validation.required")),
     email: Yup.string()
-      .email("Email không hợp lệ")
-      .required("Email là bắt buộc"),
-    phone: Yup.string().required("Điện Thoại là bắt buộc"),
-    // address: Yup.string().required("Địa chỉ là bắt buộc"),
+      .email(t("validation.invalidEmail"))
+      .required(t("validation.required")),
+    phone: Yup.string().required(t("validation.required")),
+
+    province: Yup.object()
+      .nullable()
+      .required(t("validation.required"))
+      .test("provinceRequired", t("validation.required"), (value) => {
+        return isObject(value) && !isEmpty(value);
+      }),
+
+    district: Yup.object()
+      .nullable()
+      .required(t("validation.required"))
+      .test("districtRequired", t("validation.required"), (value) => {
+        return isObject(value) && !isEmpty(value);
+      }),
+
+    ward: Yup.object()
+      .nullable()
+      .required(t("validation.required"))
+      .test("wardRequired", t("validation.required"), (value) => {
+        return isObject(value) && !isEmpty(value);
+      }),
+
+    street: Yup.string().required(t("validation.required")),
   });
-};
 
 export default validationSchema;

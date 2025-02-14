@@ -34,18 +34,24 @@ function ProfileEdit() {
     name: userData?.fullname,
     email: userData?.email,
     phone: userData?.phone,
-    province: {
-      ProvinceID: userData?.address?.province.provinceId,
-      ProvinceName: userData?.address?.province.provinceName,
-    },
-    district: {
-      DistrictID: userData?.address?.district.districtId,
-      DistrictName: userData?.address?.district.districtName,
-    },
-    ward: {
-      WardCode: userData?.address?.ward?.wardCode,
-      WardName: userData?.address?.ward?.wardName,
-    },
+    province: userData?.address?.province
+      ? {
+          ProvinceID: userData?.address?.province.provinceId,
+          ProvinceName: userData?.address?.province.provinceName,
+        }
+      : null,
+    district: userData?.address?.district
+      ? {
+          DistrictID: userData?.address?.district.districtId,
+          DistrictName: userData?.address?.district.districtName,
+        }
+      : null,
+    ward: userData?.address?.ward
+      ? {
+          WardCode: userData?.address?.ward?.wardCode,
+          WardName: userData?.address?.ward?.wardName,
+        }
+      : null,
     street: userData?.address?.street,
   };
 
@@ -96,7 +102,7 @@ function ProfileEdit() {
   return (
     <div className="xl:p-4">
       <h2 className="text-2xl font-semibold text-dark shadow-md p-4">
-        Thông tin tài khoản
+        {t("profile.title")}
       </h2>
       <Formik
         enableReinitialize
@@ -110,7 +116,7 @@ function ProfileEdit() {
               <FormikTextField
                 name="name"
                 labelWidth={"150px"}
-                label="Họ Và Tên:"
+                label={t("profile.name")}
                 orientation={isLargerThanSm ? "horizontal" : "vertical"}
                 labelClassName="font-medium"
                 required
@@ -120,7 +126,7 @@ function ProfileEdit() {
               <FormikTextField
                 name="email"
                 labelWidth={"150px"}
-                label="Email:"
+                label={t("profile.email")}
                 orientation={isLargerThanSm ? "horizontal" : "vertical"}
                 labelClassName="font-medium"
                 disabled
@@ -130,7 +136,7 @@ function ProfileEdit() {
               <FormikTextField
                 name="phone"
                 labelWidth={"150px"}
-                label="Điện Thoại:"
+                label={t("profile.phone")}
                 orientation={isLargerThanSm ? "horizontal" : "vertical"}
                 labelClassName="font-medium"
                 required
@@ -138,7 +144,7 @@ function ProfileEdit() {
 
               <FormikAutoComplete
                 name="province"
-                label="Tỉnh/Thành phô"
+                label={t("profile.province")}
                 orientation={isLargerThanSm ? "horizontal" : "vertical"}
                 labelWidth={"150px"}
                 asyncRequest={getProvinceDataTest}
@@ -160,7 +166,7 @@ function ProfileEdit() {
               <FormikAutoComplete
                 labelWidth={"150px"}
                 name="district"
-                label="Quận/Huyện:"
+                label={t("profile.district")}
                 orientation={isLargerThanSm ? "horizontal" : "vertical"}
                 asyncRequest={() => {
                   return getDistrictDataTest(values?.province?.ProvinceID);
@@ -185,7 +191,7 @@ function ProfileEdit() {
               <FormikAutoComplete
                 labelWidth={"150px"}
                 name="ward"
-                label="Phường/Xã"
+                label={t("profile.ward")}
                 orientation={isLargerThanSm ? "horizontal" : "vertical"}
                 asyncRequest={() => {
                   return getWardDataTest(values?.district?.DistrictID);
@@ -210,7 +216,7 @@ function ProfileEdit() {
               <FormikTextField
                 name="street"
                 labelWidth={"150px"}
-                label="Tên đường:"
+                label={t("profile.street")}
                 orientation={isLargerThanSm ? "horizontal" : "vertical"}
                 labelClassName="font-medium"
                 required
@@ -219,11 +225,11 @@ function ProfileEdit() {
             <div className="flex mt-10">
               <div className="flex gap-4 ml-auto">
                 <Button type="button" onClick={() => resetForm()}>
-                  Hủy
+                  {t("common.cancel")}
                 </Button>
 
                 <Button type="submit" className="">
-                  Lưu Thông Tin
+                  {t("common.saveChange")}
                 </Button>
               </div>
             </div>
