@@ -30,7 +30,7 @@
     "invalidOption": "Lựa chọn không phù hợp",
     "invalidPassword": "Mật khẩu phải có ít nhất 6 ký tự",
     "invalidOTP": "Mã OTP phải có đúng 6 ký tự",
-    "invalidConfirmPassword": "Mật khẩu xác nhận đang không khớp"
+    "invalidConfirmPassword": "Mật khẩu xác nhận không khớp."
   },
 
   "pageTitle": {
@@ -249,6 +249,7 @@
     "priceAsc": "Giá tăng dần",
     "priceDesc": "Giá giảm dần"
   },
+
   "forgotPassword": {
     "title": "QUÊN MẬT KHẨU",
     "email": "Email",
