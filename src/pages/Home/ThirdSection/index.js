@@ -1,8 +1,10 @@
+import { useTranslation } from "react-i18next";
 import images from "../../../asset/images";
 import Button from "../../../components/Button";
 import { PATH } from "../../../constants/path";
 
 function ThirdSection() {
+  const { t } = useTranslation();
   return (
     <section
       style={{
@@ -20,9 +22,11 @@ function ThirdSection() {
         className="h-full w-full absolute inset-0 pointer-events-none"
       ></div>
       <div className="text-center xl:w-[35%] p-10 z-[1000]">
-        <p className="text-xl text-yellow font-semibold">Mid Autumn Festival</p>
+        <p className="text-xl text-yellow font-semibold">
+          {t("common.midAutumnFestival")}
+        </p>
         <h2 className="xl:text-[50px] text-[35px]  font-semibold text-white mt-3">
-          ĂN BÁNH TRUNG THU NGỌT NGÀO
+          {t("common.sweetCakes")}
         </h2>
         <Button
           rounded
@@ -34,7 +38,7 @@ function ThirdSection() {
           to={PATH.PRODUCTS}
           className="m-auto font-semibold px-10 mt-5"
         >
-          XEM MENU
+          {t("common.showMenu")}
         </Button>
       </div>
     </section>

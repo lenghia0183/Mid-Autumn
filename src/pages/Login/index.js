@@ -1,7 +1,7 @@
 import React from "react";
 import { Formik, Form } from "formik";
 import FormikTextField from "../../components/Formik/FormikTextField";
-import { PATH } from "./../../constants/path";
+import { PATH } from "../../constants/path";
 import Button from "../../components/Button";
 import Icon from "../../components/Icon";
 import validationSchema from "./schema";
@@ -42,7 +42,7 @@ function Login() {
     handleLogin(convertValue, {
       onSuccess: (response) => {
         if (response?.code === 200) {
-          toast.success("Đăng nhập thành công");
+          toast.success(t("login.success"));
           navigate(PATH.HOME);
           login(response?.data);
         } else {
@@ -50,7 +50,7 @@ function Login() {
         }
       },
       onError: () => {
-        toast.error("Đăng nhập thất bại vui lòng thử lại");
+        toast.error(t("login.failed"));
       },
     });
   };
@@ -65,21 +65,20 @@ function Login() {
       handleSocialLogin(idToken, {
         onSuccess: (response) => {
           if (response?.code === 200) {
-            toast.success("Đăng nhập thành công");
+            toast.success(t("login.toast.success"));
+
             navigate(PATH.HOME);
             login(response?.data);
           } else {
             toast.error(response?.message);
           }
         },
-        onError: (error) => {
-          console.log("error", error);
-          toast.error("Đăng nhập thất bại vui lòng thử lại");
+        onError: () => {
+          toast.error(t("login.toast.failed"));
         },
       });
     } catch (error) {
-      toast.error("Có lỗi xảy ra vui lòng thử lại");
-      console.log("error", error);
+      toast.error(t("login.toast.error"));
     }
   };
 
@@ -91,26 +90,26 @@ function Login() {
       handleSocialLogin(idToken, {
         onSuccess: (response) => {
           if (response?.code === 200) {
-            toast.success("Đăng nhập thành công");
+            toast.success(t("login.toast.success"));
             navigate(PATH.HOME);
             login(response?.data);
           } else {
             toast.error(response?.message);
           }
         },
-        onError: (error) => {
-          toast.error("Đăng nhập thất bại vui lòng thử lại");
+        onError: () => {
+          toast.error(t("login.toast.failed"));
         },
       });
     } catch (error) {
-      toast.error("Có lỗi xảy ra vui lòng thử lại");
+      toast.error(t("login.toast.error"));
     }
   };
 
   return (
     <>
       <Backdrop open={isLoginLoading || isSocialLoginLoading} />
-      <h2 className="text-[40px] text-dark font-medium">ĐĂNG NHẬP</h2>
+      <h2 className="text-[40px] text-dark font-medium">{t("login.title")}</h2>
 
       <Formik
         initialValues={initialValues}
@@ -120,13 +119,13 @@ function Login() {
         <Form>
           <FormikTextField
             name="email"
-            label="Email"
+            label={t("login.email")}
             className="mt-10"
             allow={TEXTFIELD_ALLOW.ALPHANUMERIC_SPECIAL}
           />
           <FormikTextField
             name="password"
-            label="Mật khẩu"
+            label={t("login.password")}
             type="password"
             className="mt-10"
             allow={TEXTFIELD_ALLOW.ALPHANUMERIC_SPECIAL}
@@ -134,7 +133,7 @@ function Login() {
           />
 
           <Button type="submit" className="mt-10 px-8 py-3 !text-xl">
-            ĐĂNG NHẬP
+            {t("login.title")}
           </Button>
 
           <Button
@@ -142,17 +141,17 @@ function Login() {
             size="zeroPadding"
             className="text-lg font-semibold text-emerald hover:text-yellow mt-4"
           >
-            - Bạn quên mật khẩu
+            - {t("login.forgotPassword")}
           </Button>
 
           <div className="flex items-center text-lg mt-2">
-            <p className="text-gray-500 mr-2">- Bạn chưa có tài khoản?</p>
+            <p className="text-gray-500 mr-2">- {t("login.noAccount")}</p>
             <Button
               to={PATH.SIGN_UP}
               size="zeroPadding"
               className="text-lg font-semibold text-emerald hover:text-yellow"
             >
-              Đăng ký ngay
+              {t("login.register")}
             </Button>
           </div>
         </Form>

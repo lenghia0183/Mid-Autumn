@@ -1,8 +1,10 @@
+import { useTranslation } from "react-i18next";
 import images from "../../../asset/images";
 import ItemCard from "../../../components/ItemCard";
 import { useGetProduct } from "../../../service/https";
 
 function PopularDishes() {
+  const { t } = useTranslation();
   const { data, mutate: refreshGetProduct } = useGetProduct({
     limit: 4,
     page: 1,
@@ -18,10 +20,10 @@ function PopularDishes() {
       }}
     >
       <h4 className="sm:text-xl text-lg text-emerald font-medium text-center pt-4">
-        Mid Autumn Festival
+        {t("common.midAutumnFestival")}
       </h4>
       <h2 className="xl:text-[42px] text-3xl font-semibold text-dark text-center mt-2">
-        MÓN PHỔ BIẾN
+        {t("common.popularDishes")}
       </h2>
 
       <div className="flex gap-4 justify-center mt-10 container">
