@@ -12,7 +12,10 @@
     "send": "Gửi đi",
     "popularDishes": "MÓN PHỔ BIẾN",
     "sweetCakes": "ĂN BÁNH TRUNG THU NGỌT NGÀO",
-    "showMenu": "Xem Menu"
+    "showMenu": "Xem Menu",
+    "autumnCake": "Bánh trung thu",
+    "inStock": "Còn hàng",
+    "outOfStock": "Hết hàng"
   },
 
   "validation": {
@@ -207,5 +210,21 @@
       "failed": "Đăng nhập thất bại, vui lòng thử lại",
       "error": "Có lỗi xảy ra, vui lòng thử lại"
     }
+  },
+  "productDetail": {
+    "productInfo": "Thông tin sản phẩm",
+    "comment": "Bình Luận",
+    "toast": {
+      "addProductToCartFailed": "Thêm sản phẩm vào giỏ hàng thất bại vui lòng thử lại"
+    },
+    "status": "Tình trạng tồn kho:",
+    "brand": "Thương hiệu:",
+    "productCode": "Mã sản phẩm:",
+    "addToCart": "THÊM VÀO GIỎ HÀNG",
+    "addToFavorite": "YÊU THÍCH",
+    "removeFromFavorite": "BỎ YÊU THÍCH",
+    "compare": "SO SÁNH",
+    "related": "SẢN PHẨM LIÊN QUAN",
+    "category": "Loại bánh:"
   }
 }

@@ -17,10 +17,11 @@ import { useAddProductToCart } from "../../service/https/cart";
 import { toast } from "react-toastify";
 import { validateStatus } from "../../utils/api";
 import { useAddProductToFavoriteList } from "./../../service/https/favorite";
+import { useTranslation } from "react-i18next";
 
 function ProductDetail() {
   const params = useParams();
-
+  const { t } = useTranslation();
   const {
     data: itemDetail,
     isLoading: isGetProductDetailLoading,
@@ -35,11 +36,11 @@ function ProductDetail() {
   } = useAddProductToFavoriteList(params.productId);
   const productDetailBreadcrumbs = [
     {
-      label: "Trang chủ",
+      label: t("pageTitle.home"),
       to: PATH.HOME,
     },
     {
-      label: "Sản phẩm",
+      label: t("pageTitle.product"),
       to: PATH.PRODUCTS,
     },
     {
@@ -54,7 +55,7 @@ function ProductDetail() {
 
   const tagList = [
     {
-      label: "Bánh trung thu",
+      label: t("common.autumnCake"),
       to: PATH.PRODUCTS,
     },
     {
@@ -68,8 +69,8 @@ function ProductDetail() {
   ];
 
   const tabList = [
-    { label: "Thông tin sản phẩm", value: "product-info" },
-    { label: "Bình Luận", value: "product-info" },
+    { label: t("productDetail.productInfo"), value: "product-info" },
+    { label: t("productDetail.comment"), value: "product-info" },
   ];
 
   return (
@@ -99,9 +100,7 @@ function ProductDetail() {
               }
             },
             onError: () => {
-              toast.error(
-                "Thêm sản phẩm vào giỏ hàng thất bại vui lòng thử lại"
-              );
+              toast.error(t("productDetail.toast.addProductToCartFailed"));
             },
           });
         }}
@@ -123,7 +122,7 @@ function ProductDetail() {
                   {itemDetail?.name}
                 </h1>
                 <p className="text-xl font-medium mt-3">
-                  Tình trạng tồn kho:{" "}
+                  {t("productDetail.status")}{" "}
                   <span className="text-emerald">
                     {itemDetail?.inStock ? "Còn hàng" : "Hết hàng"}
                   </span>
@@ -131,14 +130,14 @@ function ProductDetail() {
 
                 <div className="sm:flex gap-2 text-xl font-medium xl:mt-3 mt-3">
                   <p>
-                    Thương hiệu:
+                    {t("productDetail.brand")}
                     <span className="text-emerald ml-3">
                       {itemDetail?.manufacturerId?.name}
                     </span>
                   </p>
                   <p className="sm:inline-block hidden">|</p>
                   <p className="mt-1 xl:mt-0">
-                    Mã sản phẩm:
+                    {t("productDetail.productCode")}
                     <span className="text-emerald ml-3">
                       {itemDetail?.code}
                     </span>
@@ -158,7 +157,9 @@ function ProductDetail() {
                     />
                   </div>
                   <div className="flex gap-3">
-                    <Button className="flex-shrink-0 text-xl">SO SÁNH</Button>
+                    <Button className="flex-shrink-0 text-xl">
+                      {t("productDetail.compare")}
+                    </Button>
                     <Button
                       className="flex-shrink-0 text-xl"
                       type="button"
@@ -184,7 +185,9 @@ function ProductDetail() {
                         );
                       }}
                     >
-                      {itemDetail?.isFavorite ? "BỎ YÊU THÍCH" : "YÊU THÍCH"}
+                      {itemDetail?.isFavorite
+                        ? t("productDetail.removeFromFavorite")
+                        : t("productDetail.addToFavorite")}
                     </Button>
                   </div>
                 </div>
@@ -197,7 +200,7 @@ function ProductDetail() {
                   size="large"
                   className="sm:mt-5 mt-3 text-xl font-semibold"
                 >
-                  THÊM VÀO GIỎ HÀNG
+                  {t("productDetail.addToCart")}
                 </Button>
 
                 <div className="shadow-sm sm:mt-5 mt-3 flex items-center gap-4 py-2 px-3">
@@ -224,16 +227,18 @@ function ProductDetail() {
                 <Tabs className="sm:mt-5 mt-3" list={tabList} divider={true}>
                   <div className="text-dark-400 text-lg flex flex-col gap-3">
                     <p>
-                      Thương hiệu:{" "}
+                      {t("productDetail.brand")}{" "}
                       <span>{itemDetail?.manufacturerId?.name}</span>
                     </p>
 
                     <p>
-                      Loại bánh: <span>{itemDetail?.categoryId?.name}</span>
+                      {t("productDetail.category")}{" "}
+                      <span>{itemDetail?.categoryId?.name}</span>
                     </p>
 
                     <p>
-                      Mã sản phẩm: <span>{itemDetail?.code}</span>
+                      {t("productDetail.productCode")}{" "}
+                      <span>{itemDetail?.code}</span>
                     </p>
 
                     <p>{itemDetail?.description}</p>
@@ -244,7 +249,7 @@ function ProductDetail() {
 
               <div className="col-span-12 sm:mt-14">
                 <h2 className="text-emerald text-[35px] font-medium">
-                  SẢN PHẨM LIÊN QUAN
+                  {t("productDetail.related")}
                 </h2>
                 <Divider color="emerald" height="2px" />
 
