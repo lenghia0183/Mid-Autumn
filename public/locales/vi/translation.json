@@ -2,7 +2,12 @@
   "common": {
     "byNow": "MUA NGAY",
     "midAutumnFestival": "Mid Autumn Festival",
-    "register": "Đăng ký"
+    "register": "Đăng ký",
+    "showMore": "Xem thêm",
+    "hidden": "Thu gọn",
+    "loading": "Đang tải...",
+    "cancel": "Hủy bỏ",
+    "saveChange": "Lưu thay đổi"
   },
 
   "pageTitle": {
@@ -93,6 +98,35 @@
     "email": {
       "title": "Đăng ký email nhận tin khuyến mãi",
       "inputPlaceholder": "Địa chỉ email..."
+    }
+  },
+  "about": {
+    "introduction": "Giới thiệu",
+    "mission": "Tầm nhìn và sứ mệnh",
+    "staff": "Đội ngũ nhân viên",
+    "desc01": "Chúng tôi xin chân thành cảm ơn sự quan tâm của quý khách hàng trong suốt thời gian qua đã ủng hộ tin tưởng sản phẩm của chúng tôi!",
+    "desc02": "Trung Thu năm nay, ấn tượng nhất về sự đầu tư, sáng tạo của Kinh Đô là dòng sản phẩm thượng hạng Trăng Vàng. Với ý nghĩa châu báu của đời người là tình thân và các mối giao hảo, Kinh Đô ra mắt bộ sưu tập Trăng Vàng với các bộ sản phẩm hoàn toàn mới: Trăng Vàng Kim Cương, Trăng Vàng Bạch Kim, Trăng Vàng Hoàng Kim, Trăng Vàng Hồng Ngọc cùng các hương vị bánh mới với thành phần nguyên liệu thượng hạng như: Sò điệp Nhật xốt X.O, Cua Huỳnh Đế, Tôm Càng Bách Hoa, Gà quay Tứ Quý.",
+    "desc03": "Chúng tôi cũng là một trong những thương hiệu bánh được người tiêu dùng bình chọn là hàng Việt Nam chất lượng cao. Thành công đó có được là nhờ những phấn đấu không ngừng có mặt trên thị trường của tập thể quản lý, nhân viên và thợ làm bánh.",
+    "desc04": "Nhưng trên hết, chúng tôi mong muốn gửi đến Quý khách hàng lời cảm ơn chân thành nhất vì đã ủng hộ thương hiệu bánh trong suốt thời gian vừa qua. Chúng tôi tin tưởng với sự cố gắng của mình và sự ưu ái của Quý khách hàng, chúng tôi sẽ không ngừng lớn mạnh để phục vụ người tiêu dùng ngày càng tốt hơn.",
+    "desc05": "Chúng tôi hướng đến việc trở thành thương hiệu bánh Trung Thu số 1 tại Việt Nam, với cam kết mang đến những sản phẩm thượng hạng, an toàn và sáng tạo, để làm hài lòng mọi khách hàng.",
+    "desc06": "Sứ mệnh của chúng tôi là không ngừng sáng tạo, nâng cao chất lượng và mang đến những trải nghiệm tuyệt vời cho khách hàng trong từng sản phẩm, vì tình thân và các mối giao hảo.",
+    "desc07": "Chúng tôi tin rằng sự thành công không chỉ đến từ việc cung cấp sản phẩm chất lượng mà còn từ sự tận tâm trong từng khâu sản xuất, đóng gói, và phục vụ khách hàng. Từng chiếc bánh mà chúng tôi tạo ra đều là một tác phẩm nghệ thuật, chứa đựng không chỉ hương vị mà còn cả tình yêu và sự tôn trọng đối với khách hàng.",
+    "desc08": "Trong tương lai, chúng tôi sẽ không ngừng phát triển và nâng cấp quy trình sản xuất, áp dụng công nghệ hiện đại để mang đến cho người tiêu dùng những trải nghiệm tốt nhất. Đồng thời, chúng tôi cam kết bảo vệ môi trường, tối ưu hóa sử dụng nguồn tài nguyên, và luôn đồng hành cùng sự phát triển bền vững.",
+    "desc09": "Mỗi sản phẩm không chỉ là một món quà ý nghĩa trong dịp Trung Thu, mà còn là một biểu tượng của tình cảm và sự gắn kết mà chúng tôi muốn truyền tải đến mỗi gia đình Việt Nam. Với tầm nhìn xa rộng và sứ mệnh vững chắc, chúng tôi mong muốn mang đến những giá trị lâu dài, tạo nên niềm tin và sự yêu thương từ người tiêu dùng.",
+    "desc10": "Không quá cầu kì, bánh trung thu mang nét mộc mạc, đặc trưng làm say lòng không biết bao thế hệ người thưởng thức."
+  },
+  "changePassword": {
+    "title": "Đổi mật khẩu",
+    "currentPassword": "Mật khẩu hiện tại",
+    "newPassword": "Mật khẩu mới",
+    "confirmPassword": "Xác nhận mật khẩu",
+    "submit": "Xác nhận",
+    "errors": {
+      "currentPasswordRequired": "Mật khẩu hiện tại là bắt buộc",
+      "newPasswordMin": "Mật khẩu mới phải có ít nhất 6 ký tự",
+      "newPasswordRequired": "Mật khẩu mới là bắt buộc",
+      "confirmPasswordMismatch": "Mật khẩu xác nhận không khớp",
+      "confirmPasswordRequired": "Xác nhận mật khẩu là bắt buộc"
     }
   }
 }

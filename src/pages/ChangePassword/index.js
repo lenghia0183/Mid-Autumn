@@ -15,7 +15,6 @@ function ChangePassword() {
 
   const { trigger: handleChangePassword } = useChangePassword();
 
-  // Initial values with empty fields
   const initialValues = {
     currentPassword: "",
     newPassword: "",
@@ -23,7 +22,6 @@ function ChangePassword() {
   };
 
   const handleSubmit = (values, { resetForm }) => {
-    // Handle form submission
     handleChangePassword(
       {
         currentPassword: values.currentPassword,
@@ -50,7 +48,7 @@ function ChangePassword() {
   return (
     <div className="xl:p-4">
       <h2 className="text-2xl font-semibold text-dark shadow-md p-4">
-        Đổi Mật Khẩu
+        {t("changePassword.title")}
       </h2>
       <Formik
         initialValues={initialValues}
@@ -62,7 +60,7 @@ function ChangePassword() {
             <div className="flex flex-col gap-6 sm:gap-y-6 gap-y-14 sm:mt-7 mt-14">
               <FormikTextField
                 name="currentPassword"
-                label="Mật khẩu hiện tại:"
+                label={t("changePassword.currentPassword")}
                 type="password"
                 orientation={isLargerThanSm ? "horizontal" : "vertical"}
                 labelWidth="200px"
@@ -73,7 +71,7 @@ function ChangePassword() {
 
               <FormikTextField
                 name="newPassword"
-                label="Mật khẩu mới:"
+                label={t("changePassword.newPassword")}
                 type="password"
                 orientation={isLargerThanSm ? "horizontal" : "vertical"}
                 labelWidth="200px"
@@ -84,7 +82,7 @@ function ChangePassword() {
 
               <FormikTextField
                 name="confirmPassword"
-                label="Xác nhận mật khẩu mới:"
+                label={t("changePassword.confirmPassword")}
                 type="password"
                 orientation={isLargerThanSm ? "horizontal" : "vertical"}
                 labelWidth="200px"
@@ -99,11 +97,11 @@ function ChangePassword() {
                   type="button"
                   onClick={() => resetForm()} // Reset form on button click
                 >
-                  Hủy
+                  {t("common.cancel")}
                 </Button>
 
                 <Button type="submit" className="">
-                  Lưu Thay Đổi
+                  {t("common.saveChange")}
                 </Button>
               </div>
             </div>

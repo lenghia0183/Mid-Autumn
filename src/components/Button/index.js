@@ -4,6 +4,7 @@ import clsx from "clsx";
 import Loading from "../Loading";
 import useColorClasses from "../../hooks/useColorClasses";
 import { Link } from "react-router-dom";
+import { useTranslation } from "react-i18next";
 
 const Button = ({
   children,
@@ -31,6 +32,8 @@ const Button = ({
   to,
   ...props
 }) => {
+  const { t } = useTranslation();
+
   const isLink = Boolean(to || href);
 
   const baseClasses =
@@ -122,7 +125,7 @@ const Button = ({
       {loading ? (
         <>
           <Loading color={textColor || "white"} size="1em" />
-          <span className="ml-2">Đang tải...</span>
+          <span className="ml-2">{t("common.loading")}</span>
         </>
       ) : (
         <>
