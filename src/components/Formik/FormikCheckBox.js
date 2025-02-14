@@ -10,6 +10,7 @@ const FormikCheckBox = ({
   ...props
 }) => {
   const [field, meta, helpers] = useField(name);
+  console.log("name", field);
   const { setValue } = helpers;
 
   const handleChange = (value) => {

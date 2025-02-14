@@ -11,16 +11,20 @@ import Accordion from "../../../components/Accordion";
 import clsx from "clsx";
 import { useTranslation } from "react-i18next";
 import { TEXTFIELD_ALLOW } from "../../../constants";
+import { PATH } from "../../../constants/path";
+import { useNavigate } from "react-router-dom";
 
 const ProductFilterSideBar = ({
   values,
   setFieldValue,
   categoryList,
   manufacturerList,
+  resetForm,
 }) => {
   const { t } = useTranslation();
+  const navigate = useNavigate();
   const ratings = [1, 2, 3, 4, 5];
-
+  console.log("values", values);
   return (
     <div className="space-y-4">
       {/* Tìm kiếm */}
@@ -213,6 +217,10 @@ const ProductFilterSideBar = ({
           bgHoverColor="crimson-100"
           full
           className="hover:text-dark mt-3"
+          onClick={() => {
+            navigate(PATH.PRODUCTS);
+            resetForm();
+          }}
         >
           {t("common.cancel")}
         </Button>

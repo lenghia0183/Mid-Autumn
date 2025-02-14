@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import clsx from "clsx";
 import useColorClasses from "../../hooks/useColorClasses";
 
@@ -21,6 +21,10 @@ const CustomCheckBox = ({
       onChange(newChecked);
     }
   };
+
+  useEffect(() => {
+    setIsChecked(checked);
+  }, [checked]);
 
   const { borderColor: newBorderColor } = useColorClasses({ borderColor });
 

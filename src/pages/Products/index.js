@@ -109,11 +109,8 @@ function Products() {
 
             setFilters({ ...convertValues });
           }}
-          onReset={() => {
-            navigate(PATH.PRODUCTS);
-          }}
         >
-          {({ setFieldValue, values }) => (
+          {({ setFieldValue, values, resetForm }) => (
             <Form>
               <div className="container py-14">
                 <div className="grid grid-cols-12 gap-4">
@@ -124,6 +121,7 @@ function Products() {
                       setFieldValue={setFieldValue}
                       manufacturerList={manufacturerList}
                       categoryList={categoryList}
+                      resetForm={resetForm}
                     />
                   </div>
 
@@ -158,6 +156,7 @@ function Products() {
                       setFieldValue={setFieldValue}
                       manufacturerList={manufacturerList}
                       categoryList={categoryList}
+                      resetForm={resetForm}
                     />
                   </div>
                 </div>
