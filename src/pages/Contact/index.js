@@ -17,14 +17,14 @@ function ContactUs() {
   const isLargerThanSm = useBreakpoint("sm");
 
   const validationSchema = Yup.object({
-    name: Yup.string().required("Họ tên là bắt buộc"),
+    name: Yup.string().required(t("validation.required")),
     email: Yup.string()
-      .email("Email không hợp lệ")
+      .email(t("validation.invalidEmail"))
       .required("Email là bắt buộc"),
     phone: Yup.string()
-      .matches(/^[0-9]+$/, "Số điện thoại không hợp lệ")
+      .matches(/^[0-9]+$/, t("validation.invalidPhoneNumber"))
       .required("Số điện thoại là bắt buộc"),
-    message: Yup.string().required("Tin nhắn là bắt buộc"),
+    message: Yup.string().required(t("validation.required")),
   });
 
   // Initial values
@@ -57,18 +57,16 @@ function ContactUs() {
 
       <div className="container shadow-md py-14">
         <h3 className="sm:text-[35px] text-3xl w-[80%] m-auto text-dark font-semibold text-center">
-          HÃY KẾT NỐI VỚI CHÚNG TÔI
+          {t("contact.title")}
         </h3>
         <p className="xl:w-[60%] w-full m-auto mt-5  text-xl text-dark-400 text-center font-medium">
-          Bạn có đề xuất hoặc phản hồi? Chúng tôi rất sẵn sàng nghe ý kiến từ
-          bạn! Sử dụng mẫu dưới đây để chia sẻ suy nghĩ của bạn. Cảm ơn bạn đã
-          giúp chúng tôi cải thiện!
+          {t("contact.desc")}
         </p>
 
         <div className="container py-14 flex xl:flex-row flex-col gap-14">
           <div className="flex-1">
             <h2 className="sm:text-[35px] text-3xl font-semibold text-dark  p-4">
-              THÔNG TIN LIÊN HỆ
+              {t("contact.contactInfo")}
             </h2>
             <Divider />
 
@@ -76,21 +74,21 @@ function ContactUs() {
               <div className="flex sm:flex-row flex-col items-start sm:items-center sm:gap-2 gap-1">
                 <div className="flex gap-2 items-center">
                   <Icon name="location" size="1.2em" color="emerald" />
-                  <p className="text-emerald">Địa chỉ: </p>
+                  <p className="text-emerald">{t("contact.address")}</p>
                 </div>
                 <p>{t("shopInfo.address")}</p>
               </div>
 
               <div className="flex items-center gap-2">
                 <Icon name="phone" size="1.2em" color="emerald" />
-                <p className="text-emerald">Điện thoại: </p>
+                <p className="text-emerald">{t("contact.phone")} </p>
                 <p className="">{t("shopInfo.phoneNumber")}</p>
               </div>
 
               <div className="flex sm:flex-row flex-col items-start sm:items-center sm:gap-2 gap-1">
                 <div className="flex gap-2 items-center">
                   <Icon name="email" size="1.2em" color="emerald" />
-                  <p className="text-emerald">Email: </p>
+                  <p className="text-emerald"> {t("contact.phone")}</p>
                 </div>
                 <p>{t("shopInfo.email")}</p>
               </div>
@@ -108,7 +106,7 @@ function ContactUs() {
                   <div className="flex flex-col sm:gap-6 gap-14 mt-7">
                     <FormikTextField
                       name="name"
-                      label="Họ và tên:"
+                      label={t("contact.name")}
                       orientation={isLargerThanSm ? "horizontal" : "vertical"}
                       labelClassName="font-medium"
                       rightIcon={
@@ -119,7 +117,7 @@ function ContactUs() {
 
                     <FormikTextField
                       name="email"
-                      label="Email:"
+                      label={t("contact.email")}
                       orientation={isLargerThanSm ? "horizontal" : "vertical"}
                       labelClassName="font-medium"
                       type="email"
@@ -131,7 +129,7 @@ function ContactUs() {
 
                     <FormikTextField
                       name="phone"
-                      label="Số điện thoại:"
+                      label={t("contact.phone")}
                       orientation={isLargerThanSm ? "horizontal" : "vertical"}
                       labelClassName="font-medium"
                       rightIcon={
@@ -143,7 +141,7 @@ function ContactUs() {
 
                     <FormikTextArea
                       name="message"
-                      label="Tin nhắn:"
+                      label={t("contact.message")}
                       orientation={isLargerThanSm ? "horizontal" : "vertical"}
                       labelClassName="font-medium"
                       required
@@ -158,7 +156,7 @@ function ContactUs() {
                         size="large"
                         startIcon={<Icon name="send" size="1em" />}
                       >
-                        GỬI ĐI
+                        {t("common.send")}
                       </Button>
 
                       <Button
@@ -172,7 +170,7 @@ function ContactUs() {
                         startIcon={<Icon name="refresh" size="1.2em" />}
                         onClick={() => resetForm()}
                       >
-                        LÀM LẠI
+                        {t("common.cancel")}
                       </Button>
                     </div>
                   </div>
@@ -184,14 +182,6 @@ function ContactUs() {
       </div>
 
       <Comment />
-
-      {/* <iframe
-        src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d7456.6298516158995!2d105.88085536557655!3d20.859352998337474!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x3135b1798a40dc27%3A0xf7c2339b14b010fc!2zTGnDqm4gUGjGsMahbmcsIFRoxrDhu51uZyBUw61uLCBIYW5vaSwgVmlldG5hbQ!5e0!3m2!1sen!2s!4v1724488545942!5m2!1sen!2s"
-        style={{ width: "100%", aspectRatio: "3/1" }}
-        allowfullscreen=""
-        loading="lazy"
-        referrerpolicy="no-referrer-when-downgrade"
-      ></iframe> */}
     </>
   );
 }

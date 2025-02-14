@@ -8,7 +8,8 @@
     "loading": "Đang tải...",
     "cancel": "Hủy bỏ",
     "saveChange": "Lưu thay đổi",
-    "checkout": "Thanh toán"
+    "checkout": "Thanh toán",
+    "send": "Gửi đi"
   },
 
   "validation": {
@@ -174,5 +175,15 @@
     "totalShippingFee": "Phí vận chuyển",
     "tempFee": "Tạm Tính",
     "totalPayment": "Thành tiền"
+  },
+  "contact": {
+    "title": "HÃY KẾT NỐI VỚI CHÚNG TÔI",
+    "contactInfo": "THÔNG TIN LIÊN HỆ",
+    "desc": "Bạn có đề xuất hoặc phản hồi? Chúng tôi rất sẵn sàng nghe ý kiến từ bạn! Sử dụng mẫu dưới đây để chia sẻ suy nghĩ của bạn. Cảm ơn bạn đã giúp chúng tôi cải thiện!",
+    "name": "Họ Và Tên:",
+    "email": "Email:",
+    "phone": "Số điện thoại:",
+    "address": "Địa chỉ:",
+    "message": "Tin nhắn"
   }
 }
