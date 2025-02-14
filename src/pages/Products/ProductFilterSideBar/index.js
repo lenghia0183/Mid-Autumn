@@ -45,7 +45,7 @@ const ProductFilterSideBar = ({
 
         <Divider color="dark-300" marginTop="10px" />
 
-        <Accordion minHeight="240px" buttonClassName="text-emerald">
+        <Accordion minHeight="200px" buttonClassName="text-emerald">
           {categoryList?.map(({ name, image, _id }) => (
             <div
               key={_id}
@@ -118,6 +118,7 @@ const ProductFilterSideBar = ({
           bgColor="emerald"
           bgHoverColor="yellow"
           full
+          type="submit"
           className="mt-5 hover:text-dark"
         >
           {t("common.apply")}
@@ -202,8 +203,18 @@ const ProductFilterSideBar = ({
           bgHoverColor="yellow"
           full
           className="hover:text-dark"
+          type="submit"
         >
           {t("common.search")}
+        </Button>
+
+        <Button
+          bgColor="crimson"
+          bgHoverColor="crimson-100"
+          full
+          className="hover:text-dark mt-3"
+        >
+          {t("common.cancel")}
         </Button>
       </div>
 

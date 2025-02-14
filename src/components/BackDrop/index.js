@@ -11,6 +11,7 @@ const Backdrop = ({ open, onClick, className }) => {
     };
 
     if (open) {
+      window.scrollTo(0, 0);
       document.body.style.overflow = "hidden";
       window.addEventListener("wheel", preventScroll, { passive: false });
       window.addEventListener("touchmove", preventScroll, { passive: false });

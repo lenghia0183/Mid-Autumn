@@ -15,6 +15,7 @@ const ProductFilterTopBar = ({ setFieldValue, values }) => {
         </div>
 
         <Button
+          type="submit"
           height="50px"
           className={clsx("text-lg hover:text-dark hidden sm:block", {
             "bg-yellow text-dark hover:text-white":
@@ -26,6 +27,7 @@ const ProductFilterTopBar = ({ setFieldValue, values }) => {
         </Button>
 
         <Button
+          type="submit"
           height="50px"
           className={clsx("text-lg hover:text-dark hidden sm:block", {
             "bg-yellow text-dark hover:text-white":
@@ -37,6 +39,7 @@ const ProductFilterTopBar = ({ setFieldValue, values }) => {
         </Button>
 
         <Button
+          type="submit"
           height="50px"
           className={clsx("text-lg hover:text-dark hidden sm:block", {
             "bg-yellow text-dark hover:text-white":
@@ -48,6 +51,7 @@ const ProductFilterTopBar = ({ setFieldValue, values }) => {
         </Button>
 
         <Button
+          type="submit"
           height="50px"
           className={clsx("text-lg hover:text-dark hidden sm:block", {
             "bg-yellow text-dark hover:text-white":

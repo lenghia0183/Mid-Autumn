@@ -14,9 +14,11 @@ import Backdrop from "../../components/BackDrop";
 import { useGetCategory } from "../../service/https/category";
 import { filter } from "lodash";
 import { useTranslation } from "react-i18next";
+import { useNavigate } from "react-router-dom";
 
 function Products() {
   const { t } = useTranslation();
+  const navigate = useNavigate();
 
   const breadcrumbItems = [
     { label: PAGE_TITLE.HOME, to: PATH.HOME },
@@ -104,7 +106,11 @@ function Products() {
             };
 
             console.log("convert values", convertValues);
+
             setFilters({ ...convertValues });
+          }}
+          onReset={() => {
+            navigate(PATH.PRODUCTS);
           }}
         >
           {({ setFieldValue, values }) => (

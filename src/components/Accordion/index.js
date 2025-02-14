@@ -4,7 +4,6 @@ import Icon from "../Icon";
 import clsx from "clsx";
 import useResponsiveStyle from "../../hooks/useResponsiveStyle";
 import useParseDimension from "../../hooks/useParseDimension";
-import { useTranslation } from "react-i18next";
 
 const Accordion = ({
   children,
@@ -17,8 +16,6 @@ const Accordion = ({
   const [isOpen, setIsOpen] = useState(false);
   const [contentHeight, setContentHeight] = useState(0);
   const contentRef = useRef(null);
-
-  const { t } = useTranslation();
 
   const { "max-height": newMaxHeightStyle } = useResponsiveStyle(
     maxHeight,
@@ -37,7 +34,7 @@ const Accordion = ({
     if (contentRef.current) {
       setContentHeight(contentRef.current.scrollHeight);
     }
-  }, [isOpen]);
+  }, [isOpen, children]);
 
   const toggleAccordion = () => {
     setIsOpen(!isOpen);
@@ -80,7 +77,7 @@ const Accordion = ({
             />
           }
         >
-          {isOpen ? t("common.hidden") : t("common.showMore")}
+          {isOpen ? "Thu gọn" : "Xem thêm"}
         </Button>
       )}
     </div>
