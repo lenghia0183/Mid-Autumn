@@ -7,12 +7,15 @@
     "hidden": "Thu gọn",
     "loading": "Đang tải...",
     "cancel": "Hủy bỏ",
-    "saveChange": "Lưu thay đổi"
+    "saveChange": "Lưu thay đổi",
+    "checkout": "Thanh toán"
   },
 
   "validation": {
     "required": "Trường này là bắt buộc.",
-    "invalidEmail": "Email không hợp lệ."
+    "invalidEmail": "Email không hợp lệ.",
+    "invalidPhoneNumber": "Số điện thoại không hợp lệ",
+    "invalidOption": "Lựa chọn không phù hợp"
   },
 
   "pageTitle": {
@@ -143,5 +146,33 @@
     "district": "Quận/Huyện:",
     "ward": "Phường/Xã",
     "street": "Tên đường"
+  },
+  "checkout": {
+    "title": "Thanh toán",
+    "userInfo": "Thông tin khách hàng",
+    "buyer": "NGƯỜI MUA HÀNG",
+    "name": "Họ Và Tên",
+    "email": "Email",
+    "phone": "Số điện thoại",
+    "provine": "Tỉnh/Thành phố:",
+    "district": "Quận/Huyện:",
+    "ward": "Phường/Xã",
+    "street": "Tên đường",
+    "useBuyerInfo": "Sử dụng thông tin người mua hàng",
+    "recipient": "NGƯỜI NHẬN HÀNG",
+    "shippingAddress": "ĐỊA CHỈ NHẬN HÀNG",
+    "shippingCompany": "ĐƠN VỊ GIAO HÀNG",
+    "shippingFee": "Gia hàng tận nơi có phi",
+    "freeShip": " Miễn phí vận chuyển cho đơn từ 500.000đ",
+    "paymentMethod": "HÌNH THỨC THANH TOÁN",
+    "cod": "Thanh toán khi nhận hàng",
+    "online": "Thanh toán trực tuyến",
+    "momo": "Thanh toán quy ví MoMo",
+    "zalo": "Thanh toán qua ZaloPay",
+    "orderInfo": "THÔNG TIN ĐƠN HÀNG",
+    "totalOrder": "Tổng tiền hàng",
+    "totalShippingFee": "Phí vận chuyển",
+    "tempFee": "Tạm Tính",
+    "totalPayment": "Thành tiền"
   }
 }

@@ -199,7 +199,7 @@ function Checkout() {
               <Form>
                 <div className="container my-14 bg-white-100">
                   <h2 className="text-dark text-[35px] font-semibold text-center p-5">
-                    THANH TOÁN
+                    {t("checkout.title")}
                   </h2>
                   <Divider marginBottom="20px" color="dark-300" />
 
@@ -208,12 +208,12 @@ function Checkout() {
                     <div className="xl:col-span-7 col-span-full p-5">
                       <p className="flex items-center gap-2 text-xl font-semibold text-dark">
                         <Icon name="locationEmpty" size="1.3em" color="dark" />
-                        <p>THÔNG TIN KHÁCH HÀNG</p>
+                        <p>{t("checkout.userInfo")}</p>
                       </p>
 
                       <div className="shadow-lg p-4">
                         <p className=" text-xl font-medium text-dark">
-                          NGƯỜI MUA HÀNG
+                          {t("checkout.buyer")}
                         </p>
 
                         {/* Thông tin người mua hàng */}
@@ -221,21 +221,21 @@ function Checkout() {
                           <FormikTextField
                             className="sm:col-span-6 col-span-full"
                             name="buyerName"
-                            label="Họ Và Tên"
+                            label={t("checkout.name")}
                             required
                           />
 
                           <FormikTextField
                             className="sm:col-span-6 col-span-full"
                             name="buyerEmail"
-                            label="Email"
+                            label={t("checkout.email")}
                             required
                           />
 
                           <FormikTextField
                             className="sm:col-span-6 col-span-full"
                             name="buyerPhone"
-                            label="Điện Thoại"
+                            label={t("checkout.phone")}
                             allow={TEXTFIELD_ALLOW.NUMERIC}
                             required
                           />
@@ -243,21 +243,21 @@ function Checkout() {
 
                         <div>
                           <p className="text-dark text-xl font-medium mt-14">
-                            NGƯỜI NHẬN HÀNG
+                            {t("checkout.recipient")}
                           </p>
                           {/* Thông tin người nhận hàng */}
                           <div className="grid grid-cols-12 gap-7 gap-y-11 mt-10 ">
                             <FormikTextField
                               className="sm:col-span-6 col-span-full"
                               name="recipientName"
-                              label="Họ Và Tên"
+                              label={t("checkout.name")}
                               required
                             />
 
                             <FormikTextField
                               className="sm:col-span-6 col-span-full"
                               name="recipientPhone"
-                              label="Điện Thoại"
+                              label={t("checkout.phone")}
                               allow={TEXTFIELD_ALLOW.NUMERIC}
                               required
                             />
@@ -275,7 +275,7 @@ function Checkout() {
                                 handleCopyInfo(setFieldValue, values);
                               }}
                             >
-                              Sử dụng thông tin người mua hàng
+                              {t("checkout.useBuyerInfo")}
                             </Button>
                           </div>
                         </div>
@@ -285,11 +285,11 @@ function Checkout() {
                           {/* Địa chi  */}
                           <div className="md:col-span-6 col-span-full flex flex-col gap-y-12">
                             <p className="text-dark text-xl font-medium">
-                              ĐỊA CHỈ NHẬN HÀNG
+                              {t("checkout.shippingAddress")}
                             </p>
                             <FormikAutocomplete
                               name="province"
-                              label="Tỉnh/Thành phô"
+                              label={t("checkout.province")}
                               asyncRequest={getProvinceDataTest}
                               asyncRequestHelper={(res) => {
                                 return res?.data;
@@ -310,7 +310,7 @@ function Checkout() {
 
                             <FormikAutocomplete
                               name="district"
-                              label="Quận/Huyện"
+                              label={t("checkout.district")}
                               asyncRequest={() => {
                                 return getDistrictDataTest(
                                   values?.province?.ProvinceID
@@ -338,7 +338,7 @@ function Checkout() {
 
                             <FormikAutocomplete
                               name="ward"
-                              label="Phường/Xã"
+                              label={t("checkout.ward")}
                               asyncRequest={() => {
                                 return getWardDataTest(
                                   values?.district?.DistrictID
@@ -366,7 +366,7 @@ function Checkout() {
                             <FormikTextArea
                               className="sm:hidden block"
                               name="street"
-                              label="Địa chỉ"
+                              label={t("checkout.street")}
                               required
                             />
                           </div>
@@ -374,7 +374,7 @@ function Checkout() {
                           {/* Đơn vị giao hàng */}
                           <div className="md:col-span-6 col-span-full flex flex-col">
                             <p className="text-dark text-xl font-medium mt-0">
-                              ĐƠN VỊ GIAO HÀNG
+                              {t("checkout.shippingCompany")}
                             </p>
 
                             <FormikRadioGroup
@@ -424,13 +424,13 @@ function Checkout() {
                                         objectFit="contain"
                                       />
                                       <p>
-                                        Giao hàng tận nơi có phí -{" "}
+                                        {t("checkout.shippingFee")} -{" "}
                                         <span className="font-semibold">
                                           {formatCurrency(values?.shippingFee)}
                                         </span>
                                       </p>
                                       <p className="text-crimson font-medium">
-                                        Miễn phí vận chuyển cho đơn từ 500.000đ
+                                        {t("checkout.freeShip")}
                                       </p>
                                     </div>
                                     <FormikRadio
@@ -446,7 +446,7 @@ function Checkout() {
                           <FormikTextArea
                             className="col-span-12 hidden sm:block"
                             name="street"
-                            label="Địa chỉ"
+                            label={t("checkout.street")}
                             required
                           />
                         </div>
@@ -454,7 +454,7 @@ function Checkout() {
 
                       <p className="flex items-center gap-2 text-xl font-semibold text-dark mt-10">
                         <Icon name="paymentMethod" size="1.5em" color="dark" />
-                        <p>HÌNH THỨC THANH TOÁN</p>
+                        <p>{t("checkout.paymentMethod")}</p>
                       </p>
 
                       <div className="grid grid-cols-12 gap-5 items-start mt-6 shadow-lg px-4 pb-10 rounded-sm">
@@ -466,7 +466,7 @@ function Checkout() {
                           label={
                             <div className="w-full flex items-center gap-2 bg-emerald-500 pr-3 text-lg font-semibold text-white rounded-sm ">
                               <Image src={images.codMethod} width="60px" />
-                              <p>Thanh toán khi nhận hàng</p>
+                              <p>{t("checkout.cod")}</p>
                             </div>
                           }
                         />
@@ -474,7 +474,7 @@ function Checkout() {
                         <div className="xl:col-span-6 col-span-full">
                           <div className="w-full flex items-center gap-2 bg-blue-400 pr-3 text-lg font-semibold text-white  rounded-sm ">
                             <Image src={images.bankingMethod} width="60px" />
-                            <p>Thanh toán trực tuyến</p>
+                            <p>{t("checkout.online")}</p>
                           </div>
 
                           <div className="flex flex-col bg-gray-100 px-4 mt-5">
@@ -484,13 +484,13 @@ function Checkout() {
                               labelClassName="w-full"
                               label={
                                 <div>
-                                  <div className="flex items-center justify-between py-4 text-base text-dark ">
+                                  <div className="flex items-center justify-between py-4 text-lg font-medium text-dark ">
                                     <Image
                                       src={images.logoMomo}
                                       width="auto"
                                       height="30px"
                                     />
-                                    <p className="">Thanh toán qua ví MoMo</p>
+                                    <p className="">{t("checkout.momo")}</p>
                                   </div>
                                   <Divider />
                                 </div>
@@ -523,13 +523,13 @@ function Checkout() {
                               value="ZaloPay"
                               labelClassName="w-full"
                               label={
-                                <div className="flex items-center justify-between py-4 text-base text-dark ">
+                                <div className="flex items-center justify-between py-4 text-lg font-medium text-dark ">
                                   <Image
                                     src={images.logoZaloPay}
                                     width="auto"
                                     height="30px"
                                   />
-                                  <p className="">Thanh toán qua ZaloPay</p>
+                                  <p className="">{t("checkout.zalo")}</p>
                                 </div>
                               }
                             />
@@ -550,7 +550,7 @@ function Checkout() {
                       <div className="flex justify-between">
                         <p className="flex items-center gap-2 text-xl font-semibold text-dark">
                           <Icon name="cart" size="1.3em" color="dark" />
-                          <p>THÔNG TIN KHÁCH HÀNG</p>
+                          <p>{t("checkout.orderInfo")}</p>
                         </p>
 
                         <IconButton
@@ -592,7 +592,7 @@ function Checkout() {
                       <div className="bg-gray-100 px-4 py-6 mt-10">
                         <div>
                           <LabelValue
-                            label={"Tổng tiền hàng"}
+                            label={t("checkout.totalOrder")}
                             value={formatCurrency(cartData?.cartTotalMoney)}
                             className="justify-between"
                             labelClassName="text-xl !font-normal text-gray-500"
@@ -607,7 +607,7 @@ function Checkout() {
 
                         <div>
                           <LabelValue
-                            label={"Phí vận chuyển"}
+                            label={t("checkout.totalShippingFee")}
                             value={formatCurrency(values?.shippingFee)}
                             className="justify-between"
                             labelClassName="text-xl !font-normal text-gray-500"
@@ -622,7 +622,7 @@ function Checkout() {
 
                         <div>
                           <LabelValue
-                            label={"Tạm Tính"}
+                            label={t("checkout.tempFee")}
                             value={formatCurrency(
                               values?.shippingFee + cartData?.cartTotalMoney
                             )}
@@ -639,7 +639,7 @@ function Checkout() {
 
                         <div>
                           <LabelValue
-                            label={"Thành tiền"}
+                            label={t("checkout.totalPayment")}
                             value={formatCurrency(
                               values?.shippingFee + cartData?.cartTotalMoney
                             )}
@@ -662,7 +662,7 @@ function Checkout() {
                         size="large"
                         className="text-xl mt-5 "
                       >
-                        Thanh Toán
+                        {t("common.checkout")}
                       </Button>
 
                       <Button
@@ -675,7 +675,7 @@ function Checkout() {
                           resetForm();
                         }}
                       >
-                        Làm Mới
+                        {t("common.cancel")}
                       </Button>
                     </div>
                   </div>
