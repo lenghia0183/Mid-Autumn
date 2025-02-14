@@ -76,8 +76,8 @@ const Header = ({ bgColor = "emerald", textColor = "white", className }) => {
   const navItems = [
     { label: PAGE_TITLE.HOME, path: PATH.HOME, isArrow: false },
     { label: PAGE_TITLE.ABOUT, path: PATH.ABOUT, isArrow: false },
-    { label: PAGE_TITLE.PRODUCT, path: PATH.PRODUCTS, isArrow: true },
-    { label: PAGE_TITLE.OTHER, path: PATH.OTHER, isArrow: true },
+    { label: PAGE_TITLE.PRODUCT, path: PATH.PRODUCTS, isArrow: false },
+    { label: PAGE_TITLE.OTHER, path: PATH.OTHER, isArrow: false },
     { label: PAGE_TITLE.CONTACT, path: PATH.CONTACT, isArrow: false },
   ];
 
