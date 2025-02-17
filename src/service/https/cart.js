@@ -2,13 +2,13 @@ import useSWRMutation from "swr/mutation";
 import { api } from "../api";
 import useSWR from "swr";
 
-export const useAddProductToCart = () => {
+export const useAddProductToCart = (shouldShowLoading = true) => {
   const url = "v1/cart";
   const fetcher = (url, { arg }) => {
     return api.post(url, arg);
   };
 
-  return useSWRMutation(url, fetcher);
+  return useSWRMutation(url, fetcher, { shouldShowLoading });
 };
 
 export const useDeleteCartDetail = () => {
@@ -31,7 +31,7 @@ export const useUpdateCartDetail = () => {
   return useSWRMutation(url, fetcher);
 };
 
-export const useGetMyCart = (isLoggedIn) => {
+export const useGetMyCart = (isLoggedIn, shouldShowLoading = false) => {
   const url = "v1/cart/me";
   const fetcher = async (url) => {
     const response = await api.get(url);
@@ -40,7 +40,8 @@ export const useGetMyCart = (isLoggedIn) => {
 
   const { data, isLoading, isValidating, mutate } = useSWR(
     isLoggedIn ? url : null,
-    fetcher
+    fetcher,
+    { shouldShowLoading }
   );
 
   return {

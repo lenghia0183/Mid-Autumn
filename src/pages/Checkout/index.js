@@ -30,7 +30,7 @@ import { useAddOrder } from "../../service/https/checkout";
 import { validateStatus } from "../../utils/api";
 import { toast } from "react-toastify";
 import { useNavigate } from "react-router-dom";
-import Backdrop from "../../components/BackDrop";
+
 import { useCart, useUser } from "../../context";
 
 function Checkout() {
@@ -39,7 +39,7 @@ function Checkout() {
   const formRef = useRef();
 
   const [values, setValues] = useState({});
-  const { trigger: addOrder, isMutating: isAddOrderLoading } = useAddOrder();
+  const { trigger: addOrder } = useAddOrder();
   const { user: data } = useUser();
 
   const [userData, setUserData] = useState(data);
@@ -61,7 +61,7 @@ function Checkout() {
     },
   ];
 
-  const { cartData, isLoading } = useCart();
+  const { cartData } = useCart();
 
   const items = cartData?.cartDetails || [];
   const initialValues = {
@@ -130,8 +130,6 @@ function Checkout() {
 
   return (
     <>
-      <Backdrop open={isLoading || isAddOrderLoading} />
-
       <main className="bg-white">
         <Breadcrumb items={breadcrumbCheckout} />
         <Formik

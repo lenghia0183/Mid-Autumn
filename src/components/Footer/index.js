@@ -19,7 +19,7 @@ const Footer = ({
   const { bgColor: newBgColor } = useColorClasses({ bgColor });
   const { textColor: newTextColor } = useColorClasses({ textColor });
 
-  const { data: categoryList } = useGetCategory() || [];
+  const { data: categoryList } = useGetCategory(false) || [];
 
   return (
     <footer

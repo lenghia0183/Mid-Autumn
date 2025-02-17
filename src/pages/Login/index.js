@@ -17,7 +17,6 @@ import { useLogin, useSocialLogin } from "../../service/https";
 import { useUser } from "../../context/userContext";
 import { useNavigate } from "react-router-dom";
 import { toast } from "react-toastify";
-import Backdrop from "../../components/BackDrop";
 
 function Login() {
   const { t } = useTranslation();
@@ -108,7 +107,6 @@ function Login() {
 
   return (
     <>
-      <Backdrop open={isLoginLoading || isSocialLoginLoading} />
       <h2 className="text-[40px] text-dark font-medium">{t("login.title")}</h2>
 
       <Formik

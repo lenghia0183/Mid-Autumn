@@ -127,7 +127,7 @@ const DrawerMenu = ({
 
   const drawerStyle = {
     ...positionStyle,
-    zIndex: 1000,
+    zIndex: 100,
   };
 
   const overlayClasses = clsx(
@@ -135,7 +135,7 @@ const DrawerMenu = ({
     durationMap[animationDuration],
     {
       "opacity-0 pointer-events-none": !isOpen,
-      "opacity-100 z-[1000]": isOpen,
+      "opacity-100 z-[100]": isOpen,
     }
   );
 

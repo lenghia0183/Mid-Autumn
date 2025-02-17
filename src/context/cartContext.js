@@ -1,4 +1,10 @@
-import React, { createContext, useContext, useCallback, useMemo } from "react";
+import React, {
+  createContext,
+  useContext,
+  useCallback,
+  useEffect,
+  useState,
+} from "react";
 import {
   useAddProductToCart,
   useDeleteCartDetail,
@@ -13,20 +19,25 @@ export const CartProvider = ({ children }) => {
   const { user } = useUser();
 
   const { trigger: addProductToCart, isMutating: isAdding } =
-    useAddProductToCart();
+    useAddProductToCart(true);
   const { trigger: deleteCartDetail, isMutating: isDeleting } =
     useDeleteCartDetail();
   const { trigger: updateCartDetail, isMutating: isUpdating } =
     useUpdateCartDetail();
   const {
     data: cartData,
-    isLoading,
+    isGetting,
     isValidating: isValidatingGetMyCart,
     mutate: refreshCart,
   } = useGetMyCart(user.isLoggedIn);
 
-  const loading =
-    isLoading || isAdding || isDeleting || isUpdating || isValidatingGetMyCart;
+  const [isLoading, setIsLoading] = useState(false);
+
+  useEffect(() => {
+    setIsLoading(
+      isGetting || isAdding || isDeleting || isUpdating || isValidatingGetMyCart
+    );
+  }, [isGetting, isAdding, isDeleting, isUpdating, isValidatingGetMyCart]);
 
   const refreshCartData = useCallback(() => {
     refreshCart();
@@ -40,11 +51,11 @@ export const CartProvider = ({ children }) => {
         deleteCartDetail,
         updateCartDetail,
         refreshCart: refreshCartData,
-        loading,
+        isLoading,
         isAdding,
         isDeleting,
         isUpdating,
-        isLoading,
+        isGetting,
         isValidatingGetMyCart,
       }}
     >

@@ -24,7 +24,7 @@ const ProductFilterSideBar = ({
   const { t } = useTranslation();
   const navigate = useNavigate();
   const ratings = [1, 2, 3, 4, 5];
-  console.log("values", values);
+  // console.log("values", values);
   return (
     <div className="space-y-4">
       {/* Tìm kiếm */}

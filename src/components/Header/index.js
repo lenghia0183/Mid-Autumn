@@ -18,7 +18,6 @@ import formatCurrency from "../../utils/formatCurrency";
 import { useCart, useUser } from "../../context";
 import { validateStatus } from "../../utils/api";
 import { toast } from "react-toastify";
-import Backdrop from "../BackDrop";
 
 const Header = ({ bgColor = "emerald", textColor = "white", className }) => {
   const containerRef = useRef();
@@ -32,7 +31,7 @@ const Header = ({ bgColor = "emerald", textColor = "white", className }) => {
   const [isOpenCartDrawer, setIsOpenCartDrawer] = useState(false);
   const [isOpenNavDrawer, setIsOpenNavDrawer] = useState(false);
 
-  const { cartData, deleteCartDetail, isLoading } = useCart();
+  const { cartData, deleteCartDetail } = useCart();
 
   const myCart = cartData || [];
 
@@ -117,7 +116,7 @@ const Header = ({ bgColor = "emerald", textColor = "white", className }) => {
             <div>
               {myCart?.cartDetails.map((cart) => {
                 return (
-                  <div className="flex items-start gap-2 p-3 border-t border-b border-dashed border-gray-300">
+                  <div className="flex items-center gap-2 p-3 border-t border-b border-dashed border-gray-300">
                     <Image
                       src={cart?.productId?.images[0]}
                       width="100px"
@@ -269,7 +268,6 @@ const Header = ({ bgColor = "emerald", textColor = "white", className }) => {
 
   return (
     <>
-      <Backdrop open={isLoading} />
       <header
         className={clsx(
           `top-0 z-[99999] w-full h-[110px] shadow-lg`,
@@ -382,7 +380,11 @@ const Header = ({ bgColor = "emerald", textColor = "white", className }) => {
                   <div
                     className={clsx(
                       "absolute top-0 right-0 -translate-y-[30%] translate-x-[35%] w-[20px] h-[20px] flex items-center justify-center bg-yellow text-dark rounded-full",
-                      { hidden: myCart?.cartDetails?.length === 0 }
+                      {
+                        hidden:
+                          myCart?.cartDetails?.length === 0 ||
+                          myCart?.length === 0,
+                      }
                     )}
                   >
                     {myCart?.cartDetails?.length}

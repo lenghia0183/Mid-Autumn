@@ -11,7 +11,7 @@ import Divider from "../../components/Devider";
 import RelatedProducts from "../../components/RelatedProducts";
 import { useGetProductDetail } from "../../service/https";
 import { useParams } from "react-router-dom";
-import Backdrop from "../../components/BackDrop";
+
 import { isArray } from "lodash";
 import { useAddProductToCart } from "../../service/https/cart";
 import { toast } from "react-toastify";
@@ -75,13 +75,6 @@ function ProductDetail() {
 
   return (
     <>
-      <Backdrop
-        open={
-          isGetProductDetailLoading ||
-          isAddProductToCartLoading ||
-          isAddProductToFavoriteListLoading
-        }
-      />
       <Formik
         initialValues={{ quantity: 1 }}
         onSubmit={(values) => {

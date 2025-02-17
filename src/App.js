@@ -5,9 +5,11 @@ import { ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import { auth } from "./firebaseConfig";
 import { useTranslation } from "react-i18next";
+
 function App() {
   const { i18n } = useTranslation();
   auth.languageCode = i18n.language;
+
   return (
     <>
       <ToastContainer style={{ zIndex: "9999999999" }} />

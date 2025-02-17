@@ -12,7 +12,7 @@ const UserContext = createContext();
 export const UserProvider = ({ children }) => {
   const [user, setUser] = useState({
     user: null,
-    isLoggedIn: false,
+    isLoggedIn: getLocalStorageItem("token"),
   });
 
   const updateUser = (updatedData) => {

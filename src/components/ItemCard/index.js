@@ -10,7 +10,6 @@ import { PATH } from "../../constants/path";
 import { useAddProductToFavoriteList } from "../../service/https/favorite";
 import { validateStatus } from "../../utils/api";
 import { toast } from "react-toastify";
-import Backdrop from "../BackDrop";
 import { useCart } from "../../context";
 
 const ItemCard = ({ product, className, refreshGetProduct }) => {
@@ -29,17 +28,13 @@ const ItemCard = ({ product, className, refreshGetProduct }) => {
     isFavorite = false,
   } = product;
 
-  const { isAdding, addProductToCart, refreshCart } = useCart();
+  const { addProductToCart, refreshCart } = useCart();
 
-  const {
-    trigger: addProductToFavoriteList,
-    isMutating: isAddProductToFavoriteListLoading,
-  } = useAddProductToFavoriteList(_id);
+  const { trigger: addProductToFavoriteList } =
+    useAddProductToFavoriteList(_id);
 
-  // Chuyển discount từ phần trăm sang giá trị phần trăm dưới dạng số thập phân
   const discountDecimal = discount / 100;
 
-  // Tính oldPrice dựa trên discount nếu có
   const oldPrice = discountDecimal
     ? Math.round(price / (1 - discountDecimal))
     : null;
@@ -66,15 +61,13 @@ const ItemCard = ({ product, className, refreshGetProduct }) => {
   };
 
   return (
-    <>
-      <Backdrop open={isAdding || isAddProductToFavoriteListLoading} />
+    <div>
       <div
         className={clsx(
           "group relative shadow-lg rounded-md bg-white-100 border-gray-300 border transition-all duration-300 hover:-translate-y-1 overflow-hidden",
           className
         )}
       >
-        {/* Hiển thị tình trạng hàng */}
         <div
           className={clsx(
             "absolute top-4 -left-[2px] z-[2] w-fit p-2 rounded-br-lg text-white font-medium opacity-90",
@@ -210,7 +203,7 @@ const ItemCard = ({ product, className, refreshGetProduct }) => {
           </div>
         </div>
       </div>
-    </>
+    </div>
   );
 };
 

@@ -13,7 +13,6 @@ import Dialog from "../../components/Diaglog";
 import useBreakpoint from "./../../hooks/useBreakpoint";
 import { toast } from "react-toastify";
 import { validateStatus } from "../../utils/api";
-import Backdrop from "../../components/BackDrop";
 import QuantityInput from "../../components/QuantityInput";
 import { useCart } from "../../context";
 
@@ -25,10 +24,6 @@ function Cart() {
   const {
     cartData,
     isLoading,
-    isAdding,
-    isUpdating,
-    isDeleting,
-    isValidatingGetMyCart,
     updateCartDetail,
     deleteCartDetail,
     refreshCart,
@@ -86,7 +81,7 @@ function Cart() {
       },
       {
         onSuccess: (response) => {
-          console.log("response: ", response);
+          // console.log("response: ", response);
           if (validateStatus(response?.code)) {
             toast.success(response?.message);
             // refreshCart();
@@ -104,10 +99,7 @@ function Cart() {
   };
 
   return (
-    <div>
-      <Backdrop
-        open={isAdding || isDeleting || isUpdating || isValidatingGetMyCart}
-      />
+    <>
       <Breadcrumb items={breadcrumbCart} />
       <div className="bg-white py-14">
         <div className="container bg-white-100 py-4 rounded-md shadow-md">
@@ -222,7 +214,7 @@ function Cart() {
           </div>
         </div>
       </div>
-    </div>
+    </>
   );
 }
 

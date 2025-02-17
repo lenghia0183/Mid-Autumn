@@ -9,7 +9,7 @@ import { TEXTFIELD_ALLOW } from "../../constants/common";
 import { useForgotPassword } from "../../service/https";
 import { useNavigate } from "react-router-dom";
 import { toast } from "react-toastify";
-import Backdrop from "../../components/BackDrop";
+
 import { setLocalStorageItem } from "../../utils";
 
 function ForgotPassword() {
@@ -42,7 +42,6 @@ function ForgotPassword() {
 
   return (
     <>
-      <Backdrop open={isForgotPasswordLoading} />
       <h2 className="text-[40px] text-dark font-medium">
         {t("forgotPassword.title")}
       </h2>

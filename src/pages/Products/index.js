@@ -12,13 +12,11 @@ import useBreakpoint from "./../../hooks/useBreakpoint";
 import { useGetManufacturer, useGetProduct } from "../../service/https";
 import Backdrop from "../../components/BackDrop";
 import { useGetCategory } from "../../service/https/category";
-import { filter } from "lodash";
-import { useTranslation } from "react-i18next";
-import { useNavigate } from "react-router-dom";
+
+import { useLoading } from "../../context/loadingContext";
 
 function Products() {
-  const { t } = useTranslation();
-  const navigate = useNavigate();
+  const { setLoading, isLoading } = useLoading();
 
   const breadcrumbItems = [
     { label: PAGE_TITLE.HOME, to: PATH.HOME },
@@ -52,10 +50,8 @@ function Products() {
     page: page,
     // manufacturerId: [...filters],
   });
-  const { data: manufacturerList, isLoading: isGetManufacturerLoading } =
-    useGetManufacturer();
-  const { data: categoryList, isLoading: isGetCategoryLoading } =
-    useGetCategory();
+  const { data: manufacturerList } = useGetManufacturer();
+  const { data: categoryList } = useGetCategory();
 
   // console.log("useGetProduct", useGetProduct());
   // console.log("filters", filters);
@@ -67,7 +63,20 @@ function Products() {
     refreshGetProduct();
   }, [filters, page]);
 
+  // if (
+  //   isGetCategoryLoading ||
+  //   isGetManufacturerLoading ||
+  //   isGetProductLoading ||
+  //   isGetProductValidating
+  // ) {
+  //   setLoading(true);
+  // } else {
+  //   setLoading(false);
+  // }
+
   const isLargerThanSm = useBreakpoint("sm");
+
+  // console.log("loading", isLoading);
 
   const initialValues = {
     ...filters,
@@ -75,14 +84,12 @@ function Products() {
 
   return (
     <>
-      <Backdrop
+      {/* <Backdrop open={isLoading} /> */}
+      {/* <Backdrop
         open={
-          isGetCategoryLoading ||
-          isGetManufacturerLoading ||
-          isGetProductLoading ||
-          isGetProductValidating
+         
         }
-      />
+      /> */}
       <div
         style={{
           backgroundImage: `url(${images.productPageBg})`,
@@ -92,7 +99,7 @@ function Products() {
         <Formik
           initialValues={initialValues}
           onSubmit={(values) => {
-            console.log("products values", values);
+            // console.log("products values", values);
             const convertValues = {
               keyword: values?.keyword,
               category: values?.category,
@@ -105,7 +112,7 @@ function Products() {
               ),
             };
 
-            console.log("convert values", convertValues);
+            // console.log("convert values", convertValues);
 
             setFilters({ ...convertValues });
           }}
