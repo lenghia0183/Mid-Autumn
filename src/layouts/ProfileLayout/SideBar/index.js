@@ -1,8 +1,15 @@
-import { NavLink } from "react-router-dom";
+import { NavLink, useNavigate } from "react-router-dom";
 import Icon from "../../../components/Icon";
 import { PATH } from "../../../constants/path";
+import Button from "../../../components/Button";
+
+import { useUser } from "../../../context";
+import { triggerLogout } from "../../../utils";
 
 function SideBar() {
+  const { logout } = useUser();
+  const navigate = useNavigate();
+
   const accountLinks = [
     { name: "Thông tin tài khoản", path: PATH.PROFILE_EDIT, icon: "edit" },
     { name: "Đổi mật khẩu", path: PATH.CHANGE_PASSWORD, icon: "key" },
@@ -15,7 +22,7 @@ function SideBar() {
   ];
 
   return (
-    <nav className="p-4 sm:pb-[200px] pb-[100px] bg-white-100 border-r border-gray-200">
+    <nav className="p-4 sm:pb-[150px] pb-[100px] bg-white-100 border-r border-gray-200">
       <div className="mb-4">
         <div className="text-dark text-xl font-semibold">LECONGNGHIA</div>
         <div className="text-gray-400 text-lg ">Chỉnh sửa tài khoản</div>
@@ -74,6 +81,16 @@ function SideBar() {
           ))}
         </ul>
       </div>
+
+      <Button
+        full
+        className="mt-10"
+        onClick={() => {
+          logout(navigate);
+        }}
+      >
+        Đăng xuất
+      </Button>
     </nav>
   );
 }

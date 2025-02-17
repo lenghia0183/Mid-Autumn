@@ -157,7 +157,7 @@
     "name": "全名",
     "email": "电子邮件",
     "phone": "电话",
-    "provine": "省",
+    "province": "省",
     "district": "区",
     "ward": "街道",
     "street": "街"
@@ -169,7 +169,7 @@
     "name": "全名",
     "email": "电子邮件",
     "phone": "电话",
-    "provine": "省",
+    "province": "省",
     "district": "区",
     "ward": "街道",
     "street": "街",

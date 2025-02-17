@@ -11,7 +11,6 @@ import { useLoading } from "../../context/loadingContext";
 function ProfileLayout() {
   const location = useLocation();
   const currentPath = location.pathname;
-  const { isLoading } = useLoading();
 
   const breadcrumbData = {
     [PATH.PROFILE_EDIT]: [
@@ -42,7 +41,6 @@ function ProfileLayout() {
     <>
       <Header />
 
-      <Backdrop open={isLoading} />
       <Breadcrumb items={breadcrumbProfile} />
       <main className="container grid grid-cols-12 gap-4 py-14">
         {/* SideBar chiếm 3 cột */}

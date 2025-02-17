@@ -26,9 +26,9 @@ function PopularDishes() {
         {t("common.popularDishes")}
       </h2>
 
-      <div className="flex gap-4 justify-center mt-10 container">
+      <div className="xl:flex  gap-4 justify-center mt-10 container">
         {popularDishesList.map((dish) => (
-          <div className="w-[25%]">
+          <div className="xl:w-[25%] w-full xl:mt-0 mt-5">
             <ItemCard
               key={dish.id}
               product={dish}

@@ -188,6 +188,7 @@ function ProductDetail() {
                 </div>
 
                 <Button
+                  type="submit"
                   bgColor="yellow"
                   textColor="dark"
                   bgHoverColor="emerald"

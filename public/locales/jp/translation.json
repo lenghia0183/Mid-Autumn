@@ -157,7 +157,7 @@
     "name": "フルネーム",
     "email": "メールアドレス",
     "phone": "電話番号",
-    "provine": "都道府県",
+    "province": "都道府県",
     "district": "市区町村",
     "ward": "町",
     "street": "街"
@@ -184,7 +184,7 @@
     "name": "フルネーム",
     "email": "メールアドレス",
     "phone": "電話番号",
-    "provine": "都道府県",
+    "province": "都道府県",
     "district": "市区町村",
     "ward": "町",
     "street": "街",

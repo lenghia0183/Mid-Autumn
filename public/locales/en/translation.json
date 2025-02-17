@@ -157,7 +157,7 @@
     "name": "Full name",
     "email": "Email",
     "phone": "Phone number",
-    "provine": "Province/City:",
+    "province": "Province/City:",
     "district": "District:",
     "ward": "Ward",
     "street": "Street"
@@ -169,7 +169,7 @@
     "name": "Full Name",
     "email": "Email",
     "phone": "Phone Number",
-    "provine": "Province/City:",
+    "province": "Province/City:",
     "district": "District:",
     "ward": "Ward",
     "street": "Street",

@@ -72,11 +72,13 @@ function Login() {
             toast.error(response?.message);
           }
         },
-        onError: () => {
+        onError: (err) => {
+          console.error(err);
           toast.error(t("login.toast.failed"));
         },
       });
     } catch (error) {
+      console.error(error);
       toast.error(t("login.toast.error"));
     }
   };
@@ -96,11 +98,13 @@ function Login() {
             toast.error(response?.message);
           }
         },
-        onError: () => {
+        onError: (err) => {
+          console.error(err);
           toast.error(t("login.toast.failed"));
         },
       });
     } catch (error) {
+      console.log(error);
       toast.error(t("login.toast.error"));
     }
   };

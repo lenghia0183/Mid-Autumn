@@ -5,7 +5,8 @@ import {
 } from "../utils/localStorage";
 import { api } from "../service/api";
 import { toast } from "react-toastify";
-import { onLogout, eventEmitter } from "../utils";
+import { eventEmitter } from "../utils";
+import { PATH } from "../constants/path";
 
 const UserContext = createContext();
 
@@ -34,7 +35,7 @@ export const UserProvider = ({ children }) => {
     setLocalStorageItem("refreshToken", data?.refreshToken);
   };
 
-  const logout = () => {
+  const logout = (navigate) => {
     setUser({
       user: null,
       isLoggedIn: false,
@@ -42,8 +43,12 @@ export const UserProvider = ({ children }) => {
     localStorage.removeItem("user");
     localStorage.removeItem("token");
     localStorage.removeItem("refreshToken");
-
+    console.log("logout");
     toast.info("Bạn đã đăng xuất thành công.");
+
+    if (navigate) {
+      navigate(PATH.LOGIN);
+    }
   };
 
   useEffect(() => {
@@ -51,7 +56,7 @@ export const UserProvider = ({ children }) => {
       logout();
     };
 
-    onLogout(handleLogout);
+    eventEmitter.addListener("logout", handleLogout);
 
     return () => {
       eventEmitter.removeListener("logout", handleLogout);

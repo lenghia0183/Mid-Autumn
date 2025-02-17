@@ -1,7 +1,7 @@
 import useSWR from "swr";
 import { api } from "../api";
 
-export const useGetCategory = (shouldShowLoading = true) => {
+export const useGetCategory = (shouldShowLoading = false) => {
   const url = "v1/category";
   const fetcher = async (url, arg) => {
     const response = await api.get(url, arg);
@@ -9,5 +9,5 @@ export const useGetCategory = (shouldShowLoading = true) => {
     return response?.data?.categories;
   };
 
-  return useSWR(url, fetcher, shouldShowLoading);
+  return useSWR(url, fetcher, { shouldShowLoading });
 };

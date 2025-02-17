@@ -157,7 +157,7 @@
     "name": "Họ và tên",
     "email": "Email",
     "phone": "Số điện thoại",
-    "provine": "Tỉnh/Thành phố:",
+    "province": "Tỉnh/Thành phố:",
     "district": "Quận/Huyện:",
     "ward": "Phường/Xã",
     "street": "Tên đường"
@@ -169,7 +169,7 @@
     "name": "Họ Và Tên",
     "email": "Email",
     "phone": "Số điện thoại",
-    "provine": "Tỉnh/Thành phố:",
+    "province": "Tỉnh/Thành phố:",
     "district": "Quận/Huyện:",
     "ward": "Phường/Xã",
     "street": "Tên đường",

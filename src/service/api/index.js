@@ -95,8 +95,10 @@ export const createInstance = (baseURL, customHeaders = {}) => {
           triggerLogout();
         }
       } else if (
-        response?.status === 401 &&
-        response.config.baseURL !== BASE_URL_GHN
+        (response?.status === 401 &&
+          response.config.baseURL !== BASE_URL_GHN &&
+          response.data.message === "Invalid token") ||
+        response.data.message === "Token không hợp lệ."
       ) {
         triggerLogout();
       } else {
