@@ -18,6 +18,7 @@
     "outOfStock": "在庫切れ",
     "apply": "適用",
     "search": "検索",
+    "logout": "ログアウト",
     "toast": {
       "hasErrorTryAgainLater": "エラーが発生しました。後で再試行してください"
     }

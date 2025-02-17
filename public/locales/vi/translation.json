@@ -18,6 +18,8 @@
     "outOfStock": "Hết hàng",
     "apply": "Áp dụng",
     "search": "Tìm kiếm",
+    "logout": "Đăng xuất",
+
     "toast": {
       "hasErrorTryAgainLater": "Đã có lỗi xảy ra vui lòng thử lại sau"
     }
@@ -160,7 +162,15 @@
     "province": "Tỉnh/Thành phố:",
     "district": "Quận/Huyện:",
     "ward": "Phường/Xã",
-    "street": "Tên đường"
+    "street": "Tên đường",
+
+    "sideBar": {
+      "accountInfo": "Thông tin tài khoản",
+      "changePassword": "Đổi mật khẩu",
+      "yourOrder": "Đơn hàng của bạn",
+      "viewedProduct": "Sản phẩm đã xem",
+      "favoriteList": "Danh sách yêu thích"
+    }
   },
   "checkout": {
     "title": "Thanh toán",

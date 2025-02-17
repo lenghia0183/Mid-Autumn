@@ -18,6 +18,7 @@
     "outOfStock": "Out of stock",
     "apply": "Apply",
     "search": "Search",
+    "logout": "Logout",
     "toast": {
       "hasErrorTryAgainLater": "An error occurred, please try again later"
     }
