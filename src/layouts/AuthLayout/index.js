@@ -10,10 +10,13 @@ import images from "../../asset/images";
 import Header from "../../components/Header";
 import Footer from "../../components/Footer";
 import GoToTop from "../../components/GoToTop";
+import { useLoading } from "../../context/loadingContext";
+import Backdrop from "../../components/BackDrop";
 
 function AuthLayout() {
   const location = useLocation();
   const currentPath = location.pathname;
+  const { isLoading } = useLoading();
 
   const breadcrumbData = {
     [PATH.LOGIN]: [
@@ -45,6 +48,7 @@ function AuthLayout() {
   return (
     <>
       <Header />
+      <Backdrop open={isLoading} />
       <Breadcrumb items={breadcrumbAuthLayout} />
 
       <div className="container xl:flex items-center xl:mt-14 mt-6 xl:space-x-7 space-y-6">

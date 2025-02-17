@@ -10,7 +10,7 @@ import { Form, Formik } from "formik";
 import { useQueryState } from "../../hooks/useQueryState";
 import useBreakpoint from "./../../hooks/useBreakpoint";
 import { useGetManufacturer, useGetProduct } from "../../service/https";
-import Backdrop from "../../components/BackDrop";
+
 import { useGetCategory } from "../../service/https/category";
 
 import { useLoading } from "../../context/loadingContext";
@@ -84,12 +84,6 @@ function Products() {
 
   return (
     <>
-      {/* <Backdrop open={isLoading} /> */}
-      {/* <Backdrop
-        open={
-         
-        }
-      /> */}
       <div
         style={{
           backgroundImage: `url(${images.productPageBg})`,

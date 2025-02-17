@@ -12,7 +12,7 @@ import { useResetPassword } from "../../service/https";
 
 import { useNavigate } from "react-router-dom";
 import { toast } from "react-toastify";
-import Backdrop from "../../components/BackDrop";
+
 import { getLocalStorageItem } from "../../utils";
 
 function ResetPassword() {
@@ -50,7 +50,6 @@ function ResetPassword() {
 
   return (
     <>
-      <Backdrop open={isResetPasswordLoading} />
       <h2 className="text-[40px] text-dark font-medium">
         {t("resetPassword.title")}
       </h2>

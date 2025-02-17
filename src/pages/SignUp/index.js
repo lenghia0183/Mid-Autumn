@@ -14,8 +14,7 @@ import {
   signInWithPopup,
   FacebookAuthProvider,
 } from "firebase/auth";
-import Loading from "../../components/Loading";
-import Backdrop from "../../components/BackDrop";
+
 import { useRegister, useSocialLogin } from "../../service/https/auth";
 import { validateStatus } from "../../utils/api";
 import { toast } from "react-toastify";
@@ -112,7 +111,6 @@ function SignUp() {
 
   return (
     <>
-      <Backdrop open={false} />;
       <h2 className="text-[40px] text-dark font-medium">ĐĂNG KÝ</h2>
       <Formik
         initialValues={initialValues}

@@ -26,8 +26,6 @@ const Tabs = ({
     if (tab) {
       const { offsetLeft, offsetWidth } = tab;
 
-      console.log("tab", offsetLeft, offsetWidth);
-
       setUnderlineStyle({
         left: offsetLeft,
         width: offsetWidth,

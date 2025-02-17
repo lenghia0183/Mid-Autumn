@@ -12,7 +12,7 @@ import { useVerifyForgotOTP } from "../../service/https";
 
 import { useNavigate } from "react-router-dom";
 import { toast } from "react-toastify";
-import Backdrop from "../../components/BackDrop";
+
 import { getLocalStorageItem, setLocalStorageItem } from "../../utils";
 import { useTranslation } from "react-i18next";
 
@@ -52,7 +52,6 @@ function VerifyForgotOTP() {
 
   return (
     <>
-      <Backdrop open={isVerifyForgotLoading} />
       <h2 className="text-[40px] text-dark font-medium">
         {t("verifyForgotOTP.title")}
       </h2>
