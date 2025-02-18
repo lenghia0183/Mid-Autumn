@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { Suspense, useEffect, useState } from "react";
 import images from "../../asset/images";
 import Breadcrumb from "../../components/Breadcrumb";
 import ItemCard from "../../components/ItemCard";

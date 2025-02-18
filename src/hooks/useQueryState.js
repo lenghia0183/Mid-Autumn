@@ -1,5 +1,13 @@
 import { useCallback, useMemo, useRef } from "react";
-import { isArray, isEqual, isNull, mapKeys, omit } from "lodash";
+import {
+  isArray,
+  isEmpty,
+  isEqual,
+  isNull,
+  isObject,
+  mapKeys,
+  omit,
+} from "lodash";
 import { useNavigate, useLocation } from "react-router-dom";
 // Chuyển từ useHistory sang useNavigate
 
@@ -163,11 +171,36 @@ export const useQueryState = (initialQuery, { prefix = "" } = {}) => {
         ...obj,
       };
 
-      if (combinedObj[$keyword] === "") delete combinedObj[$keyword];
-      if (combinedObj[$tab] === "") delete combinedObj[$tab];
-      if (combinedObj[$page] === 1) delete combinedObj[$page];
-      if (combinedObj[$pageSize] === undefined) delete combinedObj[$pageSize];
+      Object.keys(combinedObj).forEach((key) => {
+        const value = combinedObj[key];
 
+        if (
+          value === undefined ||
+          value === null ||
+          value === "" ||
+          (isArray(value) && value.length === 0) ||
+          (isObject(value) && isEmpty(value))
+        ) {
+          delete combinedObj[key];
+        } else if (isObject(value)) {
+          Object.keys(value).forEach((nestedKey) => {
+            if (
+              value[nestedKey] === undefined ||
+              value[nestedKey] === null ||
+              value[nestedKey] === "" ||
+              (isArray(value[nestedKey]) && value[nestedKey].length === 0) ||
+              (isObject(value[nestedKey]) && isEmpty(value[nestedKey]))
+            ) {
+              console.log('nestedKey",', nestedKey);
+              delete value[nestedKey];
+            }
+          });
+
+          if (isEmpty(value)) {
+            delete combinedObj[key];
+          }
+        }
+      });
       const convertedObj = convertObj(combinedObj);
 
       const newSearch = new URLSearchParams(convertedObj).toString();
