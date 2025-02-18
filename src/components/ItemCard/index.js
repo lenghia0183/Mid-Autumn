@@ -11,6 +11,7 @@ import { useAddProductToFavoriteList } from "../../service/https/favorite";
 import { validateStatus } from "../../utils/api";
 import { toast } from "react-toastify";
 import { useCart } from "../../context";
+import { useTranslation } from "react-i18next";
 
 const ItemCard = ({ product, className, refreshGetProduct }) => {
   const navigate = useNavigate();
@@ -27,6 +28,8 @@ const ItemCard = ({ product, className, refreshGetProduct }) => {
     manufacturerId,
     isFavorite = false,
   } = product;
+
+  const { t } = useTranslation();
 
   const { addProductToCart, refreshCart } = useCart();
 
@@ -74,7 +77,7 @@ const ItemCard = ({ product, className, refreshGetProduct }) => {
             inStock ? "bg-emerald" : "bg-gray-400"
           )}
         >
-          {inStock ? "Còn hàng" : "Hết hàng"}
+          {inStock ? t("common.inStock") : t("common.outOfStock")}
           <div
             className={clsx(
               "absolute translate-y-full left-0 bottom-0 w-0 h-0 border-r-[3px] border-b-[5px]",
@@ -96,7 +99,7 @@ const ItemCard = ({ product, className, refreshGetProduct }) => {
           <Image
             src={image || images[0]}
             alt={name}
-            className="transition-transform duration-300 group-hover:scale-105 ease-linear absolute inset-0"
+            className="transition-transform duration-300 group-hover:scale-105 ease-linear absolute inset-0 rounded-md"
           />
 
           {/* Options */}
@@ -124,9 +127,7 @@ const ItemCard = ({ product, className, refreshGetProduct }) => {
                       }
                     },
                     onError: () => {
-                      toast.error(
-                        "Thêm sản phẩm vào giỏ hàng thất bại vui lòng thử lại"
-                      );
+                      toast.error(t("common.hasErrorTryAgainLater"));
                     },
                   }
                 );
@@ -171,9 +172,7 @@ const ItemCard = ({ product, className, refreshGetProduct }) => {
                       }
                     },
                     onError: () => {
-                      toast.error(
-                        "Thêm sản phẩm vào giỏ hàng thất bại vui lòng thử lại"
-                      );
+                      toast.error(t("common.hasErrorTryAgainLater"));
                     },
                   }
                 );
@@ -214,8 +213,8 @@ ItemCard.propTypes = {
     image: PropTypes.string.isRequired,
     price: PropTypes.number.isRequired,
     ratings: PropTypes.number.isRequired,
-    discount: PropTypes.number, // Discount là phần trăm từ 0 đến 100
-    state: PropTypes.number.isRequired, // 1 là còn hàng, 0 là hết hàng
+    discount: PropTypes.number,
+    state: PropTypes.number.isRequired,
   }).isRequired,
 };
 
