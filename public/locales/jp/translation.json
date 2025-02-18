@@ -19,6 +19,7 @@
     "apply": "適用",
     "search": "検索",
     "logout": "ログアウト",
+    "showMoreItem": "さらに商品を見る",
     "toast": {
       "hasErrorTryAgainLater": "エラーが発生しました。後で再試行してください"
     }
@@ -62,7 +63,13 @@
     "total": "合計:",
     "empty": "カートは空です",
     "cartBtn": "カート",
-    "checkoutBtn": "チェックアウト"
+    "checkoutBtn": "チェックアウト",
+    "dialog": {
+      "title": "削除の確認",
+      "submitLabel": "確認",
+      "cancelLabel": "キャンセル",
+      "desc": "この商品をカートから削除してもよろしいですか？"
+    }
   },
 
   "shopInfo": {

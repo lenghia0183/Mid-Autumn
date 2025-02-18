@@ -15,15 +15,18 @@ import { toast } from "react-toastify";
 import { validateStatus } from "../../utils/api";
 import QuantityInput from "../../components/QuantityInput";
 import { useCart } from "../../context";
+import { useTranslation } from "react-i18next";
 
 function Cart() {
   const [openDialog, setOpenDialog] = useState(false);
   const [selectedCartDetail, setSelectedCartDetail] = useState(null);
   const isLargerThanSm = useBreakpoint("sm");
 
+  const { t } = useTranslation();
+
   const {
     cartData,
-    isLoading,
+
     updateCartDetail,
     deleteCartDetail,
     refreshCart,
@@ -66,7 +69,7 @@ function Cart() {
           }
         },
         onError: () => {
-          toast.error("Xóa sản phẩm khỏi giỏ hàng thất bại vui lòng thử lại");
+          toast.error(t("common.hasErrorTryAgainLater"));
         },
       }
     );
@@ -90,9 +93,7 @@ function Cart() {
           }
         },
         onError: () => {
-          toast.error(
-            "Cập nhật sản phẩm khỏi giỏ hàng thất bại vui lòng thử lại"
-          );
+          toast.error(t("common.hasErrorTryAgainLater"));
         },
       }
     );
@@ -103,7 +104,9 @@ function Cart() {
       <Breadcrumb items={breadcrumbCart} />
       <div className="bg-white py-14">
         <div className="container bg-white-100 py-4 rounded-md shadow-md">
-          <h3 className="text-emerald text-[28px] font-semibold">GIỎ HÀNG</h3>
+          <h3 className="text-emerald text-[28px] font-semibold">
+            {t(PAGE_TITLE.CART)}
+          </h3>
           <Divider marginTop="10px" color="dark" />
 
           <div>
@@ -154,21 +157,19 @@ function Cart() {
                         iconName="bin"
                         textColor="dark-500"
                         onClick={() => handleOpenDialog(item)}
-                      >
-                        Xóa
-                      </IconButton>
+                      ></IconButton>
                     </div>
                   </div>
                   <Divider marginBottom="20px" />
                 </div>
               ))
             ) : (
-              <p>Giỏ hàng trống</p>
+              <p>{t("cart.empty")}</p>
             )}
 
             <div className="flex flex-col items-end mt-4">
               <LabelValue
-                label="Tổng tiền"
+                label={t("cart.total")}
                 labelWidth="150px"
                 value={formatCurrency(myCart?.cartTotalMoney)}
                 className="!text-2xl font-semibold "
@@ -185,7 +186,7 @@ function Cart() {
                   className="sm:text-xl"
                   to={PATH.PRODUCTS}
                 >
-                  XEM THÊM SẢN PHẨM
+                  {t("common.showMoreItem").toLocaleUpperCase()}
                 </Button>
                 <Button
                   size={isLargerThanSm ? "large" : "medium"}
@@ -196,7 +197,7 @@ function Cart() {
                   textHoverColor="dark"
                   to={PATH.CHECKOUT}
                 >
-                  THANH TOÁN
+                  {t("common.checkout").toLocaleUpperCase()}
                 </Button>
               </div>
             </div>
@@ -204,12 +205,12 @@ function Cart() {
               open={openDialog}
               onCancel={handleCloseDialog}
               onSubmit={() => handleConfirmDelete()}
-              submitLabel="Xác nhận"
-              cancelLabel="Hủy bỏ"
-              title="Xác nhận xóa"
+              submitLabel={t("cart.dialog.submitLabel")}
+              cancelLabel={t("cart.dialog.cancelLabel")}
+              title={t("cart.dialog.title")}
               titleProps="text-lg font-semibold"
             >
-              <p>Bạn có chắc chắn muốn xóa sản phẩm này khỏi giỏ hàng?</p>
+              <p>{t("cart.dialog.desc")}</p>
             </Dialog>
           </div>
         </div>

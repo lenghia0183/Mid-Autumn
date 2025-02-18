@@ -19,6 +19,7 @@
     "apply": "Apply",
     "search": "Search",
     "logout": "Logout",
+    "showMoreItem": "Show more items",
     "toast": {
       "hasErrorTryAgainLater": "An error occurred, please try again later"
     }
@@ -62,7 +63,13 @@
     "total": "Total:",
     "empty": "Your cart is empty",
     "cartBtn": "Cart",
-    "checkoutBtn": "Checkout"
+    "checkoutBtn": "Checkout",
+    "dialog": {
+      "title": "Confirm Deletion",
+      "submitLabel": "Confirm",
+      "cancelLabel": "Cancel",
+      "desc": "Are you sure you want to remove this item from the cart?"
+    }
   },
 
   "shopInfo": {

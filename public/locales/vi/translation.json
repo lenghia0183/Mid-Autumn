@@ -19,7 +19,7 @@
     "apply": "Áp dụng",
     "search": "Tìm kiếm",
     "logout": "Đăng xuất",
-
+    "showMoreItem": "Xem thêm sản phẩm",
     "toast": {
       "hasErrorTryAgainLater": "Đã có lỗi xảy ra vui lòng thử lại sau"
     }
@@ -63,7 +63,13 @@
     "total": "Tổng tiền:",
     "empty": "Giỏ hàng của bạn đang trống",
     "cartBtn": "Giỏ hàng",
-    "checkoutBtn": "Thanh toán"
+    "checkoutBtn": "Thanh toán",
+    "dialog": {
+      "title": "Xác nhận xóa",
+      "submitLabel": "Xác nhận",
+      "cancelLabel": "Hủy bỏ",
+      "desc": "Bạn có chắc chắn muốn xóa sản phẩm này khỏi giỏ hàng?"
+    }
   },
 
   "shopInfo": {
