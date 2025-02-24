@@ -10,9 +10,9 @@ const LabelValue = ({
   className = "",
 }) => {
   return (
-    <div className={clsx("flex items-center text-lg text-dark", className)}>
+    <div className={clsx("flex items-start text-lg text-dark", className)}>
       <div
-        className={clsx("font-semibold", labelClassName)}
+        className={clsx("font-semibold flex-shrink-0", labelClassName)}
         style={{ width: labelWidth }}
       >
         {label}

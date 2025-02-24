@@ -21,7 +21,7 @@ const Image = (
     shadow = false,
     fadeIn = true,
     transitionDuration = 300,
-    objectFit = "cover", // Thêm thuộc tính objectFit với giá trị mặc định là "cover"
+    objectFit = "cover",
     ...props
   },
   ref

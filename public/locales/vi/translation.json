@@ -20,6 +20,7 @@
     "search": "Tìm kiếm",
     "logout": "Đăng xuất",
     "showMoreItem": "Xem thêm sản phẩm",
+    "showItemDetail": "Xem chi tiết sản phẩm",
     "toast": {
       "hasErrorTryAgainLater": "Đã có lỗi xảy ra vui lòng thử lại sau"
     },

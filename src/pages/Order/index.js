@@ -14,9 +14,13 @@ import OrderListSkeleton from "../../components/Skeletons/OrderListSkeleton";
 import { useTranslation } from "react-i18next";
 
 import ReviewDialog from "./ReviewDialog";
+import { useNavigate } from "react-router-dom";
+import { PATH } from "./../../constants/path";
+import useBreakpoint from "../../hooks/useBreakpoint";
 
 function Order() {
   const { page } = useQueryState();
+  const navigate = useNavigate();
   const { tab, setTab } = useQueryState({ tab: "pending" });
   const {
     data,
@@ -26,10 +30,13 @@ function Order() {
   } = useGetOrder({
     status: tab,
     limit: 3,
+    page,
   });
   const { trigger: updateOrderStatus } = useUpdateOrderStatus();
   const [isOpenDialogReview, setIsOpenDialogReview] = useState(false);
   const [selectedCartDetail, setSelectedCartDetail] = useState(null);
+
+  const isLargeThanSm = useBreakpoint("sm");
 
   const { t } = useTranslation();
   const isFetching = isLoading || isValidating;
@@ -71,21 +78,44 @@ function Order() {
     return cartDetails.map((cartItem) => (
       <div key={cartItem._id}>
         <div className="flex justify-between items-start py-3">
-          <Image
-            src={cartItem?.productId?.images[0]}
-            width="70px"
-            height="70px"
-          />
-          <p className="w-1/2 text-lg font-medium text-left text-dark">
-            {cartItem?.productId?.name}
-          </p>
-          <p className="text-lg text-crimson">{cartItem?.quantity} x</p>
-          <p className="text-lg text-crimson">
-            {formatCurrency(cartItem?.productId?.price)}
-          </p>
+          <div className="flex gap-3 xl:w-1/2 w-3/4 text-lg font-medium text-left text-dark">
+            <Image
+              src={cartItem?.productId?.images[0]}
+              width="xl:w-[100px] 70px"
+              height="xl:h-[100px] 70px"
+            />
+            <p>{cartItem?.productId?.name}</p>
+          </div>
+          <div className="xl:flex gap-4">
+            <p className="text-lg text-crimson text-center">
+              {cartItem?.quantity}
+            </p>
+            <p className="text-lg text-crimson text-center">x</p>
+            <p className="text-lg text-crimson">
+              {formatCurrency(cartItem?.productId?.price)}
+            </p>
+          </div>
+        </div>
+
+        <div className={"flex justify-between mb-3 ml-auto"}>
+          <Button
+            variant="outlined"
+            borderColor="emerald"
+            textColor="emerald"
+            bgHoverColor="none"
+            className="hover:underline"
+            borderHoverColor="blue"
+            textHoverColor="blue"
+            to={PATH.PRODUCT_DETAIL.replace(
+              ":productId",
+              cartItem?.productId?._id
+            )}
+          >
+            {t("common.showItemDetail")}
+          </Button>
+
           {cartItem?.commentStatus === "allowed" && (
             <Button
-              className={"my-auto"}
               onClick={() => {
                 setIsOpenDialogReview(true);
                 setSelectedCartDetail(cartItem);
@@ -165,7 +195,7 @@ function Order() {
 
   return (
     <div className="xl:p-4">
-      <h2 className="text-2xl font-semibold text-dark shadow-md p-4">
+      <h2 className="text-2xl font-semibold text-dark shadow-md p-4 ">
         {t("order.listTitle")}
       </h2>
       <div className="sm:mt-5 mt-3 w-full">
@@ -182,7 +212,7 @@ function Order() {
             <div className="text-dark-400 text-lg flex flex-col gap-3">
               {data?.data?.orders?.map((item) => (
                 <div className="p-5 shadow-md bg-gray-100" key={item._id}>
-                  <div className="flex justify-between">
+                  <div className="sm:flex justify-between">
                     <LabelValue
                       label={t("order.paymentMethod")}
                       value={
@@ -199,7 +229,7 @@ function Order() {
                   <h2 className="text-2xl text-center mt-5 text-yellow">
                     {t("order.productList")}
                   </h2>
-                  <Accordion key={item._id}>
+                  <Accordion key={item._id} minHeight="180px">
                     {renderCartDetails(item.cartDetails)}
                   </Accordion>
                   {renderPriceDetails(item.totalAmount, item.shippingFee)}
