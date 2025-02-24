@@ -101,6 +101,33 @@
     "refundDesc": "Within 12 hours",
     "copyRight": "Products by lenghia0183"
   },
+  "order": {
+    "status": {
+      "pending": "Pending",
+      "confirmed": "Confirmed",
+      "reject": "Rejected",
+      "shipping": "Shipping",
+      "success": "Success",
+      "canceled": "Canceled"
+    },
+    "paymentStatus": {
+      "paid": "Paid",
+      "unpaid": "Unpaid"
+    },
+    "buyerName": "Buyer Name",
+    "recipientName": "Recipient Name",
+    "address": "Address",
+    "productTotal": "Product Total",
+    "shippingFee": "Shipping Fee",
+    "totalAmount": "Total Amount",
+    "paymentMethod": "Payment Method",
+    "onlinePayment": "Online Payment",
+    "cashOnDelivery": "Cash on Delivery",
+    "productList": "Product List",
+    "cancel": "Cancel",
+    "proceedPayment": "Proceed to Payment",
+    "listTitle": "Your Order List"
+  },
 
   "banner": {
     "title": "MOONCAKES YOU CAN'T MISS",

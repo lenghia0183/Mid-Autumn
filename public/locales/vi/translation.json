@@ -25,6 +25,34 @@
     }
   },
 
+  "order": {
+    "status": {
+      "pending": "Chờ xác nhận",
+      "confirmed": "Đã xác nhận",
+      "reject": "Từ chối",
+      "shipping": "Đang giao",
+      "success": "Thành công",
+      "canceled": "Bị hủy"
+    },
+    "paymentStatus": {
+      "paid": "Đã thanh toán",
+      "unpaid": "Chưa thanh toán"
+    },
+    "buyerName": "Tên người mua",
+    "recipientName": "Tên người nhận",
+    "address": "Địa chỉ",
+    "productTotal": "Tổng tiền sản phẩm",
+    "shippingFee": "Phí ship",
+    "totalAmount": "Tổng tiền đơn hàng",
+    "paymentMethod": "Phương thức thanh toán",
+    "onlinePayment": "Thanh toán trực tuyến",
+    "cashOnDelivery": "Thanh toán khi nhận hàng",
+    "productList": "Danh sách sản phẩm",
+    "cancel": "Hủy",
+    "proceedPayment": "Tiến hành thanh toán",
+    "listTitle": "Danh sách đơn hàng của bạn"
+  },
+
   "validation": {
     "required": "Trường này là bắt buộc.",
     "invalidEmail": "Email không hợp lệ.",

@@ -1,6 +1,6 @@
 import ItemCard from "../../components/ItemCard";
 import Pagination from "../../components/Pagination";
-import { useEffect, useState } from "react";
+import { useEffect } from "react";
 import { useGetMyFavorite } from "../../service/https/favorite";
 import { useQueryState } from "../../hooks/useQueryState";
 import { useTranslation } from "react-i18next";

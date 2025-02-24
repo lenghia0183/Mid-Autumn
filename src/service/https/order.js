@@ -6,7 +6,7 @@ import { sleep } from "../../utils";
 export const useGetOrder = (filters, config) => {
   const url = "v1/order/me";
   const fetcher = async (url) => {
-    await sleep(30000);
+    // await sleep(30000);
     return api.get(url, filters);
   };
 

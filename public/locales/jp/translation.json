@@ -72,6 +72,33 @@
     }
   },
 
+  "order": {
+    "status": {
+      "pending": "確認待ち",
+      "confirmed": "確認済み",
+      "reject": "拒否",
+      "shipping": "配送中",
+      "success": "成功",
+      "canceled": "キャンセル"
+    },
+    "paymentStatus": {
+      "paid": "支払い済み",
+      "unpaid": "未払い"
+    },
+    "buyerName": "購入者名",
+    "recipientName": "受取人名",
+    "address": "住所",
+    "productTotal": "商品合計",
+    "shippingFee": "配送料",
+    "totalAmount": "注文合計",
+    "paymentMethod": "支払い方法",
+    "onlinePayment": "オンライン決済",
+    "cashOnDelivery": "代金引換",
+    "productList": "商品リスト",
+    "cancel": "キャンセル",
+    "proceedPayment": "支払いを進める",
+    "listTitle": "注文リスト"
+  },
   "shopInfo": {
     "phoneNumber": "0966 859 061",
     "address": "Xóm 2, Liên Phương, Thường Tín, Hà Nội",

@@ -25,11 +25,11 @@ function SideBar() {
 
   const transactionLinks = [
     { name: t(PAGE_TITLE.ORDER), path: PATH.ORDER, icon: "order" },
-    {
-      name: t(PAGE_TITLE.VIEWED_PRODUCTS),
-      path: t(PATH.VIEWED_PRODUCTS),
-      icon: "eye",
-    },
+    // {
+    //   name: t(PAGE_TITLE.VIEWED_PRODUCTS),
+    //   path: t(PATH.VIEWED_PRODUCTS),
+    //   icon: "eye",
+    // },
     { name: t(PAGE_TITLE.FAVORITE), path: PATH.FAVORITE, icon: "heart" },
   ];
 
