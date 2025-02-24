@@ -1,16 +1,14 @@
 import React, { useState } from "react";
-
 import Breadcrumb from "../../components/Breadcrumb";
 import Divider from "../../components/Devider";
 import { PAGE_TITLE, PATH } from "../../constants/path";
-
 import IconButton from "../../components/IconButton";
 import Image from "../../components/Image";
 import LabelValue from "../../components/LabelValue";
-import formatCurrency from "./../../utils/formatCurrency";
-import Button from "./../../components/Button/index";
+import formatCurrency from "../../utils/formatCurrency";
+import Button from "../../components/Button";
 import Dialog from "../../components/Diaglog";
-import useBreakpoint from "./../../hooks/useBreakpoint";
+import useBreakpoint from "../../hooks/useBreakpoint";
 import { toast } from "react-toastify";
 import { validateStatus } from "../../utils/api";
 import QuantityInput from "../../components/QuantityInput";
@@ -21,28 +19,19 @@ function Cart() {
   const [openDialog, setOpenDialog] = useState(false);
   const [selectedCartDetail, setSelectedCartDetail] = useState(null);
   const isLargerThanSm = useBreakpoint("sm");
-
   const { t } = useTranslation();
-
   const {
     cartData,
-
     updateCartDetail,
     deleteCartDetail,
     refreshCart,
+    isLoading,
   } = useCart();
-
   const myCart = cartData || [];
 
   const breadcrumbCart = [
-    {
-      label: PAGE_TITLE.HOME,
-      to: PATH.HOME,
-    },
-    {
-      label: PAGE_TITLE.CART,
-      to: PATH.CART,
-    },
+    { label: PAGE_TITLE.HOME, to: PATH.HOME },
+    { label: PAGE_TITLE.CART, to: PATH.CART },
   ];
 
   const handleOpenDialog = (cartDetail) => {
@@ -84,10 +73,8 @@ function Cart() {
       },
       {
         onSuccess: (response) => {
-          // console.log("response: ", response);
           if (validateStatus(response?.code)) {
             toast.success(response?.message);
-            // refreshCart();
           } else {
             toast.error(response?.message);
           }
@@ -110,61 +97,59 @@ function Cart() {
           <Divider marginTop="10px" color="dark" />
 
           <div>
-            {myCart?.cartDetails && myCart?.cartDetails.length > 0 ? (
+            {isLoading ? (
+              <SkeletonCart />
+            ) : myCart?.cartDetails && myCart?.cartDetails.length > 0 ? (
               myCart?.cartDetails.map((item, index) => (
-                <div key={index} className="mt-4 flex flex-col">
-                  <div className="grid grid-cols-12 gap-4 mb-4">
-                    {/* Responsive phần hình ảnh và tên sản phẩm */}
-                    <div className="col-span-12 md:col-span-5 flex gap-2">
-                      <Image src={item?.productId?.images[0]} width="100px" />
-                      <h2 className="text-lg text-dark font-medium truncate">
+                <div key={index} className="py-4 border-b border-gray-200">
+                  <div className="grid grid-cols-12 items-center gap-4">
+                    {/* Cột hình ảnh và tên sản phẩm */}
+                    <div className="col-span-5 flex items-center gap-4">
+                      <Image src={item?.productId?.images[0]} width="80px" />
+                      <h2 className="text-lg text-dark font-medium">
                         {item?.productId?.name?.toUpperCase()}
                       </h2>
                     </div>
 
-                    {/* Responsive phần đơn giá, số lượng, thành tiền */}
-                    <div className="col-span-12 md:col-span-5 flex flex-col justify-between gap-y-2 md:gap-y-0 mt-4 md:mt-0">
+                    {/* Cột đơn giá, số lượng, thành tiền */}
+                    <div className="col-span-5 flex flex-col gap-y-2">
                       <LabelValue
-                        labelWidth="100px"
                         label="Đơn giá"
                         value={formatCurrency(item?.productId?.price)}
                       />
                       <LabelValue
-                        labelWidth="100px"
                         label="Số lượng"
                         value={
                           <QuantityInput
-                            width="200px"
                             value={item?.quantity}
-                            onChange={(quantity) => {
-                              handleUpdateQuantity(quantity, item);
-                            }}
+                            onChange={(quantity) =>
+                              handleUpdateQuantity(quantity, item)
+                            }
                             max={20}
                           />
                         }
                       />
                       <LabelValue
-                        labelWidth="100px"
                         label="Thành tiền"
                         valueClassName="text-emerald text-xl font-medium"
                         value={formatCurrency(item?.totalMoney)}
                       />
                     </div>
 
-                    {/* Responsive phần nút xóa */}
-                    <div className="col-span-12 md:col-span-2 flex items-center justify-center">
+                    {/* Cột nút xóa */}
+                    <div className="col-span-2 flex justify-end">
                       <IconButton
                         iconName="bin"
-                        textColor="dark-500"
+                        textColor="gray-500"
+                        className="hover:text-red-500"
                         onClick={() => handleOpenDialog(item)}
-                      ></IconButton>
+                      />
                     </div>
                   </div>
-                  <Divider marginBottom="20px" />
                 </div>
               ))
             ) : (
-              <p>{t("cart.empty")}</p>
+              <p className="text-center text-gray-500">{t("cart.empty")}</p>
             )}
 
             <div className="flex flex-col items-end mt-4">
@@ -172,7 +157,7 @@ function Cart() {
                 label={t("cart.total")}
                 labelWidth="150px"
                 value={formatCurrency(myCart?.cartTotalMoney)}
-                className="!text-2xl font-semibold "
+                className="!text-2xl font-semibold"
                 valueClassName="text-emerald"
               />
 
@@ -183,39 +168,64 @@ function Cart() {
                   textHoverColor="white"
                   textColor="dark"
                   size={isLargerThanSm ? "large" : "medium"}
-                  className="sm:text-xl"
                   to={PATH.PRODUCTS}
                 >
-                  {t("common.showMoreItem").toLocaleUpperCase()}
+                  {t("common.showMoreItem").toUpperCase()}
                 </Button>
                 <Button
                   size={isLargerThanSm ? "large" : "medium"}
-                  className="sm:text-xl"
                   bgColor="emerald"
                   textColor="white"
                   bgHoverColor="yellow"
                   textHoverColor="dark"
                   to={PATH.CHECKOUT}
                 >
-                  {t("common.checkout").toLocaleUpperCase()}
+                  {t("common.checkout").toUpperCase()}
                 </Button>
               </div>
             </div>
-            <Dialog
-              open={openDialog}
-              onCancel={handleCloseDialog}
-              onSubmit={() => handleConfirmDelete()}
-              submitLabel={t("cart.dialog.submitLabel")}
-              cancelLabel={t("cart.dialog.cancelLabel")}
-              title={t("cart.dialog.title")}
-              titleProps="text-lg font-semibold"
-            >
-              <p>{t("cart.dialog.desc")}</p>
-            </Dialog>
           </div>
+          {/* <SkeletonCart /> */}
         </div>
       </div>
+
+      <Dialog
+        open={openDialog}
+        onCancel={handleCloseDialog}
+        onSubmit={handleConfirmDelete}
+        submitLabel={t("cart.dialog.submitLabel")}
+        cancelLabel={t("cart.dialog.cancelLabel")}
+        title={t("cart.dialog.title")}
+        titleProps="text-lg font-semibold"
+      >
+        <p>{t("cart.dialog.desc")}</p>
+      </Dialog>
     </>
+  );
+}
+
+// Component Skeleton
+function SkeletonCart() {
+  return (
+    <div className="space-y-4">
+      {[...Array(2)].map((_, index) => (
+        <div
+          key={index}
+          className="grid grid-cols-12 items-center gap-4 p-4 bg-gray-100 rounded-md"
+        >
+          <div className="col-span-5 h-20 flex gap-5 items-center">
+            <div className=" bg-gray-300 animate-pulse w-[80px] h-[80px]"></div>
+            <div className=" bg-gray-300 animate-pulse w-[80%] h-[40px]"></div>
+          </div>
+          <div className="col-span-5 space-y-2">
+            <div className="h-6 bg-gray-300 animate-pulse w-1/3"></div>
+            <div className="h-6 bg-gray-300 animate-pulse w-1/2"></div>
+            <div className="h-6 bg-gray-300 animate-pulse w-1/3"></div>
+          </div>
+          <div className="col-span-2 h-6 bg-gray-300 animate-pulse w-10"></div>
+        </div>
+      ))}
+    </div>
   );
 }
 

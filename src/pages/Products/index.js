@@ -13,11 +13,19 @@ import { useGetManufacturer, useGetProduct } from "../../service/https";
 
 import { useGetCategory } from "../../service/https/category";
 
-import { useLoading } from "../../context/loadingContext";
+function SkeletonProductCard() {
+  return (
+    <div className="animate-pulse bg-gray-200 rounded-md p-4 shadow-lg">
+      <div className="w-full aspect-square bg-gray-300 rounded-md"></div>
+      <div className="h-4 bg-gray-400 rounded mt-4 w-3/4"></div>
+      <div className="h-4 bg-gray-400 rounded mt-2 w-1/2"></div>
+      <div className="h-3 bg-gray-500 rounded mt-4 w-1/4"></div>
+      <div className="h-6 bg-gray-500 rounded mt-4 w-1/3"></div>
+    </div>
+  );
+}
 
 function Products() {
-  const { setLoading, isLoading } = useLoading();
-
   const breadcrumbItems = [
     { label: PAGE_TITLE.HOME, to: PATH.HOME },
     { label: PAGE_TITLE.PRODUCT, to: PATH.PRODUCTS },
@@ -38,45 +46,30 @@ function Products() {
     isLoading: isGetProductLoading,
     isValidating: isGetProductValidating,
     mutate: refreshGetProduct,
-  } = useGetProduct({
-    minPrice: filters.minPrice,
-    maxPrice: filters.maxPrice,
-    keyword: filters.keyword || "",
-    minRating: filters.rating,
-    categoryId: filters.category,
-    manufacturerId: filters.manufacturers,
-    limit: 6,
-    sortBy: filters?.displayOption,
-    page: page,
-    // manufacturerId: [...filters],
-  });
-  const { data: manufacturerList } = useGetManufacturer();
-  const { data: categoryList } = useGetCategory();
-
-  // console.log("useGetProduct", useGetProduct());
-  // console.log("filters", filters);
-  // console.log("items", data);
-  // console.log("manufacturerList", manufacturerList);
-  // console.log("categoryList", categoryList);
+  } = useGetProduct(
+    {
+      minPrice: filters.minPrice,
+      maxPrice: filters.maxPrice,
+      keyword: filters.keyword || "",
+      minRating: filters.rating,
+      categoryId: filters.category,
+      manufacturerId: filters.manufacturers,
+      limit: 6,
+      sortBy: filters?.displayOption,
+      page: page,
+    },
+    { shouldShowLoading: false }
+  );
+  const { data: manufacturerList, isLoading: isGetManufacturerListLoading } =
+    useGetManufacturer();
+  const { data: categoryList, isLoading: isGetCategoryListLoading } =
+    useGetCategory();
 
   useEffect(() => {
     refreshGetProduct();
   }, [filters, page]);
 
-  // if (
-  //   isGetCategoryLoading ||
-  //   isGetManufacturerLoading ||
-  //   isGetProductLoading ||
-  //   isGetProductValidating
-  // ) {
-  //   setLoading(true);
-  // } else {
-  //   setLoading(false);
-  // }
-
   const isLargerThanSm = useBreakpoint("sm");
-
-  // console.log("loading", isLoading);
 
   const initialValues = {
     ...filters,
@@ -93,7 +86,6 @@ function Products() {
         <Formik
           initialValues={initialValues}
           onSubmit={(values) => {
-            // console.log("products values", values);
             const convertValues = {
               keyword: values?.keyword,
               category: values?.category,
@@ -105,8 +97,6 @@ function Products() {
                 (key) => values[key] === true
               ),
             };
-
-            // console.log("convert values", convertValues);
 
             setFilters({ ...convertValues });
           }}
@@ -122,6 +112,10 @@ function Products() {
                       setFieldValue={setFieldValue}
                       manufacturerList={manufacturerList}
                       categoryList={categoryList}
+                      isGetCategoryListLoading={isGetCategoryListLoading}
+                      isGetManufacturerListLoading={
+                        isGetManufacturerListLoading
+                      }
                       resetForm={resetForm}
                     />
                   </div>
@@ -135,13 +129,17 @@ function Products() {
 
                     {/* Danh sách sản phẩm */}
                     <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-                      {data?.data?.products?.map((item) => (
-                        <ItemCard
-                          key={item.id}
-                          product={item}
-                          refreshGetProduct={refreshGetProduct}
-                        />
-                      ))}
+                      {isGetProductLoading || isGetProductValidating
+                        ? Array.from({ length: 6 }).map((_, index) => (
+                            <SkeletonProductCard key={index} />
+                          ))
+                        : data?.data?.products?.map((item) => (
+                            <ItemCard
+                              key={item.id}
+                              product={item}
+                              refreshGetProduct={refreshGetProduct}
+                            />
+                          ))}
                     </div>
 
                     <Pagination

@@ -43,7 +43,7 @@ export const UserProvider = ({ children }) => {
     localStorage.removeItem("user");
     localStorage.removeItem("token");
     localStorage.removeItem("refreshToken");
-    console.log("logout");
+
     toast.info("Bạn đã đăng xuất thành công.");
 
     if (navigate) {
@@ -70,7 +70,7 @@ export const UserProvider = ({ children }) => {
         const url = `v1/auth/me`;
         const response = await api.get(url);
         setUser({
-          user: response.data,
+          user: response?.data || {},
           isLoggedIn: true,
         });
       } else {

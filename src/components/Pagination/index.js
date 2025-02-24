@@ -138,6 +138,10 @@ const Pagination = ({
     return pages;
   };
 
+  if (!pageCount) {
+    return null;
+  }
+
   return (
     <ul
       ref={ulRef}

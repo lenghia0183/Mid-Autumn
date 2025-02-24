@@ -14,13 +14,53 @@ import { TEXTFIELD_ALLOW } from "../../../constants";
 import { PATH } from "../../../constants/path";
 import { useNavigate } from "react-router-dom";
 
+const CategoryListSkeleton = ({ className, count = 5 }) =>
+  Array.from({ length: count }).map((_, index) => {
+    const randomWidth = `${Math.floor(50 + Math.random() * 50)}%`;
+
+    return (
+      <div
+        key={index}
+        className={clsx("mt-2 flex gap-x-3 items-center", className)}
+      >
+        <div className="animate-pulse bg-gray-300 rounded w-[30px] h-[30px]"></div>
+        <div
+          className="animate-pulse bg-gray-300 rounded h-[20px]"
+          style={{ width: randomWidth }}
+        ></div>
+      </div>
+    );
+  });
+
+const ManufacturerListSkeleton = ({ className, count = 4 }) =>
+  Array.from({ length: count }).map((_, index) => {
+    const randomWidth = `${Math.floor(10 + Math.random() * 50)}%`;
+
+    return (
+      <div
+        key={index}
+        className={clsx("mt-2 flex gap-x-3 items-center", className)}
+      >
+        <div className="animate-pulse bg-gray-300 rounded w-[30px] h-[30px]"></div>
+        <div
+          className="animate-pulse bg-gray-300 rounded h-[20px]"
+          style={{ width: randomWidth }}
+        ></div>
+      </div>
+    );
+  });
+
 const ProductFilterSideBar = ({
   values,
   setFieldValue,
   categoryList,
   manufacturerList,
+  isGetCategoryListLoading,
+  isGetManufacturerListLoading,
   resetForm,
 }) => {
+  console.log("isGetCategoryListLoading", isGetCategoryListLoading);
+
   const { t } = useTranslation();
   const navigate = useNavigate();
   const ratings = [1, 2, 3, 4, 5];
@@ -50,29 +90,33 @@ const ProductFilterSideBar = ({
         <Divider color="dark-300" marginTop="10px" />
 
         <Accordion minHeight="200px" buttonClassName="text-emerald">
-          {categoryList?.map(({ name, image, _id }) => (
-            <div
-              key={_id}
-              onClick={() => {
-                setFieldValue("category", _id);
-              }}
-              className="cursor-pointer"
-            >
-              <div className="flex items-center gap-3 p-2">
-                <div className="w-[30px] h-[30px]">
-                  <Image src={image} alt={name} />
+          {isGetCategoryListLoading ? (
+            <CategoryListSkeleton />
+          ) : (
+            categoryList?.map(({ name, image, _id }) => (
+              <div
+                key={_id}
+                onClick={() => {
+                  setFieldValue("category", _id);
+                }}
+                className="cursor-pointer"
+              >
+                <div className="flex items-center gap-3 p-2">
+                  <div className="w-[30px] h-[30px]">
+                    <Image src={image} alt={name} />
+                  </div>
+                  <p
+                    className={clsx("text-lg font-normal", {
+                      "text-yellow": values.category === _id,
+                    })}
+                  >
+                    {name}
+                  </p>
                 </div>
-                <p
-                  className={clsx("text-lg font-normal", {
-                    "text-yellow": values.category === _id,
-                  })}
-                >
-                  {name}
-                </p>
+                <Divider color="white-100" />
               </div>
-              <Divider color="white-100" />
-            </div>
-          ))}
+            ))
+          )}
         </Accordion>
       </div>
 
@@ -142,9 +186,13 @@ const ProductFilterSideBar = ({
 
         <Accordion minHeight="180px" buttonClassName="text-emerald">
           <div className="mt-3 ml-2">
-            {manufacturerList?.map(({ name, _id }) => (
-              <FormikCheckBox key={_id} label={name} name={_id} />
-            ))}
+            {isGetManufacturerListLoading ? (
+              <ManufacturerListSkeleton />
+            ) : (
+              manufacturerList?.map(({ name, _id }) => (
+                <FormikCheckBox key={_id} label={name} name={_id} />
+              ))
+            )}
           </div>
         </Accordion>
       </div>

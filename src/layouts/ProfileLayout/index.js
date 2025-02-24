@@ -5,8 +5,6 @@ import Footer from "./../../components/Footer/index";
 import SideBar from "./SideBar";
 import Breadcrumb from "./../../components/Breadcrumb/index";
 import { PAGE_TITLE, PATH } from "../../constants/path";
-import Backdrop from "../../components/BackDrop";
-import { useLoading } from "../../context/loadingContext";
 
 function ProfileLayout() {
   const location = useLocation();

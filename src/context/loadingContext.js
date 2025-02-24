@@ -6,7 +6,6 @@ export const LoadingProvider = ({ children }) => {
   const [isLoading, setIsLoading] = useState(false);
 
   const setLoading = (value) => {
-    // console.log("setLoading", value);
     setIsLoading(value);
   };
 

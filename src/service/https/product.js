@@ -1,13 +1,13 @@
 import useSWR from "swr";
 import { api } from "../api";
 
-export const useGetProduct = (filters) => {
+export const useGetProduct = (filters, config) => {
   const url = "v1/product";
   const fetcher = (url) => {
     return api.get(url, filters);
   };
 
-  return useSWR(url, fetcher);
+  return useSWR(url, fetcher, { shouldShowLoading: true, ...config });
 };
 
 export const useGetProductDetail = (productId) => {

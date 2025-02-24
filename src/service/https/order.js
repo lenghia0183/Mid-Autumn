@@ -1,10 +1,12 @@
 import useSWR from "swr";
 import { api } from "../api";
 import useSWRMutation from "swr/mutation";
+import { sleep } from "../../utils";
 
-export const useGetOrder = (filters) => {
+export const useGetOrder = (filters, config) => {
   const url = "v1/order/me";
-  const fetcher = (url) => {
+  const fetcher = async (url) => {
+    await sleep(3000);
     return api.get(url, filters);
   };
 
