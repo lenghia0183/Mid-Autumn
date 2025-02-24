@@ -22,6 +22,14 @@
     "showMoreItem": "Xem thêm sản phẩm",
     "toast": {
       "hasErrorTryAgainLater": "Đã có lỗi xảy ra vui lòng thử lại sau"
+    },
+    "review": "Đánh giá",
+    "rating": {
+      "1": "1 sao",
+      "2": "2 sao",
+      "3": "3 sao",
+      "4": "4 sao",
+      "5": "5 sao"
     }
   },
 
@@ -50,7 +58,15 @@
     "productList": "Danh sách sản phẩm",
     "cancel": "Hủy",
     "proceedPayment": "Tiến hành thanh toán",
-    "listTitle": "Danh sách đơn hàng của bạn"
+    "listTitle": "Danh sách đơn hàng của bạn",
+    "dialog": {
+      "title": "Thêm đánh giá",
+      "content": "Nội dung đánh giá",
+      "rating": "Đánh giá của bạn",
+      "submitLabel": "Gửi đánh giá",
+      "cancel": "Hủy bỏ",
+      "successful": "Thêm đánh giá thành công"
+    }
   },
 
   "validation": {

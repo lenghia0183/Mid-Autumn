@@ -100,7 +100,7 @@ const Dialog = ({
     >
       <div
         className={clsx(
-          "bg-white rounded-lg shadow-lg w-full",
+          "bg-[#ffff] rounded-lg shadow-lg w-full",
           dialogClassName,
           maxWidth,
           { "max-w-full": fullWidth },

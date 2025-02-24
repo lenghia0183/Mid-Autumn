@@ -6,7 +6,7 @@ import { sleep } from "../../utils";
 export const useAddProductToCart = (config) => {
   const url = "v1/cart";
   const fetcher = async (url, { arg }) => {
-    await sleep(5000);
+    // await sleep(5000);
     return api.post(url, arg);
   };
 

@@ -1,7 +1,6 @@
 import useSWR from "swr";
 import { api } from "../api";
 import useSWRMutation from "swr/mutation";
-import { sleep } from "../../utils";
 
 export const useGetOrder = (filters, config) => {
   const url = "v1/order/me";

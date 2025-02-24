@@ -1,4 +1,4 @@
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import Pagination from "../../components/Pagination";
 import Tabs from "../../components/Tabs";
 import { useGetOrder } from "../../service/https/order";
@@ -13,13 +13,23 @@ import { useUpdateOrderStatus } from "../../service/https/order";
 import OrderListSkeleton from "../../components/Skeletons/OrderListSkeleton";
 import { useTranslation } from "react-i18next";
 
+import ReviewDialog from "./ReviewDialog";
+
 function Order() {
   const { page } = useQueryState();
   const { tab, setTab } = useQueryState({ tab: "pending" });
-  const { data, mutate, isLoading, isValidating } = useGetOrder({
+  const {
+    data,
+    mutate: refreshOrder,
+    isLoading,
+    isValidating,
+  } = useGetOrder({
     status: tab,
+    limit: 3,
   });
   const { trigger: updateOrderStatus } = useUpdateOrderStatus();
+  const [isOpenDialogReview, setIsOpenDialogReview] = useState(false);
+  const [selectedCartDetail, setSelectedCartDetail] = useState(null);
 
   const { t } = useTranslation();
   const isFetching = isLoading || isValidating;
@@ -34,8 +44,8 @@ function Order() {
   ];
 
   useEffect(() => {
-    mutate();
-  }, [tab, mutate, page]);
+    refreshOrder();
+  }, [tab, refreshOrder, page]);
 
   const renderPaymentStatus = (paymentMethod, isPaid) => {
     return paymentMethod === "bank" && isPaid
@@ -73,6 +83,17 @@ function Order() {
           <p className="text-lg text-crimson">
             {formatCurrency(cartItem?.productId?.price)}
           </p>
+          {cartItem?.commentStatus === "allowed" && (
+            <Button
+              className={"my-auto"}
+              onClick={() => {
+                setIsOpenDialogReview(true);
+                setSelectedCartDetail(cartItem);
+              }}
+            >
+              {t("common.review")}
+            </Button>
+          )}
         </div>
         <Divider color="dark-200" borderStyle="dashed" />
       </div>
@@ -107,7 +128,7 @@ function Order() {
 
   const handleUpdateOrderStatus = (orderId, status) => {
     updateOrderStatus({ orderId, status }).then(() => {
-      mutate();
+      refreshOrder();
     });
   };
 
@@ -178,7 +199,7 @@ function Order() {
                   <h2 className="text-2xl text-center mt-5 text-yellow">
                     {t("order.productList")}
                   </h2>
-                  <Accordion key={item._id} maxHeight="600px">
+                  <Accordion key={item._id}>
                     {renderCartDetails(item.cartDetails)}
                   </Accordion>
                   {renderPriceDetails(item.totalAmount, item.shippingFee)}
@@ -190,6 +211,16 @@ function Order() {
         </Tabs>
       </div>
       <Pagination pageCount={data?.data?.totalPage} className="ml-auto mt-10" />
+
+      <ReviewDialog
+        open={isOpenDialogReview}
+        selectedCartDetail={selectedCartDetail}
+        onCancel={() => {
+          setSelectedCartDetail(null);
+          setIsOpenDialogReview(false);
+        }}
+        refreshOrder={refreshOrder}
+      />
     </div>
   );
 }

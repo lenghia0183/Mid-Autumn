@@ -42,6 +42,8 @@ const Autocomplete = ({
 }) => {
   const { values } = useFormikContext();
 
+  console.log("values", values);
+
   // console.log("fomikcontext values", values);
   // console.log("values of dependencies", values[asyncRequestDeps]);
 
@@ -129,6 +131,7 @@ const Autocomplete = ({
 
   const handleInputChange = (e) => {
     const newValue = e.target.value;
+
     setInputValue(newValue);
     setShowOptions(true);
     setIsUserInput(true);
@@ -136,6 +139,8 @@ const Autocomplete = ({
 
   const handleOptionSelect = (option) => {
     let newSelectedValues;
+
+    console.log("newSelectedValues", option);
 
     if (multiple) {
       if (selectedValues.some((selected) => isEqualValue(selected, option))) {

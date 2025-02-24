@@ -17,6 +17,7 @@ const FormikAutocomplete = ({
       <Autocomplete
         {...props}
         onChange={(val) => {
+          console.log("val", val);
           if (externalOnchange) {
             externalOnchange(val);
           }
