@@ -51,8 +51,6 @@ function Order() {
     </>
   );
 
-  console.log("data", data);
-
   const renderCartDetails = (cartDetails) => {
     return cartDetails.map((cartItem) => (
       <div key={cartItem._id}>
@@ -103,7 +101,7 @@ function Order() {
 
   const handleUpdateOrderStatus = (orderId, status) => {
     updateOrderStatus({ orderId, status }).then(() => {
-      mutate(); // Refresh the order data after updating status
+      mutate();
     });
   };
 

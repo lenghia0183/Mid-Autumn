@@ -19,7 +19,7 @@ export const CartProvider = ({ children }) => {
   const { user } = useUser();
 
   const { trigger: addProductToCart, isMutating: isAdding } =
-    useAddProductToCart(true);
+    useAddProductToCart();
   const { trigger: deleteCartDetail, isMutating: isDeleting } =
     useDeleteCartDetail();
   const { trigger: updateCartDetail, isMutating: isUpdating } =

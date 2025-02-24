@@ -1,4 +1,3 @@
-// src/layouts/MainLayout.jsx
 import React from "react";
 import { Outlet } from "react-router-dom";
 import Header from "./../../components/Header/index";
@@ -9,11 +8,10 @@ import Backdrop from "../../components/BackDrop";
 
 const MainLayout = () => {
   const { isLoading } = useLoading();
-  console.log("isLoading", isLoading);
+
   return (
     <div>
       <Header />
-
       <Backdrop open={isLoading} />
       <main>
         <Outlet />

@@ -1,10 +1,12 @@
 import useSWRMutation from "swr/mutation";
 import { api } from "../api";
 import useSWR from "swr";
+import { sleep } from "../../utils";
 
 export const useAddProductToFavoriteList = (productId, config) => {
   const url = `v1/favorite/${productId}/toggle`;
-  const fetcher = (url, { arg }) => {
+  const fetcher = async (url, { arg }) => {
+    // await sleep(5000);
     return api.put(url, arg);
   };
 

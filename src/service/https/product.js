@@ -1,11 +1,9 @@
 import useSWR from "swr";
 import { api } from "../api";
-import { sleep } from "../../utils";
 
 export const useGetProduct = (filters, config) => {
   const url = "v1/product";
   const fetcher = async (url) => {
-    await sleep(50000);
     return api.get(url, filters);
   };
 
