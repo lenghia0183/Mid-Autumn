@@ -12,18 +12,8 @@ import useBreakpoint from "./../../hooks/useBreakpoint";
 import { useGetManufacturer, useGetProduct } from "../../service/https";
 
 import { useGetCategory } from "../../service/https/category";
-
-function SkeletonProductCard() {
-  return (
-    <div className="animate-pulse bg-gray-200 rounded-md p-4 shadow-lg">
-      <div className="w-full aspect-square bg-gray-300 rounded-md"></div>
-      <div className="h-4 bg-gray-400 rounded mt-4 w-3/4"></div>
-      <div className="h-4 bg-gray-400 rounded mt-2 w-1/2"></div>
-      <div className="h-3 bg-gray-500 rounded mt-4 w-1/4"></div>
-      <div className="h-6 bg-gray-500 rounded mt-4 w-1/3"></div>
-    </div>
-  );
-}
+import SkeletonProductCard from "../../components/Skeletons";
+import ProductListSkeleton from "../../components/Skeletons/ProductListSkeleton";
 
 function Products() {
   const breadcrumbItems = [
@@ -121,26 +111,26 @@ function Products() {
                   </div>
 
                   {/* Phần hiển thị sản phẩm chiếm 9 cột */}
+                  {/* Danh sách sản phẩm */}
                   <div className="xl:col-span-9 col-span-full">
                     <ProductFilterTopBar
                       values={values}
                       setFieldValue={setFieldValue}
                     />
 
-                    {/* Danh sách sản phẩm */}
-                    <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-                      {isGetProductLoading || isGetProductValidating
-                        ? Array.from({ length: 6 }).map((_, index) => (
-                            <SkeletonProductCard key={index} />
-                          ))
-                        : data?.data?.products?.map((item) => (
-                            <ItemCard
-                              key={item.id}
-                              product={item}
-                              refreshGetProduct={refreshGetProduct}
-                            />
-                          ))}
-                    </div>
+                    {isGetProductLoading || isGetProductValidating ? (
+                      <ProductListSkeleton className="lg:!grid-cols-3" />
+                    ) : (
+                      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+                        {data?.data?.products?.map((item) => (
+                          <ItemCard
+                            key={item.id}
+                            product={item}
+                            refreshGetProduct={refreshGetProduct}
+                          />
+                        ))}
+                      </div>
+                    )}
 
                     <Pagination
                       pageCount={data?.data?.totalPage}

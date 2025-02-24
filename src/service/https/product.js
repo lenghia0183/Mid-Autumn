@@ -1,21 +1,23 @@
 import useSWR from "swr";
 import { api } from "../api";
+import { sleep } from "../../utils";
 
 export const useGetProduct = (filters, config) => {
   const url = "v1/product";
-  const fetcher = (url) => {
+  const fetcher = async (url) => {
+    await sleep(50000);
     return api.get(url, filters);
   };
 
-  return useSWR(url, fetcher, { shouldShowLoading: true, ...config });
+  return useSWR(url, fetcher, { shouldShowLoading: false, ...config });
 };
 
-export const useGetProductDetail = (productId) => {
+export const useGetProductDetail = (productId, config) => {
   const url = `v1/product/${productId}`;
   const fetcher = async (url) => {
     const response = await api.get(url);
     return response.data;
   };
 
-  return useSWR(url, fetcher);
+  return useSWR(url, fetcher, { shouldShowLoading: false, ...config });
 };

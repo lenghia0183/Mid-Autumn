@@ -4,14 +4,21 @@ import IconButton from "../../../components/IconButton";
 import { useRef } from "react";
 import { useTranslation } from "react-i18next";
 import { useGetProduct } from "../../../service/https";
+import ProductListSkeleton from "../../../components/Skeletons/ProductListSkeleton";
 
 function SaleItems() {
-  const { data, mutate: refreshGetProduct } = useGetProduct({
+  const {
+    data,
+    mutate: refreshGetProduct,
+    isLoading: isGettingProductList,
+    isValidating: isValidatingProductList,
+  } = useGetProduct({
     limit: 6,
     page: 1,
   });
 
   const saleItems = data?.data?.products || [];
+  const isLoading = isGettingProductList || isValidatingProductList;
 
   const slider = useRef();
   const { t } = useTranslation();
@@ -51,7 +58,9 @@ function SaleItems() {
       <p className="xl:text-xl text-lg text-dark font-medium text-center w-[70%] m-auto  mb-7">
         {t("home.saleItems.desc")}
       </p>
-      {saleItems.length > 2 ? (
+      {isLoading ? (
+        <ProductListSkeleton count={4} />
+      ) : saleItems.length > 2 ? (
         <div className="relative">
           <IconButton
             type="button"
