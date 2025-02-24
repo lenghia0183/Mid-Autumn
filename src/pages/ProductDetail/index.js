@@ -18,22 +18,24 @@ import { toast } from "react-toastify";
 import { validateStatus } from "../../utils/api";
 import { useAddProductToFavoriteList } from "./../../service/https/favorite";
 import { useTranslation } from "react-i18next";
+import { useQueryState } from "./../../hooks/useQueryState";
+import { useGetCommentByProductId } from "../../service/https/comment";
+import CommentList from "../../components/CommentList";
 
 function ProductDetail() {
   const params = useParams();
-  const { t } = useTranslation();
-  const {
-    data: itemDetail,
-    isLoading: isGetProductDetailLoading,
-    mutate: refreshGetProductDetail,
-  } = useGetProductDetail(params.productId);
 
-  const { trigger: addProductToCart, isMutating: isAddProductToCartLoading } =
-    useAddProductToCart();
-  const {
-    trigger: addProductToFavoriteList,
-    isMutating: isAddProductToFavoriteListLoading,
-  } = useAddProductToFavoriteList(params.productId);
+  const { t } = useTranslation();
+  const { data: itemDetail, mutate: refreshGetProductDetail } =
+    useGetProductDetail(params.productId);
+
+  const { trigger: addProductToCart } = useAddProductToCart();
+  const { trigger: addProductToFavoriteList } = useAddProductToFavoriteList(
+    params.productId
+  );
+
+  const { tab, setTab } = useQueryState();
+
   const productDetailBreadcrumbs = [
     {
       label: t("pageTitle.home"),
@@ -70,7 +72,7 @@ function ProductDetail() {
 
   const tabList = [
     { label: t("productDetail.productInfo"), value: "product-info" },
-    { label: t("productDetail.comment"), value: "product-info" },
+    { label: t("productDetail.comment"), value: "comment" },
   ];
 
   return (
@@ -220,7 +222,15 @@ function ProductDetail() {
                   </div>
                 </div>
 
-                <Tabs className="sm:mt-5 mt-3" list={tabList} divider={true}>
+                <Tabs
+                  className="sm:mt-5 mt-3"
+                  list={tabList}
+                  divider={true}
+                  value={tab}
+                  onChange={(value) => {
+                    setTab(value);
+                  }}
+                >
                   <div className="text-dark-400 text-lg flex flex-col gap-3">
                     <p>
                       {t("productDetail.brand")}{" "}
@@ -239,7 +249,9 @@ function ProductDetail() {
 
                     <p>{itemDetail?.description}</p>
                   </div>
-                  <div></div>
+                  <div>
+                    <CommentList />
+                  </div>
                 </Tabs>
               </div>
 
