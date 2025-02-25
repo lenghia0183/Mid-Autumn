@@ -61,7 +61,7 @@ function Checkout() {
     },
   ];
 
-  const { cartData } = useCart();
+  const { cartData, refreshCart } = useCart();
 
   const items = cartData?.cartDetails || [];
   const initialValues = {
@@ -174,10 +174,10 @@ function Checkout() {
 
             addOrder(convertValue, {
               onSuccess: (response) => {
-                console.log(response);
                 if (validateStatus(response?.code)) {
                   toast.success(response?.message);
                   window.open(response?.data?.payUrl, "_blank");
+                  refreshCart();
                   navigate(PATH.HOME);
                 } else {
                   toast.success(response?.message);
@@ -185,9 +185,7 @@ function Checkout() {
                 }
               },
               onError: () => {
-                toast.success(
-                  "Có lỗi xảy ra trong quá trình tạo đơn hàng vui lòng thử lại sau"
-                );
+                toast.success(t("common.hasErrorTryAgainLater"));
               },
             });
           }}
@@ -379,36 +377,6 @@ function Checkout() {
                               name="method"
                               className="flex flex-col"
                             >
-                              {/* <FormikRadio
-                              value="ghtk"
-                              hideInput={true}
-                              label={
-                                <div className="flex items-center border border-gray-400 border-dashed p-4 text-base">
-                                  <div>
-                                    <Image
-                                      src={images.logoGHTK}
-                                      height="40px"
-                                      width="fit-content"
-                                      objectFit="contain"
-                                    />
-                                    <p>
-                                      Giao hàng tận nơi có phí -{" "}
-                                      <span className="font-semibold">
-                                        {formatCurrency(35000)}
-                                      </span>
-                                    </p>
-                                    <p className="text-crimson font-medium">
-                                      Miễn phí vận chuyển cho đơn từ 500.000đ
-                                    </p>
-                                  </div>
-                                  <FormikRadio
-                                    checked={values.method === "ghtk"}
-                                    width="fit-content"
-                                  />
-                                </div>
-                              }
-                            /> */}
-
                               <FormikRadio
                                 value="ghn"
                                 hideInput={true}
@@ -494,27 +462,6 @@ function Checkout() {
                                 </div>
                               }
                             />
-
-                            {/* <FormikRadio
-                            name="paymentMethod"
-                            value="logoVnpay"
-                            disabled
-                            labelClassName="w-full"
-                            label={
-                              <div>
-                                <div className="flex items-center justify-between py-4 text-base text-dark ">
-                                  <Image
-                                    src={images.logoVnpay}
-                                    width="auto"
-                                    height="30px"
-                                  />
-
-                                  <p className="">Thanh toán qua VNPAY</p>
-                                </div>
-                                <Divider />
-                              </div>
-                            }
-                          /> */}
 
                             <FormikRadio
                               name="paymentMethod"
