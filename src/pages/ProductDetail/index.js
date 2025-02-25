@@ -285,6 +285,7 @@ function ProductDetail() {
                   manufacturerId={itemDetail?.manufacturerId?._id}
                   categoryId={itemDetail?.categoryId?._id}
                   productId={params.productId}
+                  isGettingProductDetail={isLoading}
                 />
               </div>
             </div>

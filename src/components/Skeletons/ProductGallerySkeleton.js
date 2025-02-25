@@ -1,7 +1,7 @@
 function ProductGallerySkeleton() {
   return (
     <div className="xl:col-span-6 col-span-full">
-      <div className="w-full aspect-[4/3] bg-gray-200 animate-pulse rounded"></div>
+      <div className="w-full aspect-square bg-gray-200 animate-pulse rounded"></div>
       <div className="flex gap-2 mt-2">
         {Array.from({ length: 5 }).map((_, index) => (
           <div

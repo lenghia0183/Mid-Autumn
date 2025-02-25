@@ -6,13 +6,29 @@ import ItemCard from "../ItemCard";
 import clsx from "clsx";
 import { useGetProduct } from "../../service/https";
 
-function RelatedProducts({ className, categoryId, manufacturerId, productId }) {
-  const { data, mutate: refreshData } = useGetProduct({
-    categoryId,
-    manufacturerId: [manufacturerId],
-    limit: 6,
-    page: 1,
-  });
+import ProductListSkeleton from "../Skeletons/ProductListSkeleton";
+
+function RelatedProducts({
+  className,
+  categoryId,
+  manufacturerId,
+  productId,
+  isGettingProductDetail,
+}) {
+  const {
+    data,
+    mutate: refreshData,
+    isLoading: isGettingProductList,
+  } = useGetProduct(
+    isGettingProductDetail
+      ? null
+      : {
+          categoryId,
+          manufacturerId: [manufacturerId],
+          limit: 6,
+          page: 1,
+        }
+  );
 
   const saleItems = data?.data?.products || [];
 
@@ -33,19 +49,23 @@ function RelatedProducts({ className, categoryId, manufacturerId, productId }) {
     arrow: false,
     responsive: [
       {
-        breakpoint: 1024, // 1024px
+        breakpoint: 1024,
         settings: {
-          slidesToShow: 2, // Hiển thị 3 slide
+          slidesToShow: 2,
         },
       },
       {
-        breakpoint: 480, // 480px
+        breakpoint: 480,
         settings: {
-          slidesToShow: 1, // Hiển thị 1 slide
+          slidesToShow: 1,
         },
       },
     ],
   };
+
+  if (isGettingProductDetail || isGettingProductList) {
+    return <ProductListSkeleton count={4} className="mt-10" />;
+  }
 
   return (
     <section className={clsx("container sm:mt-14 mt-10", className)}>
