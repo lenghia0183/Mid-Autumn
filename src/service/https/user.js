@@ -4,8 +4,18 @@ import useSWR from "swr";
 
 export const useUpdateMe = (config) => {
   const url = `v1/auth/me`;
+
   const fetcher = (url, { arg }) => {
-    return api.put(url, arg);
+    const formData = new FormData();
+
+    Object.entries(arg).forEach(([key, value]) =>
+      formData.append(
+        key,
+        value instanceof File ? value : JSON.stringify(value)
+      )
+    );
+
+    return api.putMultiplePart(url, formData);
   };
 
   return useSWRMutation(url, fetcher, { shouldShowLoading: true, ...config });

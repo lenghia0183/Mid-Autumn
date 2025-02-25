@@ -1,4 +1,4 @@
-import React, { forwardRef, useState } from "react";
+import React, { forwardRef, useEffect, useState } from "react";
 import clsx from "clsx";
 import images from "../../asset/images";
 import useResponsiveStyle from "./../../hooks/useResponsiveStyle";
@@ -47,6 +47,10 @@ const Image = (
       onLoad(e);
     }
   };
+
+  useEffect(() => {
+    setImgSrc(src);
+  }, [src]);
 
   return (
     <img

@@ -23,6 +23,8 @@ const HEADERS_MULTIPLE_PART = {
 const REFRESH_TOKEN_URL = "v1/auth/refresh-token";
 
 export const createInstance = (baseURL, customHeaders = {}) => {
+  console.log("customHeaders: ", customHeaders);
+
   const instance = axios.create({
     baseURL: baseURL,
     headers: {
@@ -41,6 +43,7 @@ export const createInstance = (baseURL, customHeaders = {}) => {
       if (config.url !== REFRESH_TOKEN_URL && token) {
         config.headers["Authorization"] = `Bearer ${token}`;
       }
+
       return config;
     },
     (error) => {
@@ -124,9 +127,9 @@ export const createApi = (instance) => ({
       });
   },
 
-  postMultiplePart: (endpoint, params) => {
+  postMultiplePart: (endpoint, body) => {
     return instance
-      .post(endpoint, params, {
+      .post(endpoint, body, {
         headers: HEADERS_MULTIPLE_PART,
       })
       .then((response) => {
@@ -151,6 +154,19 @@ export const createApi = (instance) => ({
   put: (endpoint, params) => {
     return instance
       .put(endpoint, params)
+      .then((response) => {
+        return response;
+      })
+      .catch((err) => {
+        return err?.response?.data || err;
+      });
+  },
+
+  putMultiplePart: (endpoint, body) => {
+    return instance
+      .put(endpoint, body, {
+        headers: HEADERS_MULTIPLE_PART,
+      })
       .then((response) => {
         return response;
       })

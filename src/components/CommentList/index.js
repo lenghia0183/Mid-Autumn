@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect } from "react";
 import clsx from "clsx";
 import { useTranslation } from "react-i18next";
 import Icon from "../Icon";
@@ -7,15 +7,25 @@ import Pagination from "./../Pagination/index";
 import { useParams } from "react-router-dom";
 import { useGetCommentByProductId } from "../../service/https/comment";
 import CommentListSkeleton from "../Skeletons/CommentListSkeleton";
+import { useQueryState } from "../../hooks/useQueryState";
 
 const CommentList = ({}) => {
+  const { page } = useQueryState();
+
   const { t } = useTranslation();
   const params = useParams();
-  const { data: commentsData, isLoading } = useGetCommentByProductId(
-    params.productId
-  );
+  const {
+    data: commentsData,
+    isLoading,
+    mutate: refreshComments,
+    isValidating,
+  } = useGetCommentByProductId(params.productId);
 
   const comments = commentsData?.comments;
+
+  useEffect(() => {
+    refreshComments();
+  }, [page]);
 
   const renderStars = (ratings) => {
     const totalStars = 5;
@@ -37,7 +47,7 @@ const CommentList = ({}) => {
     return stars;
   };
 
-  if (isLoading) return <CommentListSkeleton />;
+  if (isLoading || isValidating) return <CommentListSkeleton />;
 
   return (
     <div className="mt-10">

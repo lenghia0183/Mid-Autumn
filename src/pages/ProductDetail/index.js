@@ -19,7 +19,7 @@ import { validateStatus } from "../../utils/api";
 import { useAddProductToFavoriteList } from "./../../service/https/favorite";
 import { useTranslation } from "react-i18next";
 import { useQueryState } from "./../../hooks/useQueryState";
-import { useGetCommentByProductId } from "../../service/https/comment";
+
 import CommentList from "../../components/CommentList";
 
 function ProductDetail() {
