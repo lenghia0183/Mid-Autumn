@@ -45,6 +45,17 @@ export default {
         sourceSansPro: ['"Source Sans Pro"', "sans-serif"],
       },
 
+      keyframes: {
+        "slide-horizontal": {
+          "0%": { transform: "translateX(0%) translateY(-50%)" },
+          "50%": { transform: "translateX(-20%) translateY(-50%)" },
+          "100%": { transform: "translateX(0%) translateY(-50%)" },
+        },
+      },
+      animation: {
+        "slide-horizontal": "slide-horizontal 10s ease-in-out infinite",
+      },
+
       colors: {
         ...colors,
       },
