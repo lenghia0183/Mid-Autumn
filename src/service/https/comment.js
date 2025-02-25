@@ -12,10 +12,12 @@ export const useAddComment = (config) => {
   return useSWRMutation(url, fetcher, { shouldShowLoading: true, ...config });
 };
 
-export const useGetCommentByProductId = (productId, config) => {
-  const url = `v1/comment/${productId}`;
+export const useGetCommentByProductId = (filters, config) => {
+  const { productId, ...restFilters } = filters;
+  const url = `v1/comment/${filters.productId}`;
+
   const fetcher = async (url) => {
-    const response = await api.get(url);
+    const response = await api.get(url, restFilters);
 
     return response.data;
   };

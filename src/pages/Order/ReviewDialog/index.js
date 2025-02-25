@@ -9,6 +9,7 @@ import FormikTextArea from "../../../components/Formik/FormikTextArea";
 import Dialog from "../../../components/Diaglog";
 import { useTranslation } from "react-i18next";
 import validationSchema from "./schema";
+import { TEXTFIELD_REQUIRED_LENGTH } from "../../../constants";
 
 const ReviewDialog = ({ open, onCancel, selectedCartDetail, refreshOrder }) => {
   const { t } = useTranslation();
@@ -83,6 +84,9 @@ const ReviewDialog = ({ open, onCancel, selectedCartDetail, refreshOrder }) => {
           rows={5}
           className="mt-9"
           required
+          inputProps={{
+            maxLength: TEXTFIELD_REQUIRED_LENGTH.COMMON,
+          }}
         />
       </div>
     </Dialog>

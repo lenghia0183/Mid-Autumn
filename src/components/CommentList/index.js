@@ -8,6 +8,7 @@ import { useParams } from "react-router-dom";
 import { useGetCommentByProductId } from "../../service/https/comment";
 import CommentListSkeleton from "../Skeletons/CommentListSkeleton";
 import { useQueryState } from "../../hooks/useQueryState";
+import Accordion from "./../Accordion/index";
 
 const CommentList = ({}) => {
   const { page } = useQueryState();
@@ -19,7 +20,11 @@ const CommentList = ({}) => {
     isLoading,
     mutate: refreshComments,
     isValidating,
-  } = useGetCommentByProductId(params.productId);
+  } = useGetCommentByProductId({
+    limit: 3,
+    productId: params.productId,
+    page: page,
+  });
 
   const comments = commentsData?.comments;
 
@@ -82,7 +87,9 @@ const CommentList = ({}) => {
               <div className="mt-1 flex items-center">
                 {renderStars(comment.rating)}
               </div>
-              <p className="mt-2 text-gray-700 text-lg">{comment.content}</p>
+              <Accordion minHeight="70px">
+                <p className="mt-2 text-gray-700 text-lg">{comment.content}</p>
+              </Accordion>
             </div>
           </div>
         ))
