@@ -115,7 +115,7 @@ function RelatedProducts({
         <div className="flex justify-center gap-4">
           {saleItems?.map((item, index) => (
             <div className="xl:w-[25%] w-full" key={index}>
-              <ItemCard product={item} />
+              <ItemCard product={item} refreshGetProduct={refreshData} />
             </div>
           ))}
         </div>
