@@ -5,9 +5,7 @@ import { ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import { auth } from "./firebaseConfig";
 import { useTranslation } from "react-i18next";
-import Backdrop from "./components/BackDrop";
 import { useLoading } from "./context/loadingContext";
-import LogoutListener from "./components/LogoutListener";
 
 function App() {
   const { i18n } = useTranslation();
@@ -18,10 +16,7 @@ function App() {
     <>
       <ToastContainer style={{ zIndex: "9999999999" }} />
       <RouterProvider router={router}>
-        <div className="App">
-          <LogoutListener />
-          <Backdrop open={isLoading} />
-        </div>
+        <div className="App"></div>
       </RouterProvider>
     </>
   );

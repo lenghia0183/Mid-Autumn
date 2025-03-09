@@ -2,13 +2,13 @@ import axios from "axios";
 import { validateStatus } from "../../utils/api";
 import { toast } from "react-toastify";
 import Cookies from "universal-cookie";
-import { CONFIG_COOKIES } from "../../constants";
+import { CONFIG_COOKIES, EVENT_EMITTER } from "../../constants";
 import {
   getLocalStorageItem,
   setLocalStorageItem,
 } from "../../utils/localStorage";
 
-import { triggerLogout } from "../../utils/eventEmitter";
+import { eventEmitter } from "../../utils/eventEmitter";
 
 const cookies = new Cookies();
 const BASE_URL = process.env.REACT_APP_BASE_URL + "/api/";
@@ -38,7 +38,7 @@ export const createInstance = (baseURL, customHeaders = {}) => {
   // Add a request interceptor
   instance.interceptors.request.use(
     (config) => {
-      const token = getLocalStorageItem("token"); // Lấy token từ localStorage
+      const token = getLocalStorageItem("token");
 
       if (config.url !== REFRESH_TOKEN_URL && token) {
         config.headers["Authorization"] = `Bearer ${token}`;
@@ -92,10 +92,10 @@ export const createInstance = (baseURL, customHeaders = {}) => {
             ] = `Bearer ${newAccessToken}`;
             return api.instance(originalRequest);
           } else {
-            triggerLogout();
+            eventEmitter.emit(EVENT_EMITTER.LOGOUT);
           }
         } catch (err) {
-          triggerLogout();
+          eventEmitter.emit(EVENT_EMITTER.LOGOUT);
         }
       } else if (
         (response?.status === 401 &&
@@ -103,7 +103,7 @@ export const createInstance = (baseURL, customHeaders = {}) => {
           response.data.message === "Invalid token") ||
         response.data.message === "Token không hợp lệ."
       ) {
-        triggerLogout();
+        eventEmitter.emit(EVENT_EMITTER.LOGOUT);
       } else {
         return Promise.reject(error);
       }

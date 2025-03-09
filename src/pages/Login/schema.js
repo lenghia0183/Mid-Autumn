@@ -7,7 +7,7 @@ const validationSchema = (t) => {
       .required(t("validation.required")),
     password: Yup.string()
       .required(t("validation.required"))
-      .min(6, t("invalidPassword")),
+      .min(6, t("validation.invalidPassword")),
   });
 };
 

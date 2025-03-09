@@ -41,9 +41,7 @@ function Login() {
     handleLogin(convertValue, {
       onSuccess: (response) => {
         if (response?.code === 200) {
-          toast.success(t("login.success"));
-          navigate(PATH.HOME);
-          login(response?.data);
+          login(response?.data, navigate);
         } else {
           toast.error(response?.message);
         }
@@ -64,10 +62,7 @@ function Login() {
       handleSocialLogin(idToken, {
         onSuccess: (response) => {
           if (response?.code === 200) {
-            toast.success(t("login.toast.success"));
-
-            navigate(PATH.HOME);
-            login(response?.data);
+            login(response?.data, navigate);
           } else {
             toast.error(response?.message);
           }
@@ -91,9 +86,7 @@ function Login() {
       handleSocialLogin(idToken, {
         onSuccess: (response) => {
           if (response?.code === 200) {
-            toast.success(t("login.toast.success"));
-            navigate(PATH.HOME);
-            login(response?.data);
+            login(response?.data, navigate);
           } else {
             toast.error(response?.message);
           }
@@ -104,7 +97,6 @@ function Login() {
         },
       });
     } catch (error) {
-      console.log(error);
       toast.error(t("login.toast.error"));
     }
   };

@@ -23,3 +23,7 @@ export const TEXTFIELD_REQUIRED_LENGTH = {
   MAX_50: 50,
   MAX_10: 10,
 };
+
+export const EVENT_EMITTER = {
+  LOGOUT: "logout",
+};

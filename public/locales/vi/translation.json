@@ -31,7 +31,9 @@
       "3": "3 sao",
       "4": "4 sao",
       "5": "5 sao"
-    }
+    },
+    "loginSuccess": "Đăng nhập thành công",
+    "logoutSuccess": "Đăng xuất thành công"
   },
 
   "order": {

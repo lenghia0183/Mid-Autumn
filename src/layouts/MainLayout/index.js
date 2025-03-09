@@ -5,6 +5,7 @@ import Footer from "./../../components/Footer/index";
 import GoToTop from "../../components/GoToTop";
 import { useLoading } from "../../context/loadingContext";
 import Backdrop from "../../components/BackDrop";
+import LogoutListener from "../../components/LogoutListener";
 
 const MainLayout = () => {
   const { isLoading } = useLoading();
@@ -12,6 +13,7 @@ const MainLayout = () => {
   return (
     <div>
       <Header />
+      <LogoutListener />
       <Backdrop open={isLoading} />
       <main>
         <Outlet />

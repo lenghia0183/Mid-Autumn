@@ -2,27 +2,24 @@ import { useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 
 import { eventEmitter } from "../../utils";
-import { PATH } from "../../constants/path";
+import { useUser } from "../../context";
+import { EVENT_EMITTER } from "../../constants";
 
 const LogoutListener = () => {
+  const { logout } = useUser();
   const navigate = useNavigate();
 
   useEffect(() => {
-    const handleLogout = () => {
-      console.log("🔴 Đã logout! Chuyển hướng...");
-      // navigate(PATH.LOGIN);
-    };
-
-    eventEmitter.addListener("logout", () => {
-      console.log("test");
+    eventEmitter.once(EVENT_EMITTER.LOGOUT, () => {
+      logout(navigate);
     });
 
     return () => {
-      eventEmitter.removeListener("logout", handleLogout);
+      eventEmitter.removeAllListeners(EVENT_EMITTER.LOGOUT);
     };
   }, []);
 
-  return <div>haha</div>;
+  return <></>;
 };
 
 export default LogoutListener;

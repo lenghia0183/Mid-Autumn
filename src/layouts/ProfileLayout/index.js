@@ -7,6 +7,7 @@ import Breadcrumb from "./../../components/Breadcrumb/index";
 import { PAGE_TITLE, PATH } from "../../constants/path";
 import { useLoading } from "../../context/loadingContext";
 import Backdrop from "../../components/BackDrop";
+import LogoutListener from "./../../components/LogoutListener/index";
 
 function ProfileLayout() {
   const location = useLocation();
@@ -41,6 +42,7 @@ function ProfileLayout() {
   return (
     <>
       <Backdrop open={isLoading} />
+      <LogoutListener />
       <Header />
       <Breadcrumb items={breadcrumbProfile} />
       <main className="container grid grid-cols-12 gap-4 py-14">

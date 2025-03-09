@@ -12,6 +12,7 @@ import Footer from "../../components/Footer";
 import GoToTop from "../../components/GoToTop";
 import { useLoading } from "../../context/loadingContext";
 import Backdrop from "../../components/BackDrop";
+import LogoutListener from "../../components/LogoutListener";
 
 function AuthLayout() {
   const location = useLocation();
@@ -47,6 +48,7 @@ function AuthLayout() {
 
   return (
     <>
+      <LogoutListener />
       <Header />
       <Backdrop open={isLoading} />
       <Breadcrumb items={breadcrumbAuthLayout} />
