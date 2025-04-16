@@ -175,8 +175,12 @@ function Checkout() {
             addOrder(convertValue, {
               onSuccess: (response) => {
                 if (validateStatus(response?.code)) {
+                  console.log("response", response);
                   toast.success(response?.message);
-                  window.open(response?.data?.payUrl, "_blank");
+                  window.open(
+                    response?.data?.payUrl || response?.data?.order_url,
+                    "_blank"
+                  );
                   refreshCart();
                   navigate(PATH.HOME);
                 } else {
