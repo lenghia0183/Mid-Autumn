@@ -262,7 +262,8 @@
     "email": "Email:",
     "phone": "Số điện thoại:",
     "address": "Địa chỉ:",
-    "message": "Tin nhắn"
+    "message": "Tin nhắn",
+    "success": "Chúng tôi sẽ liên hệ để hỗ trợ bạn ngay khi có thể"
   },
   "favorite": {
     "title": "Sản phẩm yêu thích",

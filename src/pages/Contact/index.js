@@ -11,33 +11,43 @@ import { TEXTFIELD_ALLOW } from "../../constants/common";
 import { PAGE_TITLE, PATH } from "../../constants/path";
 import Comment from "../Home/Comment";
 import useBreakpoint from "../../hooks/useBreakpoint";
+import { useSendContact } from "../../service/https/contact";
+import { validateStatus } from "../../utils/api";
+import schema from "./schema";
+import { toast } from "react-toastify";
+import { useNavigate } from "react-router-dom";
 
 function ContactUs() {
   const { t } = useTranslation();
   const isLargerThanSm = useBreakpoint("sm");
+  const navigate = useNavigate();
 
-  const validationSchema = Yup.object({
-    name: Yup.string().required(t("validation.required")),
-    email: Yup.string()
-      .email(t("validation.invalidEmail"))
-      .required("Email là bắt buộc"),
-    phone: Yup.string()
-      .matches(/^[0-9]+$/, t("validation.invalidPhoneNumber"))
-      .required("Số điện thoại là bắt buộc"),
-    message: Yup.string().required(t("validation.required")),
-  });
-
+  const { trigger: sendContact, isMutating } = useSendContact();
   // Initial values
   const initialValues = {
-    name: "",
+    fullname: "",
     email: "",
     phone: "",
-    message: "",
+    content: "",
   };
 
   const handleSubmit = (values) => {
     // Handle form submission
     console.log("Form values:", values);
+    sendContact(values, {
+      onSuccess: (response) => {
+        if (validateStatus(response.code)) {
+          toast.success(t("contact.success"));
+
+          navigate(PATH.ABOUT);
+        } else {
+          toast.error(response?.message);
+        }
+      },
+      onError: () => {
+        toast.error(t("common.hasErrorTryAgainLater"));
+      },
+    });
   };
 
   const breadcrumbContact = [
@@ -98,14 +108,15 @@ function ContactUs() {
           <div className="flex-1">
             <Formik
               initialValues={initialValues}
-              validationSchema={validationSchema}
+              validationSchema={schema(t)}
               onSubmit={handleSubmit}
+              enableReinitialize
             >
               {({ resetForm }) => (
                 <Form>
                   <div className="flex flex-col sm:gap-6 gap-14 mt-7">
                     <FormikTextField
-                      name="name"
+                      name="fullname"
                       label={t("contact.name")}
                       orientation={isLargerThanSm ? "horizontal" : "vertical"}
                       labelClassName="font-medium"
@@ -140,7 +151,7 @@ function ContactUs() {
                     />
 
                     <FormikTextArea
-                      name="message"
+                      name="content"
                       label={t("contact.message")}
                       orientation={isLargerThanSm ? "horizontal" : "vertical"}
                       labelClassName="font-medium"
