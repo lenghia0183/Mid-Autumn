@@ -5,6 +5,10 @@ import { useGetMyFavorite } from "../../service/https/favorite";
 import { useQueryState } from "../../hooks/useQueryState";
 import { useTranslation } from "react-i18next";
 import ProductListSkeleton from "./../../components/Skeletons/ProductListSkeleton";
+import Image from "../../components/Image";
+import images from "../../asset/images";
+import Button from "../../components/Button";
+import { PATH } from "../../constants/path";
 
 function Favorite() {
   const { page } = useQueryState();
@@ -52,7 +56,20 @@ function Favorite() {
           />
         </>
       ) : (
-        <p className="text-xl mt-10">{t("favorite.empty")}</p>
+        <div className="flex flex-col items-center justify-center py-10">
+          <Image src={images.orderEmpty} width="220px" height="220px" />
+          <p className="text-xl text-gray-500 font-medium mb-2">
+            {t("favorite.empty")}
+          </p>
+          <Button
+            to={PATH.PRODUCTS}
+            bgColor="emerald"
+            textColor="white"
+            className="mt-4"
+          >
+            {t("common.continueShopping")}
+          </Button>
+        </div>
       )}
     </div>
   );
