@@ -10,6 +10,8 @@
     "saveChange": "Lưu thay đổi",
     "checkout": "Thanh toán",
     "send": "Gửi đi",
+
+    "continueShopping": "Tiếp tục mua hàng",
     "popularDishes": "MÓN PHỔ BIẾN",
     "sweetCakes": "ĂN BÁNH TRUNG THU NGỌT NGÀO",
     "showMenu": "Xem Menu",
@@ -37,6 +39,7 @@
   },
 
   "order": {
+    "noOrders": "Bạn chưa có đơn hàng nào",
     "status": {
       "pending": "Chờ xác nhận",
       "confirmed": "Đã xác nhận",
@@ -262,7 +265,8 @@
     "email": "Email:",
     "phone": "Số điện thoại:",
     "address": "Địa chỉ:",
-    "message": "Tin nhắn"
+    "message": "Tin nhắn",
+    "success": "Chúng tôi sẽ liên hệ để hỗ trợ bạn ngay khi có thể"
   },
   "favorite": {
     "title": "Sản phẩm yêu thích",

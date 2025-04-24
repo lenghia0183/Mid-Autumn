@@ -12,6 +12,7 @@ import Button from "../../components/Button";
 import { useUpdateOrderStatus } from "../../service/https/order";
 import OrderListSkeleton from "../../components/Skeletons/OrderListSkeleton";
 import { useTranslation } from "react-i18next";
+import images from "../../asset/images";
 
 import ReviewDialog from "./ReviewDialog";
 import { useNavigate } from "react-router-dom";
@@ -208,6 +209,21 @@ function Order() {
         >
           {isFetching ? (
             <OrderListSkeleton />
+          ) : data?.data?.orders?.length === 0 ? (
+            <div className="flex flex-col items-center justify-center py-10">
+              <Image src={images.orderEmpty} width="220px" height="220px" />
+              <p className="text-xl text-gray-500 font-medium mb-2">
+                {t("order.noOrders")}
+              </p>
+              <Button
+                to={PATH.PRODUCTS}
+                bgColor="emerald"
+                textColor="white"
+                className="mt-4"
+              >
+                {t("common.continueShopping")}
+              </Button>
+            </div>
           ) : (
             <div className="text-dark-400 text-lg flex flex-col gap-3">
               {data?.data?.orders?.map((item) => (
