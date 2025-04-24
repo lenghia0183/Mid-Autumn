@@ -261,5 +261,15 @@
     "newPassword": "新しいパスワード",
     "confirmPassword": "新しいパスワードの確認",
     "reset": "パスワードをリセット"
+  },
+  "chat": {
+    "title": "管理者とチャット",
+    "startConversation": "管理者との会話を始める",
+    "typingMessage": "メッセージを入力...",
+    "send": "送信",
+    "toast": {
+      "messageSent": "メッセージが送信されました",
+      "messageError": "メッセージを送信できませんでした。もう一度お試しください"
+    }
   }
 }

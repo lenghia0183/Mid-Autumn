@@ -13,6 +13,8 @@ import GoToTop from "../../components/GoToTop";
 import { useLoading } from "../../context/loadingContext";
 import Backdrop from "../../components/BackDrop";
 import LogoutListener from "../../components/LogoutListener";
+import ChatButton from "../../components/ChatButton";
+import ChatModal from "../../components/ChatModal";
 
 function AuthLayout() {
   const location = useLocation();
@@ -88,6 +90,8 @@ function AuthLayout() {
       <Comment />
       <Footer />
       <GoToTop />
+      <ChatButton />
+      <ChatModal />
     </>
   );
 }

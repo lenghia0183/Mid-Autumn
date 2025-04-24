@@ -358,5 +358,17 @@
     "toast": {
       "successMessage": "Mật khẩu của bạn đã được đặt lại thành công"
     }
+  },
+  "chat": {
+    "title": "Chat với Admin",
+    "startConversation": "Bắt đầu cuộc trò chuyện với admin",
+    "typingMessage": "Nhập tin nhắn của bạn...",
+    "send": "Gửi",
+    "responseTime": "Chúng tôi thường phản hồi trong vòng vài phút",
+    "supportAvailable": "Hỗ trợ 24/7",
+    "toast": {
+      "messageSent": "Tin nhắn đã được gửi",
+      "messageError": "Không thể gửi tin nhắn, vui lòng thử lại"
+    }
   }
 }

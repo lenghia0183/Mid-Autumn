@@ -1,10 +1,13 @@
 // hooks/useSocket.js
 import { useEffect, useRef, useCallback } from "react";
 import { io } from "socket.io-client";
+import { getLocalStorageItem } from "../utils";
 
 const API_URL = process.env.REACT_APP_API_URL || "http://localhost:3000";
 
 export const useSocket = (token) => {
+  const user = getLocalStorageItem("user");
+  console.log("user", user);
   const socketRef = useRef(null);
   console.log("token", token);
   useEffect(() => {
@@ -18,7 +21,7 @@ export const useSocket = (token) => {
     socketRef.current = socket;
 
     socket.on("connect", () => {
-      console.log("Connected:", socket.id);
+      socket.emit("chat:join", { userId: user?._id });
     });
 
     socket.on("disconnect", () => {
@@ -31,6 +34,7 @@ export const useSocket = (token) => {
   }, [token]);
 
   const emit = useCallback((event, data) => {
+    console.log("emit", event, data);
     socketRef.current?.emit(event, data);
   }, []);
 

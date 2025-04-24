@@ -8,6 +8,8 @@ import { PAGE_TITLE, PATH } from "../../constants/path";
 import { useLoading } from "../../context/loadingContext";
 import Backdrop from "../../components/BackDrop";
 import LogoutListener from "./../../components/LogoutListener/index";
+import ChatButton from "../../components/ChatButton";
+import ChatModal from "../../components/ChatModal";
 
 function ProfileLayout() {
   const location = useLocation();
@@ -58,6 +60,8 @@ function ProfileLayout() {
       </main>
       <Footer />
       <GoToTop />
+      <ChatButton />
+      <ChatModal />
     </>
   );
 }

@@ -6,6 +6,8 @@ import GoToTop from "../../components/GoToTop";
 import { useLoading } from "../../context/loadingContext";
 import Backdrop from "../../components/BackDrop";
 import LogoutListener from "../../components/LogoutListener";
+import ChatButton from "../../components/ChatButton";
+import ChatModal from "../../components/ChatModal";
 
 const MainLayout = () => {
   const { isLoading } = useLoading();
@@ -20,6 +22,8 @@ const MainLayout = () => {
       </main>
       <Footer />
       <GoToTop />
+      <ChatButton />
+      <ChatModal />
     </div>
   );
 };

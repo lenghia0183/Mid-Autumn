@@ -261,5 +261,15 @@
     "newPassword": "New Password",
     "confirmPassword": "Confirm New Password",
     "reset": "Reset Password"
+  },
+  "chat": {
+    "title": "Chat with Admin",
+    "startConversation": "Start a conversation with admin",
+    "typingMessage": "Type your message...",
+    "send": "Send",
+    "toast": {
+      "messageSent": "Message sent",
+      "messageError": "Could not send message, please try again"
+    }
   }
 }
