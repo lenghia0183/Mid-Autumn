@@ -1,4 +1,4 @@
-import React, { useRef, useEffect, useState } from "react";
+import React, { useRef, useEffect } from "react";
 import Dialog from "../Diaglog";
 import { useChat } from "../../context/chatContext";
 import { useUser } from "../../context";
@@ -9,16 +9,14 @@ import ChatInput from "./ChatInput";
 
 const ChatModal = () => {
   const { t } = useTranslation();
-  const { isOpen, closeChat, messages, sendMessage } = useChat();
+  const { isOpen, closeChat, messages, sendMessage, isAdminTyping } = useChat();
   const { user } = useUser();
-  const [isTyping, setIsTyping] = useState(false);
   const messagesEndRef = useRef(null);
   const messageAreaRef = useRef(null);
 
   const handleSendMessage = (message) => {
     if (message.trim()) {
       sendMessage(message);
-      setIsTyping(false);
     }
   };
 
@@ -56,7 +54,7 @@ const ChatModal = () => {
       <div className="flex flex-col h-full">
         <MessageArea
           messages={messages}
-          isTyping={isTyping}
+          isTyping={isAdminTyping}
           user={user}
           messageAreaRef={messageAreaRef}
           messagesEndRef={messagesEndRef}

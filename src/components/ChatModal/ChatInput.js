@@ -2,10 +2,12 @@ import React, { useState } from "react";
 import Button from "../Button";
 import Icon from "../Icon";
 import { useTranslation } from "react-i18next";
+import { useChat, useUser } from "../../context";
 
 const ChatInput = ({ onSendMessage }) => {
   const { t } = useTranslation();
   const [inputValue, setInputValue] = useState("");
+  const { sendUserTyping, sendUserStopTyping } = useChat();
 
   const handleSendMessage = () => {
     if (inputValue.trim()) {
@@ -16,6 +18,11 @@ const ChatInput = ({ onSendMessage }) => {
 
   const handleInputChange = (e) => {
     setInputValue(e.target.value);
+    sendUserTyping();
+  };
+
+  const handleInputBlur = () => {
+    sendUserStopTyping();
   };
 
   const handleKeyDown = (e) => {
@@ -36,6 +43,7 @@ const ChatInput = ({ onSendMessage }) => {
           value={inputValue}
           onChange={handleInputChange}
           onKeyDown={handleKeyDown}
+          onBlur={handleInputBlur}
           placeholder={t("chat.typingMessage") || "Nhập tin nhắn của bạn..."}
           className="flex-1 bg-transparent py-3 px-4 focus:outline-none text-gray-700"
         />

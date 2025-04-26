@@ -5,8 +5,68 @@ import Icon from "../Icon";
 import Image from "../Image";
 import images from "../../asset/images";
 
-const MessageArea = ({ messages, isTyping, user, messageAreaRef, messagesEndRef }) => {
+const MessageArea = ({
+  messages,
+  isTyping,
+  user,
+  messageAreaRef,
+  messagesEndRef,
+}) => {
   const { t } = useTranslation();
+
+  const isCurrentUser = (message) => {
+    if (typeof message.sender === "object") {
+      return message.sender.role === "user";
+    }
+
+    return message.sender === "user";
+  };
+
+  const getAvatar = (message) => {
+    if (message?.sender.avatar) {
+      return message.sender.avatar;
+    }
+    return user?.user?.avatar || images.fallBack;
+  };
+
+  const getMessageTime = (message) => {
+    const timestamp = message.createdAt || message.timestamp;
+    return new Date(timestamp).toLocaleTimeString([], {
+      hour: "2-digit",
+      minute: "2-digit",
+    });
+  };
+
+  const getMessageDate = (message) => {
+    const timestamp = message.createdAt || message.timestamp;
+    const date = new Date(timestamp);
+    const today = new Date();
+    const yesterday = new Date(today);
+    yesterday.setDate(yesterday.getDate() - 1);
+
+    if (date.toDateString() === today.toDateString()) {
+      return "Hôm nay";
+    } else if (date.toDateString() === yesterday.toDateString()) {
+      return "Hôm qua";
+    } else {
+      return date.toLocaleDateString("vi-VN", {
+        day: "2-digit",
+        month: "2-digit",
+        year: "numeric",
+      });
+    }
+  };
+
+  const shouldShowDate = (message, index) => {
+    if (index === 0) return true;
+
+    const currentDate = new Date(message.createdAt || message.timestamp);
+    const prevDate = new Date(
+      messages[index - 1].createdAt || messages[index - 1].timestamp
+    );
+
+    return currentDate.toDateString() !== prevDate.toDateString();
+  };
 
   return (
     <div
@@ -27,75 +87,82 @@ const MessageArea = ({ messages, isTyping, user, messageAreaRef, messagesEndRef 
             <Icon name="send" color="emerald" size="2.5" />
           </div>
           <div className="text-center">
-            {t("chat.startConversation") ||
-              "Start a conversation with admin"}
+            {t("chat.startConversation") || "Start a conversation with admin"}
           </div>
         </div>
       ) : (
         <>
-          {messages.map((message) => (
-            <div
-              key={message.id}
-              className={clsx(
-                "mb-4 flex",
-                message.sender === "user"
-                  ? "justify-end items-start"
-                  : "justify-start items-start"
-              )}
-            >
-              {message.sender !== "user" && (
-                <div className="w-10 h-10 rounded-full bg-emerald flex items-center justify-center mr-2 flex-shrink-0 shadow-md border-2 border-white mt-1">
-                  <Icon name="user" color="white" size="1.2" />
+          {messages.map((message, index) => (
+            <React.Fragment key={message._id || message.id}>
+              {/* Hiển thị ngày khi cần thiết */}
+              {shouldShowDate(message, index) && (
+                <div className="flex justify-center my-4">
+                  <div className="bg-gray-200 text-gray-600 text-xs px-3 py-1 rounded-full shadow-sm">
+                    {getMessageDate(message)}
+                  </div>
                 </div>
               )}
-              <div className="flex flex-col max-w-[75%]">
-                <div
-                  className={clsx(
-                    "p-3 shadow-md transition-all relative",
-                    message.sender === "user"
-                      ? "bg-emerald text-white rounded-tl-lg rounded-tr-lg rounded-bl-lg"
-                      : "bg-white text-dark rounded-tr-lg rounded-tl-lg rounded-br-lg border border-gray-100"
-                  )}
-                >
-                  <div className="text-sm whitespace-pre-wrap break-words">
-                    {message.content}
-                  </div>
 
-                  {/* Arrow pointer */}
+              {/* Tin nhắn */}
+              <div
+                className={clsx(
+                  "mb-4 flex",
+                  isCurrentUser(message)
+                    ? "justify-end items-start"
+                    : "justify-start items-start"
+                )}
+              >
+                {!isCurrentUser(message) && (
+                  <div className="w-10 h-10 rounded-full bg-emerald flex items-center justify-center mr-2 flex-shrink-0 shadow-md border-2 border-white mt-1">
+                    <Icon name="user" color="white" size="1.2" />
+                  </div>
+                )}
+                <div className="flex flex-col max-w-[75%]">
                   <div
                     className={clsx(
-                      "absolute w-3 h-3 rotate-45",
-                      message.sender === "user"
-                        ? "bg-emerald -right-1.5 top-[12px]"
-                        : "bg-white -left-1.5 top-[12px] border-b border-r border-gray-100"
+                      "p-3 shadow-md transition-all relative",
+                      isCurrentUser(message)
+                        ? "bg-emerald text-white rounded-tl-lg rounded-tr-lg rounded-bl-lg"
+                        : "bg-white text-dark rounded-tr-lg rounded-tl-lg rounded-br-lg border border-gray-100"
                     )}
-                  ></div>
+                  >
+                    <div className="text-sm whitespace-pre-wrap break-words">
+                      {message.content}
+                    </div>
+
+                    {/* Arrow pointer */}
+                    <div
+                      className={clsx(
+                        "absolute w-3 h-3 rotate-45",
+                        isCurrentUser(message)
+                          ? "bg-emerald -right-1.5 top-[12px]"
+                          : "bg-white -left-1.5 top-[12px] border-b border-r border-gray-100"
+                      )}
+                    ></div>
+                  </div>
+                  <div
+                    className={clsx(
+                      "text-xs mt-1",
+                      isCurrentUser(message)
+                        ? "text-gray-500 text-right mr-2"
+                        : "text-gray-500 ml-2"
+                    )}
+                  >
+                    {getMessageTime(message)}
+                  </div>
                 </div>
-                <div
-                  className={clsx(
-                    "text-xs mt-1",
-                    message.sender === "user"
-                      ? "text-gray-500 text-right mr-2"
-                      : "text-gray-500 ml-2"
-                  )}
-                >
-                  {new Date(message.timestamp).toLocaleTimeString([], {
-                    hour: "2-digit",
-                    minute: "2-digit",
-                  })}
-                </div>
+                {isCurrentUser(message) && (
+                  <div className="w-10 h-10 rounded-full overflow-hidden ml-2 flex-shrink-0 shadow-md border-2 border-white mt-1">
+                    <Image
+                      src={getAvatar(message)}
+                      width="w-full"
+                      height="h-full"
+                      className="object-cover"
+                    />
+                  </div>
+                )}
               </div>
-              {message.sender === "user" && (
-                <div className="w-10 h-10 rounded-full overflow-hidden ml-2 flex-shrink-0 shadow-md border-2 border-white mt-1">
-                  <Image
-                    src={user?.user?.avatar || images.fallBack}
-                    width="w-full"
-                    height="h-full"
-                    className="object-cover"
-                  />
-                </div>
-              )}
-            </div>
+            </React.Fragment>
           ))}
           {isTyping && (
             <div className="flex items-start mt-2 mb-4">

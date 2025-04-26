@@ -7,9 +7,9 @@ const API_URL = process.env.REACT_APP_API_URL || "http://localhost:3000";
 
 export const useSocket = (token) => {
   const user = getLocalStorageItem("user");
-  console.log("user", user);
+
   const socketRef = useRef(null);
-  console.log("token", token);
+
   useEffect(() => {
     if (!token) return;
 
@@ -21,7 +21,7 @@ export const useSocket = (token) => {
     socketRef.current = socket;
 
     socket.on("connect", () => {
-      socket.emit("chat:join", { userId: user?._id });
+      socket.emit("chat:join", { chatId: "6808fa760a2ac7a5cacd546d" });
     });
 
     socket.on("disconnect", () => {
