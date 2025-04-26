@@ -45,7 +45,7 @@ const ChatModal = () => {
           </div>
         </div>
       }
-      maxWidth="max-w-md"
+      maxWidth="max-w-xl"
       fullWidth={true}
       dialogClassName="h-[500px] flex flex-col rounded-xl overflow-hidden shadow-2xl"
       titleContainerClassName="bg-white border-b border-gray-200 p-4 bg-gradient-to-r from-white to-gray-50"

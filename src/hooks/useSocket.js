@@ -34,7 +34,6 @@ export const useSocket = (token) => {
   }, [token]);
 
   const emit = useCallback((event, data) => {
-    console.log("emit", event, data);
     socketRef.current?.emit(event, data);
   }, []);
 

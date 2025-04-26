@@ -15,13 +15,13 @@ export const ChatProvider = ({ children }) => {
 
   const { data } = useGetMyChat();
 
+  console.log("data", data);
+
   useEffect(() => {
     if (data) {
       setMessages(data?.data?.messages || []);
     }
   }, [data]);
-
-  console.log("data", data);
 
   const openChat = () => setIsOpen(true);
   const closeChat = () => setIsOpen(false);
@@ -29,38 +29,21 @@ export const ChatProvider = ({ children }) => {
   const sendMessage = (content) => {
     if (!content.trim()) return;
 
-    const tempMessage = {
-      _id: Date.now().toString(),
-      content,
-      sender: {
-        _id: user?.user?._id || "temp-user-id",
-        fullname: user?.user?.fullname || "User",
-        email: user?.user?.email || "",
-        role: "user",
-        avatar: user?.user?.avatar || "",
-      },
-      status: "sending",
-      createdAt: new Date().toISOString(),
-      updatedAt: new Date().toISOString(),
-    };
-
-    setMessages((prev) => [...prev, tempMessage]);
-
     emit("message:send", {
       content: content,
-      chatId: data?.data?._id,
+      chatId: "6808fa760a2ac7a5cacd546d",
     });
   };
 
   const sendUserTyping = () => {
     emit("user:typing", {
-      chatId: data?.data?._id,
+      chatId: "6808fa760a2ac7a5cacd546d",
     });
   };
 
   const sendUserStopTyping = () => {
     emit("user:stop-typing", {
-      chatId: data?.data?._id,
+      chatId: "6808fa760a2ac7a5cacd546d",
     });
   };
 
@@ -68,18 +51,17 @@ export const ChatProvider = ({ children }) => {
     if (!socket) return;
 
     const handleAdminMessage = (data) => {
+      console.log("data", data);
+
+      const messageData = data.message || data;
+
       const adminMessage = {
-        _id: Date.now().toString(),
-        content: data.content,
-        sender: {
-          _id: "admin-id",
-          fullname: "Admin",
-          role: "admin",
-          avatar: "",
-        },
-        status: "received",
-        createdAt: new Date().toISOString(),
-        updatedAt: new Date().toISOString(),
+        _id: messageData._id || Date.now().toString(),
+        content: messageData.content,
+        sender: messageData?.sender,
+        status: messageData.status || "sent",
+        createdAt: messageData.createdAt || new Date().toISOString(),
+        updatedAt: messageData.updatedAt || new Date().toISOString(),
       };
 
       setMessages((prev) => [...prev, adminMessage]);
@@ -93,12 +75,12 @@ export const ChatProvider = ({ children }) => {
       setIsAdminTyping(false);
     };
 
-    on("admin_message", handleAdminMessage);
+    on("message:new", handleAdminMessage);
     on("user:typing", handleAdminTyping);
     on("user:stop-typing", handleAdminStopTyping);
 
     return () => {
-      off("admin_message", handleAdminMessage);
+      off("message:new", handleAdminMessage);
       off("user:typing", handleAdminTyping);
       off("user:stop-typing", handleAdminStopTyping);
     };
