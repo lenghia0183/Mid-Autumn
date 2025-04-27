@@ -30,7 +30,7 @@ const GoToTop = () => {
     <div
       onClick={handleGoToTop}
       className={clsx(
-        "fixed cursor-pointer flex items-center justify-center transition-all duration-300",
+        "fixed cursor-pointer flex items-center justify-center transition-all duration-400",
         {
           "bottom-4 right-4": scrollPercentage > 0,
         },

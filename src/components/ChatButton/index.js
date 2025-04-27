@@ -6,7 +6,17 @@ import clsx from "clsx";
 const ChatButton = () => {
   const { openChat, messages } = useChat();
   const [hasNewMessages, setHasNewMessages] = useState(false);
-  const [isAnimating, setIsAnimating] = useState(false);
+  const [scrolled, setScrolled] = useState(false); // chỉ lưu true/false
+
+  useEffect(() => {
+    const handleScroll = () => {
+      const scrollTop = window.scrollY || document.documentElement.scrollTop;
+      setScrolled(scrollTop > 0);
+    };
+
+    window.addEventListener("scroll", handleScroll);
+    return () => window.removeEventListener("scroll", handleScroll);
+  }, []);
 
   useEffect(() => {
     if (
@@ -14,13 +24,6 @@ const ChatButton = () => {
       messages[messages.length - 1].sender === "admin"
     ) {
       setHasNewMessages(true);
-      setIsAnimating(true);
-
-      const timer = setTimeout(() => {
-        setIsAnimating(false);
-      }, 3000);
-
-      return () => clearTimeout(timer);
     }
   }, [messages]);
 
@@ -33,8 +36,9 @@ const ChatButton = () => {
     <div
       onClick={handleOpenChat}
       className={clsx(
-        "fixed bottom-20 right-5 z-50 cursor-pointer flex items-center justify-center transition-all duration-300 hover:scale-110",
-        isAnimating && "animate-bounce"
+        "fixed cursor-pointer flex items-center justify-center transition-all duration-400",
+        scrolled ? "bottom-20 right-4" : "bottom-4 right-4",
+        hasNewMessages && "animate-bounce"
       )}
     >
       <div className="relative flex items-center justify-center w-[50px] h-[50px] rounded-full bg-emerald shadow-xl">
