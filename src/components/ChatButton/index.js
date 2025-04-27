@@ -8,7 +8,6 @@ const ChatButton = () => {
   const [hasNewMessages, setHasNewMessages] = useState(false);
   const [isAnimating, setIsAnimating] = useState(false);
 
-  // Check for new messages
   useEffect(() => {
     if (
       messages.length > 0 &&
@@ -17,7 +16,6 @@ const ChatButton = () => {
       setHasNewMessages(true);
       setIsAnimating(true);
 
-      // Stop animation after 3 seconds
       const timer = setTimeout(() => {
         setIsAnimating(false);
       }, 3000);
@@ -26,7 +24,6 @@ const ChatButton = () => {
     }
   }, [messages]);
 
-  // Reset new messages flag when chat is opened
   const handleOpenChat = () => {
     setHasNewMessages(false);
     openChat();
@@ -36,11 +33,11 @@ const ChatButton = () => {
     <div
       onClick={handleOpenChat}
       className={clsx(
-        "fixed bottom-6 right-6 z-50 cursor-pointer flex items-center justify-center transition-all duration-300 hover:scale-110",
+        "fixed bottom-20 right-5 z-50 cursor-pointer flex items-center justify-center transition-all duration-300 hover:scale-110",
         isAnimating && "animate-bounce"
       )}
     >
-      <div className="relative flex items-center justify-center w-[65px] h-[65px] rounded-full bg-emerald shadow-xl">
+      <div className="relative flex items-center justify-center w-[50px] h-[50px] rounded-full bg-emerald shadow-xl">
         <div className="absolute inset-0 rounded-full bg-emerald"></div>
         {hasNewMessages && (
           <span className="absolute -top-1 -right-1 w-5 h-5 bg-red-500 rounded-full flex items-center justify-center text-white text-xs font-bold animate-pulse">

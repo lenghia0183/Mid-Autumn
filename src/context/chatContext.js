@@ -15,8 +15,6 @@ export const ChatProvider = ({ children }) => {
 
   const { data } = useGetMyChat();
 
-  console.log("data", data);
-
   useEffect(() => {
     if (data) {
       setMessages(data?.data?.messages || []);
@@ -31,19 +29,19 @@ export const ChatProvider = ({ children }) => {
 
     emit("message:send", {
       content: content,
-      chatId: "6808fa760a2ac7a5cacd546d",
+      userId: user?.user?._id,
     });
   };
 
   const sendUserTyping = () => {
     emit("user:typing", {
-      chatId: "6808fa760a2ac7a5cacd546d",
+      userId: user?.user?._id,
     });
   };
 
   const sendUserStopTyping = () => {
     emit("user:stop-typing", {
-      chatId: "6808fa760a2ac7a5cacd546d",
+      userId: user?.user?._id,
     });
   };
 
@@ -51,8 +49,6 @@ export const ChatProvider = ({ children }) => {
     if (!socket) return;
 
     const handleAdminMessage = (data) => {
-      console.log("data", data);
-
       const messageData = data.message || data;
 
       const adminMessage = {

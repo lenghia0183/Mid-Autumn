@@ -5,8 +5,8 @@ import Image from "../../components/Image";
 import images from "../../asset/images";
 import Reason from "./../Home/Reason/index";
 import Comment from "../Home/Comment";
-import AOS from "aos"; // Import AOS
-import "aos/dist/aos.css"; // Import CSS của AOS
+import AOS from "aos";
+import "aos/dist/aos.css";
 import { useTranslation } from "react-i18next";
 
 const About = () => {
@@ -24,7 +24,7 @@ const About = () => {
   const { t } = useTranslation();
 
   useEffect(() => {
-    AOS.init({ duration: 1000 }); // Khởi tạo AOS với thời gian hiệu ứng 1 giây
+    AOS.init({ duration: 1000 });
   }, []);
 
   return (
