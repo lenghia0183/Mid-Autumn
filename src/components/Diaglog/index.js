@@ -5,6 +5,7 @@ import PropTypes from "prop-types";
 import React, { useCallback } from "react";
 import Button from "../Button";
 import IconButton from "../IconButton";
+import { memo } from "react";
 
 const Dialog = ({
   open,
@@ -154,4 +155,4 @@ Dialog.propTypes = {
   backdropClassName: PropTypes.string,
 };
 
-export default Dialog;
+export default memo(Dialog);

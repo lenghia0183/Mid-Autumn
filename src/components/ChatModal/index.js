@@ -1,4 +1,4 @@
-import React, { useRef, useEffect } from "react";
+import React, { useRef, useEffect, memo } from "react";
 import Dialog from "../Diaglog";
 import { useChat } from "../../context/chatContext";
 import { useUser } from "../../context";
@@ -9,21 +9,9 @@ import ChatInput from "./ChatInput";
 
 const ChatModal = () => {
   const { t } = useTranslation();
-  const { isOpen, closeChat, messages, sendMessage, isAdminTyping } = useChat();
-  const { user } = useUser();
-  const messagesEndRef = useRef(null);
-  const messageAreaRef = useRef(null);
+  const { isOpen, closeChat } = useChat();
 
-  const handleSendMessage = (message) => {
-    if (message.trim()) {
-      sendMessage(message);
-    }
-  };
-
-  // Scroll to bottom when messages change
-  useEffect(() => {
-    messagesEndRef.current?.scrollIntoView({ behavior: "smooth" });
-  }, [messages]);
+  console.log("rerenfdadffads");
 
   return (
     <Dialog
@@ -52,17 +40,11 @@ const ChatModal = () => {
       contentClassName="flex-1 flex flex-col p-0 overflow-hidden"
     >
       <div className="flex flex-col h-full">
-        <MessageArea
-          messages={messages}
-          isTyping={isAdminTyping}
-          user={user}
-          messageAreaRef={messageAreaRef}
-          messagesEndRef={messagesEndRef}
-        />
-        <ChatInput onSendMessage={handleSendMessage} />
+        <MessageArea />
+        <ChatInput />
       </div>
     </Dialog>
   );
 };
 
-export default ChatModal;
+export default memo(ChatModal);

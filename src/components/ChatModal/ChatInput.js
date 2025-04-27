@@ -4,14 +4,15 @@ import Icon from "../Icon";
 import { useTranslation } from "react-i18next";
 import { useChat, useUser } from "../../context";
 
-const ChatInput = ({ onSendMessage }) => {
+const ChatInput = () => {
   const { t } = useTranslation();
   const [inputValue, setInputValue] = useState("");
-  const { sendUserTyping, sendUserStopTyping } = useChat();
+
+  const { sendUserTyping, sendUserStopTyping, sendMessage } = useChat();
 
   const handleSendMessage = () => {
     if (inputValue.trim()) {
-      onSendMessage(inputValue);
+      sendMessage(inputValue);
       setInputValue("");
     }
   };

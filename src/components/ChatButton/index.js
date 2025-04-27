@@ -6,7 +6,7 @@ import clsx from "clsx";
 const ChatButton = () => {
   const { openChat, messages } = useChat();
   const [hasNewMessages, setHasNewMessages] = useState(false);
-  const [scrolled, setScrolled] = useState(false); // chỉ lưu true/false
+  const [scrolled, setScrolled] = useState(false);
 
   useEffect(() => {
     const handleScroll = () => {
@@ -21,7 +21,7 @@ const ChatButton = () => {
   useEffect(() => {
     if (
       messages.length > 0 &&
-      messages[messages.length - 1].sender === "admin"
+      messages[messages.length - 1].sender.role === "admin"
     ) {
       setHasNewMessages(true);
     }
@@ -44,7 +44,7 @@ const ChatButton = () => {
       <div className="relative flex items-center justify-center w-[50px] h-[50px] rounded-full bg-emerald shadow-xl">
         <div className="absolute inset-0 rounded-full bg-emerald"></div>
         {hasNewMessages && (
-          <span className="absolute -top-1 -right-1 w-5 h-5 bg-red-500 rounded-full flex items-center justify-center text-white text-xs font-bold animate-pulse">
+          <span className="absolute -top-1 -right-1 z-20 w-5 h-5 bg-red-500 rounded-full flex items-center justify-center text-white text-xs font-bold animate-pulse">
             !
           </span>
         )}

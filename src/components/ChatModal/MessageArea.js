@@ -1,18 +1,18 @@
-import React from "react";
+import React, { useEffect, useRef } from "react";
 import { useTranslation } from "react-i18next";
 import clsx from "clsx";
 import Icon from "../Icon";
 import Image from "../Image";
 import images from "../../asset/images";
+import { useChat, useUser } from "../../context";
 
-const MessageArea = ({
-  messages,
-  isTyping,
-  user,
-  messageAreaRef,
-  messagesEndRef,
-}) => {
+const MessageArea = () => {
   const { t } = useTranslation();
+  const messagesEndRef = useRef(null);
+  const messageAreaRef = useRef(null);
+
+  const { user } = useUser();
+  const { messages, isAdminTyping: isTyping } = useChat();
 
   const getSenderRole = (sender) =>
     typeof sender === "object" ? sender.role : sender;
@@ -139,6 +139,12 @@ const MessageArea = ({
       </div>
     </div>
   );
+
+  useEffect(() => {
+    if (messagesEndRef.current) {
+      messagesEndRef.current.scrollIntoView({ behavior: "smooth" });
+    }
+  }, [messages]);
 
   return (
     <div
