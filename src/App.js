@@ -5,15 +5,21 @@ import { ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import { auth } from "./firebaseConfig";
 import { useTranslation } from "react-i18next";
-import { useLoading } from "./context/loadingContext";
+
 import { getLocalStorageItem } from "./utils";
 import { useSocket } from "./hooks/useSocket";
+import { useRecordVisit } from "./service/https/visit";
+import { useEffect } from "react";
 
 function App() {
   const { i18n } = useTranslation();
   auth.languageCode = i18n.language;
-  const { isLoading } = useLoading();
   useSocket(getLocalStorageItem("token"));
+  const { trigger: recordVisit } = useRecordVisit();
+  useEffect(() => {
+    recordVisit();
+  }, []);
+
   return (
     <>
       <ToastContainer style={{ zIndex: "9999999999" }} />
