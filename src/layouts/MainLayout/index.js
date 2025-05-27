@@ -8,24 +8,30 @@ import Backdrop from "../../components/BackDrop";
 import LogoutListener from "../../components/LogoutListener";
 import ChatButton from "../../components/ChatButton";
 import ChatModal from "../../components/ChatModal";
+import { useUser } from "../../context";
 
 const MainLayout = () => {
-  const { isLoading } = useLoading();
+    const { isLoading } = useLoading();
+    const { user: userData } = useUser();
 
-  return (
-    <div>
-      <Header />
-      <LogoutListener />
-      <Backdrop open={isLoading} />
-      <main>
-        <Outlet />
-      </main>
-      <Footer />
-      <GoToTop />
-      <ChatButton />
-      <ChatModal />
-    </div>
-  );
+    return (
+        <div>
+            <Header />
+            <LogoutListener />
+            <Backdrop open={isLoading} />
+            <main>
+                <Outlet />
+            </main>
+            <Footer />
+            <GoToTop />
+            {userData?.isLoggedIn ? (
+                <>
+                    <ChatButton />
+                    <ChatModal />
+                </>
+            ) : null}
+        </div>
+    );
 };
 
 export default MainLayout;
