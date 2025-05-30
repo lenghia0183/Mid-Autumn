@@ -10,10 +10,26 @@ export const ChatProvider = ({ children }) => {
   const [isOpen, setIsOpen] = useState(false);
   const [messages, setMessages] = useState([]);
   const [isAdminTyping, setIsAdminTyping] = useState(false);
-  const { socket, emit, on, off } = useSocket(getLocalStorageItem("token"));
+  const [token, setToken] = useState(getLocalStorageItem("token"));
+  const { socket, emit, on, off } = useSocket(token);
   const { user } = useUser();
 
-  const { data } = useGetMyChat();
+  const { data, mutate: refreshChat } = useGetMyChat();
+
+  // Cập nhật token khi user đăng nhập/đăng xuất
+  useEffect(() => {
+    const currentToken = getLocalStorageItem("token");
+    if (currentToken !== token) {
+      setToken(currentToken);
+      // Refresh chat data khi token thay đổi
+      if (currentToken) {
+        refreshChat();
+      } else {
+        // Clear messages khi logout
+        setMessages([]);
+      }
+    }
+  }, [user.isLoggedIn, token, refreshChat]);
 
   useEffect(() => {
     if (data) {

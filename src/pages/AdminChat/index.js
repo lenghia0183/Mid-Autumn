@@ -14,9 +14,26 @@ const AdminChat = () => {
   const [activeChat, setActiveChat] = useState(null);
   const [messages, setMessages] = useState([]);
   const [chats, setChats] = useState([]);
-  const { socket, emit, on, off } = useSocket(getLocalStorageItem("token"));
+  const [token, setToken] = useState(getLocalStorageItem("token"));
+  const { socket, emit, on, off } = useSocket(token);
   const { data, mutate: refreshChats } = useGetAdminChat();
   const { sendMessage: apiSendMessage } = useSendMessage();
+
+  // Cập nhật token khi user đăng nhập/đăng xuất
+  useEffect(() => {
+    const currentToken = getLocalStorageItem("token");
+    if (currentToken !== token) {
+      setToken(currentToken);
+      if (currentToken) {
+        refreshChats();
+      } else {
+        // Clear data khi logout
+        setChats([]);
+        setMessages([]);
+        setActiveChat(null);
+      }
+    }
+  }, [user.isLoggedIn, token, refreshChats]);
 
   // Format chats for display
   const formattedChats = useMemo(() => {

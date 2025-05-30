@@ -6,15 +6,12 @@ import "react-toastify/dist/ReactToastify.css";
 import { auth } from "./firebaseConfig";
 import { useTranslation } from "react-i18next";
 
-import { getLocalStorageItem } from "./utils";
-import { useSocket } from "./hooks/useSocket";
 import { useRecordVisit } from "./service/https/visit";
 import { useEffect } from "react";
 
 function App() {
   const { i18n } = useTranslation();
   auth.languageCode = i18n.language;
-  useSocket(getLocalStorageItem("token"));
   const { trigger: recordVisit } = useRecordVisit();
   useEffect(() => {
     recordVisit();
