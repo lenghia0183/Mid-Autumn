@@ -118,11 +118,11 @@ function Cart() {
                     {/* Cột đơn giá, số lượng, thành tiền */}
                     <div className="col-span-5 flex flex-col gap-y-2">
                       <LabelValue
-                        label="Đơn giá"
+                        label={t("cart.unitPrice")}
                         value={formatCurrency(item?.productId?.price)}
                       />
                       <LabelValue
-                        label="Số lượng"
+                        label={t("cart.quantity")}
                         value={
                           <QuantityInput
                             value={item?.quantity}
@@ -134,7 +134,7 @@ function Cart() {
                         }
                       />
                       <LabelValue
-                        label="Thành tiền"
+                        label={t("cart.totalPrice")}
                         valueClassName="text-emerald text-xl font-medium"
                         value={formatCurrency(item?.totalMoney)}
                       />

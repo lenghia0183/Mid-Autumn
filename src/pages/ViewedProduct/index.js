@@ -2,8 +2,10 @@ import images from "../../asset/images";
 import ItemCard from "../../components/ItemCard";
 import Pagination from "../../components/Pagination";
 import { useState } from "react";
+import { useTranslation } from "react-i18next";
 
 function ViewedProduct() {
+  const { t } = useTranslation();
   const [currentPage, setCurrentPage] = useState(0);
   const items = [
     {
@@ -81,7 +83,7 @@ function ViewedProduct() {
   return (
     <div className="xl:p-4">
       <h2 className="text-2xl font-semibold text-dark shadow-md p-4">
-        Danh sách sản phẩm đã xem
+        {t("viewedProducts.title")}
       </h2>
 
       {/* Danh sách sản phẩm */}

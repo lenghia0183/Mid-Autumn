@@ -54,7 +54,7 @@ function SignUp() {
           }
         },
         onError: () => {
-          toast.error("Đăng ký thật bạo vui lòng thử lại");
+          toast.error(t("signUp.toast.registerFailed"));
         },
       }
     );
@@ -111,7 +111,7 @@ function SignUp() {
 
   return (
     <>
-      <h2 className="text-[40px] text-dark font-medium">ĐĂNG KÝ</h2>
+      <h2 className="text-[40px] text-dark font-medium">{t("signUp.title")}</h2>
       <Formik
         initialValues={initialValues}
         validationSchema={validationSchema(t)}
@@ -121,7 +121,7 @@ function SignUp() {
           <Form>
             <FormikTextField
               name="fullName"
-              label="Họ và tên"
+              label={t("signUp.fullName")}
               className="mt-10"
               allow={TEXTFIELD_ALLOW.VIETNAMESE}
               required
@@ -131,7 +131,7 @@ function SignUp() {
 
             <FormikTextField
               name="email"
-              label="Email"
+              label={t("signUp.email")}
               className="mt-10"
               allow={TEXTFIELD_ALLOW.ALPHANUMERIC_SPECIAL}
               required
@@ -139,7 +139,7 @@ function SignUp() {
 
             <FormikTextField
               name="password"
-              label="Mật khẩu"
+              label={t("signUp.password")}
               type="password"
               className="mt-10"
               rightIconClassName="text-gray-500"
@@ -149,7 +149,7 @@ function SignUp() {
 
             <FormikTextField
               name="confirmPassword"
-              label="Xác nhận mật khẩu"
+              label={t("signUp.confirmPassword")}
               type="password"
               className="mt-10"
               rightIconClassName="text-gray-500"
@@ -158,19 +158,19 @@ function SignUp() {
             />
 
             <div className="flex items-center text-lg mt-5">
-              <p className="text-gray-500 mr-2">- Bạn đã có tài khoản?</p>
+              <p className="text-gray-500 mr-2">- {t("signUp.hasAccount")}</p>
               <Button
                 to={PATH.LOGIN}
                 size="zeroPadding"
                 className="text-lg font-semibold text-emerald hover:text-yellow"
               >
-                Đăng nhập
+                {t("signUp.loginNow")}
               </Button>
             </div>
 
             <div className="flex gap-3">
               <Button type="submit" className="mt-4 px-8 py-3 !text-xl">
-                ĐĂNG KÝ
+                {t("signUp.submitBtn")}
               </Button>
 
               <Button
@@ -178,7 +178,7 @@ function SignUp() {
                 onClick={() => resetForm()}
                 className="mt-4 px-8 py-3 !text-xl"
               >
-                LÀM LẠI
+                {t("signUp.resetBtn")}
               </Button>
             </div>
 

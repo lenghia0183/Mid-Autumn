@@ -82,7 +82,14 @@
     "invalidOption": "Lựa chọn không phù hợp",
     "invalidPassword": "Mật khẩu phải có ít nhất 6 ký tự",
     "invalidOTP": "Mã OTP phải có đúng 6 ký tự",
-    "invalidConfirmPassword": "Mật khẩu xác nhận không khớp."
+    "invalidConfirmPassword": "Mật khẩu xác nhận không khớp.",
+    "fullNameRequired": "Tên đăng nhập là bắt buộc",
+    "fullNameMinLength": "Tên đăng nhập phải có ít nhất 4 ký tự",
+    "emailRequired": "Email là bắt buộc",
+    "passwordRequired": "Mật khẩu là bắt buộc",
+    "passwordMinLength": "Mật khẩu phải có ít nhất 6 ký tự",
+    "confirmPasswordRequired": "Xác nhận mật khẩu là bắt buộc",
+    "confirmPasswordNotMatch": "Mật khẩu xác nhận không khớp"
   },
 
   "pageTitle": {
@@ -108,12 +115,19 @@
     "favorites": "Danh sách sản phẩm yêu thích"
   },
 
+  "viewedProducts": {
+    "title": "Danh sách sản phẩm đã xem"
+  },
+
   "cart": {
     "title": "Giỏ hàng của bạn",
     "total": "Tổng tiền:",
     "empty": "Giỏ hàng của bạn đang trống",
     "cartBtn": "Giỏ hàng",
     "checkoutBtn": "Thanh toán",
+    "unitPrice": "Đơn giá",
+    "quantity": "Số lượng",
+    "totalPrice": "Thành tiền",
     "dialog": {
       "title": "Xác nhận xóa",
       "submitLabel": "Xác nhận",
@@ -284,6 +298,21 @@
       "success": "Đăng nhập thành công",
       "failed": "Đăng nhập thất bại, vui lòng thử lại",
       "error": "Có lỗi xảy ra, vui lòng thử lại"
+    }
+  },
+
+  "signUp": {
+    "title": "ĐĂNG KÝ",
+    "fullName": "Họ và tên",
+    "email": "Email",
+    "password": "Mật khẩu",
+    "confirmPassword": "Xác nhận mật khẩu",
+    "hasAccount": "Bạn đã có tài khoản?",
+    "loginNow": "Đăng nhập",
+    "submitBtn": "ĐĂNG KÝ",
+    "resetBtn": "LÀM LẠI",
+    "toast": {
+      "registerFailed": "Đăng ký thất bại vui lòng thử lại"
     }
   },
   "productDetail": {
