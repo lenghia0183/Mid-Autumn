@@ -125,7 +125,7 @@ function Cart() {
                             onChange={(quantity) =>
                               handleUpdateQuantity(quantity, item)
                             }
-                            max={20}
+                            max={item?.productId?.quantity}
                           />
                         }
                       />

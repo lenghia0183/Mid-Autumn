@@ -15,6 +15,7 @@ import { useTranslation } from "react-i18next";
 
 const ItemCard = ({ product, className, refreshGetProduct }) => {
   const navigate = useNavigate();
+  console.log("product", product);
 
   const {
     _id,
@@ -107,6 +108,7 @@ const ItemCard = ({ product, className, refreshGetProduct }) => {
             className="absolute inset-x-0 -bottom-[15px] flex justify-center gap-5 transition-all duration-300 ease-linear transform translate-y-full
         group-hover:translate-y-0 group-hover:bottom-[10px]"
           >
+            (
             <IconButton
               type="button"
               iconName="bag"
@@ -114,6 +116,7 @@ const ItemCard = ({ product, className, refreshGetProduct }) => {
               width="40px"
               height="40px"
               className="rounded-md px-2 py-1 bg-yellow-500"
+              disabled={!inStock}
               onClick={() => {
                 addProductToCart(
                   { productId: _id, quantity: 1 },
