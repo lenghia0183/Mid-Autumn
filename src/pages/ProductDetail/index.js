@@ -24,11 +24,12 @@ import CommentList from "../../components/CommentList";
 import ProductGallerySkeleton from "../../components/Skeletons/ProductGallerySkeleton";
 import ProductDetailInfoSkeleton from "../../components/Skeletons/ProductDetailInfo";
 import { useCart } from "../../context";
+import { getLocalizedProductInfo } from "../../utils";
 
 function ProductDetail() {
   const params = useParams();
 
-  const { t } = useTranslation();
+  const { t, i18n } = useTranslation();
   const {
     data: itemDetail,
     mutate: refreshGetProductDetail,
@@ -36,6 +37,9 @@ function ProductDetail() {
   } = useGetProductDetail(params.productId);
 
   console.log("itemDetail", itemDetail);
+
+  // Get localized product info based on current language
+  const localizedProduct = getLocalizedProductInfo(itemDetail, i18n.language);
 
   const { trigger: addProductToCart } = useAddProductToCart();
   const { trigger: addProductToFavoriteList } = useAddProductToFavoriteList(
@@ -74,7 +78,7 @@ function ProductDetail() {
       to: finalSearch,
     },
     {
-      label: itemDetail?.name,
+      label: localizedProduct.name,
       to: PATH.PRODUCT_DETAIL.replace(":productId", itemDetail?._id),
     },
   ];
@@ -134,7 +138,7 @@ function ProductDetail() {
                 ) : (
                   <div>
                     <h1 className="sm:text-[45px] text-[38px] leading-tight font-medium">
-                      {itemDetail?.name}
+                      {localizedProduct.name}
                     </h1>
                     <p className="text-xl font-medium mt-3">
                       {t("productDetail.status")}{" "}
@@ -164,7 +168,7 @@ function ProductDetail() {
                       {formatCurrency(itemDetail?.price)}
                     </p>
                     <p className="text-[17px] mt-3">
-                      {itemDetail?.description}
+                      {localizedProduct.description}
                     </p>
 
                     <div className="flex flex-col sm:flex-row gap-5 mt-5">
@@ -273,7 +277,7 @@ function ProductDetail() {
                       <span>{itemDetail?.code}</span>
                     </p>
 
-                    <p>{itemDetail?.description}</p>
+                    <p>{localizedProduct.description}</p>
                   </div>
                   <div>
                     <CommentList />

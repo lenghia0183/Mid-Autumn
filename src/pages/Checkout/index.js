@@ -32,9 +32,10 @@ import { toast } from "react-toastify";
 import { useNavigate } from "react-router-dom";
 
 import { useCart, useUser } from "../../context";
+import { getLocalizedProductName } from "../../utils";
 
 function Checkout() {
-  const { t } = useTranslation();
+  const { t, i18n } = useTranslation();
   // const isLargerThanSm = useBreakpoint("sm");
   const formRef = useRef();
 
@@ -522,7 +523,10 @@ function Checkout() {
                                   height="70px"
                                 />
                                 <p className="w-1/2 text-lg font-medium text-left text-dark">
-                                  {item?.productId?.name}
+                                  {getLocalizedProductName(
+                                    item?.productId,
+                                    i18n.language
+                                  )}
                                 </p>
                                 <p className="text-lg text-crimson">
                                   {item?.quantity} x

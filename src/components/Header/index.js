@@ -18,6 +18,7 @@ import formatCurrency from "../../utils/formatCurrency";
 import { useCart, useUser } from "../../context";
 import { validateStatus } from "../../utils/api";
 import { toast } from "react-toastify";
+import { getLocalizedProductName } from "../../utils";
 
 const Header = ({ bgColor = "emerald", textColor = "white", className }) => {
   const containerRef = useRef();
@@ -65,7 +66,7 @@ const Header = ({ bgColor = "emerald", textColor = "white", className }) => {
     }
   }, []);
 
-  const { t } = useTranslation();
+  const { t, i18n } = useTranslation();
   const changeLanguage = useChangeLanguage();
 
   const handleLanguageChange = (lang) => {
@@ -125,7 +126,10 @@ const Header = ({ bgColor = "emerald", textColor = "white", className }) => {
                     />
                     <div>
                       <p className="text-lg font-medium line-clamp-2">
-                        {cart?.productId?.name}
+                        {getLocalizedProductName(
+                          cart?.productId,
+                          i18n.language
+                        )}
                       </p>
                       <p>
                         {cart?.quantity} X{" "}
@@ -252,7 +256,7 @@ const Header = ({ bgColor = "emerald", textColor = "white", className }) => {
             iconName="japanFlag"
             width="35px"
             height="30px"
-            onClick={() => handleLanguageChange("jp")}
+            onClick={() => handleLanguageChange("ja")}
           />
           <IconButton
             className="sm:hidden flex"
@@ -441,7 +445,7 @@ const Header = ({ bgColor = "emerald", textColor = "white", className }) => {
                 iconName="japanFlag"
                 width="35px"
                 height="30px"
-                onClick={() => handleLanguageChange("jp")}
+                onClick={() => handleLanguageChange("ja")}
               />
               <IconButton
                 className="sm:flex hidden"

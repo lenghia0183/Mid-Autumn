@@ -14,12 +14,13 @@ import { validateStatus } from "../../utils/api";
 import QuantityInput from "../../components/QuantityInput";
 import { useCart } from "../../context";
 import { useTranslation } from "react-i18next";
+import { getLocalizedProductName } from "../../utils";
 
 function Cart() {
   const [openDialog, setOpenDialog] = useState(false);
   const [selectedCartDetail, setSelectedCartDetail] = useState(null);
   const isLargerThanSm = useBreakpoint("sm");
-  const { t } = useTranslation();
+  const { t, i18n } = useTranslation();
   const {
     cartData,
     updateCartDetail,
@@ -107,7 +108,10 @@ function Cart() {
                     <div className="col-span-5 flex items-center gap-4">
                       <Image src={item?.productId?.images[0]} width="80px" />
                       <h2 className="text-lg text-dark font-medium">
-                        {item?.productId?.name?.toUpperCase()}
+                        {getLocalizedProductName(
+                          item?.productId,
+                          i18n.language
+                        )?.toUpperCase()}
                       </h2>
                     </div>
 

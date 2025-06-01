@@ -13,6 +13,7 @@ import { useUpdateOrderStatus } from "../../service/https/order";
 import OrderListSkeleton from "../../components/Skeletons/OrderListSkeleton";
 import { useTranslation } from "react-i18next";
 import images from "../../asset/images";
+import { getLocalizedProductName } from "../../utils";
 
 import ReviewDialog from "./ReviewDialog";
 import { useNavigate } from "react-router-dom";
@@ -39,7 +40,7 @@ function Order() {
 
   const isLargeThanSm = useBreakpoint("sm");
 
-  const { t } = useTranslation();
+  const { t, i18n } = useTranslation();
   const isFetching = isLoading || isValidating;
 
   const tabList = [
@@ -85,7 +86,7 @@ function Order() {
               width="xl:w-[100px] 70px"
               height="xl:h-[100px] 70px"
             />
-            <p>{cartItem?.productId?.name}</p>
+            <p>{getLocalizedProductName(cartItem?.productId, i18n.language)}</p>
           </div>
           <div className="xl:flex gap-4">
             <p className="text-lg text-crimson text-center">

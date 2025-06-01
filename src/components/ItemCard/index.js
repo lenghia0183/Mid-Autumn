@@ -12,6 +12,7 @@ import { validateStatus } from "../../utils/api";
 import { toast } from "react-toastify";
 import { useCart } from "../../context";
 import { useTranslation } from "react-i18next";
+import { getLocalizedProductName } from "../../utils";
 
 const ItemCard = ({ product, className, refreshGetProduct }) => {
   const navigate = useNavigate();
@@ -30,9 +31,12 @@ const ItemCard = ({ product, className, refreshGetProduct }) => {
     isFavorite = false,
   } = product;
 
-  const { t } = useTranslation();
+  const { t, i18n } = useTranslation();
 
   const { addProductToCart, refreshCart } = useCart();
+
+  // Get localized product name
+  const localizedName = getLocalizedProductName(product, i18n.language);
 
   const { trigger: addProductToFavoriteList } =
     useAddProductToFavoriteList(_id);
@@ -99,7 +103,7 @@ const ItemCard = ({ product, className, refreshGetProduct }) => {
         <div className="relative aspect-square overflow-hidden">
           <Image
             src={image || images[0]}
-            alt={name}
+            alt={localizedName}
             className="transition-transform duration-300 group-hover:scale-105 ease-linear absolute inset-0 rounded-md"
           />
 
@@ -108,7 +112,6 @@ const ItemCard = ({ product, className, refreshGetProduct }) => {
             className="absolute inset-x-0 -bottom-[15px] flex justify-center gap-5 transition-all duration-300 ease-linear transform translate-y-full
         group-hover:translate-y-0 group-hover:bottom-[10px]"
           >
-            (
             <IconButton
               type="button"
               iconName="bag"
@@ -186,7 +189,7 @@ const ItemCard = ({ product, className, refreshGetProduct }) => {
 
         <div className="p-5">
           <h3 className="text-xl font-semibold text-dark mt-2 line-clamp-1">
-            {name}
+            {localizedName}
           </h3>
           <div className="flex space-x-1 mt-2">{renderStars(ratings)}</div>
           <div className="text-base font-semibold text-emerald mt-2">
