@@ -88,6 +88,8 @@ function ProductDetail() {
     { label: t("productDetail.comment"), value: "comment" },
   ];
 
+  console.log("localizedProduct", localizedProduct);
+
   return (
     <>
       <Formik
@@ -141,7 +143,7 @@ function ProductDetail() {
                       {localizedProduct.name}
                     </h1>
                     <p className="text-xl font-medium mt-3">
-                      {t("productDetail.status")}{" "}
+                      {t("productDetail.status")} {itemDetail.quantity}{" "}
                       <span className="text-emerald">
                         {itemDetail?.inStock
                           ? t("common.inStock")
