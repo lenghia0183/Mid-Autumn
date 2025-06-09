@@ -57,7 +57,9 @@ function Order() {
   }, [tab, refreshOrder, page]);
 
   const renderPaymentStatus = (paymentMethod, isPaid) => {
-    return paymentMethod === "bank" && isPaid
+    console.log("paymentMethod", paymentMethod);
+    console.log("isPaid", isPaid);
+    return paymentMethod === "Bank" && isPaid
       ? t("order.paymentStatus.paid")
       : t("order.paymentStatus.unpaid");
   };

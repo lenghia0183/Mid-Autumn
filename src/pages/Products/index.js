@@ -14,6 +14,7 @@ import { useGetManufacturer, useGetProduct } from "../../service/https";
 import { useGetCategory } from "../../service/https/category";
 import SkeletonProductCard from "../../components/Skeletons";
 import ProductListSkeleton from "../../components/Skeletons/ProductListSkeleton";
+import validationSchema from "./ProductFilterSideBar/schema";
 
 function Products() {
   const breadcrumbItems = [
@@ -87,9 +88,9 @@ function Products() {
                 (key) => values[key] === true
               ),
             };
-
             setFilters({ ...convertValues });
           }}
+          validationSchema={validationSchema}
         >
           {({ setFieldValue, values, resetForm }) => (
             <Form>
