@@ -178,10 +178,12 @@ function Checkout() {
                 if (validateStatus(response?.code)) {
                   console.log("response", response);
                   toast.success(response?.message);
-                  window.open(
-                    response?.data?.payUrl || response?.data?.order_url,
-                    "_blank"
-                  );
+                  if (response?.data?.payUrl || response?.data?.order_url) {
+                    window.open(
+                      response?.data?.payUrl || response?.data?.order_url,
+                      "_blank"
+                    );
+                  }
                   refreshCart();
                   navigate(PATH.HOME);
                 } else {
