@@ -23,11 +23,14 @@ const HEADERS_MULTIPLE_PART = {
 const REFRESH_TOKEN_URL = "v1/auth/refresh-token";
 
 export const createInstance = (baseURL, customHeaders = {}) => {
+  const lang = localStorage.getItem("lang") || "vi";
+
   const instance = axios.create({
     baseURL: baseURL,
     headers: {
       contentType: "application/json",
       accept: "application/json",
+      "accept-language": lang,
       "Access-Control-Allow-Origin": "*",
       ...customHeaders,
     },
@@ -88,6 +91,7 @@ export const createInstance = (baseURL, customHeaders = {}) => {
             originalRequest.headers[
               "Authorization"
             ] = `Bearer ${newAccessToken}`;
+
             return api.instance(originalRequest);
           } else {
             eventEmitter.emit(EVENT_EMITTER.LOGOUT);
