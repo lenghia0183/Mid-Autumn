@@ -13,63 +13,57 @@ import ChatModal from "../../components/ChatModal";
 import { useUser } from "../../context";
 
 function ProfileLayout() {
-    const location = useLocation();
-    const currentPath = location.pathname;
-    const { isLoading } = useLoading();
-    const { user: userData } = useUser();
+  const location = useLocation();
+  const currentPath = location.pathname;
+  const { isLoading } = useLoading();
+  const { user: userData } = useUser();
 
-    const breadcrumbData = {
-        [PATH.PROFILE_EDIT]: [
-            { label: PAGE_TITLE.HOME, to: PATH.HOME },
-            { label: PAGE_TITLE.PROFILE_EDIT, to: PATH.PROFILE_EDIT },
-        ],
-        [PATH.CHANGE_PASSWORD]: [
-            { label: PAGE_TITLE.HOME, to: PATH.HOME },
-            { label: PAGE_TITLE.CHANGE_PASSWORD, to: PATH.CHANGE_PASSWORD },
-        ],
-        [PATH.ORDER]: [
-            { label: PAGE_TITLE.HOME, to: PATH.HOME },
-            { label: PAGE_TITLE.ORDER, to: PATH.ORDER },
-        ],
-        [PATH.VIEWED_PRODUCTS]: [
-            { label: PAGE_TITLE.HOME, to: PATH.HOME },
-            { label: PAGE_TITLE.VIEWED_PRODUCTS, to: PATH.VIEWED_PRODUCTS },
-        ],
-        [PATH.FAVORITE]: [
-            { label: PAGE_TITLE.HOME, to: PATH.HOME },
-            { label: PAGE_TITLE.FAVORITE, to: PATH.FAVORITE },
-        ],
-    };
+  const breadcrumbData = {
+    [PATH.PROFILE_EDIT]: [
+      { label: PAGE_TITLE.HOME, to: PATH.HOME },
+      { label: PAGE_TITLE.PROFILE_EDIT, to: PATH.PROFILE_EDIT },
+    ],
+    [PATH.CHANGE_PASSWORD]: [
+      { label: PAGE_TITLE.HOME, to: PATH.HOME },
+      { label: PAGE_TITLE.CHANGE_PASSWORD, to: PATH.CHANGE_PASSWORD },
+    ],
+    [PATH.ORDER]: [
+      { label: PAGE_TITLE.HOME, to: PATH.HOME },
+      { label: PAGE_TITLE.ORDER, to: PATH.ORDER },
+    ],
+    [PATH.VIEWED_PRODUCTS]: [
+      { label: PAGE_TITLE.HOME, to: PATH.HOME },
+      { label: PAGE_TITLE.VIEWED_PRODUCTS, to: PATH.VIEWED_PRODUCTS },
+    ],
+    [PATH.FAVORITE]: [
+      { label: PAGE_TITLE.HOME, to: PATH.HOME },
+      { label: PAGE_TITLE.FAVORITE, to: PATH.FAVORITE },
+    ],
+  };
 
-    const breadcrumbProfile = breadcrumbData[currentPath] || [];
+  const breadcrumbProfile = breadcrumbData[currentPath] || [];
 
-    return (
-        <>
-            <Backdrop open={isLoading} />
-            <LogoutListener />
-            <Header />
-            <Breadcrumb items={breadcrumbProfile} />
-            <main className="container grid grid-cols-12 gap-4 py-14">
-                {/* SideBar chiếm 3 cột */}
-                <aside className="lg:col-span-3 col-span-full rounded-md shadow-md">
-                    <SideBar />
-                </aside>
+  return (
+    <>
+      <Backdrop open={isLoading} />
+      <LogoutListener />
+      <Header />
+      <Breadcrumb items={breadcrumbProfile} />
+      <main className="container grid grid-cols-12 gap-4 py-14">
+        {/* SideBar chiếm 3 cột */}
+        <aside className="lg:col-span-3 col-span-full rounded-md shadow-md">
+          <SideBar />
+        </aside>
 
-                {/* Nội dung chính chiếm 9 cột */}
-                <section className="lg:col-span-9 col-span-full">
-                    <Outlet />
-                </section>
-            </main>
-            <Footer />
-            <GoToTop />
-            {userData?.isLoggedIn ? (
-                <>
-                    <ChatButton />
-                    <ChatModal />
-                </>
-            ) : null}
-        </>
-    );
+        {/* Nội dung chính chiếm 9 cột */}
+        <section className="lg:col-span-9 col-span-full">
+          <Outlet />
+        </section>
+      </main>
+      <Footer />
+      <GoToTop />
+    </>
+  );
 }
 
 // SideBar Component

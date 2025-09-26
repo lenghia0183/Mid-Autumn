@@ -11,27 +11,21 @@ import ChatModal from "../../components/ChatModal";
 import { useUser } from "../../context";
 
 const MainLayout = () => {
-    const { isLoading } = useLoading();
-    const { user: userData } = useUser();
+  const { isLoading } = useLoading();
+  const { user: userData } = useUser();
 
-    return (
-        <div>
-            <Header />
-            <LogoutListener />
-            <Backdrop open={isLoading} />
-            <main>
-                <Outlet />
-            </main>
-            <Footer />
-            <GoToTop />
-            {userData?.isLoggedIn ? (
-                <>
-                    <ChatButton />
-                    <ChatModal />
-                </>
-            ) : null}
-        </div>
-    );
+  return (
+    <div>
+      <Header />
+      <LogoutListener />
+      <Backdrop open={isLoading} />
+      <main>
+        <Outlet />
+      </main>
+      <Footer />
+      <GoToTop />
+    </div>
+  );
 };
 
 export default MainLayout;
