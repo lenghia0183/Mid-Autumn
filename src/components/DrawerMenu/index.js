@@ -25,6 +25,7 @@ const DrawerMenu = ({
   handleOverlayClick,
   className,
 }) => {
+  console.log("isOpen", isOpen);
   const timeoutRef = useRef(null);
   const location = useLocation();
 
@@ -33,7 +34,8 @@ const DrawerMenu = ({
 
   useEffect(() => {
     handleClose();
-  }, [location.pathname, handleClose]);
+    // eslint-disable-next-line
+  }, [location.pathname]);
 
   useEffect(() => {
     if (disableScroll) {

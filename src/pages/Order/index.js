@@ -18,6 +18,8 @@ import { getLocalizedProductName } from "../../utils";
 import ReviewDialog from "./ReviewDialog";
 
 import { PATH } from "./../../constants/path";
+import { validateStatus } from "../../utils/api";
+import { toast } from "react-toastify";
 
 function Order() {
   const { page } = useQueryState();
@@ -156,9 +158,19 @@ function Order() {
   );
 
   const handleUpdateOrderStatus = (orderId, status) => {
-    updateOrderStatus({ orderId, status }).then(() => {
-      refreshOrder();
-    });
+    updateOrderStatus(
+      { orderId, status },
+      {
+        onSuccess: (response) => {
+          if (validateStatus(response?.code)) {
+            toast.success(response?.message);
+            refreshOrder();
+          } else {
+            toast.error(response?.message);
+          }
+        },
+      }
+    );
   };
 
   const renderOrderActions = (item) => (

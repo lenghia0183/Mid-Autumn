@@ -47,6 +47,7 @@ const Header = ({ bgColor = "emerald", textColor = "white", className }) => {
   };
 
   const handleOpenCartDrawer = () => {
+    console.log("click");
     setIsOpenCartDrawer(true);
   };
 
