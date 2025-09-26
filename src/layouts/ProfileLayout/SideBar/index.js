@@ -1,6 +1,6 @@
 import { NavLink, useNavigate } from "react-router-dom";
-import { Formik, Form, Field } from "formik";
-import * as Yup from "yup";
+import { Formik, Form } from "formik";
+
 import Icon from "../../../components/Icon";
 import { PAGE_TITLE, PATH } from "../../../constants/path";
 import Button from "../../../components/Button";
@@ -11,10 +11,6 @@ import clsx from "clsx";
 import { useState } from "react";
 import { useUpdateMe } from "../../../service/https/user";
 import { toast } from "react-toastify";
-
-const validationSchema = Yup.object().shape({
-  // avatar: Yup.mixed().required("Vui lòng chọn ảnh"),
-});
 
 function SideBar() {
   const { logout, user: userData, updateUser } = useUser();

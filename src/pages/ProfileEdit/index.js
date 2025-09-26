@@ -57,7 +57,7 @@ function ProfileEdit() {
 
   const handleSubmit = (values) => {
     // Handle form submission
-    console.log("Form values:", values);
+
     const convertValues = {
       fullname: values?.name,
       email: values?.email,
@@ -85,16 +85,15 @@ function ProfileEdit() {
 
     updateMe(convertValues, {
       onSuccess: (response) => {
-        console.log(response);
         if (validateStatus(response?.code)) {
           toast.success(response?.message);
           refreshGetUserData();
-          console.log("response", response);
+
           updateUser(response?.data);
         }
       },
       onError: (error) => {
-        console.log(error);
+        toast.error(error?.response?.data?.message);
       },
     });
   };

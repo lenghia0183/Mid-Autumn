@@ -17,7 +17,7 @@ const LogoutListener = () => {
     return () => {
       eventEmitter.removeAllListeners(EVENT_EMITTER.LOGOUT);
     };
-  }, []);
+  }, [logout, navigate]);
 
   return <></>;
 };

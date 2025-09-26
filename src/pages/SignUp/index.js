@@ -1,5 +1,5 @@
 import React from "react";
-import { Formik, Form, Field } from "formik";
+import { Formik, Form } from "formik";
 
 import FormikTextField from "../../components/Formik/FormikTextField";
 import { PATH } from "../../constants/path";
@@ -169,7 +169,12 @@ function SignUp() {
             </div>
 
             <div className="flex gap-3">
-              <Button type="submit" className="mt-4 px-8 py-3 !text-xl">
+              <Button
+                type="submit"
+                className="mt-4 px-8 py-3 !text-xl"
+                disabled={isSocialLoginLoading}
+                loading={isSocialLoginLoading}
+              >
                 {t("signUp.submitBtn")}
               </Button>
 

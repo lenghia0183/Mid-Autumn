@@ -27,7 +27,7 @@ function Favorite() {
 
   useEffect(() => {
     refreshGetMyFavorite();
-  }, [page]);
+  }, [page, refreshGetMyFavorite]);
 
   const items = data?.data?.favorites || [];
 

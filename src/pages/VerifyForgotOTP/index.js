@@ -76,7 +76,12 @@ function VerifyForgotOTP() {
             {t("verifyForgotOTP.description")}
           </p>
 
-          <Button type="submit" className="mt-5 px-8 py-3 !text-xl">
+          <Button
+            type="submit"
+            className="mt-5 px-8 py-3 !text-xl"
+            disabled={isVerifyForgotLoading}
+            loading={isVerifyForgotLoading}
+          >
             {t("verifyForgotOTP.verifyButton")}
           </Button>
 

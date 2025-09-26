@@ -1,5 +1,3 @@
-import React from "react";
-import { Formik, Form } from "formik";
 import FormikTextField from "../../../components/Formik/FormikTextField";
 import Icon from "../../../components/Icon";
 import images from "./../../../asset/images/index";
@@ -25,12 +23,10 @@ const ProductFilterSideBar = ({
   isGetManufacturerListLoading,
   resetForm,
 }) => {
-  console.log("isGetCategoryListLoading", isGetCategoryListLoading);
-
   const { t } = useTranslation();
   const navigate = useNavigate();
   const ratings = [1, 2, 3, 4, 5];
-  // console.log("values", values);
+
   return (
     <div className="space-y-4">
       {/* Tìm kiếm */}

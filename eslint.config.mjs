@@ -11,8 +11,8 @@ export default [
   {
     rules: {
       "react/prop-types": "off",
-      "no-console": "warn",
-      "no-unused-vars": ["warn", { argsIgnorePattern: "^_" }],
+      "no-console": "error",
+      "no-unused-vars": ["error", { argsIgnorePattern: "^_" }],
       "react/jsx-no-target-blank": "off",
       "react-refresh/only-export-components": [
         "warn",

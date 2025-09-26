@@ -23,8 +23,6 @@ const HEADERS_MULTIPLE_PART = {
 const REFRESH_TOKEN_URL = "v1/auth/refresh-token";
 
 export const createInstance = (baseURL, customHeaders = {}) => {
-  console.log("customHeaders: ", customHeaders);
-
   const instance = axios.create({
     baseURL: baseURL,
     headers: {

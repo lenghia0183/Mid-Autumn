@@ -109,6 +109,7 @@ const Footer = ({
             allowFullScreen=""
             loading="lazy"
             referrerPolicy="no-referrer-when-downgrade"
+            title="Shop Location"
           ></iframe>
         </div>
       </div>

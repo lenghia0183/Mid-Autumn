@@ -16,13 +16,12 @@ import images from "../../asset/images";
 import { getLocalizedProductName } from "../../utils";
 
 import ReviewDialog from "./ReviewDialog";
-import { useNavigate } from "react-router-dom";
+
 import { PATH } from "./../../constants/path";
-import useBreakpoint from "../../hooks/useBreakpoint";
 
 function Order() {
   const { page } = useQueryState();
-  const navigate = useNavigate();
+
   const { tab, setTab } = useQueryState({ tab: "pending" });
   const {
     data,
@@ -37,8 +36,6 @@ function Order() {
   const { trigger: updateOrderStatus } = useUpdateOrderStatus();
   const [isOpenDialogReview, setIsOpenDialogReview] = useState(false);
   const [selectedCartDetail, setSelectedCartDetail] = useState(null);
-
-  const isLargeThanSm = useBreakpoint("sm");
 
   const { t, i18n } = useTranslation();
   const isFetching = isLoading || isValidating;
@@ -57,8 +54,6 @@ function Order() {
   }, [tab, refreshOrder, page]);
 
   const renderPaymentStatus = (paymentMethod, isPaid) => {
-    console.log("paymentMethod", paymentMethod);
-    console.log("isPaid", isPaid);
     return paymentMethod === "Bank" && isPaid
       ? t("order.paymentStatus.paid")
       : t("order.paymentStatus.unpaid");

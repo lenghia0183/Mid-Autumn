@@ -1,5 +1,4 @@
-import React, { forwardRef, useId, useState } from "react";
-import PropTypes from "prop-types";
+import { forwardRef, useId, useState } from "react";
 import clsx from "clsx";
 import useResponsiveStyle from "../../hooks/useResponsiveStyle";
 import Icon from "../Icon"; // Giả sử bạn có một component Icon để render biểu tượng

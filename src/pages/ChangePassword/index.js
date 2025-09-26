@@ -1,6 +1,6 @@
 import { Form, Formik } from "formik";
 import FormikTextField from "./../../components/Formik/FormikTextField";
-import * as Yup from "yup";
+
 import Button from "../../components/Button";
 import useBreakpoint from "../../hooks/useBreakpoint";
 import validationSchema from "./schema";

@@ -21,7 +21,7 @@ import {
   getShipPriceTest,
   getWardDataTest,
 } from "../../service/GHNApi";
-import { useEffect, useRef, useState } from "react";
+import { useEffect, useMemo, useRef, useState } from "react";
 import validationSchema from "./schema";
 import { useTranslation } from "react-i18next";
 import { TEXTFIELD_ALLOW } from "../../constants";
@@ -64,7 +64,10 @@ function Checkout() {
 
   const { cartData, refreshCart } = useCart();
 
-  const items = cartData?.cartDetails || [];
+  const items = useMemo(
+    () => cartData?.cartDetails || [],
+    [cartData?.cartDetails]
+  );
   const initialValues = {
     buyerName: userData?.fullname || "",
     buyerEmail: userData?.email || "",
@@ -122,7 +125,7 @@ function Checkout() {
 
       fetchServicePrice();
     }
-  }, [values?.province, values?.district, values?.ward]);
+  }, [values?.province, values?.district, values?.ward, items]);
 
   const handleCopyInfo = (setFieldValue, values) => {
     setFieldValue("recipientName", values?.buyerName);
@@ -143,7 +146,7 @@ function Checkout() {
           }}
           onSubmit={(values) => {
             // Handle form submission
-            // console.log("Submitted values", values);
+
             const convertValue = {
               cartId: cartData?.id,
               buyerName: values?.buyerName,
@@ -176,7 +179,6 @@ function Checkout() {
             addOrder(convertValue, {
               onSuccess: (response) => {
                 if (validateStatus(response?.code)) {
-                  console.log("response", response);
                   toast.success(response?.message);
                   if (response?.data?.payUrl || response?.data?.order_url) {
                     window.open(

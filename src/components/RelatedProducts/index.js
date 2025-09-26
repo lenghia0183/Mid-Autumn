@@ -34,7 +34,7 @@ function RelatedProducts({
 
   useEffect(() => {
     refreshData();
-  }, [productId, categoryId, manufacturerId]);
+  }, [productId, categoryId, manufacturerId, refreshData]);
 
   const slider = useRef();
 

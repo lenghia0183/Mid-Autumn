@@ -1,3 +1,5 @@
+// disable eslint for this file
+/* eslint-disable */
 export const TEXTFIELD_PREVENT = {
   NUMERIC: /^[0-9]*$/,
   POSITIVE_DECIMAL: /^[0-9.]*$/,

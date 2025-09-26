@@ -1,4 +1,3 @@
-import React from "react";
 import PropTypes from "prop-types";
 import Image from "../Image";
 import Icon from "../Icon";
@@ -16,11 +15,9 @@ import { getLocalizedProductName } from "../../utils";
 
 const ItemCard = ({ product, className, refreshGetProduct }) => {
   const navigate = useNavigate();
-  console.log("product", product);
 
   const {
     _id,
-    name,
     image,
     images,
     price,

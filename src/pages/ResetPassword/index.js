@@ -82,7 +82,12 @@ function ResetPassword() {
             {t("resetPassword.description")}
           </p>
 
-          <Button type="submit" className="mt-5 px-8 py-3 !text-xl">
+          <Button
+            type="submit"
+            className="mt-5 px-8 py-3 !text-xl"
+            disabled={isResetPasswordLoading}
+            loading={isResetPasswordLoading}
+          >
             {t("resetPassword.submitButton")}
           </Button>
 

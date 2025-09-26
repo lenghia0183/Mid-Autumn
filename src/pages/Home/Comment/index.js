@@ -1,14 +1,10 @@
 import Slider from "react-slick";
-import ItemCard from "../../../components/ItemCard";
 import images from "../../../asset/images";
 import IconButton from "../../../components/IconButton";
 import { useRef } from "react";
-import { useTranslation } from "react-i18next";
-import Icon from "../../../components/Icon";
 
 function Comment() {
   const slider = useRef();
-  const { t } = useTranslation();
   const settings = {
     // dots: true,
     infinite: true,

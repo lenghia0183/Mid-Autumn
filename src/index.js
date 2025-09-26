@@ -8,7 +8,6 @@ import { I18nextProvider } from "react-i18next";
 import i18n from "./i18n";
 import { CartProvider, UserProvider } from "./context";
 import { LoadingProvider } from "./context/loadingContext";
-import { ChatProvider } from "./context/chatContext";
 import loadingMiddleware from "./middlewares/loadingMiddleware";
 
 const root = ReactDOM.createRoot(document.getElementById("root"));
@@ -26,9 +25,7 @@ root.render(
         >
           <UserProvider>
             <CartProvider>
-              <ChatProvider>
-                <App />
-              </ChatProvider>
+              <App />
             </CartProvider>
           </UserProvider>
         </SWRConfig>

@@ -8,15 +8,11 @@ import { PAGE_TITLE, PATH } from "../../constants/path";
 import { useLoading } from "../../context/loadingContext";
 import Backdrop from "../../components/BackDrop";
 import LogoutListener from "./../../components/LogoutListener/index";
-import ChatButton from "../../components/ChatButton";
-import ChatModal from "../../components/ChatModal";
-import { useUser } from "../../context";
 
 function ProfileLayout() {
   const location = useLocation();
   const currentPath = location.pathname;
   const { isLoading } = useLoading();
-  const { user: userData } = useUser();
 
   const breadcrumbData = {
     [PATH.PROFILE_EDIT]: [

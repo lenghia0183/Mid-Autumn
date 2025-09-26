@@ -15,7 +15,7 @@ function App() {
   const { trigger: recordVisit } = useRecordVisit();
   useEffect(() => {
     recordVisit();
-  }, []);
+  }, [recordVisit]);
 
   return (
     <>

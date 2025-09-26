@@ -36,8 +36,6 @@ function ProductDetail() {
     isLoading,
   } = useGetProductDetail(params.productId);
 
-  console.log("itemDetail", itemDetail);
-
   // Get localized product info based on current language
   const localizedProduct = getLocalizedProductInfo(itemDetail, i18n.language);
 
@@ -88,8 +86,6 @@ function ProductDetail() {
     { label: t("productDetail.comment"), value: "comment" },
   ];
 
-  console.log("localizedProduct", localizedProduct);
-
   return (
     <>
       <Formik
@@ -102,7 +98,6 @@ function ProductDetail() {
 
           addProductToCart(convertValues, {
             onSuccess: (response) => {
-              // console.log(response);
               if (validateStatus(response.code)) {
                 toast.success(response.message);
                 refreshCart();
@@ -194,7 +189,6 @@ function ProductDetail() {
                               {},
                               {
                                 onSuccess: (response) => {
-                                  // console.log(response);
                                   if (validateStatus(response.code)) {
                                     toast.success(response.message);
                                     refreshGetProductDetail();

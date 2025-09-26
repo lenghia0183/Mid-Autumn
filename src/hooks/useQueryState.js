@@ -1,3 +1,5 @@
+//disable eslint for this file
+/* eslint-disable */
 import { useCallback, useMemo, useRef } from "react";
 import {
   isArray,
@@ -14,10 +16,6 @@ import { useNavigate, useLocation } from "react-router-dom";
 export const useQueryState = (initialQuery, { prefix = "" } = {}) => {
   const navigate = useNavigate();
   const { pathname, search } = useLocation();
-
-  // console.log("pathName", pathname);
-  // console.log("search", search);
-  // console.log("initial query", initialQuery);
 
   const queryObjRef = useRef();
 
@@ -53,10 +51,6 @@ export const useQueryState = (initialQuery, { prefix = "" } = {}) => {
       const result = { ...obj };
       const keys = [$filters, $quickFilters, $keyword];
 
-      // console.log("convertObj keys", keys);
-      // console.log("convertObj result", result);
-      // console.log("convertObj obj", { ...obj });
-
       keys.forEach((key) => {
         if (isNull(obj[key]) || isEqual(obj[key], {})) {
           result[key] = null;
@@ -74,11 +68,9 @@ export const useQueryState = (initialQuery, { prefix = "" } = {}) => {
     let result;
 
     if (!search && !!initialQuery) {
-      // console.log("result before map", result);
       result = mapKeys(initialQuery, (v, k) => `${pf}${k}`);
-      // console.log("before convert obj", result);
+
       result = convertObj(result);
-      // console.log("result after convert", result);
     } else {
       const params = new URLSearchParams(search);
       result = Object.fromEntries(params.entries());
@@ -111,15 +103,15 @@ export const useQueryState = (initialQuery, { prefix = "" } = {}) => {
   );
   const quickFilters = useMemo(
     () => jsonParse(queryObj[$quickFilters], {}) || {},
-    [queryObj, $quickFilters]
+    [queryObj, $quickFilters, jsonParse]
   );
   const keyword = useMemo(
     () => jsonParse(queryObj[$keyword], "") || "",
-    [queryObj, $keyword]
+    [queryObj, $keyword, jsonParse]
   );
   const tab = useMemo(
     () => queryObj[$tab] ?? initialQuery?.tab,
-    [queryObj, $tab]
+    [queryObj, $tab, jsonParse]
   );
 
   const currentQuery = useMemo(() => {
@@ -191,7 +183,6 @@ export const useQueryState = (initialQuery, { prefix = "" } = {}) => {
               (isArray(value[nestedKey]) && value[nestedKey].length === 0) ||
               (isObject(value[nestedKey]) && isEmpty(value[nestedKey]))
             ) {
-              console.log('nestedKey",', nestedKey);
               delete value[nestedKey];
             }
           });

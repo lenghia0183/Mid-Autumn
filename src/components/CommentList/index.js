@@ -1,5 +1,4 @@
 import React, { useEffect } from "react";
-import clsx from "clsx";
 import { useTranslation } from "react-i18next";
 import Icon from "../Icon";
 import Image from "../Image";
@@ -10,7 +9,7 @@ import CommentListSkeleton from "../Skeletons/CommentListSkeleton";
 import { useQueryState } from "../../hooks/useQueryState";
 import Accordion from "./../Accordion/index";
 
-const CommentList = ({}) => {
+const CommentList = () => {
   const { page } = useQueryState();
 
   const { t } = useTranslation();
@@ -30,7 +29,7 @@ const CommentList = ({}) => {
 
   useEffect(() => {
     refreshComments();
-  }, [page]);
+  }, [page, refreshComments]);
 
   const renderStars = (ratings) => {
     const totalStars = 5;

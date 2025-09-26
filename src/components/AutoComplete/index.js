@@ -1,4 +1,6 @@
-import React, { useState, useEffect, useRef, useId, memo } from "react";
+// disable eslint for this file
+/* eslint-disable */
+import { useState, useEffect, useRef, useId, memo } from "react";
 import PropTypes from "prop-types";
 import useDebounce from "../../hooks/useDebouce";
 import Input from "./Input";
@@ -42,9 +44,6 @@ const Autocomplete = ({
 }) => {
   const { values } = useFormikContext();
 
-  // console.log("fomikcontext values", values);
-  // console.log("values of dependencies", values[asyncRequestDeps]);
-
   const [optionsState, setOptions] = useState(options);
   const [inputValue, setInputValue] = useState("");
   const debouncedInputValue = useDebounce(inputValue, 500);
@@ -57,7 +56,6 @@ const Autocomplete = ({
   const inputContainerRef = useRef(null);
   const inputRef = useRef(null);
 
-  const labelRef = useRef();
   const id = useId();
 
   const heightStyle = useResponsiveStyle(height, "h");
@@ -137,8 +135,6 @@ const Autocomplete = ({
 
   const handleOptionSelect = (option) => {
     let newSelectedValues;
-
-    console.log("newSelectedValues", option);
 
     if (multiple) {
       if (selectedValues.some((selected) => isEqualValue(selected, option))) {

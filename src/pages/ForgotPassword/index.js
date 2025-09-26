@@ -1,4 +1,3 @@
-import React from "react";
 import { Formik, Form } from "formik";
 import FormikTextField from "../../components/Formik/FormikTextField";
 import { PATH } from "../../constants/path";
@@ -83,6 +82,8 @@ function ForgotPassword() {
               to={PATH.SIGN_UP}
               size="zeroPadding"
               className="text-lg font-semibold text-emerald hover:text-yellow"
+              disabled={isForgotPasswordLoading}
+              loading={isForgotPasswordLoading}
             >
               {t("forgotPassword.signUpNow")}
             </Button>

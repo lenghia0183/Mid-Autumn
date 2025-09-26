@@ -1,5 +1,4 @@
-import React, { useState, useEffect, useRef } from "react";
-import PropTypes from "prop-types";
+import { useEffect, useRef } from "react";
 import clsx from "clsx";
 import { durationMap } from "../../config/durationConfig";
 import useColorClasses from "./../../hooks/useColorClasses";
@@ -18,7 +17,7 @@ const DrawerMenu = ({
   disableScroll = true,
   autoCloseTimeout = null,
   handleClose = () => {},
-  // handleOpen = () => {},
+
   overlayColor = "rgba(0, 0, 0, 0.5)",
   bgColor = "white",
   textColor,
@@ -34,8 +33,7 @@ const DrawerMenu = ({
 
   useEffect(() => {
     handleClose();
-    if (handleClose) handleClose();
-  }, [location.pathname]);
+  }, [location.pathname, handleClose]);
 
   useEffect(() => {
     if (disableScroll) {

@@ -126,7 +126,12 @@ function Login() {
             rightIconClassName="!text-gray-500"
           />
 
-          <Button type="submit" className="mt-10 px-8 py-3 !text-xl">
+          <Button
+            type="submit"
+            className="mt-10 px-8 py-3 !text-xl"
+            disabled={isSocialLoginLoading || isLoginLoading}
+            loading={isSocialLoginLoading || isLoginLoading}
+          >
             {t("login.title")}
           </Button>
 
@@ -158,6 +163,8 @@ function Login() {
           bgColor="facebook"
           startIcon={<Icon name="facebook" size={1} />}
           onClick={handleFacebookLogin}
+          disabled={isSocialLoginLoading || isLoginLoading}
+          loading={isSocialLoginLoading || isLoginLoading}
         >
           Facebook
         </Button>
@@ -168,6 +175,8 @@ function Login() {
           bgColor="google"
           startIcon={<Icon name="google" size={1} />}
           onClick={handleGoogleLogin}
+          disabled={isSocialLoginLoading || isLoginLoading}
+          loading={isSocialLoginLoading || isLoginLoading}
         >
           Google
         </Button>

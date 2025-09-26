@@ -1,4 +1,4 @@
-import { Suspense, useEffect, useState } from "react";
+import { useEffect } from "react";
 import images from "../../asset/images";
 import Breadcrumb from "../../components/Breadcrumb";
 import ItemCard from "../../components/ItemCard";
@@ -12,7 +12,7 @@ import useBreakpoint from "./../../hooks/useBreakpoint";
 import { useGetManufacturer, useGetProduct } from "../../service/https";
 
 import { useGetCategory } from "../../service/https/category";
-import SkeletonProductCard from "../../components/Skeletons";
+
 import ProductListSkeleton from "../../components/Skeletons/ProductListSkeleton";
 import validationSchema from "./ProductFilterSideBar/schema";
 
@@ -58,7 +58,7 @@ function Products() {
 
   useEffect(() => {
     refreshGetProduct();
-  }, [filters, page]);
+  }, [filters, page, refreshGetProduct]);
 
   const isLargerThanSm = useBreakpoint("sm");
 

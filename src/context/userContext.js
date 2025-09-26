@@ -1,4 +1,10 @@
-import React, { createContext, useState, useContext, useEffect } from "react";
+import React, {
+  createContext,
+  useState,
+  useContext,
+  useEffect,
+  useCallback,
+} from "react";
 import {
   getLocalStorageItem,
   setLocalStorageItem,
@@ -43,24 +49,27 @@ export const UserProvider = ({ children }) => {
     eventEmitter.once(EVENT_EMITTER.LOGOUT, () => logout());
   };
 
-  const logout = (navigate) => {
-    setUser({
-      user: null,
-      isLoggedIn: false,
-    });
+  const logout = useCallback(
+    (navigate) => {
+      setUser({
+        user: null,
+        isLoggedIn: false,
+      });
 
-    if (localStorage.getItem("token")) {
-      toast.info(t("common.logoutSuccess"));
-    }
+      if (localStorage.getItem("token")) {
+        toast.info(t("common.logoutSuccess"));
+      }
 
-    localStorage.removeItem("user");
-    localStorage.removeItem("token");
-    localStorage.removeItem("refreshToken");
+      localStorage.removeItem("user");
+      localStorage.removeItem("token");
+      localStorage.removeItem("refreshToken");
 
-    if (navigate) {
-      navigate(PATH.LOGIN);
-    }
-  };
+      if (navigate) {
+        navigate(PATH.LOGIN);
+      }
+    },
+    [t]
+  );
 
   useEffect(() => {
     const fetchUserData = async () => {
@@ -79,7 +88,7 @@ export const UserProvider = ({ children }) => {
     };
 
     fetchUserData();
-  }, []);
+  }, [logout]);
 
   return (
     <UserContext.Provider value={{ user, login, logout, updateUser }}>

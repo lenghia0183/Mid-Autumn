@@ -26,12 +26,10 @@ export const useSocket = (token) => {
     socketRef.current = socket;
 
     socket.on("connect", () => {
-      console.log("Socket connected with token:", token);
       socket.emit("chat:join", { userId: user?._id });
     });
 
     socket.on("disconnect", () => {
-      console.log("Socket disconnected");
       socket.emit("chat:leave", { userId: user?._id });
     });
 

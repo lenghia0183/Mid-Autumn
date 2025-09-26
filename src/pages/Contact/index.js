@@ -1,6 +1,5 @@
 import { Form, Formik } from "formik";
 import FormikTextField from "./../../components/Formik/FormikTextField";
-import * as Yup from "yup";
 import Button from "../../components/Button";
 import Breadcrumb from "../../components/Breadcrumb";
 import Divider from "../../components/Devider";
@@ -33,7 +32,7 @@ function ContactUs() {
 
   const handleSubmit = (values) => {
     // Handle form submission
-    console.log("Form values:", values);
+
     sendContact(values, {
       onSuccess: (response) => {
         if (validateStatus(response.code)) {
@@ -180,6 +179,8 @@ function ContactUs() {
                         textHoverColor="white"
                         startIcon={<Icon name="refresh" size="1.2em" />}
                         onClick={() => resetForm()}
+                        disabled={isMutating}
+                        loading={isMutating}
                       >
                         {t("common.cancel")}
                       </Button>

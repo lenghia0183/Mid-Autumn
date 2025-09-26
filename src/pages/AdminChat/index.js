@@ -183,7 +183,6 @@ const AdminChat = () => {
       if (activeChat && activeChat._id === chatId) {
         // Here you would set a state to show typing indicator
         // For now, we'll just log it
-        console.log(`User ${userId} is typing...`);
       }
     };
 
@@ -194,7 +193,6 @@ const AdminChat = () => {
       if (activeChat && activeChat._id === chatId) {
         // Here you would set a state to hide typing indicator
         // For now, we'll just log it
-        console.log(`User ${userId} stopped typing`);
       }
     };
 

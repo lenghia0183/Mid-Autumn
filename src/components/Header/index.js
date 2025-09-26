@@ -1,5 +1,5 @@
-import React, { useEffect, useRef, useState } from "react";
-import PropTypes from "prop-types";
+import { useEffect, useRef, useState } from "react";
+
 import { NavLink, useLocation } from "react-router-dom";
 import clsx from "clsx";
 import Image from "../Image";
@@ -25,7 +25,7 @@ const Header = ({ bgColor = "emerald", textColor = "white", className }) => {
   const [padding, setPadding] = useState({});
   const isLargerThanSm = useBreakpoint("sm");
 
-  const { user, logout } = useUser();
+  const { user } = useUser();
 
   const { bgColor: newBgColor } = useColorClasses({ bgColor });
   const { textColor: newTextColor } = useColorClasses({ textColor });

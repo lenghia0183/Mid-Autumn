@@ -13,7 +13,6 @@ export const getDistrictDataTest = (provinceId) => {
 };
 
 export const getWardDataTest = (districtID) => {
-  console.log(districtID);
   const url = "/master-data/ward";
   return ghnApi.get(url, {
     district_id: districtID,
